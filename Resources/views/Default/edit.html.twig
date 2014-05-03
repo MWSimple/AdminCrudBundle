@@ -1,0 +1,32 @@
+{% extends 'MWSimpleAdminCrudBundle::layout.html.twig' %}
+
+{% block title %}
+{{ parent() }} - {{ 'views.edit.edit'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
+{% endblock %}
+
+{% block page %}
+    {% form_theme edit_form 'MWSimpleAdminCrudBundle:widget:fields.html.twig' %}
+    <div class="panel panel-default center-block">
+        <div class="panel-heading">
+            <h3 class="panel-title center-block">
+                {{ 'views.edit.edit'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
+            </h3>
+        </div>
+        <div class="panel-body">
+            {{ form(edit_form) }}
+        </div>
+    </div>
+    <div class="col-lg-9">
+        <div class="float-left col-lg-3">
+            <a class="btn btn-info col-lg-11" href="{{ path(config.index) }}">
+                {{ 'views.recordactions.backtothelist'|trans({}, 'MWSimpleAdminCrudBundle') }}
+            </a>
+        </div>
+        <div class="float-left col-lg-3">{{ form(delete_form) }}</div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/mwsimplecrudgenerator/js/widget.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,133 @@
+<?php
+
+namespace MWSimple\Bundle\AdminCrudBundle\Controller;
+
+use MWSimple\Bundle\AdminCrudBundle\Controller\DefaultController as Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use MWSimple\Bundle\AdminCrudBundle\Entity\Post;
+use MWSimple\Bundle\AdminCrudBundle\Form\PostType;
+use MWSimple\Bundle\AdminCrudBundle\Form\PostFilterType;
+
+/**
+ * Post controller.
+ * @author Gonzalo Alonso <gonkpo@gmail.com>
+ *
+ * @Route("/mwsimpleadmincrud/post")
+ */
+class PostController extends Controller
+{
+    private $config = array(
+        'entityName' => 'Post',
+        'entity'     => 'MWSimple\Bundle\AdminCrudBundle\Entity\Post',
+        'repository' => 'MWSimpleAdminCrudBundle:Post',
+        'index'  => 'mwsimpleadmincrud_post',
+        'new'    => 'mwsimpleadmincrud_post_new',
+        'edit'    => 'mwsimpleadmincrud_post_edit',
+        'show'   => 'mwsimpleadmincrud_post_show',
+        'create' => 'mwsimpleadmincrud_post_create',
+        'update' => 'mwsimpleadmincrud_post_update',
+        'delete' => 'mwsimpleadmincrud_post_delete',
+        'sessionFilter' => 'PostControllerFilter',
+        'filterType' => null,
+        'newType' => null,
+        'editType' => null,
+    );
+
+    /**
+     * Lists all Post entities.
+     *
+     * @Route("/", name="mwsimpleadmincrud_post")
+     * @Method("GET")
+     * @Template("MWSimpleAdminCrudBundle:Default:index.html.twig")
+     */
+    public function indexAction($config = null)
+    {
+        $this->config['filterType'] = new PostFilterType();
+        $response = parent::indexAction($this->config);
+        return $response;
+    }
+
+    /**
+     * Creates a new Post entity.
+     *
+     * @Route("/", name="mwsimpleadmincrud_post_create")
+     * @Method("POST")
+     * @Template("MWSimpleAdminCrudBundle:Default:new.html.twig")
+     */
+    public function createAction($config = null)
+    {
+        $this->config['newType'] = new PostType();
+        $response = parent::createAction($this->config);
+        return $response;
+    }
+
+    /**
+     * Displays a form to create a new Post entity.
+     *
+     * @Route("/new", name="mwsimpleadmincrud_post_new")
+     * @Method("GET")
+     * @Template("MWSimpleAdminCrudBundle:Default:new.html.twig")
+     */
+    public function newAction($config = null)
+    {
+        $this->config['newType'] = new PostType();
+        $response = parent::newAction($this->config);
+        return $response;
+    }
+
+    /**
+     * Finds and displays a Post entity.
+     *
+     * @Route("/{id}", name="mwsimpleadmincrud_post_show")
+     * @Method("GET")
+     * @Template("MWSimpleAdminCrudBundle:Default:show.html.twig")
+     */
+    public function showAction($id, $config = null)
+    {
+        $response = parent::showAction($id, $this->config);
+        return $response;
+    }
+
+    /**
+     * Displays a form to edit an existing Post entity.
+     *
+     * @Route("/{id}/edit", name="mwsimpleadmincrud_post_edit")
+     * @Method("GET")
+     * @Template("MWSimpleAdminCrudBundle:Default:edit.html.twig")
+     */
+    public function editAction($id, $config = null)
+    {
+        $this->config['editType'] = new PostType();
+        $response = parent::editAction($id, $this->config);
+        return $response;
+    }
+
+    /**
+     * Edits an existing Post entity.
+     *
+     * @Route("/{id}", name="mwsimpleadmincrud_post_update")
+     * @Method("PUT")
+     * @Template("MWSimpleAdminCrudBundle:Default:edit.html.twig")
+     */
+    public function updateAction($id, $config = null)
+    {
+        $this->config['editType'] = new PostType();
+        $response = parent::updateAction($id, $this->config);
+        return $response;
+    }
+
+    /**
+     * Deletes a Post entity.
+     *
+     * @Route("/{id}", name="mwsimpleadmincrud_post_delete")
+     * @Method("DELETE")
+     */
+    public function deleteAction($id, $config = null)
+    {
+        $response = parent::deleteAction($id, $this->config);
+        return $response;
+    }
+
+}

@@ -1,0 +1,45 @@
+views:
+    layout:
+        bannersadmin: Administrador
+    index:
+        filters: Filtres
+        filter: Filtrar
+        reset: Netejar
+        list: %entity%: llista
+        actions: Accions
+        createnew: Crear %entity%
+        pagprev: '&larr; Anterior'
+        pagnext: 'Següent &rarr;'
+        actions: Accions
+    actions:
+        show: veure %entity%
+        edit: editar %entity%
+    recordactions:
+        backtothelist: Tornar a la llista
+        edit: Editar
+        delete: Eliminar
+        confirm: Eliminar l'element?
+    new:
+        creation: Crear %entity%
+        create: Crear
+        save: Guardar
+        saveAndAdd: Guardar i afegir
+    edit:
+        edit: Editar %entity%
+        editbutton: Editar
+    show:
+        show: Veure %entity%
+
+flash:
+    create:
+        success: Element creat satisfactòriament.
+        error: Hi ha hagut un error durant la creació de l'element.
+    update:
+        success: Element actualitzat satisfactòriament.
+        error: Hi ha hagut un error durant l'actualització de l'element.
+    delete:
+        success: Element eliminat satisfactòriament.
+        error: Hi ha hagut un error durant l'eliminació de l'element.
+
+ROLE_ADMIN: Administrador
+ROLE_USER: Usuari

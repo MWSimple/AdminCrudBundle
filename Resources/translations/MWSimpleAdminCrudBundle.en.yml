@@ -1,0 +1,45 @@
+views:
+    layout:
+        bannersadmin: Administrator
+    index:
+        filters: Filters
+        filter: Filter
+        reset: Reset
+        list: %entity% list
+        actions: Actions
+        createnew: Create a new %entity%
+        pagprev: '&larr; Previous'
+        pagnext: 'Next &rarr;'
+        actions: Actions
+    actions:
+        show: show %entity%
+        edit: edit %entity%
+    recordactions:
+        backtothelist: Back to the list
+        edit: Edit
+        delete: Delete
+        confirm: Delete the item?
+    new:
+        creation: Create %entity%
+        create: Create
+        save: Save
+        saveAndAdd: Save and add
+    edit:
+        edit: Edit %entity%
+        editbutton: Edit
+    show:
+        show: Show %entity%
+
+flash:
+    create:
+        success: Item has been successfully created.
+        error: An error has occurred during item creation.
+    update:
+        success: Item has been successfully updated.
+        error: An error has occurred during item update.
+    delete:
+        success: Item has been deleted successfully.
+        error: An Error has occurred during item deletion.
+
+ROLE_ADMIN: Administrator
+ROLE_USER: User
