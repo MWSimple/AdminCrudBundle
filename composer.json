@@ -17,7 +17,7 @@
         "lexik/form-filter-bundle": "v2.0.2"
     },
     "autoload": {
-        "psr-0": { "MWSimple\\Bundle\\AminCrudBundle": "" }
+        "psr-0": { "MWSimple\\Bundle\\AdminCrudBundle": "" }
     },
     "target-dir": "MWSimple/Bundle/AdminCrudBundle",
     "minimum-stability": "dev",
