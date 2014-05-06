@@ -90,39 +90,20 @@ app/console generate:doctrine:entity
 Example test entity:
 see vendor/mwsimple/admin-crud/MWSimple/Bundle/AdminCrudBundle/Entity/Post.dist
 
-### Configure entities
+### Configure entity
 
-You can configure `config.yml`
+You can create `file.yml` in Resources/config
 ```yaml
-mw_simple_admin_crud:
-    Entity: #Entity name
-        fields.index: #Fields view index
-            a.field: #a (query) . field (name field)
-                name: 'Field' #name display field
-        fields.show: #Fields view show
-            a.field:
-                name: 'Field'
+fields.index: #Fields view index
+    a.field: #a (query) . field (name field)
+        name: 'Field' #name display field
+fields.show: #Fields view show
+    a.field:
+        name: 'Field'
 ```
 
-Example
-```yaml
-mw_simple_admin_crud:
-    Post:
-        fields.index:
-            a.id:
-                name: 'Id'
-        fields.show:
-            a.text:
-                name: 'Text'
-    Post2:
-        fields.index:
-            a.id:
-                name: 'Id'
-        fields.show:
-            a.text:
-                name: 'Text'
-    #...
-```
+Example yml:
+see vendor/mwsimple/admin-crud/MWSimple/Bundle/AdminCrudBundle/Resources/config/post.dist
 
 ### Create Controller:
 see vendor/mwsimple/admin-crud/MWSimple/Bundle/AdminCrudBundle/Controller/PostController.dist

@@ -3,6 +3,7 @@
 namespace MWSimple\Bundle\AdminCrudBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * MWSimpleAdminCrudBundle Default controller.
@@ -26,7 +27,8 @@ class DefaultController extends Controller
         //remove the form to return to the view
         unset($config['filterType']);
         //agrego los fieldsindex configurados en el yml segun entity.
-        $config['fields'] = $this->container->getParameter('mwsadmincrud.'.$config['entityName'])['fieldsindex'];
+        $config['fields'] = Yaml::parse(file_get_contents($this->get('kernel')->getRootDir().'/../src/'.$config['yml']))['fieldsindex'];
+        // $config['fields'] = $this->container->getParameter('mwsadmincrud.'.$config['entityName'])['fieldsindex'];
 
         return array(
         	'config'     => $config,
@@ -210,7 +212,7 @@ class DefaultController extends Controller
         $deleteForm = $this->createDeleteForm($config, $id);
 
         //agrego los fieldsshow configurados en el yml segun entity.
-        $config['fields'] = $this->container->getParameter('mwsadmincrud.'.$config['entityName'])['fieldsshow'];
+        $config['fields'] = Yaml::parse(file_get_contents($this->get('kernel')->getRootDir().'/../src/'.$config['yml']))['fieldsshow'];
 
         return array(
             'config'      => $config,

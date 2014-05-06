@@ -1,0 +1,62 @@
+fieldsindex:
+    a.id:
+        name: 'Id'
+    a.booleano:
+        name: 'Booleano'
+    a.entero:
+        name: 'Entero'
+    a.smallEntero: 
+        name: 'SmallEntero'
+    a.bigEntero:
+        name: 'BigEntero'
+    a.cadena:
+        name: 'Cadena'
+    a.texto:
+        name: 'Texto'
+    a.fechatiempo:
+        name: 'Fechatiempo'
+        date: 'Y-m-d H:i:s'
+    a.dechatiempoz:
+        name: 'Dechatiempoz'
+        date: 'Y-m-d H:i:s'
+    a.fecha:
+        name: 'Fecha'
+        date: 'Y-m-d'
+    a.tiempo:
+        name: 'Tiempo'
+        date: 'H:i:s'
+    a.numerodecimal:
+        name: 'Numerodecimal'
+    a.numeroconcoma:
+        name: 'Numeroconcoma'
+fieldsshow:
+    # a.id:
+    #     name: 'Id'
+    a.booleano:
+        name: 'Booleano'
+    a.entero:
+        name: 'Entero'
+    a.smallEntero: 
+        name: 'SmallEntero'
+    a.bigEntero:
+        name: 'BigEntero'
+    a.cadena:
+        name: 'Cadena'
+    a.texto:
+        name: 'Texto'
+    a.fechatiempo:
+        name: 'Fechatiempo'
+        date: 'Y-m-d H:i:s'
+    a.dechatiempoz:
+        name: 'Dechatiempoz'
+        date: 'Y-m-d H:i:s'
+    a.fecha:
+        name: 'Fecha'
+        date: 'Y-m-d'
+    a.tiempo:
+        name: 'Tiempo'
+        date: 'H:i:s'
+    a.numerodecimal:
+        name: 'Numerodecimal'
+    a.numeroconcoma:
+        name: 'Numeroconcoma'
