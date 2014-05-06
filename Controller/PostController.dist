@@ -19,21 +19,7 @@ use Sistema\PruebaBundle\Form\PostFilterType;
 class PostController extends Controller
 {
     private $config = array(
-        'yml'        => 'Sistema/PruebaBundle/Resources/config/post.yml',
-        'entityName' => 'Post',
-        'entity'     => 'Sistema\PruebaBundle\Entity\Post',
-        'repository' => 'SistemaPruebaBundle:Post',
-        'index'  => 'mwsimpleadmincrud_post',
-        'new'    => 'mwsimpleadmincrud_post_new',
-        'edit'   => 'mwsimpleadmincrud_post_edit',
-        'show'   => 'mwsimpleadmincrud_post_show',
-        'create' => 'mwsimpleadmincrud_post_create',
-        'update' => 'mwsimpleadmincrud_post_update',
-        'delete' => 'mwsimpleadmincrud_post_delete',
-        'sessionFilter' => 'PostControllerFilter',
-        'filterType'    => null,
-        'newType'       => null,
-        'editType'      => null,
+        'yml' => 'Sistema/PruebaBundle/Resources/config/post.yml',
     );
 
     /**

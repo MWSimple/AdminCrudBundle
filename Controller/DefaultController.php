@@ -16,6 +16,7 @@ class DefaultController extends Controller
      */
     public function indexAction($config)
     {
+        $config = $this->getConfig($config);
         list($filterForm, $queryBuilder) = $this->filter($config);
 
         $paginator  = $this->get('knp_paginator');
@@ -26,9 +27,6 @@ class DefaultController extends Controller
         );
         //remove the form to return to the view
         unset($config['filterType']);
-        //agrego los fieldsindex configurados en el yml segun entity.
-        $config['fields'] = Yaml::parse(file_get_contents($this->get('kernel')->getRootDir().'/../src/'.$config['yml']))['fieldsindex'];
-        // $config['fields'] = $this->container->getParameter('mwsadmincrud.'.$config['entityName'])['fieldsindex'];
 
         return array(
         	'config'     => $config,
@@ -115,6 +113,7 @@ class DefaultController extends Controller
      */
     public function createAction($config)
     {
+        $config = $this->getConfig($config);
     	$request = $this->getRequest();
         $entity = new $config['entity']();
         $form   = $this->createCreateForm($config, $entity);
@@ -182,6 +181,7 @@ class DefaultController extends Controller
      */
     public function newAction($config)
     {
+        $config = $this->getConfig($config);
         $entity = new $config['entity']();
         $form   = $this->createCreateForm($config, $entity);
 
@@ -201,6 +201,7 @@ class DefaultController extends Controller
      */
     public function showAction($id, $config)
     {
+        $config = $this->getConfig($config);
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository($config['repository'])->find($id);
@@ -210,9 +211,6 @@ class DefaultController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($config, $id);
-
-        //agrego los fieldsshow configurados en el yml segun entity.
-        $config['fields'] = Yaml::parse(file_get_contents($this->get('kernel')->getRootDir().'/../src/'.$config['yml']))['fieldsshow'];
 
         return array(
             'config'      => $config,
@@ -227,6 +225,7 @@ class DefaultController extends Controller
      */
     public function editAction($id, $config)
     {
+        $config = $this->getConfig($config);
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository($config['repository'])->find($id);
@@ -288,6 +287,7 @@ class DefaultController extends Controller
      */
     public function updateAction($id, $config)
     {
+        $config = $this->getConfig($config);
     	$request = $this->getRequest();
         $em = $this->getDoctrine()->getManager();
 
@@ -330,6 +330,7 @@ class DefaultController extends Controller
      */
     public function deleteAction($id, $config)
     {
+        $config = $this->getConfig($config);
     	$request = $this->getRequest();
         $form = $this->createDeleteForm($config, $id);
         $form->handleRequest($request);
@@ -374,5 +375,13 @@ class DefaultController extends Controller
             ))
             ->getForm()
         ;
+    }
+
+    private function getConfig($config){
+        $configs = Yaml::parse(file_get_contents($this->get('kernel')->getRootDir().'/../src/'.$config['yml']));
+        foreach ($configs as $key => $value) {
+            $config[$key] = $value;
+        }
+        return $config;
     }
 }

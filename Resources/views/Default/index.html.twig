@@ -39,7 +39,7 @@
         <table class="table table-striped table-bordered table-condensed table-responsive">
             <thead>
                 <tr>
-                    {% for key, field in config.fields %}
+                    {% for key, field in config.fieldsindex %}
                         <th{% if entities.isSorted(key) %} class="sorted"{% endif %}>{{ knp_pagination_sortable(entities, field.name, key) }}</th>
                     {% endfor %}
                     <th>{{ 'views.index.actions'|trans({}, 'MWSimpleAdminCrudBundle') }}</th>
@@ -48,7 +48,7 @@
             <tbody>
             {% for entity in entities %}
                 <tr>
-                    {% for key, field in config.fields %}
+                    {% for key, field in config.fieldsindex %}
                         <td>
                         {% if field.date is defined %}
                             {{ attribute(entity, field.name)|date(field.date) }}
