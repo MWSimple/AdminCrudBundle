@@ -100,6 +100,9 @@ fields.index: #Fields view index
 fields.show: #Fields view show
     a.field:
         name: 'Field'
+    a.datetime:
+        name: 'Datetime'
+        date: 'Y-m-d H:i:s'
 ```
 
 Example yml:
