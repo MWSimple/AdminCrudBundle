@@ -1,14 +1,14 @@
 <?php
 
-namespace MWSimple\Bundle\AdminCrudBundle\Controller;
+namespace Sistema\PruebaBundle\Controller;
 
 use MWSimple\Bundle\AdminCrudBundle\Controller\DefaultController as Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use MWSimple\Bundle\AdminCrudBundle\Entity\Post;
-use MWSimple\Bundle\AdminCrudBundle\Form\PostType;
-use MWSimple\Bundle\AdminCrudBundle\Form\PostFilterType;
+use Sistema\PruebaBundle\Entity\Post;
+use Sistema\PruebaBundle\Form\PostType;
+use Sistema\PruebaBundle\Form\PostFilterType;
 
 /**
  * Post controller.
@@ -19,20 +19,21 @@ use MWSimple\Bundle\AdminCrudBundle\Form\PostFilterType;
 class PostController extends Controller
 {
     private $config = array(
+        'yml'        => 'Sistema/PruebaBundle/Resources/config/post.yml',
         'entityName' => 'Post',
-        'entity'     => 'MWSimple\Bundle\AdminCrudBundle\Entity\Post',
-        'repository' => 'MWSimpleAdminCrudBundle:Post',
+        'entity'     => 'Sistema\PruebaBundle\Entity\Post',
+        'repository' => 'SistemaPruebaBundle:Post',
         'index'  => 'mwsimpleadmincrud_post',
         'new'    => 'mwsimpleadmincrud_post_new',
-        'edit'    => 'mwsimpleadmincrud_post_edit',
+        'edit'   => 'mwsimpleadmincrud_post_edit',
         'show'   => 'mwsimpleadmincrud_post_show',
         'create' => 'mwsimpleadmincrud_post_create',
         'update' => 'mwsimpleadmincrud_post_update',
         'delete' => 'mwsimpleadmincrud_post_delete',
         'sessionFilter' => 'PostControllerFilter',
-        'filterType' => null,
-        'newType' => null,
-        'editType' => null,
+        'filterType'    => null,
+        'newType'       => null,
+        'editType'      => null,
     );
 
     /**

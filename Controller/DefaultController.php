@@ -96,12 +96,12 @@ class DefaultController extends Controller
 
         $form
             ->add('filter', 'submit', array(
-                'translation_domain' => 'MWSimpleCrudGeneratorBundle',
+                'translation_domain' => 'MWSimpleAdminCrudBundle',
                 'label'              => 'views.index.filter',
                 'attr'               => array('class' => 'btn btn-success col-lg-1'),
             ))
             ->add('reset', 'submit', array(
-                'translation_domain' => 'MWSimpleCrudGeneratorBundle',
+                'translation_domain' => 'MWSimpleAdminCrudBundle',
                 'label'              => 'views.index.reset',
                 'attr'               => array('class' => 'btn btn-danger col-lg-1 col-lg-offset-1'),
             ))
@@ -160,14 +160,14 @@ class DefaultController extends Controller
         $form
             ->add(
                 'save', 'submit', array(
-                'translation_domain' => 'MWSimpleCrudGeneratorBundle',
+                'translation_domain' => 'MWSimpleAdminCrudBundle',
                 'label'              => 'views.new.save',
                 'attr'               => array('class' => 'btn btn-success col-lg-2')
                 )
             )
             ->add(
                 'saveAndAdd', 'submit', array(
-                'translation_domain' => 'MWSimpleCrudGeneratorBundle',
+                'translation_domain' => 'MWSimpleAdminCrudBundle',
                 'label'              => 'views.new.saveAndAdd',
                 'attr'               => array('class' => 'btn btn-primary col-lg-2 col-lg-offset-1')
                 )
@@ -265,14 +265,14 @@ class DefaultController extends Controller
         $form
             ->add(
                 'save', 'submit', array(
-                'translation_domain' => 'MWSimpleCrudGeneratorBundle',
+                'translation_domain' => 'MWSimpleAdminCrudBundle',
                 'label'              => 'views.new.save',
                 'attr'               => array('class' => 'btn btn-success col-lg-2')
                 )
             )
             ->add(
                 'saveAndAdd', 'submit', array(
-                'translation_domain' => 'MWSimpleCrudGeneratorBundle',
+                'translation_domain' => 'MWSimpleAdminCrudBundle',
                 'label'              => 'views.new.saveAndAdd',
                 'attr'               => array('class' => 'btn btn-primary col-lg-2 col-lg-offset-1')
                 )
@@ -359,13 +359,13 @@ class DefaultController extends Controller
      */
     private function createDeleteForm($config, $id)
     {
-        $mensaje = $this->get('translator')->trans('views.recordactions.confirm', array(), 'MWSimpleCrudGeneratorBundle');
+        $mensaje = $this->get('translator')->trans('views.recordactions.confirm', array(), 'MWSimpleAdminCrudBundle');
         $onclick = 'return confirm("'.$mensaje.'");';
         return $this->createFormBuilder()
             ->setAction($this->generateUrl($config['delete'], array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array(
-                'translation_domain' => 'MWSimpleCrudGeneratorBundle',
+                'translation_domain' => 'MWSimpleAdminCrudBundle',
                 'label'              => 'views.recordactions.delete',
                 'attr'               => array(
                     'class'   => 'btn btn-danger col-lg-11',
