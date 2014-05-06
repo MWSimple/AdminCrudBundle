@@ -20,7 +20,16 @@ class MWSimpleAdminCrudExtension extends Extension
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
-        $config = $this->processConfiguration($configuration, $configs);
+
+        foreach ($configs[0] as $entity => $config) {
+            if (isset($config['fieldsindex']) && isset($config['fieldsshow'])) {
+                $container->setParameter('mwsadmincrud.'.$entity, $config);
+            } else {
+                throw new \InvalidArgumentException('Invalid fieldsindex and fieldsshow specified');
+            }
+        }
+        
+        // $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');

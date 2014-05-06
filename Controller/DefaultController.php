@@ -23,9 +23,10 @@ class DefaultController extends Controller
             $this->get('request')->query->get('page', 1),
             (isset($this->container->parameters['knp_paginator.page_range'])) ? $this->container->parameters['knp_paginator.page_range'] : 10
         );
-
-        // remove the form to return to the view
+        //remove the form to return to the view
         unset($config['filterType']);
+        //agrego los fieldsindex configurados en el yml segun entity.
+        $config['fields'] = $this->container->getParameter('mwsadmincrud.'.$config['entityName'])['fieldsindex'];
 
         return array(
         	'config'     => $config,
@@ -207,6 +208,9 @@ class DefaultController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($config, $id);
+
+        //agrego los fieldsshow configurados en el yml segun entity.
+        $config['fields'] = $this->container->getParameter('mwsadmincrud.'.$config['entityName'])['fieldsshow'];
 
         return array(
             'config'      => $config,
