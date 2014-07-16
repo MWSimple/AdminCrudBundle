@@ -7,7 +7,7 @@ AdminCrudBundle
 
 Add following lines to your `composer.json` file:
 
-### Symfony 2.3.13 + Include Boostrap 3
+### Symfony 2.3.* + Include Boostrap 3
 
 ```json
 "require": {
