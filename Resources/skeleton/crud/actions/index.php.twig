@@ -1,0 +1,35 @@
+
+
+    /**
+{% block phpdoc_method_header %}
+     * Lists all {{ entity }} entities.
+{% endblock phpdoc_method_header %}
+     *
+{% block phpdoc_method_annotations %}
+{% if 'annotation' == format %}
+     * @Route("/", name="{{ route_name_prefix }}")
+     * @Method("GET")
+     * @Template("MWSimpleAdminCrudBundle:Default:index.html.twig")
+{% endif %}
+{% endblock phpdoc_method_annotations %}
+     */
+{% block method_definition %}
+    public function indexAction($config = null)
+{% endblock method_definition %}
+    {
+{% block method_body %}
+        $this->config['filterType'] = new {{ entity_class }}FilterType();
+        $response = parent::indexAction($this->config);
+{% endblock method_body %}
+
+{% block method_return %}
+{% if 'annotation' == format %}
+        return $response;
+{% else %}
+        return $this->render('{{ bundle }}:{{ entity|replace({'\\': '/'}) }}:index.html.twig', array(
+            'entities'   => $pagination,
+            'filterForm' => $filterForm->createView(),
+        ));
+{% endif %}
+{% endblock method_return %}
+    }

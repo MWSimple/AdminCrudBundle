@@ -1,6 +1,19 @@
 AdminCrudBundle
 ===============
 
+Description
+-----
+
+The mwsimple:generate:admincrud generates a very basic controller for a given entity located in a given bundle. This controller extend the default controller implements [paginator], [filter] and allows to perform the [five basic operations] on a model, allows rewriting actions and views.
+
+    Listing all records,
+    Showing one given record identified by its primary key,
+    Creating a new record,
+    Editing an existing record,
+    Deleting an existing record.
+
+* Use only annotation in controller.
+
 ## Installation
 
 ### Using composer
@@ -59,7 +72,7 @@ You can configure `config.yml` default query parameter names and templates
 
 ```yaml
 knp_paginator:
-    page_range: 5                      # default page range used in pagination control
+    page_range: 10                      # default page range used in pagination control
     default_options:
         page_name: page                # page query parameter name
         sort_field_name: sort          # sort field query parameter name
@@ -78,44 +91,21 @@ app/console assets:install
 
 ## Dependencies
 
-This bundle add a paginator using [KnpPaginatorBundle](https://github.com/KnpLabs/KnpPaginatorBundle) and filter using [LexikFormFilterBundle](https://github.com/lexik/LexikFormFilterBundle) .
+This bundle extends [SensioGeneratorBundle](https://github.com/sensio/SensioGeneratorBundle) and add a paginator using [KnpPaginatorBundle](https://github.com/KnpLabs/KnpPaginatorBundle) and filter using [LexikFormFilterBundle](https://github.com/lexik/LexikFormFilterBundle) .
 
 ## Usage
 
 ### Create entity
 
-```cli
-app/console generate:doctrine:entity
-```
-Example test entity:
-see vendor/mwsimple/admin-crud/MWSimple/Bundle/AdminCrudBundle/Entity/Post.dist
+.. code-block:: bash
 
-### Configure entity
+    php app/console generate:doctrine:entity
 
-You can create `file.yml` in Resources/config
-```yaml
-fields.index: #Fields view index
-    a.field: #a (query) . field (name field)
-        name: 'Field' #name display field
-fields.show: #Fields view show
-    a.field:
-        name: 'Field'
-    a.datetime:
-        name: 'Datetime'
-        date: 'Y-m-d H:i:s'
-```
+### Generate ADMIN CRUD Controller
 
-Example yml:
-see vendor/mwsimple/admin-crud/MWSimple/Bundle/AdminCrudBundle/Resources/config/post.dist
+.. code-block:: bash
 
-### Create Controller:
-see vendor/mwsimple/admin-crud/MWSimple/Bundle/AdminCrudBundle/Controller/PostController.dist
-
-### Create Form:
-see vendor/mwsimple/admin-crud/MWSimple/Bundle/AdminCrudBundle/Form/PostType.dist
-see vendor/mwsimple/admin-crud/MWSimple/Bundle/AdminCrudBundle/Form/PostFilterType.dist
-
-...
+    php app/console mwsimple:generate:admincrud
 
 ## Author
 

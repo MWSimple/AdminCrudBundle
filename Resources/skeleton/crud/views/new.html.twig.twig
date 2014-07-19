@@ -1,0 +1,32 @@
+{% block extends %}
+{{ "{% extends 'MWSimpleCrudGeneratorBundle::layout.html.twig' %}" }}
+{% endblock extends %}
+
+{% block body %}
+{{ "{% block title %}" }}
+{{ "{{ parent() }} - {{ 'views.new.creation'|trans({'%entity%': '" }}{{ entity }}{{ "'}, 'MWSimpleCrudGeneratorBundle') }}" }}
+{{ "{% endblock %}" }}
+
+{{ "{% block page %}" }}
+    {{ "{% form_theme form 'MWSimpleCrudGeneratorBundle:widget:fields.html.twig' %}" }}
+    <div class="panel panel-default center-block">
+        <div class="panel-heading">
+            <h3 class="panel-title center-block">
+                {{ "{{ 'views.new.creation'|trans({'%entity%': '" }}{{ entity }}{{ "'}, 'MWSimpleCrudGeneratorBundle') }}" }}
+            </h3>
+        </div>
+            
+        <div class="panel-body">
+            {{ '{{ form(form) }}' }}
+        </div>
+    </div>
+
+    {% set hide_edit, hide_delete = true, true %}
+    {% include 'crud/views/others/record_actions.html.twig.twig' %}
+{{ "{% endblock %}" }}
+{% endblock body %}
+    
+{{ "{% block javascript %}"}}
+    {{ "{{ parent() }}" }}
+    <script src="{{ "{{ asset('bundles/mwsimplecrudgenerator/js/widget.js') }}" }}"></script>
+{{ "{% endblock %}" }}

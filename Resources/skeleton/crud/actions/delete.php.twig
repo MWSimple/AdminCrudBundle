@@ -1,0 +1,25 @@
+
+    /**
+{% block phpdoc_method_header %}
+     * Deletes a {{ entity }} entity.
+{% endblock phpdoc_method_header %}
+     *
+{% block phpdoc_method_annotations %}
+{% if 'annotation' == format %}
+     * @Route("/{id}", name="{{ route_name_prefix }}_delete")
+     * @Method("DELETE")
+{% endif %}
+{% endblock phpdoc_method_annotations %}
+     */
+{% block method_definition %}
+    public function deleteAction($id, $config = null)
+{% endblock method_definition %}
+    {
+{% block method_body %}
+        $response = parent::deleteAction($id, $this->config);
+{% endblock method_body %}
+
+{% block method_return %}
+        return $response;
+{% endblock method_return %}
+    }

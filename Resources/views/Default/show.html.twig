@@ -14,7 +14,7 @@
                     <label class="control-label">{{ field.name }}</label>
                     <div class="form-control">
                         <span class="input-xlarge uneditable-input">
-                            {% if field.date is defined %}
+                            {% if field.type in ['datetime', 'datetimetz', 'date', 'time'] %}
                                 {{ attribute(entity, field.name)|date(field.date) }}
                             {% else %}
                                 {{ attribute(entity, field.name) }}

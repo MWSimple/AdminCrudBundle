@@ -1,0 +1,84 @@
+<?php
+
+namespace {{ namespace }}\Form{{ entity_namespace ? '\\' ~ entity_namespace : '' }};
+
+{% block use_statements %}
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormError;
+{% endblock use_statements %}
+
+/**
+{% block phpdoc_class_header %}
+ * {{ form_class }} filtro.
+ * @author Nombre Apellido <name@gmail.com>
+{% endblock phpdoc_class_header %}
+ */
+{% block class_definition %}
+class {{ form_class }} extends AbstractType
+{% endblock class_definition %}
+{
+{% block class_body %}
+    {% if fields_data|length > 0 %}
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+        {%- for data in fields_data if data.fieldName != 'id' %}
+
+            ->add('{{ data.fieldName }}', '{{ data.filterWidget }}',array(
+                'attr'=> array('class'=>'form-control')
+            ))
+                    
+                    
+        {%- endfor %}
+
+        ;
+
+        $listener = function(FormEvent $event)
+        {
+            // Is data empty?
+            foreach ((array)$event->getForm()->getData() as $data) {
+                if ( is_array($data)) {
+                    foreach ($data as $subData) {
+                        if (!empty($subData)) {
+                            return;
+                        }
+                    }
+                } else {
+                    if (!empty($data)) {
+                        return;
+                    }    
+                }
+            }
+            $event->getForm()->addError(new FormError('Filter empty'));
+        };
+        $builder->addEventListener(FormEvents::POST_SUBMIT, $listener);
+    }
+    {% endif %}
+
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => '{{ namespace }}\Entity{{ entity_namespace ? '\\' ~ entity_namespace : '' }}\{{ entity_class }}'
+        ));
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return '{{ form_filter_type_name }}';
+    }
+{% endblock class_body %}
+}

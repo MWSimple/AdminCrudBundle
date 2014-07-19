@@ -1,0 +1,17 @@
+{%- for action in record_actions %}
+
+        
+        {%if action == "edit"%}
+            <a class="glyphicon glyphicon-edit tooltips"  href="{{ "{{ path('" ~ route_name_prefix ~ "_" ~ action ~ "', { 'id': entity.id }) }}" }}" title="" rel="tooltip" data-original-title="{{ "{{ 'views.actions." ~ action ~ "'|trans({}, 'MWSimpleCrudGeneratorBundle') }}" }}">
+
+            </a>
+        {%elseif  action == "show"%}
+            <a class="glyphicon glyphicon-search tooltips"  href="{{ "{{ path('" ~ route_name_prefix ~ "_" ~ action ~ "', { 'id': entity.id }) }}" }}" title="" rel="tooltip" data-original-title="{{ "{{ 'views.actions." ~ action ~ "'|trans({}, 'MWSimpleCrudGeneratorBundle') }}" }}">
+
+            </a>
+        {%endif%}
+        {#<a class="btn btn-xs btn-info" href="{{ "{{ path('" ~ route_name_prefix ~ "_" ~ action ~ "', { 'id': entity.id }) }}" }}">
+        {{ "{{ 'views.actions." ~ action ~ "'|trans({}, 'MWSimpleCrudGeneratorBundle') }}" }}    
+        </a>#}
+
+{%- endfor %}

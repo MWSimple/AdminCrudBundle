@@ -1,0 +1,46 @@
+entityName: '{{ entity }}'
+entity: '{{ namespace }}\Entity\{{ entity }}'
+repository: '{{ bundle }}:{{ entity }}'
+index: '{{ route_name_prefix }}'
+new: '{{ route_name_prefix }}_new'
+edit: '{{ route_name_prefix }}_edit'
+show: '{{ route_name_prefix }}_show'
+create: '{{ route_name_prefix }}_create'
+update: '{{ route_name_prefix }}_update'
+delete: '{{ route_name_prefix }}_delete'
+sessionFilter: '{{ entity_class }}ControllerFilter'
+fieldsindex:
+{%- for field in fields %}
+
+    a.{{ field.fieldName }}:
+        name: '{{ field.fieldName|capitalize }}'
+        type: '{{ field.type }}'
+    {%- if field.type in ['datetime', 'datetimetz'] %}
+
+        date: 'Y-m-d H:i:s'
+    {%- elseif field.type in ['date'] %}
+
+        date: 'Y-m-d'
+    {%- elseif field.type in ['time'] %}
+
+        date: 'H:i:s'
+    {%- endif %}
+{%- endfor %}
+
+fieldsshow:
+{%- for field in fields %}
+
+    a.{{ field.fieldName }}:
+        name: '{{ field.fieldName|capitalize }}'
+        type: '{{ field.type }}'
+    {%- if field.type in ['datetime', 'datetimetz'] %}
+
+        date: 'Y-m-d H:i:s'
+    {%- elseif field.type in ['date'] %}
+
+        date: 'Y-m-d'
+    {%- elseif field.type in ['time'] %}
+
+        date: 'H:i:s'
+    {%- endif %}
+{%- endfor %}
