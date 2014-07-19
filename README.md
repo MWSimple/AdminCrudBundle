@@ -98,13 +98,13 @@ This bundle extends [SensioGeneratorBundle](https://github.com/sensio/SensioGene
 ### Create entity
 
 ```cli
-    php app/console generate:doctrine:entity
+php app/console generate:doctrine:entity
 ```
 
 ### Generate ADMIN CRUD Controller
 
 ```cli
-    php app/console mwsimple:generate:admincrud
+php app/console mwsimple:generate:admincrud
 ```
 
 ## Author
