@@ -97,15 +97,15 @@ This bundle extends [SensioGeneratorBundle](https://github.com/sensio/SensioGene
 
 ### Create entity
 
-.. code-block:: bash
-
+```cli
     php app/console generate:doctrine:entity
+```
 
 ### Generate ADMIN CRUD Controller
 
-.. code-block:: bash
-
+```cli
     php app/console mwsimple:generate:admincrud
+```
 
 ## Author
 
