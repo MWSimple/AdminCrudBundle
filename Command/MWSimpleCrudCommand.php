@@ -4,6 +4,7 @@ namespace MWSimple\Bundle\AdminCrudBundle\Command;
 
 use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCrudCommand;
 use MWSimple\Bundle\AdminCrudBundle\Generator\MWSimpleCrudGenerator;
+use MWSimple\Bundle\AdminCrudBundle\Generator\MWSimpleFormGenerator;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 //Interact
 use Symfony\Component\Console\Input\InputInterface;
@@ -16,6 +17,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class MWSimpleCrudCommand extends GenerateDoctrineCrudCommand
 {
+    private $formGenerator;
+
     protected function configure()
     {
         parent::configure();
@@ -27,6 +30,16 @@ class MWSimpleCrudCommand extends GenerateDoctrineCrudCommand
     protected function createGenerator($bundle = null)
     {
         return new MWSimpleCrudGenerator($this->getContainer()->get('filesystem'));
+    }
+
+    protected function getFormGenerator($bundle = null)
+    {
+        if (null === $this->formGenerator) {
+            $this->formGenerator = new MWSimpleFormGenerator($this->getContainer()->get('filesystem'));
+            $this->formGenerator->setSkeletonDirs($this->getSkeletonDirs($bundle));
+        }
+
+        return $this->formGenerator;
     }
 
     protected function getSkeletonDirs(BundleInterface $bundle = null)

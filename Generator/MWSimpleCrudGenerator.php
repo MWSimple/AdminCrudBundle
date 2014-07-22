@@ -148,6 +148,7 @@ class MWSimpleCrudGenerator extends DoctrineCrudGenerator
             'entity'            => $this->entity,
             'entity_class'      => $entityClass,
             'fields'            => $this->metadata->fieldMappings,
+            'associations'      => $this->metadata->associationMappings,
             'route_name_prefix' => $this->routeNamePrefix,
         ));
     }

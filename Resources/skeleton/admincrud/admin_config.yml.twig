@@ -26,6 +26,27 @@ fieldsindex:
         date: 'H:i:s'
     {%- endif %}
 {%- endfor %}
+{%- for field in associations if field.type not in [4,8] %}
+
+    a.{{ field.fieldName }}:
+        name: '{{ field.fieldName|capitalize }}'
+    {%- if field.type == 1 %}
+
+        type: 'ONE_TO_ONE'
+    {%- elseif field.type == 2 %}
+
+        type: 'MANY_TO_ONE'
+    {%- elseif field.type == 4 %}
+
+        type: 'ONE_TO_MANY'
+    {%- elseif field.type == 8 %}
+
+        type: 'MANY_TO_MANY'
+    {%- else %}
+
+        type: 'entity'
+    {%- endif %}
+{%- endfor %}
 
 fieldsshow:
 {%- for field in fields %}
@@ -42,5 +63,26 @@ fieldsshow:
     {%- elseif field.type in ['time'] %}
 
         date: 'H:i:s'
+    {%- endif %}
+{%- endfor %}
+{%- for field in associations %}
+
+    a.{{ field.fieldName }}:
+        name: '{{ field.fieldName|capitalize }}'
+    {%- if field.type == 1 %}
+
+        type: 'ONE_TO_ONE'
+    {%- elseif field.type == 2 %}
+
+        type: 'MANY_TO_ONE'
+    {%- elseif field.type == 4 %}
+
+        type: 'ONE_TO_MANY'
+    {%- elseif field.type == 8 %}
+
+        type: 'MANY_TO_MANY'
+    {%- else %}
+
+        type: 'entity'
     {%- endif %}
 {%- endfor %}
