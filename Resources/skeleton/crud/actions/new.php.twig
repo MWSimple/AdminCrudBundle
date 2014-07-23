@@ -1,0 +1,34 @@
+
+    /**
+{% block phpdoc_method_header %}
+     * Displays a form to create a new {{ entity }} entity.
+{% endblock phpdoc_method_header %}
+     *
+{% block phpdoc_method_annotations %}
+{% if 'annotation' == format %}
+     * @Route("/new", name="{{ route_name_prefix }}_new")
+     * @Method("GET")
+     * @Template("MWSimpleAdminCrudBundle:Default:new.html.twig")
+{% endif %}
+{% endblock phpdoc_method_annotations %}
+     */
+{% block method_definition %}
+    public function newAction($config = null)
+{% endblock method_definition %}
+    {
+{% block method_body %}
+        $this->config['newType'] = new {{ entity_class }}Type();
+        $response = parent::newAction($this->config);
+{% endblock method_body %}
+
+{% block method_return %}
+{% if 'annotation' == format %}
+        return $response;
+{% else %}
+        return $this->render('{{ bundle }}:{{ entity|replace({'\\': '/'}) }}:new.html.twig', array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+        ));
+{% endif %}
+{% endblock method_return %}
+    }

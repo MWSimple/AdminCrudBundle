@@ -50,7 +50,7 @@
                 <tr>
                     {% for key, field in config.fieldsindex %}
                         <td>
-                        {% if field.date is defined %}
+                        {% if field.type in ['datetime', 'datetimetz', 'date', 'time'] %}
                             {{ attribute(entity, field.name)|date(field.date) }}
                         {% else %}
                             {{ attribute(entity, field.name) }}
