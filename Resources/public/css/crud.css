@@ -21,3 +21,8 @@ form.well ul li {
     color: #FFFFFF;
     background-color: #B94A48;
 }
+
+.nav-pills > li.current > a, .nav-pills > li.current > a:hover, .nav-pills > li.current > a:focus {
+    background-color: #428BCA;
+    color: #FFFFFF;
+}

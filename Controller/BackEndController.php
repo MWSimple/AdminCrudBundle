@@ -20,7 +20,7 @@ class BackEndController extends Controller {
      */
     public function indexAction() {
         return array(
-            'config' => 1,
+            'config' => null,
         );
     }
 
