@@ -15,10 +15,13 @@
         "symfony/symfony": "~2.3",
         "sensio/generator-bundle": "2.3.*",
         "knplabs/knp-paginator-bundle": "2.4.0",
-        "lexik/form-filter-bundle": "v2.0.2"
+        "lexik/form-filter-bundle": "v2.0.2",
+        "knplabs/knp-menu": "2.0.*@dev",
+        "knplabs/knp-menu-bundle": "2.0.*@dev"
+
     },
     "autoload": {
-        "psr-0": { "MWSimple\\Bundle\\AdminCrudBundle": "" }
+        "psr-0": {"MWSimple\\Bundle\\AdminCrudBundle": ""}
     },
     "target-dir": "MWSimple/Bundle/AdminCrudBundle",
     "minimum-stability": "dev",

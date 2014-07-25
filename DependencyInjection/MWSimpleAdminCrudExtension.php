@@ -12,18 +12,18 @@ use Symfony\Component\DependencyInjection\Loader;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class MWSimpleAdminCrudExtension extends Extension
-{
+class MWSimpleAdminCrudExtension extends Extension {
+
     /**
      * {@inheritDoc}
      */
-    public function load(array $configs, ContainerBuilder $container)
-    {
+    public function load(array $configs, ContainerBuilder $container) {
         $configuration = new Configuration();
-        
-        $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $config = $this->processConfiguration($configuration, $configs);
+        $container->setParameter('mw_simple_admin_crud.menu', $config['menu']);
+        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
     }
+
 }
