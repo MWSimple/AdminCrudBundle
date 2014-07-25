@@ -9,26 +9,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * Post controller.
- * @author Gonzalo Alonso <gonkpo@gmail.com>
- *
  * @Route("/admincrud")
  */
-class BackEndController extends Controller
-{
-     
+class BackEndController extends Controller {
+
     /**
-     * Lists all Post entities.
-     *
      * @Route("/", name="mws_admin_crud_menu")
      * @Method("GET")
      * @Template()
      */
-    public function indexAction()
-    {
-       
+    public function indexAction() {
         return array(
-        	'config'     => 1,
+            'config' => 1,
         );
     }
 
