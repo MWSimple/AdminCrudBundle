@@ -41,6 +41,7 @@ Add it to the `AppKernel.php` class:
 // ...
 new MWSimple\Bundle\AdminCrudBundle\MWSimpleAdminCrudBundle(),
 new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+new Knp\Bundle\MenuBundle\KnpMenuBundle(),
 new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
 ```
 
@@ -112,7 +113,7 @@ app/console assets:install
 
 ## Dependencies
 
-This bundle extends [SensioGeneratorBundle](https://github.com/sensio/SensioGeneratorBundle) and add a paginator using [KnpPaginatorBundle](https://github.com/KnpLabs/KnpPaginatorBundle) and filter using [LexikFormFilterBundle](https://github.com/lexik/LexikFormFilterBundle) .
+This bundle extends [SensioGeneratorBundle](https://github.com/sensio/SensioGeneratorBundle) and add a paginator using [KnpPaginatorBundle](https://github.com/KnpLabs/KnpPaginatorBundle) and filter using [LexikFormFilterBundle](https://github.com/lexik/LexikFormFilterBundle) and menu using [KnpMenuBundle](https://github.com/KnpLabs/KnpMenuBundle) .
 
 ## Usage
 
