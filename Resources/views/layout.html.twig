@@ -29,7 +29,9 @@
 <body>
 
 <div class="container">
-    {% block menu %}{% endblock %}
+    {% block menu %}
+        {{ knp_menu_render('MWSimpleAdminCrudBundle:Builder:adminMenu') }}
+    {% endblock %}
 
     {% for type, flashMessages in app.session.flashbag.all() %}
         {% for flashMessage in flashMessages %}
