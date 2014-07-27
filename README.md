@@ -93,6 +93,17 @@ mw_simple_admin_crud:
         child: { name: inicio, url: mws_admin_crud_menu }
 ```
 
+### Configuration routing admin
+
+You can configure `routing.yml` default query parameter names and templates
+
+```yaml
+mw_simple_admin_crud:
+    resource: "@MWSimpleAdminCrudBundle/Controller/"
+    type:     annotation
+    prefix:   /admin
+```
+
 ### Install assets
 
 ```cli
