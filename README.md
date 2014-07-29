@@ -52,6 +52,9 @@ new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
 You can configure `config.yml`
 
 ```yaml
+imports:
+    ...
+    - { resource: "@MWSimpleAdminCrudBundle/Resources/config/services.yml" }
 framework:
     ...
     translator:      { fallback: %locale% } # uncomment line

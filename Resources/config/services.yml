@@ -1,0 +1,9 @@
+services:
+    form.type.filter_text_like:
+        class: MWSimple\Bundle\AdminCrudBundle\Form\Type\TextFilterLikeType
+        tags:
+            - { name: form.type, alias: filter_text_like }
+    lexik_form_filter.doctrine_subscriber_like:
+        class: MWSimple\Bundle\AdminCrudBundle\Form\Listener\FilterSubscriber
+        tags:
+            - { name: kernel.event_subscriber }
