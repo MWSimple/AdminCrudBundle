@@ -8,8 +8,6 @@ views:
         list: %entity%: llista
         actions: Accions
         createnew: Crear %entity%
-        pagprev: '&larr; Anterior'
-        pagnext: 'Següent &rarr;'
         actions: Accions
     actions:
         show: veure %entity%
@@ -40,6 +38,9 @@ flash:
     delete:
         success: Element eliminat satisfactòriament.
         error: Hi ha hagut un error durant l'eliminació de l'element.
+
+Previous: 'Anterior'
+Next: 'Següent'
 
 ROLE_ADMIN: Administrador
 ROLE_USER: Usuari
