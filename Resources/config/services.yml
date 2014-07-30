@@ -1,0 +1,10 @@
+twig:
+    form:
+        resources:
+            - MWSimpleAdminCrudBundle:Form:bootstrap.datepicker.html.twig
+services:
+    form.type.bootstrapdatetime:
+        class: MWSimple\Bundle\AdminCrudBundle\Form\Type\BootstrapDateTimeType
+        tags:
+            - { name: form.type, alias: bootstrapdatetime }
+   

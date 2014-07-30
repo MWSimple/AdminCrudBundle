@@ -1,34 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>{% block title %}{{ 'views.layout.bannersadmin'|trans({}, 'MWSimpleAdminCrudBundle') }}{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title %}{{ 'views.layout.bannersadmin'|trans({}, 'MWSimpleAdminCrudBundle') }}{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
 
-    <!-- Le styles -->
-    <link href="{{ asset('bundles/mwsimpleadmincrud/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('bundles/mwsimpleadmincrud/css/bootstrap-checkbox.css') }}" rel="stylesheet">
-    <style>
-        body {
-            padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-        }
-    </style>
-    <link href="{{ asset('bundles/mwsimpleadmincrud/css/crud.css') }}" rel="stylesheet">
+        <!-- Le styles -->
+        <link href="{{ asset('bundles/mwsimpleadmincrud/css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('bundles/mwsimpleadmincrud/css/bootstrap-checkbox.css') }}" rel="stylesheet">
+        <style>
+            body {
+                padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+            }
+        </style>
+        <link href="{{ asset('bundles/mwsimpleadmincrud/css/crud.css') }}" rel="stylesheet">
+        <script src="{{ asset('bundles/mwsimpleadmincrud/js/jquery.min.js') }}"></script>
+        <script src="{{ asset('bundles/mwsimpleadmincrud/datetime/js/bootstrap-datetimepicker.js') }}"></script>
+        <script src="{{ asset('bundles/mwsimpleadmincrud/datetime/js/locales/bootstrap-datetimepicker.es.js') }}"></script>
     {% block stylesheets %}{% endblock %}
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+        <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
 
-    <!-- Le fav and touch icons -->
-    <link rel="shortcut icon" href="{{ asset('bundles/mwsimpleadmincrud/images/favicon.ico') }}">
-</head>
+        <!-- Le fav and touch icons -->
+        <link rel="shortcut icon" href="{{ asset('bundles/mwsimpleadmincrud/images/favicon.ico') }}">
+    </head>
 
-<body>
+    <body>
 
-<div class="container">
+        <div class="container">
     {% block menu %}
         {{ knp_menu_render('MWSimpleAdminCrudBundle:Builder:adminMenu') }}
     {% endblock %}
@@ -43,13 +46,12 @@
 
     {% block page %}{% endblock %}
 
-</div>
+        </div>
 
-
-<script src="{{ asset('bundles/mwsimpleadmincrud/js/jquery.min.js') }}"></script>
-<script src="{{ asset('bundles/mwsimpleadmincrud/js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('bundles/mwsimpleadmincrud/js/bootstrap-checkbox.js') }}"></script>
+        <script src="{{ asset('bundles/mwsimpleadmincrud/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('bundles/mwsimpleadmincrud/js/bootstrap-checkbox.js') }}"></script>
+        <script src="{{ asset('bundles/mwsimpleadmincrud/js/widget.js') }}"></script>
 
 {% block javascript %}{% endblock %}
-</body>
+    </body>
 </html>
