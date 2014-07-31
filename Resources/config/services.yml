@@ -1,3 +1,8 @@
+twig:
+    form:
+        resources:
+            - MWSimpleAdminCrudBundle:Form:field_file.html.twig
+#Services
 services:
     form.type.filter_text_like:
         class: MWSimple\Bundle\AdminCrudBundle\Form\Type\TextFilterLikeType
@@ -7,3 +12,7 @@ services:
         class: MWSimple\Bundle\AdminCrudBundle\Form\Listener\FilterSubscriber
         tags:
             - { name: kernel.event_subscriber }
+    mws_field_file_type:
+        class: MWSimple\Bundle\AdminCrudBundle\Form\Type\FieldFileType
+        tags:
+            - { name: form.type, alias: mws_field_file }
