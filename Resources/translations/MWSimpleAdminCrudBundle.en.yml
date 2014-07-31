@@ -8,8 +8,6 @@ views:
         list: %entity% list
         actions: Actions
         createnew: Create a new %entity%
-        pagprev: '&larr; Previous'
-        pagnext: 'Next &rarr;'
         actions: Actions
     actions:
         show: show %entity%
@@ -40,6 +38,9 @@ flash:
     delete:
         success: Item has been deleted successfully.
         error: An Error has occurred during item deletion.
+
+Previous: 'Previous'
+Next: 'Next'
 
 ROLE_ADMIN: Administrator
 ROLE_USER: User

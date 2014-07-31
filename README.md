@@ -25,7 +25,9 @@ Add following lines to your `composer.json` file:
 ```json
 "require": {
     ...
-    "mwsimple/admin-crud": "2.3.*@dev"
+    "mwsimple/admin-crud": "2.3.*@dev",
+    "knplabs/knp-menu-bundle": "2.0.*@dev",
+    "knplabs/knp-menu": "dev-master"
 }
 ```
 
@@ -50,6 +52,9 @@ new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
 You can configure `config.yml`
 
 ```yaml
+imports:
+    ...
+    - { resource: "@MWSimpleAdminCrudBundle/Resources/config/services.yml" }
 framework:
     ...
     translator:      { fallback: %locale% } # uncomment line
@@ -80,7 +85,8 @@ knp_paginator:
         sort_direction_name: direction # sort direction query parameter name
         distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
     template:
-        pagination: KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig # bootstrap 3 sliding pagination controls template
+        # pagination: KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig # bootstrap 3 sliding pagination controls template
+        pagination: MWSimpleAdminCrudBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig # bootstrap 3 sliding pagination controls template
         sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link template
 ```
 
