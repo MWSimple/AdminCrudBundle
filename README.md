@@ -135,6 +135,32 @@ php app/console generate:doctrine:entity
 php app/console mwsimple:generate:admincrud
 ```
 
+## Forms
+
+### File upload
+#### Entity
+```php
+...
+use MWSimple\Bundle\AdminCrudBundle\Entity\BaseFile;
+...
+class Demo extends BaseFile {
+    ...
+    public function getUploadDir()
+    {
+        $this->uploadDir = 'uploads/files';
+        return $this->uploadDir;
+    }
+}
+```
+#### Form
+```php
+->add('file', 'mws_field_file', array(
+    'required'  => false,
+    'file_path' => 'webPath',
+    'label'     => 'Image'
+))
+```
+
 ## Author
 
 Gonzalo Alonso - gonkpo@gmail.com

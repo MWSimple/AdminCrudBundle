@@ -3,6 +3,8 @@ twig:
         resources:
             - MWSimpleAdminCrudBundle:Form:bootstrap.datepicker.html.twig
             - MWSimpleAdminCrudBundle:Form:select2_field.html.twig
+            - MWSimpleAdminCrudBundle:Form:field_file.html.twig
+#Services
 services:
     form.type.bootstrapdatetime:
         class: MWSimple\Bundle\AdminCrudBundle\Form\Type\BootstrapDateTimeType
@@ -21,4 +23,7 @@ services:
         arguments: ['@doctrine.orm.entity_manager']
         tags:
             - { name: form.type, alias: select2 }
-
+    mws_field_file_type:
+        class: MWSimple\Bundle\AdminCrudBundle\Form\Type\FieldFileType
+        tags:
+            - { name: form.type, alias: mws_field_file }
