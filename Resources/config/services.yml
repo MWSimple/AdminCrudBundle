@@ -1,9 +1,15 @@
 twig:
     form:
         resources:
+            - MWSimpleAdminCrudBundle:Form:bootstrap.datepicker.html.twig
+            - MWSimpleAdminCrudBundle:Form:select2_field.html.twig
             - MWSimpleAdminCrudBundle:Form:field_file.html.twig
 #Services
 services:
+    form.type.bootstrapdatetime:
+        class: MWSimple\Bundle\AdminCrudBundle\Form\Type\BootstrapDateTimeType
+        tags:
+            - { name: form.type, alias: bootstrapdatetime }
     form.type.filter_text_like:
         class: MWSimple\Bundle\AdminCrudBundle\Form\Type\TextFilterLikeType
         tags:
@@ -12,6 +18,11 @@ services:
         class: MWSimple\Bundle\AdminCrudBundle\Form\Listener\FilterSubscriber
         tags:
             - { name: kernel.event_subscriber }
+    form.type.select2:
+        class: MWSimple\Bundle\AdminCrudBundle\Form\Type\Select2Type
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - { name: form.type, alias: select2 }
     mws_field_file_type:
         class: MWSimple\Bundle\AdminCrudBundle\Form\Type\FieldFileType
         tags:
