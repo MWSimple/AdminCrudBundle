@@ -50,7 +50,7 @@ class MWSimpleFormGenerator extends DoctrineFormGenerator
 
         $parts = explode('\\', $entity);
         array_pop($parts);
-
+        
         $this->renderFile('form/FormType.php.twig', $this->classPath, array(
             'fields'           => $this->getFieldsFromMetadata($metadata),
             'namespace'        => $bundle->getNamespace(),
@@ -71,12 +71,14 @@ class MWSimpleFormGenerator extends DoctrineFormGenerator
      */
     private function getFieldsFromMetadata(ClassMetadataInfo $metadata)
     {
-        $fields = (array) $metadata->fieldNames;
+        $fields = (array) $metadata->fieldMappings;
 
         // Remove the primary key field if it's not managed manually
         if (!$metadata->isIdentifierNatural()) {
             $fields = array_diff($fields, $metadata->identifier);
         }
+        
+        ladybug_dump_die($fields);
         foreach ($metadata->associationMappings as $fieldName => $relation) {
             // if ($relation['type'] !== ClassMetadataInfo::ONE_TO_MANY) {
                 $fields[] = $fieldName;

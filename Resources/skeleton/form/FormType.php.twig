@@ -28,9 +28,13 @@ class {{ form_class }} extends AbstractType
     {
         $builder
         {%- for field in fields %}
-
-            ->add('{{ field }}')
+            {% if field.type in ['datetime', 'datetimetz'] %}
+                ->add('{{ field }}')
+             {% else %} 
+                ->add('{{ field }}')
+              {% endif %} 
         {%- endfor %}
+    
 
         ;
     }
