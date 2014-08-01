@@ -13,11 +13,11 @@
 {% endblock phpdoc_method_annotations %}
      */
 {% block method_definition %}
-    public function showAction($id, $config = null)
+    public function showAction($id)
 {% endblock method_definition %}
     {
 {% block method_body %}
-        $response = parent::showAction($id, $this->config);
+        $response = parent::showAction($id);
 {% endblock method_body %}
 
 {% block method_return %}

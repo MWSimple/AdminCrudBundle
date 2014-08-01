@@ -13,12 +13,12 @@
 {% endblock phpdoc_method_annotations %}
      */
 {% block method_definition %}
-    public function createAction($config = null)
+    public function createAction()
 {% endblock method_definition %}
     {
 {% block method_body %}
         $this->config['newType'] = new {{ entity_class }}Type();
-        $response = parent::createAction($this->config);
+        $response = parent::createAction();
 {% endblock method_body %}
 
 {% block method_return %}

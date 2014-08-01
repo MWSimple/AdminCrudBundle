@@ -14,12 +14,12 @@
 {% endblock phpdoc_method_annotations %}
      */
 {% block method_definition %}
-    public function indexAction($config = null)
+    public function indexAction()
 {% endblock method_definition %}
     {
 {% block method_body %}
         $this->config['filterType'] = new {{ entity_class }}FilterType();
-        $response = parent::indexAction($this->config);
+        $response = parent::indexAction();
 {% endblock method_body %}
 
 {% block method_return %}
