@@ -62,8 +62,9 @@ class EntityToJsonTransformer implements DataTransformerInterface
         $jEntities = json_decode($json, true);
         foreach ($jEntities as $j) {
             $entity = $om
-                          ->getRepository($class)
-                          ->findOneBy(array('id' => $j['id']));
+                ->getRepository($class)
+                ->findOneBy(array('id' => $j['id']))
+            ;
             if (!$entitiesResponse->contains($entity)) {
                 $entitiesResponse->add($entity);
            }

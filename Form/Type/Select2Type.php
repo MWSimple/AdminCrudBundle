@@ -30,17 +30,17 @@ use Doctrine\Common\Persistence\ObjectManager;
  */
 class Select2Type extends AbstractType
 {
-     /**
+    /**
      * @var ObjectManager
-     **/
+     */
      private $om;
 
     /**
-    * @param ObjectManager $om
-    **/
+     * @param ObjectManager $om
+     */
     public function __construct(ObjectManager $om)
     {
-              $this->om = $om;
+        $this->om = $om;
     }
 
     /**
@@ -64,7 +64,6 @@ class Select2Type extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-
         if ($options['placeholder'] != '') {
             $options['configs']['placeholder'] = $options['placeholder'];
         }
