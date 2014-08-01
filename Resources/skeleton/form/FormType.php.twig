@@ -29,9 +29,8 @@ class {{ form_class }} extends AbstractType
         $builder
         {%- for field in fields %}
 
-            ->add('{{ field }}')
+            ->add('{{ field.fieldName }}')
         {%- endfor %}
-
         ;
     }
     {% endif %}

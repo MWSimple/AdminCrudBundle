@@ -50,21 +50,6 @@ class MWSimpleCrudGenerator extends DoctrineCrudGenerator
             throw new \RuntimeException('Unable to generate the controller as it already exists.');
         }
 
-        $associations = array();
-        foreach ($this->metadata->associationMappings as $value) {
-            $parts = explode('\\', $value['targetEntity']);
-            if ($parts[1] == "Bundle") {
-                $repository = $parts[0].$parts[2].":".$parts[4];
-                $actionName = $parts[4];
-            } else {
-                $repository = $parts[0].$parts[1].":".$parts[3];
-                $actionName = $parts[3];
-            }
-            $associations[$value['fieldName']]['repository'] = $repository;
-            $associations[$value['fieldName']]['actionName'] = $actionName;
-            $associations[$value['fieldName']]['type'] = $value['type'];
-        }
-
         $this->renderFile('crud/controller.php.twig', $target, array(
             'actions'           => $this->actions,
             'route_prefix'      => $this->routePrefix,
@@ -75,7 +60,7 @@ class MWSimpleCrudGenerator extends DoctrineCrudGenerator
             'namespace'         => $this->bundle->getNamespace(),
             'entity_namespace'  => $entityNamespace,
             'format'            => $this->format,
-            'associations'      => $associations,
+            'associations'      => $this->getFieldsAssociationFromMetadata($this->metadata),
         ));
     }
 
@@ -203,5 +188,33 @@ class MWSimpleCrudGenerator extends DoctrineCrudGenerator
             'associations'      => $this->metadata->associationMappings,
             'route_name_prefix' => $this->routeNamePrefix,
         ));
+    }
+
+    /**
+     * Returns an array of fields data (name and filter widget to use).
+     * Fields can be both column fields and association fields.
+     *
+     * @param ClassMetadataInfo $metadata
+     * @return array $fields
+     */
+    private function getFieldsAssociationFromMetadata(ClassMetadataInfo $metadata)
+    {
+        $associations = array();
+        foreach ($metadata->associationMappings as $value) {
+            $parts = explode('\\', $value['targetEntity']);
+            if ($parts[1] == "Bundle") {
+                $repository = $parts[0].$parts[2].":".$parts[4];
+                $actionName = $parts[4];
+            } else {
+                $repository = $parts[0].$parts[1].":".$parts[3];
+                $actionName = $parts[3];
+            }
+            $associations[$value['fieldName']]['targetEntity'] = $value['targetEntity'];
+            $associations[$value['fieldName']]['repository'] = $repository;
+            $associations[$value['fieldName']]['actionName'] = $actionName;
+            $associations[$value['fieldName']]['type'] = $value['type'];
+        }
+
+        return $associations;
     }
 }
