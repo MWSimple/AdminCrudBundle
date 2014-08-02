@@ -164,7 +164,7 @@ class Demo extends BaseFile {
 ### Use Select2: If entity relationship generates select autocomplete.
 #### Personalize
 ```php
-public function getAutocompleteNoticia()
+public function getAutocompleteEntity()
 {
     $options = array(
         ...
