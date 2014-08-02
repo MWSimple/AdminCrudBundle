@@ -161,6 +161,19 @@ class Demo extends BaseFile {
 ))
 ```
 
+### Use Select2: If entity relationship generates select autocomplete.
+#### Personalize
+```php
+public function getAutocompleteNoticia()
+{
+    $options = array(
+        ...
+        'field'      => "id", #change by field id to use for the search
+    );
+    ...
+}
+```
+
 ## Author
 
 Gonzalo Alonso - gonkpo@gmail.com
