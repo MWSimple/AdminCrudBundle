@@ -20,7 +20,7 @@ class {{ form_class }} extends AbstractType
 {
 {% block class_body %}
     {% if fields|length > 0 %}
-    /**
+/**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -31,6 +31,28 @@ class {{ form_class }} extends AbstractType
 
             ->add('{{ field.fieldName }}')
         {%- endfor %}
+        {%- for fieldName, field in associations %}
+
+            ->add('{{ fieldName }}', 'select2', array(
+                'class' => '{{ field.targetEntity }}',
+                'url'   => '{{ entity_class }}_autocomplete_{{ fieldName }}',
+                'configs' => array(
+                    {%- if field.type in [1, 2, 3] %}
+
+                    'multiple' => false,//required true or false
+                    {%- else %}
+
+                    'multiple' => true,//required true or false
+                    {%- endif %}
+
+                    'width'    => 'off',
+                ),
+                'attr' => array(
+                    'class' => "col-lg-12 col-md-12 col-sm-12 col-xs-12",
+                )
+            ))
+        {%- endfor %}
+
         ;
     }
     {% endif %}
