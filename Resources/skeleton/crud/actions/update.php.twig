@@ -13,12 +13,12 @@
 {% endblock phpdoc_method_annotations %}
      */
 {% block method_definition %}
-    public function updateAction($id, $config = null)
+    public function updateAction($id)
 {% endblock method_definition %}
     {
 {% block method_body %}
         $this->config['editType'] = new {{ entity_class }}Type();
-        $response = parent::updateAction($id, $this->config);
+        $response = parent::updateAction($id);
 {% endblock method_body %}
 
 {% block method_return %}

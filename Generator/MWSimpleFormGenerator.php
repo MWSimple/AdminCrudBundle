@@ -59,6 +59,7 @@ class MWSimpleFormGenerator extends DoctrineFormGenerator
             'bundle'           => $bundle->getName(),
             'form_class'       => $this->className,
             'form_type_name'   => strtolower(str_replace('\\', '_', $bundle->getNamespace()).($parts ? '_' : '').implode('_', $parts).'_'.substr($this->className, 0, -4)),
+            'associations'     => $this->getFieldsAssociationFromMetadata($metadata),
         ));
     }
 
@@ -75,16 +76,41 @@ class MWSimpleFormGenerator extends DoctrineFormGenerator
 
         // Remove the primary key field if it's not managed manually
         if (!$metadata->isIdentifierNatural()) {
-            $fields = array_diff($fields, $metadata->identifier);
-        }
-        
-        ladybug_dump_die($fields);
-        foreach ($metadata->associationMappings as $fieldName => $relation) {
-            // if ($relation['type'] !== ClassMetadataInfo::ONE_TO_MANY) {
-                $fields[] = $fieldName;
-            // }
+            foreach ($metadata->identifier as $id) {
+                if(array_key_exists($id, $fields)) {
+                    unset($fields[$id]);
+                }
+            }
         }
 
         return $fields;
+    }
+
+    /**
+     * Returns an array of fields data (name and filter widget to use).
+     * Fields can be both column fields and association fields.
+     *
+     * @param  ClassMetadataInfo $metadata
+     * @return array             $fields
+     */
+    private function getFieldsAssociationFromMetadata(ClassMetadataInfo $metadata)
+    {
+        $associations = array();
+        foreach ($metadata->associationMappings as $value) {
+            $parts = explode('\\', $value['targetEntity']);
+            if ($parts[1] == "Bundle") {
+                $repository = $parts[0].$parts[2].":".$parts[4];
+                $actionName = $parts[4];
+            } else {
+                $repository = $parts[0].$parts[1].":".$parts[3];
+                $actionName = $parts[3];
+            }
+            $associations[$value['fieldName']]['targetEntity'] = $value['targetEntity'];
+            $associations[$value['fieldName']]['repository'] = $repository;
+            $associations[$value['fieldName']]['actionName'] = $actionName;
+            $associations[$value['fieldName']]['type'] = $value['type'];
+        }
+
+        return $associations;
     }
 }

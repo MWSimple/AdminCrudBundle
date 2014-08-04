@@ -46,11 +46,10 @@ class EntityToJsonOneTransformer implements DataTransformerInterface
                     );
                 })->toArray();
             } else {
-                $cliente = array(
+                $jsonResponse = array(
                     'id'   => $entities->getId(),
                     'text' => $entities->__toString()
                 );
-                $jsonResponse = $cliente;
             }
         } else {
             $om = $this->om;
@@ -59,11 +58,10 @@ class EntityToJsonOneTransformer implements DataTransformerInterface
                 ->getRepository($class)
                 ->findOneBy(array('id' => $entities))
             ;
-            $cliente = array(
+            $jsonResponse = array(
                 'id'   => $entity->getId(),
                 'text' => $entity->__toString()
             );
-            $jsonResponse = $cliente;
         }
 
         return json_encode($jsonResponse);

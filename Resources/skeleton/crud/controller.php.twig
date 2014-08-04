@@ -41,7 +41,7 @@ class {{ entity_class }}Controller extends Controller
     /**
      * Configuration file.
      */
-    private $config = array(
+    protected $config = array(
         'yml' => '{{ namespace|replace({'\\': '/'}) }}/Resources/config/{{ entity_class }}.yml',
     );
 
@@ -66,5 +66,8 @@ class {{ entity_class }}Controller extends Controller
     {%- if 'delete' in actions %}
         {%- include 'crud/actions/delete.php.twig' %}
     {%- endif %}
+    {%- for nameField, field in associations %}
+        {%- include 'crud/actions/autocomplete.php.twig' %}
+    {%- endfor %}
 {% endblock class_body %}
 }

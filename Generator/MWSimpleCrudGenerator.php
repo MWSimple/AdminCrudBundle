@@ -27,6 +27,43 @@ class MWSimpleCrudGenerator extends DoctrineCrudGenerator
         $this->generateConfAdminCrud($dirFileConf);
     }
 
+    /**
+     * Generates the controller class only.
+     *
+     */
+    protected function generateControllerClass($forceOverwrite)
+    {
+        $dir = $this->bundle->getPath();
+
+        $parts = explode('\\', $this->entity);
+        $entityClass = array_pop($parts);
+        $entityNamespace = implode('\\', $parts);
+
+        $target = sprintf(
+            '%s/Controller/%s/%sController.php',
+            $dir,
+            str_replace('\\', '/', $entityNamespace),
+            $entityClass
+        );
+
+        if (!$forceOverwrite && file_exists($target)) {
+            throw new \RuntimeException('Unable to generate the controller as it already exists.');
+        }
+
+        $this->renderFile('crud/controller.php.twig', $target, array(
+            'actions'           => $this->actions,
+            'route_prefix'      => $this->routePrefix,
+            'route_name_prefix' => $this->routeNamePrefix,
+            'bundle'            => $this->bundle->getName(),
+            'entity'            => $this->entity,
+            'entity_class'      => $entityClass,
+            'namespace'         => $this->bundle->getNamespace(),
+            'entity_namespace'  => $entityNamespace,
+            'format'            => $this->format,
+            'associations'      => $this->getFieldsAssociationFromMetadata($this->metadata),
+        ));
+    }
+
     /** (c) Jordi Llonch <llonch.jordi@gmail.com> */
 
     /**
@@ -88,7 +125,7 @@ class MWSimpleCrudGenerator extends DoctrineCrudGenerator
                 break;
             case 'string':
             case 'text':
-                return 'filter_text';
+                return 'filter_text_like';
                 break;
             case 'time':
                 return 'filter_text';
@@ -151,5 +188,33 @@ class MWSimpleCrudGenerator extends DoctrineCrudGenerator
             'associations'      => $this->metadata->associationMappings,
             'route_name_prefix' => $this->routeNamePrefix,
         ));
+    }
+
+    /**
+     * Returns an array of fields data (name and filter widget to use).
+     * Fields can be both column fields and association fields.
+     *
+     * @param ClassMetadataInfo $metadata
+     * @return array $fields
+     */
+    private function getFieldsAssociationFromMetadata(ClassMetadataInfo $metadata)
+    {
+        $associations = array();
+        foreach ($metadata->associationMappings as $value) {
+            $parts = explode('\\', $value['targetEntity']);
+            if ($parts[1] == "Bundle") {
+                $repository = $parts[0].$parts[2].":".$parts[4];
+                $actionName = $parts[4];
+            } else {
+                $repository = $parts[0].$parts[1].":".$parts[3];
+                $actionName = $parts[3];
+            }
+            $associations[$value['fieldName']]['targetEntity'] = $value['targetEntity'];
+            $associations[$value['fieldName']]['repository'] = $repository;
+            $associations[$value['fieldName']]['actionName'] = $actionName;
+            $associations[$value['fieldName']]['type'] = $value['type'];
+        }
+
+        return $associations;
     }
 }

@@ -1,22 +1,25 @@
 
     /**
 {% block phpdoc_method_header %}
-     * Deletes a {{ entity }} entity.
+     * Autocomplete a {{ entity }} entity.
 {% endblock phpdoc_method_header %}
      *
 {% block phpdoc_method_annotations %}
 {% if 'annotation' == format %}
-     * @Route("/{id}", name="{{ route_name_prefix }}_delete")
-     * @Method("DELETE")
+     * @Route("/autocomplete-forms/get-{{ nameField }}", name="{{ route_name_prefix }}_autocomplete_{{ nameField }}")
 {% endif %}
 {% endblock phpdoc_method_annotations %}
      */
 {% block method_definition %}
-    public function deleteAction($id)
+    public function getAutocomplete{{ field.actionName }}()
 {% endblock method_definition %}
     {
 {% block method_body %}
-        $response = parent::deleteAction($id);
+        $options = array(
+            'repository' => "{{ field.repository }}",
+            'field'      => "id",
+        );
+        $response = parent::getAutocompleteFormsMwsAction($options);
 {% endblock method_body %}
 
 {% block method_return %}

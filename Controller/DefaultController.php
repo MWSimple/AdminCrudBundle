@@ -4,6 +4,7 @@ namespace MWSimple\Bundle\AdminCrudBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * MWSimpleAdminCrudBundle Default controller.
@@ -11,12 +12,17 @@ use Symfony\Component\Yaml\Yaml;
  */
 class DefaultController extends Controller
 {
-	/**
-     * @param array $config
+    /**
+     * Configuration file.
      */
-    public function indexAction($config)
+    protected $config = array();
+
+	/**
+     * Index
+     */
+    public function indexAction()
     {
-        $config = $this->getConfig($config);
+        $config = $this->getConfig();
         list($filterForm, $queryBuilder) = $this->filter($config);
 
         $paginator  = $this->get('knp_paginator');
@@ -109,11 +115,11 @@ class DefaultController extends Controller
     }
 
     /**
-     * @param array $config
+     * Create
      */
-    public function createAction($config)
+    public function createAction()
     {
-        $config = $this->getConfig($config);
+        $config = $this->getConfig();
     	$request = $this->getRequest();
         $entity = new $config['entity']();
         $form   = $this->createCreateForm($config, $entity);
@@ -177,11 +183,11 @@ class DefaultController extends Controller
     }
 
     /**
-     * @param array $config
+     * New
      */
-    public function newAction($config)
+    public function newAction()
     {
-        $config = $this->getConfig($config);
+        $config = $this->getConfig();
         $entity = new $config['entity']();
         $form   = $this->createCreateForm($config, $entity);
 
@@ -196,12 +202,12 @@ class DefaultController extends Controller
     }
 
     /**
+     * Show
      * @param $id
-     * @param array $config
      */
-    public function showAction($id, $config)
+    public function showAction($id)
     {
-        $config = $this->getConfig($config);
+        $config = $this->getConfig();
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository($config['repository'])->find($id);
@@ -220,12 +226,12 @@ class DefaultController extends Controller
     }
 
     /**
+     * Edit
      * @param $id
-     * @param array $config
      */
-    public function editAction($id, $config)
+    public function editAction($id)
     {
-        $config = $this->getConfig($config);
+        $config = $this->getConfig();
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository($config['repository'])->find($id);
@@ -282,12 +288,12 @@ class DefaultController extends Controller
     }
 
     /**
+     * Update
      * @param $id
-     * @param array $config
      */
-    public function updateAction($id, $config)
+    public function updateAction($id)
     {
-        $config = $this->getConfig($config);
+        $config = $this->getConfig();
     	$request = $this->getRequest();
         $em = $this->getDoctrine()->getManager();
 
@@ -325,12 +331,12 @@ class DefaultController extends Controller
     }
 
     /**
+     * Delete
      * @param $id
-     * @param array $config
      */
-    public function deleteAction($id, $config)
+    public function deleteAction($id)
     {
-        $config = $this->getConfig($config);
+        $config = $this->getConfig();
     	$request = $this->getRequest();
         $form = $this->createDeleteForm($config, $id);
         $form->handleRequest($request);
@@ -377,11 +383,46 @@ class DefaultController extends Controller
         ;
     }
 
-    private function getConfig($config){
-        $configs = Yaml::parse(file_get_contents($this->get('kernel')->getRootDir().'/../src/'.$config['yml']));
+    private function getConfig(){
+        $configs = Yaml::parse(file_get_contents($this->get('kernel')->getRootDir().'/../src/'.$this->config['yml']));
         foreach ($configs as $key => $value) {
             $config[$key] = $value;
         }
+        foreach ($this->config as $key => $value) {
+            if ($key != 'yml') {
+                $config[$key] = $value;
+            }
+        }
         return $config;
+    }
+
+    public function getAutocompleteFormsMwsAction($options)
+    {
+        $request = $this->getRequest();
+        $term = $request->query->get('q', null);
+
+        $em = $this->getDoctrine()->getManager();
+
+        $qb = $em->getRepository($options['repository'])->createQueryBuilder('a');
+        $qb
+            ->add('where', "a.".$options['field']." LIKE ?1")
+            ->add('orderBy', "a.".$options['field']." ASC")
+            ->setParameter(1, "%" . $term . "%")
+        ;
+        $entities = $qb->getQuery()->getResult();
+
+        $array = array();
+
+        foreach ($entities as $entity) {
+            $array[] = array(
+                'id'   => $entity->getId(),
+                'text' => $entity->__toString(),
+            );
+        }
+
+        $response = new JsonResponse();
+        $response->setData($array);
+
+        return $response;
     }
 }
