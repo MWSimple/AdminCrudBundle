@@ -1,12 +1,9 @@
 {% block select2_widget %}
-    <style type="text/css">
-        .select2-container {
-            margin-right: -6px;
-        }
-    </style>
-    {{ form_label(form) }}
-    <input id="select2_{{ id }}" type="text" value="" {{ block('widget_attributes') }}>
-    <input type="hidden" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}>
+    <div>
+        {{ form_label(form) }}
+        <input id="select2_{{ id }}" type="text" value="" {{ block('widget_attributes') }}>
+        <input type="hidden" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}>
+    </div>
     <script type="text/javascript">
         (function($) {
             $field = jQuery('#select2_{{ id }}');
