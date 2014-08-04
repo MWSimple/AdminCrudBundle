@@ -17,9 +17,7 @@
 {% endspaceless %}
 {% endblock textarea_widget %}
 
-{% block checkbox_widget %}
-{% spaceless %}
+{% block checkbox_widget -%}
 	{% set attr = attr|merge({'class': (attr.class|default('') ~ ' mws_checkbox')|trim}) %}
     <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
-{% endspaceless %}
-{% endblock checkbox_widget %}
+{%- endblock checkbox_widget %}
