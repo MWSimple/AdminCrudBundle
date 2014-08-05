@@ -1,5 +1,4 @@
 <?php
-
 namespace MWSimple\Bundle\AdminCrudBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
@@ -10,7 +9,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use MWSimple\Bundle\AdminCrudBundle\Form\DataTransformer\BootstrapDateTimeTransformer;
 
 class BootstrapDateTimeType extends AbstractType {
-
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $transformer = new BootstrapDateTimeTransformer($options['widget_type']);
         $builder->addViewTransformer($transformer, true);
