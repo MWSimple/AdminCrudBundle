@@ -50,7 +50,7 @@ class MWSimpleFormGenerator extends DoctrineFormGenerator
 
         $parts = explode('\\', $entity);
         array_pop($parts);
-
+        
         $this->renderFile('form/FormType.php.twig', $this->classPath, array(
             'fields'           => $this->getFieldsFromMetadata($metadata),
             'namespace'        => $bundle->getNamespace(),

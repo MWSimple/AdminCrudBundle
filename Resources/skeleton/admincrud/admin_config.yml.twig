@@ -11,7 +11,7 @@ delete: '{{ route_name_prefix }}_delete'
 sessionFilter: '{{ entity_class }}ControllerFilter'
 fieldsindex:
 {%- for field in fields %}
-
+    
     a.{{ field.fieldName }}:
         name: '{{ field.fieldName|capitalize }}'
         type: '{{ field.type }}'
