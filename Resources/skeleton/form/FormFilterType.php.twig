@@ -32,7 +32,7 @@ class {{ form_class }} extends AbstractType
         $builder
         {%- for data in fields_data if data.fieldName != 'id' %}
 
-            ->add('{{ data.fieldName }}', '{{ data.filterWidget }}',array(
+            ->add('{{ data.fieldName }}', '{{ data.filterWidget }}', array(
                 'attr'=> array('class'=>'form-control')
             ))
                     
