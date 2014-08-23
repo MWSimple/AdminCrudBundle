@@ -91,7 +91,7 @@ class DefaultController extends Controller
      * @param $filterData
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createFilterForm($config, $filterData = null)
+    protected function createFilterForm($config, $filterData = null)
     {
         $form = $this->createForm($config['filterType'], $filterData, array(
             'action' => $this->generateUrl($config['index']),
@@ -155,7 +155,7 @@ class DefaultController extends Controller
     * @param $entity The entity
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createCreateForm($config, $entity)
+    protected function createCreateForm($config, $entity)
     {
         $form = $this->createForm($config['newType'], $entity, array(
             'action' => $this->generateUrl($config['create']),
@@ -260,7 +260,7 @@ class DefaultController extends Controller
     * @param $entity The entity
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm($config, $entity)
+    protected function createEditForm($config, $entity)
     {
         $form = $this->createForm($config['editType'], $entity, array(
             'action' => $this->generateUrl($config['update'], array('id' => $entity->getId())),
@@ -364,7 +364,7 @@ class DefaultController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($config, $id)
+    protected function createDeleteForm($config, $id)
     {
         $mensaje = $this->get('translator')->trans('views.recordactions.confirm', array(), 'MWSimpleAdminCrudBundle');
         $onclick = 'return confirm("'.$mensaje.'");';
@@ -383,7 +383,7 @@ class DefaultController extends Controller
         ;
     }
 
-    private function getConfig(){
+    protected function getConfig(){
         $configs = Yaml::parse(file_get_contents($this->get('kernel')->getRootDir().'/../src/'.$this->config['yml']));
         foreach ($configs as $key => $value) {
             $config[$key] = $value;
