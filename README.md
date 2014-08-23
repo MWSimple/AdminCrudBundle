@@ -26,8 +26,6 @@ Add following lines to your `composer.json` file:
 "require": {
     ...
     "mwsimple/admin-crud": "2.3.*@dev",
-    "knplabs/knp-menu-bundle": "2.0.*@dev",
-    "knplabs/knp-menu": "dev-master"
 }
 ```
 
