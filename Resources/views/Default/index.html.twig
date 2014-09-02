@@ -40,7 +40,7 @@
             <thead>
                 <tr>
                     {% for key, field in config.fieldsindex %}
-                        <th{% if entities.isSorted(key) %} class="sorted"{% endif %}>{{ knp_pagination_sortable(entities, field.name, key) }}</th>
+                        <th{% if entities.isSorted(key) %} class="sorted"{% endif %}>{{ knp_pagination_sortable(entities, field.label, key) }}</th>
                     {% endfor %}
                     <th>{{ 'views.index.actions'|trans({}, 'MWSimpleAdminCrudBundle') }}</th>
                 </tr>
