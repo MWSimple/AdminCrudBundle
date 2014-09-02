@@ -11,7 +11,7 @@
         <fieldset>
             {% for key, field in config.fieldsshow %}
                 <div class="form-group">
-                    <label class="control-label">{{ field.name }}</label>
+                    <label class="control-label">{{ field.label }}</label>
                     <div class="form-control">
                         <span class="input-xlarge uneditable-input">
                             {% if field.type in ['datetime', 'datetimetz', 'date', 'time'] %}
