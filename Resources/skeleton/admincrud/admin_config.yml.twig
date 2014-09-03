@@ -13,6 +13,7 @@ fieldsindex:
 {%- for field in fields %}
     
     a.{{ field.fieldName }}:
+        label: '{{ field.fieldName|capitalize }}'
         name: '{{ field.fieldName|capitalize }}'
         type: '{{ field.type }}'
     {%- if field.type in ['datetime', 'datetimetz'] %}
@@ -29,6 +30,7 @@ fieldsindex:
 {%- for field in associations if field.type not in [4,8] %}
 
     a.{{ field.fieldName }}:
+        label: '{{ field.fieldName|capitalize }}'
         name: '{{ field.fieldName|capitalize }}'
     {%- if field.type == 1 %}
 
@@ -52,6 +54,7 @@ fieldsshow:
 {%- for field in fields %}
 
     a.{{ field.fieldName }}:
+        label: '{{ field.fieldName|capitalize }}'
         name: '{{ field.fieldName|capitalize }}'
         type: '{{ field.type }}'
     {%- if field.type in ['datetime', 'datetimetz'] %}
@@ -68,6 +71,7 @@ fieldsshow:
 {%- for field in associations %}
 
     a.{{ field.fieldName }}:
+        label: '{{ field.fieldName|capitalize }}'
         name: '{{ field.fieldName|capitalize }}'
     {%- if field.type == 1 %}
 
