@@ -129,11 +129,13 @@ class DefaultController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
+            $this->useACL($entity, 'create');
+
             $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
 
             $nextAction = $form->get('saveAndAdd')->isClicked()
-                    ? $this->generateUrl($config['new'])
-                    : $this->generateUrl($config['show'], array('id' => $entity->getId()));
+                ? $this->generateUrl($config['new'])
+                : $this->generateUrl($config['show'], array('id' => $entity->getId()));
             return $this->redirect($nextAction);
 
         }
@@ -215,7 +217,7 @@ class DefaultController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find '.$config['entityName'].' entity.');
         }
-
+        $this->useACL($entity, 'show');
         $deleteForm = $this->createDeleteForm($config, $id);
 
         return array(
@@ -239,7 +241,7 @@ class DefaultController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find '.$config['entityName'].' entity.');
         }
-
+        $this->useACL($entity, 'edit');
         $editForm = $this->createEditForm($config, $entity);
         $deleteForm = $this->createDeleteForm($config, $id);
 
@@ -302,7 +304,7 @@ class DefaultController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find '.$config['entityName'].' entity.');
         }
-
+        $this->useACL($entity, 'update');
         $deleteForm = $this->createDeleteForm($config, $id);
         $editForm = $this->createEditForm($config, $entity);
         $editForm->handleRequest($request);
@@ -424,5 +426,43 @@ class DefaultController extends Controller
         $response->setData($array);
 
         return $response;
+    }
+
+    protected function useACL($entity, $action)
+    {
+        $aclConf = $this->container->parameters['mw_simple_admin_crud.acl'];
+
+        if ($aclConf['use']) {
+            if ($this->isInstanceOf($entity, $aclConf['entities'])) {
+                $aclManager = $this->container->get('mws_acl_manager');
+                switch ($action) {
+                    case 'create':
+                        $aclManager->createACL($entity);
+                        break;
+                    case 'show':
+                        $aclManager->controlACL($entity, 'VIEW');
+                        break;
+                    case 'edit':
+                        $aclManager->controlACL($entity, 'EDIT');
+                        break;
+                    case 'update':
+                        $aclManager->controlACL($entity, 'EDIT');
+                        break;
+                    default:
+                        # code...
+                        break;
+                }
+            }
+        }
+    }
+
+    protected function isInstanceOf($object, Array $classnames)
+    {
+        foreach ($classnames as $classname) {
+            if ($object instanceof $classname) {
+                return true;
+            }
+        }
+        return false;
     }
 }

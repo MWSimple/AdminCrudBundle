@@ -22,6 +22,7 @@ class MWSimpleAdminCrudExtension extends Extension {
 
         $config = $this->processConfiguration($configuration, $configs);
         $container->setParameter('mw_simple_admin_crud.menu', $config['menu']);
+        $container->setParameter('mw_simple_admin_crud.acl', $config['acl']);
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
     }
