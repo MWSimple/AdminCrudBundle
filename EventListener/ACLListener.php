@@ -18,14 +18,15 @@ class ACLListener
         $entity = $args->getEntity();
         $entityManager = $args->getEntityManager();
 
-        // si es la entity entra.
-        $control = $this->isInstanceOf($entity, $aclConf['entities']);
-        if ($control) {
-            $aclManager = $this->container->get('mws_acl_manager');
-            //control ACL
-            $aclManager->controlACL($entity, 'DELETE');
-            //elimino ACL
-            $aclManager->deleteACL($entity);
+        $aclConf = $this->container->parameters['mw_simple_admin_crud.acl'];
+        if ($aclConf['use']) {
+            if ($this->isInstanceOf($entity, $aclConf['entities'])) {
+                $aclManager = $this->container->get('mws_acl_manager');
+                //control ACL
+                $aclManager->controlACL($entity, 'DELETE');
+                //elimino ACL
+                $aclManager->deleteACL($entity);
+            }
         }
     }
 
