@@ -50,6 +50,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->arrayNode('acl')
+                    ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('use')->defaultValue(false)->end()
                         ->arrayNode('entities')
