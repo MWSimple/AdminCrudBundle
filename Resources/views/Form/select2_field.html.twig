@@ -29,7 +29,7 @@
                     callback(obj);
                 };
             }
-            $configs.formatResult = function (data) {
+            $configs.formatResult = function (data) {                  
                 return "<div class='select2-user-result'>" + data.text + "</div>";
             };
             $configs.dropdownCssClass = "bigdrop";// apply css that makes the dropdown taller
@@ -55,6 +55,10 @@
             {% else %}
                 jQuery('#select2_{{ id }}').on("change", function(e) {
                     jQuery('#{{ id }}').val(JSON.stringify(e.added));
+                    //pregunta si tiene la key metodo existe
+                    {% if configs.metodo is defined %}                       
+                        {{configs.metodo}}(e.added );
+                    {% endif %} 
                 })
             {% endif %}
         })(jQuery);
