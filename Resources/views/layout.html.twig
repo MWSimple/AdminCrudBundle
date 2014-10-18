@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
         <meta charset="utf-8">
         <title>{% block title %}{{ 'views.layout.bannersadmin'|trans({}, 'MWSimpleAdminCrudBundle') }}{% endblock %}</title>
@@ -11,6 +11,7 @@
         <link href="{{ asset('bundles/mwsimpleadmincrud/css/bootstrap.min.css') }}" rel="stylesheet">
         <link href="{{ asset('bundles/mwsimpleadmincrud/css/bootstrap-checkbox.css') }}" rel="stylesheet">
         <link href="{{ asset('bundles/mwsimpleadmincrud/js/bootstrap-fileupload/bootstrap-fileupload.min.css') }}" rel="stylesheet" id="bootstrap-style">
+        <link href="{{ asset('bundles/mwsimpleadmincrud/datetime/css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('bundles/mwsimpleadmincrud/select2/select2.css') }}">
         <style>
             body {
@@ -19,46 +20,38 @@
         </style>
         <link href="{{ asset('bundles/mwsimpleadmincrud/css/crud.css') }}" rel="stylesheet">
         <script src="{{ asset('bundles/mwsimpleadmincrud/js/jquery.min.js') }}"></script>
-        <script src="{{ asset('bundles/mwsimpleadmincrud/datetime/js/bootstrap-datetimepicker.js') }}"></script>
-        <script src="{{ asset('bundles/mwsimpleadmincrud/datetime/js/locales/bootstrap-datetimepicker.es.js') }}"></script>
-        <link href="{{ asset('bundles/mwsimpleadmincrud/datetime/css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
-        <script src="{{ asset('bundles/mwsimpleadmincrud/select2/select2.min.js') }}"></script>
-
-
-    {% block stylesheets %}{% endblock %}
         <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-
+        <script src="{{ asset('bundles/mwsimpleadmincrud/datetime/js/bootstrap-datetimepicker.js') }}"></script>
+        <script src="{{ asset('bundles/mwsimpleadmincrud/datetime/js/locales/bootstrap-datetimepicker.es.js') }}"></script>
+        {% block stylesheets %}{% endblock %}
         <!-- Le fav and touch icons -->
         <link rel="shortcut icon" href="{{ asset('bundles/mwsimpleadmincrud/images/favicon.ico') }}">
     </head>
 
     <body>
-
         <div class="container">
-    {% block menu %}
-        {{ knp_menu_render('MWSimpleAdminCrudBundle:Builder:adminMenu') }}
-    {% endblock %}
+            {% block menu %}
+                {{ knp_menu_render('MWSimpleAdminCrudBundle:Builder:adminMenu') }}
+            {% endblock %}
 
-    {% for type, flashMessages in app.session.flashbag.all() %}
-        {% for flashMessage in flashMessages %}
-            <div class="alert alert-{{ type }}">
-                {{ flashMessage|trans({}, 'MWSimpleAdminCrudBundle') }}
-            </div>
-        {% endfor %}
-    {% endfor %}
+            {% for type, flashMessages in app.session.flashbag.all() %}
+                {% for flashMessage in flashMessages %}
+                    <div class="alert alert-{{ type }}">
+                        {{ flashMessage|trans({}, 'MWSimpleAdminCrudBundle') }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
 
-    {% block page %}{% endblock %}
-
+            {% block page %}{% endblock %}
         </div>
-        <script src="{{ asset('bundles/mwsimpleadmincrud/js/jquery.min.js') }}"></script>
         <script src="{{ asset('bundles/mwsimpleadmincrud/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('bundles/mwsimpleadmincrud/select2/select2.min.js') }}"></script>
         <script src="{{ asset('bundles/mwsimpleadmincrud/js/bootstrap-checkbox.js') }}"></script>
         <script src="{{ asset('bundles/mwsimpleadmincrud/js/widget.js') }}"></script>
         <script src="{{ asset('bundles/mwsimpleadmincrud/js/bootstrap-fileupload/bootstrap-fileupload.min.js') }}"></script>
-
        {% block javascript %}{% endblock %}
     </body>
 </html>
