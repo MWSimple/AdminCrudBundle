@@ -175,7 +175,7 @@ public function getAutocompleteEntity()
 ##ACL
 
 [Documentation](http://symfony.com/doc/2.3/cookbook/security/acl.html)
-
+[implement user recommend FOSUserBundle](https://github.com/FriendsOfSymfony/FOSUserBundle)
 ### Configuration
 
 You can configure `config.yml` default query parameter names and templates
