@@ -11,5 +11,23 @@ function addForm(collection,target) {
     // increase the index with one for the next item
     collection.data('index', index + 1);
     target.append(newForm);
+    //recorro los input del newForm para validarlos
+    collection.find(':input').each(function() {
+        if (this.type !== 'hidden') {
+            var $option = this.name;
+            // Add new field
+            $('form').bootstrapValidator('addField', $option);
+        };
+    });
     return index;
+}
+
+function removeForm(form) {
+    //recorro los input del form para no validarlos
+    form.find(':input').each(function() {
+        var $option = this.name;
+        // Remove field
+        $('form').bootstrapValidator('removeField', $option);
+    });
+    form.remove();
 }

@@ -205,6 +205,23 @@ mw_simple_admin_crud:
             - Acme\DemoBundle\Entity\Post2
 ```
 
+##Is included in the forms: jQuery plugin to validate form fields with Bootstrap 3+
+
+[GitHub](https://github.com/nghuuphuoc/bootstrapvalidator)
+
+##If Embed a Collection of Forms
+
+[Documentation](http://symfony.com/doc/current/cookbook/form/form_collections.html)
+
+###Using methods: addForm() and removeForm(), included in:
+
+```twig
+<script src="{{ asset('bundles/mwsimpleadmincrud/js/addForm.js') }}"></script>
+```
+
+*if not using the validation does not work
+
+
 ## Author
 
 Gonzalo Alonso - gonkpo@gmail.com

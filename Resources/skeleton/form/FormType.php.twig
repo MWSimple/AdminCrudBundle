@@ -34,12 +34,8 @@ class {{ form_class }} extends AbstractType
             ->add('{{ field.fieldName }}', 'bootstrapdatetime', array(
                 'required'   => true,
                 'label'      => '{{ field.fieldName |title}}',
-                'read_only'  => true,
                 'label_attr' => array(
                     'class' => 'col-lg-2 col-md-2 col-sm-2',
-                ),
-                'attr'       => array(
-                    'class' => 'col-lg-4 col-md-4 col-sm-4',
                 ),
                 'widget_type' => 'both',
             ))
@@ -48,12 +44,8 @@ class {{ form_class }} extends AbstractType
             ->add('{{ field.fieldName }}', 'bootstrapdatetime', array(
                 'required'   => true,
                 'label'      => '{{ field.fieldName |title}}',
-                'read_only'  => true,
                 'label_attr' => array(
                     'class' => 'col-lg-2 col-md-2 col-sm-2',
-                ),
-                'attr'       => array(
-                    'class' => 'col-lg-4 col-md-4 col-sm-4',
                 ),
                 'widget_type' => 'date',
             ))
@@ -62,12 +54,8 @@ class {{ form_class }} extends AbstractType
             ->add('{{ field.fieldName }}', 'bootstrapdatetime', array(
                 'required'   => true,
                 'label'      => '{{ field.fieldName|title }}',
-                'read_only'  => true,
                 'label_attr' => array(
                     'class' => 'col-lg-2 col-md-2 col-sm-2',
-                ),
-                'attr'       => array(
-                    'class' => 'col-lg-4 col-md-4 col-sm-4',
                 ),
                 'widget_type' => 'time',
             ))

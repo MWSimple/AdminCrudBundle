@@ -17,6 +17,7 @@ class BootstrapDateTimeType extends AbstractType {
     public function buildView(FormView $view, FormInterface $form, array $options) {
         $view->vars['widget_type'] = $options['widget_type'];
         $view->vars['options'] = $this->createDisplayOptions($options);
+        $view->vars['validator'] = $this->createValidatorOptions($options);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
@@ -94,6 +95,29 @@ class BootstrapDateTimeType extends AbstractType {
         }
 
         return json_encode($displayOptions);
+    }
+
+    private function createValidatorOptions($options = array()) {
+        $validatorOptions = array();
+        switch ($options['widget_type']) {
+            case 'both':
+                $validatorOptions = 'DD/MM/YYYY h:m';
+                break;
+            case 'date':
+                $validatorOptions = 'DD/MM/YYYY';
+                break;
+            case 'month':
+                $validatorOptions = 'MM/YYYY';
+                break;
+            case 'time':
+                $validatorOptions = 'h:m';
+                break;
+            case 'day':
+                $validatorOptions = 'h:m';
+                break;
+        }
+
+        return $validatorOptions;
     }
 
 }

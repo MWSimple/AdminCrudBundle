@@ -7,4 +7,6 @@ $(document).ready(function() {
 	        uncheckedClass: 'glyphicon glyphicon-unchecked'
 	    });
 	}
+	//FORM VALIDATOR
+	$('form').bootstrapValidator();
 });

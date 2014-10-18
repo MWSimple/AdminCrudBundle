@@ -13,11 +13,7 @@
         <link href="{{ asset('bundles/mwsimpleadmincrud/js/bootstrap-fileupload/bootstrap-fileupload.min.css') }}" rel="stylesheet" id="bootstrap-style">
         <link href="{{ asset('bundles/mwsimpleadmincrud/datetime/css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('bundles/mwsimpleadmincrud/select2/select2.css') }}">
-        <style>
-            body {
-                padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-            }
-        </style>
+        <link rel="stylesheet" href="{{ asset('bundles/mwsimpleadmincrud/css/bootstrapValidator.min.css') }}">
         <link href="{{ asset('bundles/mwsimpleadmincrud/css/crud.css') }}" rel="stylesheet">
         <script src="{{ asset('bundles/mwsimpleadmincrud/js/jquery.min.js') }}"></script>
         <script src="{{ asset('bundles/mwsimpleadmincrud/js/bootstrap.min.js') }}"></script>
@@ -50,8 +46,9 @@
             {% block page %}{% endblock %}
         </div>
         <script src="{{ asset('bundles/mwsimpleadmincrud/js/bootstrap-checkbox.js') }}"></script>
-        <script src="{{ asset('bundles/mwsimpleadmincrud/js/widget.js') }}"></script>
         <script src="{{ asset('bundles/mwsimpleadmincrud/js/bootstrap-fileupload/bootstrap-fileupload.min.js') }}"></script>
+        <script src="{{ asset('bundles/mwsimpleadmincrud/js/bootstrapValidator.min.js') }}"></script>
+        <script src="{{ asset('bundles/mwsimpleadmincrud/js/language/es_ES.js') }}"></script>
        {% block javascript %}{% endblock %}
     </body>
 </html>
