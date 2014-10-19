@@ -1,16 +1,14 @@
 {% extends 'MWSimpleAdminCrudBundle::layout.html.twig' %}
 
 {% block title %}
-{{ parent() }} - {{ 'views.new.creation'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
+    {{ parent() }} - {{ 'views.new.creation'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
 {% endblock %}
 
 {% block page %}
     {% form_theme form 'MWSimpleAdminCrudBundle:widget:fields.html.twig' %}
-    <div class="panel panel-default center-block">
+    <div class="panel panel-primary center-block">
         <div class="panel-heading">
-            <h3 class="panel-title center-block">
-                {{ 'views.new.creation'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
-            </h3>
+            <i class="glyphicon glyphicon-plus"></i> {{ 'views.new.creation'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
         </div>
         <div class="panel-body">
             {{ form(form) }}

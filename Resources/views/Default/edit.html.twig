@@ -6,14 +6,9 @@
 
 {% block page %}
     {% form_theme edit_form 'MWSimpleAdminCrudBundle:widget:fields.html.twig' %}
-    <div class="panel panel-default center-block">
+    <div class="panel panel-primary center-block">
         <div class="panel-heading">
-            <h4><i class="glyphicon glyphicon-edit"></i></h4>
-        </div>
-        <div class="panel-body">
-            <h3 class="panel-title center-block">
-                {{ 'views.edit.edit'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
-            </h3>
+            <i class="glyphicon glyphicon-pencil"></i> {{ 'views.edit.edit'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
         </div>
         <div class="panel-body">
             {% block form %}

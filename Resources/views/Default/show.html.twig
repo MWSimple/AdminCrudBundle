@@ -5,43 +5,47 @@
 {% endblock %}
 
 {% block page %}
-<div class="well well-lg">
-    <h1>{{ config.entityName }}</h1>
-    <form class="form-horizontal">
-        <fieldset>
-            {% for key, field in config.fieldsshow %}
-                <div class="form-group">
-                    <label class="control-label">{{ field.label }}</label>
-                    <div class="form-control">
-                        <span class="input-xlarge uneditable-input">
-                            {% if field.type in ['datetime', 'datetimetz', 'date', 'time'] %}
-                                {{ attribute(entity, field.name)|date(field.date) }}
-                            {% elseif field.type in ['ONE_TO_MANY', 'MANY_TO_MANY'] %}
-                                {% set many_entity = attribute(entity, field.name) %}
-                                {% for key, field in many_entity %}
-                                    {{ field }} |
-                                {% endfor %}
-                            {% else %}
-                                {{ attribute(entity, field.name) }}
-                            {% endif %}
-                        </span>
-                    </div>
-                </div>
-            {% endfor %}
-        </fieldset>
-    </form>
-</div>
-<div class="col-lg-9">
-    <div class="float-left col-lg-3">
-        <a class="btn btn-info col-lg-11" href="{{ path(config.index) }}">
-            {{ 'views.recordactions.backtothelist'|trans({}, 'MWSimpleAdminCrudBundle') }}
-        </a>
+    <div class="panel panel-primary center-block">
+        <div class="panel-heading">
+            <i class="glyphicon glyphicon-ok"></i> {{ 'views.show.show'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal">
+                <fieldset>
+                    {% for key, field in config.fieldsshow %}
+                        <div class="form-group">
+                            <label class="control-label">{{ field.label }}</label>
+                            <div class="form-control">
+                                <span class="input-xlarge uneditable-input">
+                                    {% if field.type in ['datetime', 'datetimetz', 'date', 'time'] %}
+                                        {{ attribute(entity, field.name)|date(field.date) }}
+                                    {% elseif field.type in ['ONE_TO_MANY', 'MANY_TO_MANY'] %}
+                                        {% set many_entity = attribute(entity, field.name) %}
+                                        {% for key, field in many_entity %}
+                                            {{ field }} |
+                                        {% endfor %}
+                                    {% else %}
+                                        {{ attribute(entity, field.name) }}
+                                    {% endif %}
+                                </span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </fieldset>
+            </form>
+        </div>
     </div>
-    <div class="float-left col-lg-3">
-        <a class="btn btn-primary col-lg-11" href="{{ path(config.edit, { 'id': entity.id }) }}">
-            {{ 'views.recordactions.edit'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
-        </a>
+    <div class="col-lg-9">
+        <div class="float-left col-lg-3">
+            <a class="btn btn-info col-lg-11" href="{{ path(config.index) }}">
+                {{ 'views.recordactions.backtothelist'|trans({}, 'MWSimpleAdminCrudBundle') }}
+            </a>
+        </div>
+        <div class="float-left col-lg-3">
+            <a class="btn btn-primary col-lg-11" href="{{ path(config.edit, { 'id': entity.id }) }}">
+                {{ 'views.recordactions.edit'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
+            </a>
+        </div>
+        <div class="float-left col-lg-3">{{ form(delete_form) }}</div>
     </div>
-    <div class="float-left col-lg-3">{{ form(delete_form) }}</div>
-</div>
 {% endblock %}
