@@ -9,7 +9,7 @@ class Builder extends ContainerAware {
 
     public function adminMenu(FactoryInterface $factory, array $options) {
 
-        $arrayMenu = $this->container->parameters['mw_simple_admin_crud.menu'];
+        $arrayMenu = $this->container->getParameter('mw_simple_admin_crud.menu');
 
         $menu = $factory->createItem('root');
         $menu->setChildrenAttribute('class', 'nav nav-pills');
