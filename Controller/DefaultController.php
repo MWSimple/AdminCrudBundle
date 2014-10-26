@@ -29,7 +29,7 @@ class DefaultController extends Controller
         $pagination = $paginator->paginate(
             $queryBuilder,
             $this->get('request')->query->get('page', 1),
-            (isset($this->container->parameters['knp_paginator.page_range'])) ? $this->container->parameters['knp_paginator.page_range'] : 10
+            ($this->container->hasParameter('knp_paginator.page_range')) ? $this->container->getParameter('knp_paginator.page_range'):10
         );
         //remove the form to return to the view
         unset($config['filterType']);
