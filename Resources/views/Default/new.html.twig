@@ -6,17 +6,23 @@
 
 {% block page %}
     {% form_theme form 'MWSimpleAdminCrudBundle:widget:fields.html.twig' %}
-    <div class="panel panel-primary center-block">
-        <div class="panel-heading">
-            <i class="glyphicon glyphicon-plus"></i> {{ 'views.new.creation'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
-        </div>
-        <div class="panel-body">
-            {{ form(form) }}
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="panel panel-primary center-block">
+                <div class="panel-heading">
+                    <i class="glyphicon glyphicon-plus"></i> {{ 'views.new.creation'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
+                </div>
+                <div class="panel-body">
+                    {% block form %}
+                        {{ form(form) }}
+                    {% endblock %}
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col-lg-9">
-        <div class="float-left col-lg-3">
-            <a class="btn btn-info col-lg-11" href="{{ path(config.index) }}">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <a class="btn btn-info" href="{{ path(config.index) }}">
                 {{ 'views.recordactions.backtothelist'|trans({}, 'MWSimpleAdminCrudBundle') }}
             </a>
         </div>
