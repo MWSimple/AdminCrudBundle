@@ -160,6 +160,14 @@ class Demo extends BaseFile {
 ```
 
 ### Use Select2: If entity relationship generates select autocomplete.
+#### Entities required method toString()
+```php
+public function __toString()
+{
+    return (string)$this->getId();
+}
+```
+
 #### Personalize
 ```php
 public function getAutocompleteEntity()

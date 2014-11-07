@@ -24,7 +24,12 @@
             {{ id }}_dtp_options['linkField'] = "{{ id }}";
                     // {{ id }}_dtp_options['linkFormat'] = "yyyy-mm-dd hh:ii";
             {{ id }}_dtp_options['pickerPosition'] = "bottom-left";
-            ${{ id }}_dtp.datetimepicker({{ id }}_dtp_options).datetimepicker('show').datetimepicker('hide');
+            ${{ id }}_dtp.datetimepicker({{ id }}_dtp_options)
+                .datetimepicker('show').on('changeDate', function(){
+                    var $option = $(this).find('input').attr('name');
+                    $('form').bootstrapValidator('revalidateField', $option);
+                })
+                .datetimepicker('hide');
                     //$("#{{ id }}_dtpicker").datetimepicker('show');
         })(jQuery);
     </script>
