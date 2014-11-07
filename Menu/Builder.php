@@ -14,7 +14,7 @@ class Builder extends ContainerAware {
         $menu = $factory->createItem('root');
         $menu->setChildrenAttribute('class', 'nav nav-pills');
         foreach ($arrayMenu as $m) {
-            $menu->addChild($m['name'], array('route' => $m['url']));
+            $menu->addChild($m['name'], array('route' => $m['url']), $m['icono']);
         }
 
         return $menu;
