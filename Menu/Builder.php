@@ -15,8 +15,8 @@ class Builder extends ContainerAware {
         $menu->setChildrenAttribute('class', 'nav nav-pills');
         foreach ($arrayMenu as $m) {
             $menu->addChild($m['name'], array('route' => $m['url']));
-            if (!empty($m["icono"])) {
-                $menu[$m['name']]->setAttribute('icon', $m["icono"]);
+            if (!empty($m["icon"])) {
+                $menu[$m['name']]->setAttribute('icon', $m["icon"]);
             }
         }
 

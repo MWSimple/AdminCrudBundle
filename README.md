@@ -96,6 +96,21 @@ You can configure `config.yml` default query parameter names and templates
 mw_simple_admin_crud:
     menu:
         child: { name: inicio, url: mws_admin_crud_menu }
+        //child2: { name: seccion, url: admin_seccion }
+```
+
+Optional icons, configure knp_menu `config.yml` add icon
+
+```yaml
+knp_menu:
+    twig:  # use "twig: false" to disable the Twig extension and the TwigRenderer
+        template: MWSimpleAdminCrudBundle:Menu:knp_menu.html.twig
+    templating: false # if true, enables the helper for PHP templates
+    default_renderer: twig # The renderer to use, list is also available by default
+
+mw_simple_admin_crud:
+    menu:
+        child: { name: inicio, url: mws_admin_crud_menu, icon: glyphicon glyphicon-home }
 ```
 
 ### Configuration routing admin
