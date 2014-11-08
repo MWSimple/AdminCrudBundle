@@ -14,6 +14,11 @@ The mwsimple:generate:admincrud generates a very basic controller for a given en
 
 * Use only annotation in controller.
 
+## Previews
+
+![List](https://raw.githubusercontent.com/MWSimple/AdminCrudBundle/master/preview_list.png "Screenshot")
+![New](https://raw.githubusercontent.com/MWSimple/AdminCrudBundle/master/preview_new.png "Screenshot")
+
 ## Installation
 
 ### Using composer
