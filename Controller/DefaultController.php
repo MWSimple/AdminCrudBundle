@@ -430,7 +430,8 @@ class DefaultController extends Controller
 
     protected function useACL($entity, $action)
     {
-        $aclConf = $this->container->parameters['mw_simple_admin_crud.acl'];
+        $aclConf = $this->container->hasParameter('mw_simple_admin_crud.acl') ?
+            $this->container->getParameter('mw_simple_admin_crud.acl') : null;
 
         if ($aclConf['use']) {
             if ($this->isInstanceOf($entity, $aclConf['entities'])) {
