@@ -38,6 +38,7 @@ class Configuration implements ConfigurationInterface
                         ->children()
                             ->scalarNode('name')->end()
                             ->scalarNode('url')->end()
+                            ->scalarNode('icono')->end()
                         ->end()
                     ->end()
                 ->end() //menu
