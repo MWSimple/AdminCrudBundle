@@ -96,7 +96,7 @@ You can configure `config.yml` default query parameter names and templates
 mw_simple_admin_crud:
     menu:
         child: { name: inicio, url: mws_admin_crud_menu }
-        //child2: { name: seccion, url: admin_seccion }
+        #child2: { name: seccion, url: admin_seccion }
 ```
 
 Optional icons, configure knp_menu `config.yml` add icon
