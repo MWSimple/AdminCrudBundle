@@ -42,6 +42,22 @@ class DefaultController extends Controller
     }
 
     /**
+     * Create query.
+     * @param string $repository
+     * @return Doctrine\ORM\QueryBuilder $queryBuilder
+     */
+    protected function createQuery($repository)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $queryBuilder = $em->getRepository($repository)
+            ->createQueryBuilder('a')
+            ->orderBy('a.id', 'DESC')
+        ;
+
+        return $queryBuilder;
+    }
+
+    /**
      * Process filter request.
      * @param array $config
      * @return array
@@ -51,11 +67,7 @@ class DefaultController extends Controller
         $request = $this->getRequest();
         $session = $request->getSession();
         $filterForm = $this->createFilterForm($config);
-        $em = $this->getDoctrine()->getManager();
-        $queryBuilder = $em->getRepository($config['repository'])
-            ->createQueryBuilder('a')
-            ->orderBy('a.id', 'DESC')
-        ;
+        $queryBuilder = $this->createQuery($config['repository']);
         // Bind values from the request
         $filterForm->handleRequest($request);
         // Reset filter
