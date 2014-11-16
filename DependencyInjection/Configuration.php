@@ -54,6 +54,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('use')->defaultValue(false)->end()
+                        ->scalarNode('exclude_role')->defaultValue(false)->end()
                         ->arrayNode('entities')
                             ->prototype('scalar')->end()
                         ->end()

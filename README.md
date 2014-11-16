@@ -226,7 +226,8 @@ services:
 mw_simple_admin_crud:
 #...
     acl:
-        use: true
+        use: true #default false
+        exclude_role: ROLE_SUPER_ADMIN #exclude role the control, default false
 #entities use
         entities:
             - Acme\DemoBundle\Entity\Post

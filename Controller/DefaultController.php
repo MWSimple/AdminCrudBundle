@@ -441,13 +441,13 @@ class DefaultController extends Controller
                         $aclManager->createACL($entity);
                         break;
                     case 'show':
-                        $aclManager->controlACL($entity, 'VIEW');
+                        $aclManager->controlACL($entity, 'VIEW', $aclConf['exclude_role']);
                         break;
                     case 'edit':
-                        $aclManager->controlACL($entity, 'EDIT');
+                        $aclManager->controlACL($entity, 'EDIT', $aclConf['exclude_role']);
                         break;
                     case 'update':
-                        $aclManager->controlACL($entity, 'EDIT');
+                        $aclManager->controlACL($entity, 'EDIT', $aclConf['exclude_role']);
                         break;
                     default:
                         # code...

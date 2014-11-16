@@ -42,10 +42,10 @@ class ACLManager
         $aclProvider->deleteAcl($objectIdentity);
     }
 
-    public function controlACL($entity, $permiso) {
+    public function controlACL($entity, $permiso, $exclude_role) {
         $securityContext = $this->container->get('security.context');
-        // check ROLE_ADMIN
-        if (false === $securityContext->isGranted('ROLE_ADMIN')) {
+        // check $exclude_role false or example ROLE_SUPER_ADMIN
+        if (false === $exclude_role || false === $securityContext->isGranted($exclude_role)) {
             // check access
             if (false === $securityContext->isGranted($permiso, $entity)) {
                 throw new AccessDeniedException();
