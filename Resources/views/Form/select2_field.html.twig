@@ -1,5 +1,5 @@
 {% block select2_widget %}
-    <div>
+    <div class="form-group">
         {{ form_label(form) }}
         <input id="select2_{{ id }}" type="text" value="" {{ block('widget_attributes') }}>
         <input type="hidden" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}>
