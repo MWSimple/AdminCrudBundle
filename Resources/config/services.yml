@@ -6,6 +6,12 @@ twig:
             - MWSimpleAdminCrudBundle:Form:field_file.html.twig
 #Services
 services:
+    mws.twig.extension:
+        class: MWSimple\Bundle\AdminCrudBundle\Services\Twig
+        arguments:
+            - '@service_container'
+        tags:
+            - { name: twig.extension }
     form.type.bootstrapdatetime:
         class: MWSimple\Bundle\AdminCrudBundle\Form\Type\BootstrapDateTimeType
         tags:
