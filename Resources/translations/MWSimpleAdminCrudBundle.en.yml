@@ -17,6 +17,8 @@ views:
         edit: Edit
         delete: Delete
         confirm: Delete the item?
+        disableConfirm: Disable the element?
+        disable: Disable
     new:
         creation: Create %entity%
         create: Create
