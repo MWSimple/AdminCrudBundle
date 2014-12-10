@@ -18,6 +18,9 @@ class Builder extends ContainerAware {
             if (!empty($m["icon"])) {
                 $menu[$m['name']]->setAttribute('icon', $m["icon"]);
             }
+            if (!empty($m["id"])) {
+                $menu[$m['name']]->setAttribute('id', $m["id"]);
+            }
         }
 
         return $menu;
