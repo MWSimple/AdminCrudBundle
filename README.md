@@ -175,7 +175,8 @@ class Demo extends BaseFile {
 ->add('file', 'mws_field_file', array(
     'required'  => false,
     'file_path' => 'webPath',
-    'label'     => 'Image'
+    'label'     => 'Image',
+    //'show_path' => true
 ))
 ```
 

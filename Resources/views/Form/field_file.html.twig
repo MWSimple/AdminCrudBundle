@@ -10,7 +10,7 @@
             </div>
             <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;">
             </div>
-            {% if value is not empty %}
+            {% if value is not empty and file_path == true %}
                 <br>/{{ file_url }}
             {% endif %}
             <div>
