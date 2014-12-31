@@ -21,6 +21,7 @@ class FieldFileType extends FileType
         parent::setDefaultOptions($resolver);
         $resolver->setRequired(array('file_path'));
         $resolver->setDefaults(array(
+            'file_type'  => false,
             'compound'   => false,
             'data_class' => 'Symfony\Component\HttpFoundation\File\File',
             'empty_data' => null,
@@ -36,8 +37,8 @@ class FieldFileType extends FileType
         parent::buildView($view, $form, $options);
 
         $view->vars = array_replace($view->vars, array(
-            'type'  => 'file',
-            'value' => '',
+            'type'      => 'file',
+            'value'     => '',
             'show_path' => $options['show_path'],
         ));
         if (array_key_exists('file_path', $options)) {
@@ -45,18 +46,16 @@ class FieldFileType extends FileType
             if (!is_null($parentData)) {
                 $accessor = PropertyAccess::getPropertyAccessor();
                 $imageUrl = $accessor->getValue($parentData, $options['file_path']);
-                $value = $accessor->getValue($parentData, 'filePath');
-                if ($options['dir_tmp'] && is_null($value) && $data != 0) {
-                    $uploadDir = __DIR__ . '/../../../../../../../../web/'.$options['dir_tmp'];
-                    $data->move($uploadDir, $data->getFilename());
-                    $imageUrl = $options['dir_tmp']."/".$data->getFilename();
+                $value    = $accessor->getValue($parentData, 'filePath');
+                if ($options['dir_tmp'] && is_null($value) && count($form->getErrors()) <= 0 && $data != 0) {
+                    $imageUrl = $this->saveFileTemp($data, $options);
                 }
             } else {
                 $imageUrl = null;
-                $value = null;
+                $value    = null;
             }
             $view->vars['file_path'] = $imageUrl;
-            $view->vars['value'] = $value;
+            $view->vars['value']     = $value;
         }
     }
     public function getParent()
@@ -67,6 +66,15 @@ class FieldFileType extends FileType
     public function getName()
     {
         return 'mws_field_file';
+    }
+
+    private function saveFileTemp($data, $options) {
+        $uploadDir = __DIR__ . '/../../../../../../../../web/'.$options['dir_tmp'];
+        $filename = $data->getFilename().'.'.$data->guessExtension();
+        $data->move($uploadDir, $filename);
+        $imageUrl = $options['dir_tmp']."/".$filename;
+
+        return $imageUrl;
     }
 
 }
