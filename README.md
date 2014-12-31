@@ -176,8 +176,7 @@ class Demo extends BaseFile {
     'required'  => false,
     'file_path' => 'webPath',
     'label'     => 'Image',
-    //'show_path' => true,
-    //'dir_tmp' => 'uploads/tmp',
+    //'show_path' => true
 ))
 ```
 

@@ -25,14 +25,11 @@ class FieldFileType extends FileType
             'data_class' => 'Symfony\Component\HttpFoundation\File\File',
             'empty_data' => null,
             'show_path'  => false,
-            'dir_tmp'    => false,
         ));
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $data = $form->getViewData();
-
         parent::buildView($view, $form, $options);
 
         $view->vars = array_replace($view->vars, array(
@@ -45,11 +42,6 @@ class FieldFileType extends FileType
                 $accessor = PropertyAccess::getPropertyAccessor();
                 $imageUrl = $accessor->getValue($parentData, $options['file_path']);
                 $value = $accessor->getValue($parentData, 'filePath');
-                if ($options['dir_tmp'] && is_null($value) && $data != 0) {
-                    $uploadDir = __DIR__ . '/../../../../../../../../web/'.$options['dir_tmp'];
-                    $data->move($uploadDir, $data->getFilename());
-                    $imageUrl = $options['dir_tmp']."/".$data->getFilename();
-                }
             } else {
                 $imageUrl = null;
                 $value = null;
