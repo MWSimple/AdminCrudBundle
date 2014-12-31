@@ -7,7 +7,6 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 
 /**
  * FieldFile class
@@ -20,6 +19,7 @@ class FieldFileType extends FileType
     {
         parent::setDefaultOptions($resolver);
         $resolver->setOptional(array('file_path'));
+        $resolver->setOptional(array('show_path'));
         $resolver->setDefaults(array(
             'compound'   => false,
             'data_class' => 'Symfony\Component\HttpFoundation\File\File',
@@ -38,7 +38,6 @@ class FieldFileType extends FileType
         $view->vars = array_replace($view->vars, array(
             'type'  => 'file',
             'value' => '',
-            'show_path' => $options['show_path'],
         ));
         if (array_key_exists('file_path', $options)) {
             $parentData = $form->getParent()->getData();
@@ -55,12 +54,10 @@ class FieldFileType extends FileType
                 $imageUrl = null;
                 $value = null;
             }
-            $view->vars['file_path'] = $imageUrl;
+            $view->vars['file_url'] = $imageUrl;
             $view->vars['value'] = $value;
-        } else {
-            throw new InvalidOptionsException('Not defined file_path in mws_field_file.');
         }
-        // $view->vars['show_path'] = $options['show_path'];
+        $view->vars['file_path'] = $options['show_path'];
     }
     public function getParent()
     {
