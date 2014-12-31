@@ -19,7 +19,7 @@ class FieldFileType extends FileType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         parent::setDefaultOptions($resolver);
-        $resolver->setRequired(array('file_path'));
+        $resolver->setOptional(array('file_path'));
         $resolver->setDefaults(array(
             'compound'   => false,
             'data_class' => 'Symfony\Component\HttpFoundation\File\File',
@@ -57,7 +57,10 @@ class FieldFileType extends FileType
             }
             $view->vars['file_path'] = $imageUrl;
             $view->vars['value'] = $value;
+        } else {
+            throw new InvalidOptionsException('Not defined file_path in mws_field_file.');
         }
+        // $view->vars['show_path'] = $options['show_path'];
     }
     public function getParent()
     {
