@@ -2,7 +2,7 @@
     <div class="input-group">
         <div class="input-append date form_datetime input-group" data-date="{{ value }}" id="{{ id }}_dtpicker">
             {% set attr = attr|merge({'class': (attr.class|default('') ~ ' form-control')|trim}) %}
-            <input name="{{ id }}_wd" data-bv-field="{{ id }}_wd" {{ block('widget_attributes') }} type="text" value="{{ value }}"{% if required %} required="required"{% endif %} {% if read_only %} readonly {% endif %} >
+            <input name="{{ id }}_wd" data-bv-field="{{ id }}_wd" {% for key, value in attr %}{{ key }}="{{ value }}"{% endfor %} type="text" value="{{ value }}"{% if required %} required="required"{% endif %} {% if read_only %} readonly {% endif %} >
             <span class="input-group-addon">
                 <i class="glyphicon glyphicon-{% if widget_type == 'time' or widget_type == 'day' %}time{% else %}calendar{% endif %}"></i>
             </span>
