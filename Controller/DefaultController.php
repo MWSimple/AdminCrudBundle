@@ -181,14 +181,20 @@ class DefaultController extends Controller
                 'save', 'submit', array(
                 'translation_domain' => 'MWSimpleAdminCrudBundle',
                 'label'              => 'views.new.save',
-                'attr'               => array('class' => 'btn btn-success col-lg-2')
+                'attr'               => array(
+                    'class' => 'form-control btn-success',
+                    'col'   => 'col-lg-2',
+                )
                 )
             )
             ->add(
                 'saveAndAdd', 'submit', array(
                 'translation_domain' => 'MWSimpleAdminCrudBundle',
                 'label'              => 'views.new.saveAndAdd',
-                'attr'               => array('class' => 'btn btn-primary col-lg-2 col-lg-offset-1')
+                'attr'               => array(
+                    'class' => 'form-control btn-primary',
+                    'col'   => 'col-lg-2',
+                )
                 )
             )
         ;
@@ -286,14 +292,20 @@ class DefaultController extends Controller
                 'save', 'submit', array(
                 'translation_domain' => 'MWSimpleAdminCrudBundle',
                 'label'              => 'views.new.save',
-                'attr'               => array('class' => 'btn btn-success col-lg-2')
+                'attr'               => array(
+                    'class' => 'form-control btn-success',
+                    'col'   => 'col-lg-2',
+                )
                 )
             )
             ->add(
                 'saveAndAdd', 'submit', array(
                 'translation_domain' => 'MWSimpleAdminCrudBundle',
                 'label'              => 'views.new.saveAndAdd',
-                'attr'               => array('class' => 'btn btn-primary col-lg-2 col-lg-offset-1')
+                'attr'               => array(
+                    'class' => 'form-control btn-primary',
+                    'col'   => 'col-lg-2',
+                )
                 )
             )
         ;
@@ -389,7 +401,8 @@ class DefaultController extends Controller
                 'translation_domain' => 'MWSimpleAdminCrudBundle',
                 'label'              => 'views.recordactions.delete',
                 'attr'               => array(
-                    'class'   => 'btn btn-danger col-lg-11',
+                    'class'   => 'form-control btn-danger',
+                    'col'     => 'col-lg-2',
                     'onclick' => $onclick,
                 )
             ))

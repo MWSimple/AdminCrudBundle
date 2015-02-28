@@ -155,6 +155,16 @@ php app/console mwsimple:generate:admincrud
 
 ## Forms
 
+### New attr boostrap col
+#### Example field form
+```php
+->add('text', 'text', array(
+    'attr' => array(
+        'col' => 'col-lg-6 col-md-6 col-sm-6',
+    ),
+))
+```
+
 ### File upload
 #### Entity
 ```php
