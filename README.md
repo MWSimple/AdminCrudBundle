@@ -152,6 +152,12 @@ php app/console generate:doctrine:entity
 ```cli
 php app/console mwsimple:generate:admincrud
 ```
+## List
+
+### New block override actions
+```twig
+    {% block actions %}{% endblock %}
+```
 
 ## Forms
 
