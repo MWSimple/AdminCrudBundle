@@ -17,8 +17,8 @@ class Builder extends ContainerAware {
             if ($key != 'setting') {
                 if (!empty($m['url'])) {
                     $menu->addChild($m['name'], array('route' => $m['url']));
-                }else{
-                     $menu->addChild($m['name']);
+                } else {
+                    $menu->addChild($m['name']);
                 }
                 if (!empty($m["icon"])) {
                     $menu[$m['name']]->setAttribute('icon', $m["icon"]);
@@ -37,11 +37,6 @@ class Builder extends ContainerAware {
         }
 
         return $menu;
-    }
-
-    //empty($m['subMenu'])
-    private function createMenu() {
-        
     }
 
 }
