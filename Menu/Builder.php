@@ -12,18 +12,36 @@ class Builder extends ContainerAware {
         $arrayMenu = $this->container->getParameter('mw_simple_admin_crud.menu');
 
         $menu = $factory->createItem('root');
-        $menu->setChildrenAttribute('class', 'nav nav-pills');
-        foreach ($arrayMenu as $m) {
-            $menu->addChild($m['name'], array('route' => $m['url']));
-            if (!empty($m["icon"])) {
-                $menu[$m['name']]->setAttribute('icon', $m["icon"]);
-            }
-            if (!empty($m["id"])) {
-                $menu[$m['name']]->setAttribute('id', $m["id"]);
+        $menu->setChildrenAttribute('class', $arrayMenu['setting']['class']);
+        foreach ($arrayMenu as $key => $m) {
+            if ($key != 'setting') {
+                if (!empty($m['url'])) {
+                    $menu->addChild($m['name'], array('route' => $m['url']));
+                }else{
+                     $menu->addChild($m['name']);
+                }
+                if (!empty($m["icon"])) {
+                    $menu[$m['name']]->setAttribute('icon', $m["icon"]);
+                }
+                if (!empty($m["id"])) {
+                    $menu[$m['name']]->setAttribute('id', $m["id"]);
+                }
+
+                if (!empty($m['subMenu'])) {
+                    foreach ($m['subMenu'] as $subMenu) {
+                        $menu[$m['name']]->setChildrenAttribute('class', 'dropdown-menu');
+                        $menu[$m['name']]->addChild($subMenu['name'], array('route' => $subMenu['url']));
+                    }
+                }
             }
         }
 
         return $menu;
+    }
+
+    //empty($m['subMenu'])
+    private function createMenu() {
+        
     }
 
 }
