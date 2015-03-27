@@ -5,6 +5,9 @@ namespace MWSimple\Bundle\AdminCrudBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Exporter\Source\DoctrineORMQuerySourceIterator;
+use Exporter\Handler;
 
 /**
  * MWSimpleAdminCrudBundle Default controller.
@@ -55,6 +58,48 @@ class DefaultController extends Controller
         ;
 
         return $queryBuilder;
+    }
+
+    /**
+     * Export Csv.
+     */
+    public function exportCsvAction()
+    {
+        $config = $this->getConfig();
+        $queryBuilder = $this->createQuery($config['repository']);
+        $campos = array();
+        foreach ($config['fieldsindex'] as $key => $value) {
+            //if is defined and true
+            if (!empty($value['export']) && $value['export']) {
+                $campos[] = $value['name'];
+            }
+        }
+        $query = $queryBuilder->getQuery();
+        // Pick a format to export to
+        $format = 'csv';
+        // Set Content-Type
+        $content_type = 'text/csv';
+        // Location to Export this to
+        $export_to = 'php://output';
+        // Data to export
+        $exporter_source = new DoctrineORMQuerySourceIterator($query, $campos, "Y-m-d H:i:s");
+        // Get an Instance of the Writer
+        $exporter_writer = '\Exporter\Writer\\' . ucfirst($format) . 'Writer';
+        $exporter_writer = new $exporter_writer($export_to);
+        // Generate response
+        $response = new Response();
+        // Set headers
+        $response->headers->set('Cache-Control', 'must-revalidate, post-check=0, pre-check=0');
+        $response->headers->set('Content-type', $content_type);
+        $response->headers->set('Expires', 0);
+        //$response->headers->set('Content-length', filesize($filename));
+        $response->headers->set('Pragma', 'public');
+        // Send headers before outputting anything
+        $response->sendHeaders();
+        // Export to the format
+        Handler::create($exporter_source, $exporter_writer)->export();
+
+        return $response;
     }
 
     /**

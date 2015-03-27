@@ -1,0 +1,28 @@
+
+    /**
+{% block phpdoc_method_header %}
+     * Autocomplete a {{ entity }} entity.
+{% endblock phpdoc_method_header %}
+     *
+{% block phpdoc_method_annotations %}
+{% if 'annotation' == format %}
+     * @Route("/autocomplete-forms/get-{{ fieldName }}", name="{{ entity_class }}_autocomplete_{{ fieldName }}")
+{% endif %}
+{% endblock phpdoc_method_annotations %}
+     */
+{% block method_definition %}
+    public function getAutocomplete{{ field.actionName }}()
+{% endblock method_definition %}
+    {
+{% block method_body %}
+        $options = array(
+            'repository' => "{{ field.repository }}",
+            'field'      => "id",
+        );
+        $response = parent::getAutocompleteFormsMwsAction($options);
+{% endblock method_body %}
+
+{% block method_return %}
+        return $response;
+{% endblock method_return %}
+    }
