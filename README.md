@@ -100,8 +100,14 @@ You can configure `config.yml` default query parameter names and templates
 ```yaml
 mw_simple_admin_crud:
     menu:
+        setting: { class: nav nav-pills }
         child: { name: inicio, url: mws_admin_crud_menu }
         #child2: { name: seccion, url: admin_seccion }
+        child3:  
+            name: help
+            url: null
+            subMenu:
+                 indice: { name: indice , url: admin_indice }
 ```
 
 Optional icons, configure knp_menu `config.yml` add icon
@@ -116,6 +122,11 @@ knp_menu:
 mw_simple_admin_crud:
     menu:
         child: { name: inicio, url: mws_admin_crud_menu, icon: glyphicon glyphicon-home }
+        child2:  
+            name: help
+            url: null
+            subMenu:
+                 indice: { name: indice , url: admin_indice, icon: glyphicon glyphicon-home }
 ```
 
 ### Configuration routing admin
@@ -152,8 +163,24 @@ php app/console generate:doctrine:entity
 ```cli
 php app/console mwsimple:generate:admincrud
 ```
+## List
+
+### New block override actions
+```twig
+    {% block actions %}{% endblock %}
+```
 
 ## Forms
+
+### New attr boostrap col
+#### Example field form
+```php
+->add('text', 'text', array(
+    'attr' => array(
+        'col' => 'col-lg-6 col-md-6 col-sm-6',
+    ),
+))
+```
 
 ### File upload
 #### Entity
@@ -175,7 +202,8 @@ class Demo extends BaseFile {
 ->add('file', 'mws_field_file', array(
     'required'  => false,
     'file_path' => 'webPath',
-    'label'     => 'Image'
+    'label'     => 'Image',
+    //'show_path' => true
 ))
 ```
 

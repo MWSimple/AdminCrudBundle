@@ -16,7 +16,13 @@
 
 {% block submit_widget -%}
     {% set attr = attr|merge({class: (attr.class|default('') ~ ' btn')|trim}) %}
+    {% if attr.col is defined %}
+        <div class="{{ attr.col }}">
+    {% endif %}
     {{- parent() -}}
+    {% if attr.col is defined %}
+        </div>
+    {% endif %}
 {%- endblock %}
 
 {% block button_widget -%}
@@ -180,7 +186,7 @@
 {# Rows #}
 
 {% block form_row -%}
-    <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+    <div class="form-group {% if attr.col is defined %}{{ attr.col }}{% endif %}{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
         {{ form_label(form) }}
         {{ form_widget(form) }}
         {{ form_errors(form) }}

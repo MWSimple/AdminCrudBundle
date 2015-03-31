@@ -19,24 +19,24 @@ class BaseFile
     /**
      * @Assert\File()
      */
-    private $file;
+    protected $file;
 
     /**
      * @var string
      *
      * @ORM\Column(name="file_path", type="string", length=255, nullable=true)
      */
-    private $filePath;
+    protected $filePath;
 
     /**
      * @var string
      */
-    private $temp;
+    protected $temp;
 
     /**
      * @var string
      */
-    private $uploadDir;
+    protected $uploadDir;
 
     /**
      * Set filePath

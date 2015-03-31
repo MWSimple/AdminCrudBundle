@@ -15,22 +15,36 @@
                     {% for key, field in config.fieldsshow %}
                         <div class="form-group">
                             <label class="control-label">{{ field.label }}</label>
-                            <div class="form-control">
-                                <span class="input-xlarge uneditable-input">
-                                    {% if field.type in ['datetime', 'datetimetz', 'date', 'time'] %}
+                            {% if field.type in ['datetime', 'datetimetz', 'date', 'time'] %}
+                                <div class="form-control">
+                                    <span class="input-xlarge uneditable-input">
                                         {{ attribute(entity, field.name)|date(field.date) }}
-                                    {% elseif field.type in ['boolean'] %}
+                                    </span>
+                                </div>
+                            {% elseif field.type in ['boolean'] %}
+                                <div class="form-control">
+                                    <span class="input-xlarge uneditable-input">
                                         {{ isActive(attribute(entity, field.name)) }}
-                                    {% elseif field.type in ['ONE_TO_MANY', 'MANY_TO_MANY'] %}
-                                        {% set many_entity = attribute(entity, field.name) %}
+                                    </span>
+                                </div>
+                            {% elseif field.type in ['ONE_TO_MANY', 'MANY_TO_MANY'] %}
+                                {% set many_entity = attribute(entity, field.name) %}
+                                <div class="form-control">
+                                    <span class="input-xlarge uneditable-input">
                                         {% for key, field in many_entity %}
                                             {{ field }} |
                                         {% endfor %}
-                                    {% else %}
+                                    </span>
+                                </div>
+                            {% elseif field.type in ['text'] %}
+                                <textarea class="form-control" rows="3">{{ attribute(entity, field.name) }}</textarea>
+                            {% else %}
+                                <div class="form-control">
+                                    <span class="input-xlarge uneditable-input">
                                         {{ attribute(entity, field.name) }}
-                                    {% endif %}
-                                </span>
-                            </div>
+                                    </span>
+                                </div>
+                            {% endif %}
                         </div>
                     {% endfor %}
                 </fieldset>

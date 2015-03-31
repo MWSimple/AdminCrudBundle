@@ -75,8 +75,8 @@ class BootstrapDateTimeType extends AbstractType {
                 break;
             case 'month':
                 $displayOptions['format'] = 'mm/yyyy';
-                $displayOptions['minView'] = 2;
-                $displayOptions['maxView'] = 3;
+                $displayOptions['minView'] = 3;
+                $displayOptions['maxView'] = 4;
                 break;
             case 'time':
                 $displayOptions['format'] = 'hh:ii';

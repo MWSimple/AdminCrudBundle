@@ -1,17 +1,15 @@
 {% block bootstrapdatetime_widget %}
-    <div class="form-group">
-        <div class="input-group">
-            <div class="input-append date form_datetime input-group" data-date="{{ value }}" id="{{ id }}_dtpicker">
-                {% set attr = attr|merge({'class': (attr.class|default('') ~ ' form-control')|trim}) %}
-                <input name="{{ id }}_wd" data-bv-field="{{ id }}_wd" class="{{ attr.class }}" type="text" value="{{ value }}"{% if required %} required="required"{% endif %} {% if read_only %} readonly {% endif %} >
-                <span class="input-group-addon">
-                    <i class="glyphicon glyphicon-{% if widget_type == 'time' or widget_type == 'day' %}time{% else %}calendar{% endif %}"></i>
-                </span>
-                    {#% if not required %}
-                    <span class="add-on"><i class="icon-remove"></i></span>
-                    {% endif %}
-                    <span class="add-on"><i class="icon-th"></i></span>#}
-            </div>
+    <div class="input-group">
+        <div class="input-append date form_datetime input-group" data-date="{{ value }}" id="{{ id }}_dtpicker">
+            {% set attr = attr|merge({'class': (attr.class|default('') ~ ' form-control')|trim}) %}
+            <input name="{{ id }}_wd" data-bv-field="{{ id }}_wd" {% for key, value in attr %}{{ key }}="{{ value }}"{% endfor %} type="text" value="{{ value }}"{% if required %} required="required"{% endif %} {% if read_only %} readonly {% endif %} >
+            <span class="input-group-addon">
+                <i class="glyphicon glyphicon-{% if widget_type == 'time' or widget_type == 'day' %}time{% else %}calendar{% endif %}"></i>
+            </span>
+                {#% if not required %}
+                <span class="add-on"><i class="icon-remove"></i></span>
+                {% endif %}
+                <span class="add-on"><i class="icon-th"></i></span>#}
         </div>
     </div>
     <input type="hidden" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %}/>

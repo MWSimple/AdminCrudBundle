@@ -18,15 +18,15 @@
                     {% endblock %}
                 </div>
             </div>
-            <div class="col-lg-9">
-                <div class="float-left col-lg-3">
-                    <a class="btn btn-info col-lg-11" href="{{ path(config.index) }}">
-                        {{ 'views.recordactions.backtothelist'|trans({}, 'MWSimpleAdminCrudBundle') }}
-                    </a>
-                </div>
-                <div class="float-left col-lg-3">{{ form(delete_form) }}</div>
-            </div>
         </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2">
+            <a class="form-control btn btn-info" href="{{ path(config.index) }}">
+                {{ 'views.recordactions.backtothelist'|trans({}, 'MWSimpleAdminCrudBundle') }}
+            </a>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-2">{{ form(delete_form) }}</div>
     </div>
 {% endblock %}
 

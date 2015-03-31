@@ -19,10 +19,12 @@ class FieldFileType extends FileType
     {
         parent::setDefaultOptions($resolver);
         $resolver->setOptional(array('file_path'));
+        $resolver->setOptional(array('show_path'));
         $resolver->setDefaults(array(
             'compound'   => false,
             'data_class' => 'Symfony\Component\HttpFoundation\File\File',
             'empty_data' => null,
+            'show_path'  => false,
         ));
     }
 
@@ -47,6 +49,7 @@ class FieldFileType extends FileType
             $view->vars['file_url'] = $imageUrl;
             $view->vars['value'] = $value;
         }
+        $view->vars['file_path'] = $options['show_path'];
     }
     public function getParent()
     {
