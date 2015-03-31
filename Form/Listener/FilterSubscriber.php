@@ -3,7 +3,7 @@
 namespace MWSimple\Bundle\AdminCrudBundle\Form\Listener;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Lexik\Bundle\FormFilterBundle\Event\ApplyFilterEvent;
+use Lexik\Bundle\FormFilterBundle\Event\GetFilterConditionEvent;
 use Symfony\Component\HttpFoundation\Request;
 
 class FilterSubscriber implements EventSubscriberInterface
@@ -14,8 +14,6 @@ class FilterSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            //'lexik_form_filter.apply.orm.text'            => array('filterTextLike'),
-            //'lexik_form_filter.apply.dbal.text'           => array('filterTextLike'),
             'lexik_form_filter.apply.orm.filter_text_like'  => array('filterTextLike'),
             'lexik_form_filter.apply.dbal.filter_text_like' => array('filterTextLike'),
             'lexik_form_filter.apply.orm.select2'           => array('filterTextEntity'),
@@ -28,7 +26,7 @@ class FilterSubscriber implements EventSubscriberInterface
      *
      * This method should work whih both ORM and DBAL query builder.
      */
-    public function filterTextLike(ApplyFilterEvent $event)
+    public function filterTextLike(GetFilterConditionEvent $event)
     {
         $qb = $event->getQueryBuilder();
         $expr = $event->getFilterQuery()->getExpressionBuilder();
