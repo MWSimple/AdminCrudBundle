@@ -26,6 +26,7 @@ fieldsindex:
 
         date: 'H:i:s'
     {%- endif %}
+        export: true
 {%- endfor %}
 {%- for field in associations if field.type not in [4,8] %}
 
