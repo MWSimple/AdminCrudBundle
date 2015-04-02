@@ -1,25 +1,21 @@
 
     /**
 {% block phpdoc_method_header %}
-     * Autocomplete a {{ entity }} entity.
+     * Exporter {{ entity }}.
 {% endblock phpdoc_method_header %}
      *
 {% block phpdoc_method_annotations %}
 {% if 'annotation' == format %}
-     * @Route("/autocomplete-forms/get-{{ fieldName }}", name="{{ entity_class }}_autocomplete_{{ fieldName }}")
+     * @Route("/exporter/{extension}", name="{{ route_name_prefix }}_export")
 {% endif %}
 {% endblock phpdoc_method_annotations %}
      */
 {% block method_definition %}
-    public function getAutocomplete{{ field.actionName }}()
+    public function getExporter()
 {% endblock method_definition %}
     {
 {% block method_body %}
-        $options = array(
-            'repository' => "{{ field.repository }}",
-            'field'      => "id",
-        );
-        $response = parent::getAutocompleteFormsMwsAction($options);
+        $response = parent::exportCsvAction();
 {% endblock method_body %}
 
 {% block method_return %}

@@ -66,6 +66,8 @@ class {{ entity_class }}Controller extends Controller
     {%- if 'delete' in actions %}
         {%- include 'crud/actions/delete.php.twig' %}
     {%- endif %}
+
+    {%- include 'crud/actions/exporter.php.twig' %}
     {%- for fieldName, field in associations %}
         {%- include 'crud/actions/autocomplete.php.twig' %}
     {%- endfor %}

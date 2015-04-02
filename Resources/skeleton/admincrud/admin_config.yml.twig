@@ -8,6 +8,7 @@ show: '{{ route_name_prefix }}_show'
 create: '{{ route_name_prefix }}_create'
 update: '{{ route_name_prefix }}_update'
 delete: '{{ route_name_prefix }}_delete'
+export: '{{ route_name_prefix }}_export'
 sessionFilter: '{{ entity_class }}ControllerFilter'
 fieldsindex:
 {%- for field in fields %}
@@ -26,6 +27,7 @@ fieldsindex:
 
         date: 'H:i:s'
     {%- endif %}
+
         export: true
 {%- endfor %}
 {%- for field in associations if field.type not in [4,8] %}
