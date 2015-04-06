@@ -170,6 +170,8 @@ php app/console mwsimple:generate:admincrud
     {% block actions %}{% endblock %}
 ```
 
+### New Export list to csv.
+
 ## Forms
 
 ### New attr boostrap col
