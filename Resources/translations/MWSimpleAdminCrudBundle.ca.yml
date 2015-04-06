@@ -9,6 +9,7 @@ views:
         actions: Accions
         createnew: Crear %entity%
         actions: Accions
+        export: Exportar
     actions:
         show: veure %entity%
         edit: editar %entity%

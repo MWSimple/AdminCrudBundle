@@ -164,7 +164,7 @@ class DefaultController extends Controller
             ->add('reset', 'submit', array(
                 'translation_domain' => 'MWSimpleAdminCrudBundle',
                 'label'              => 'views.index.reset',
-                'attr'               => array('class' => 'btn btn-danger col-lg-1 col-lg-offset-1'),
+                'attr'               => array('class' => 'reset_submit_filters btn btn-danger col-lg-1 col-lg-offset-1'),
             ))
         ;
 
