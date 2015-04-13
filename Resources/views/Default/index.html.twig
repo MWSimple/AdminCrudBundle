@@ -25,7 +25,9 @@
                     {{ 'views.index.export'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }} <span class="caret"></span>
                 </button>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="{{ path(config.export, { 'extension': "csv" }) }}">CSV</a></li>
+                <li><a href="{{ path(config.export, { 'format': "xls" }) }}">EXCEL</a></li>
+                <li><a href="{{ path(config.export, { 'format': "csv" }) }}">CSV</a></li>
+                <li><a href="{{ path(config.export, { 'format': "json" }) }}">JSON</a></li>
               </ul>
             </div>
             <a id="reset_index_filters" class="btn btn-danger">

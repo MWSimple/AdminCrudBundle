@@ -6,16 +6,16 @@
      *
 {% block phpdoc_method_annotations %}
 {% if 'annotation' == format %}
-     * @Route("/exporter/{extension}", name="{{ route_name_prefix }}_export")
+     * @Route("/exporter/{format}", name="{{ route_name_prefix }}_export")
 {% endif %}
 {% endblock phpdoc_method_annotations %}
      */
 {% block method_definition %}
-    public function getExporter()
+    public function getExporter($format)
 {% endblock method_definition %}
     {
 {% block method_body %}
-        $response = parent::exportCsvAction();
+        $response = parent::exportCsvAction($format);
 {% endblock method_body %}
 
 {% block method_return %}
