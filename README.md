@@ -100,14 +100,14 @@ You can configure `config.yml` default query parameter names and templates
 ```yaml
 mw_simple_admin_crud:
     menu:
-        setting: { class: nav nav-pills }
+        setting: { class: nav nav-pills, id: idMenu}
         child: { name: inicio, url: mws_admin_crud_menu }
         #child2: { name: seccion, url: admin_seccion }
-        child3:  
-            name: help
-            url: null
-            subMenu:
-                 indice: { name: indice , url: admin_indice }
+        #child3:  
+        #    name: help
+        #    url: null
+        #    subMenu:
+        #         indice: { name: indice , url: admin_indice }
 ```
 
 Optional icons, configure knp_menu `config.yml` add icon
@@ -122,11 +122,11 @@ knp_menu:
 mw_simple_admin_crud:
     menu:
         child: { name: inicio, url: mws_admin_crud_menu, icon: glyphicon glyphicon-home }
-        child2:  
-            name: help
-            url: null
-            subMenu:
-                 indice: { name: indice , url: admin_indice, icon: glyphicon glyphicon-home }
+        #child2:  
+        #    name: help
+        #    url: null
+        #    subMenu:
+        #         indice: { name: indice , url: admin_indice, icon: glyphicon glyphicon-home }
 ```
 
 ### Configuration routing admin
