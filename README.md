@@ -95,19 +95,8 @@ knp_paginator:
 
 ### Configuration menu example
 
-You can configure `config.yml` default query parameter names and templates
+You can configure `config.yml` default query parameter names and templates option add icon and roles
 
-```yaml
-mw_simple_admin_crud:
-    menu:
-        setting: { class: nav nav-pills }
-        child: { name: inicio, url: mws_admin_crud_menu }
-        #child2: { name: seccion, url: admin_seccion }
-        child3:  
-            name: help
-            url: null
-            subMenu:
-                 indice: { name: indice , url: admin_indice }
 ```
 
 Optional icons, configure knp_menu `config.yml` add icon
@@ -121,12 +110,18 @@ knp_menu:
 
 mw_simple_admin_crud:
     menu:
-        child: { name: inicio, url: mws_admin_crud_menu, icon: glyphicon glyphicon-home }
-        child2:  
-            name: help
-            url: null
-            subMenu:
-                 indice: { name: indice , url: admin_indice, icon: glyphicon glyphicon-home }
+        child: { name: inicio, url: mws_admin_crud_menu }
+        #child: { name: inicio, url: mws_admin_crud_menu, icon: glyphicon glyphicon-home }
+        #child2:  
+        #    name: help
+        #    url: null
+        #    subMenu:
+        #         indice: { name: indice , url: admin_indice, icon: glyphicon glyphicon-home }
+        #child3: 
+        #    name: Usuario
+        #    url: admin_user 
+        #    roles:
+        #        ['ROLE_SUPERADMIN']
 ```
 
 ### Configuration routing admin
