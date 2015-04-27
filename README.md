@@ -97,6 +97,20 @@ knp_paginator:
 
 You can configure `config.yml` default query parameter names and templates option add icon and roles
 
+<<<<<<< HEAD
+=======
+```yaml
+mw_simple_admin_crud:
+    menu:
+        setting: { class: nav nav-pills, id: idMenu}
+        child: { name: inicio, url: mws_admin_crud_menu }
+        #child2: { name: seccion, url: admin_seccion }
+        #child3:  
+        #    name: help
+        #    url: null
+        #    subMenu:
+        #         indice: { name: indice , url: admin_indice }
+>>>>>>> 422dd0131409a8836afec30eddeb37e7141fdebd
 ```
 
 Optional icons, configure knp_menu `config.yml` add icon
@@ -110,18 +124,25 @@ knp_menu:
 
 mw_simple_admin_crud:
     menu:
+<<<<<<< HEAD
         child: { name: inicio, url: mws_admin_crud_menu }
         #child: { name: inicio, url: mws_admin_crud_menu, icon: glyphicon glyphicon-home }
+=======
+        child: { name: inicio, url: mws_admin_crud_menu, icon: glyphicon glyphicon-home }
+>>>>>>> 422dd0131409a8836afec30eddeb37e7141fdebd
         #child2:  
         #    name: help
         #    url: null
         #    subMenu:
         #         indice: { name: indice , url: admin_indice, icon: glyphicon glyphicon-home }
+<<<<<<< HEAD
         #child3: 
         #    name: Usuario
         #    url: admin_user 
         #    roles:
         #        ['ROLE_SUPERADMIN']
+=======
+>>>>>>> 422dd0131409a8836afec30eddeb37e7141fdebd
 ```
 
 ### Configuration routing admin
@@ -164,6 +185,8 @@ php app/console mwsimple:generate:admincrud
 ```twig
     {% block actions %}{% endblock %}
 ```
+
+### New Export list to csv.
 
 ## Forms
 

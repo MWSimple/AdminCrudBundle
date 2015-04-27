@@ -20,6 +20,7 @@ class Builder extends ContainerAware {
 
         $menu = $factory->createItem('root');
         $menu->setChildrenAttribute('class', $arrayMenu['setting']['class']);
+        $menu->setChildrenAttribute('id', $arrayMenu['setting']['id']);
         foreach ($arrayMenu as $key => $m) {
             if ($key != 'setting') {
                 $exist = false;

@@ -63,7 +63,7 @@ class DefaultController extends Controller
     /**
      * Export Csv.
      */
-    public function exportCsvAction()
+    public function exportCsvAction($format)
     {
         $config = $this->getConfig();
         $queryBuilder = $this->createQuery($config['repository']);
@@ -76,9 +76,22 @@ class DefaultController extends Controller
         }
         $query = $queryBuilder->getQuery();
         // Pick a format to export to
-        $format = 'csv';
+        //$format = 'csv';
         // Set Content-Type
-        $content_type = 'text/csv';
+        switch ($format) {
+            case 'xls':
+                $content_type = 'application/vnd.ms-excel';
+                break;
+            case 'json':
+                $content_type = 'application/json';
+                break;
+            case 'csv':
+                $content_type = 'text/csv';
+                break;
+            default:
+                $content_type = 'text/csv';
+                break;
+        }
         // Location to Export this to
         $export_to = 'php://output';
         // Data to export
@@ -164,7 +177,7 @@ class DefaultController extends Controller
             ->add('reset', 'submit', array(
                 'translation_domain' => 'MWSimpleAdminCrudBundle',
                 'label'              => 'views.index.reset',
-                'attr'               => array('class' => 'btn btn-danger col-lg-1 col-lg-offset-1'),
+                'attr'               => array('class' => 'reset_submit_filters btn btn-danger col-lg-1 col-lg-offset-1'),
             ))
         ;
 
