@@ -19,13 +19,17 @@ class Builder extends ContainerAware {
         $arrayMenu = $this->container->getParameter('mw_simple_admin_crud.menu');
 
         $menu = $factory->createItem('root');
-        $menu->setChildrenAttribute('class', $arrayMenu['setting']['class']);
-        $menu->setChildrenAttribute('id', $arrayMenu['setting']['id']);
+        if (!empty($arrayMenu['setting']['id'])) {
+            $menu->setChildrenAttribute('id', $arrayMenu['setting']['id']);
+        }
+        if (!empty($arrayMenu['setting']['class'])) {
+            $menu->setChildrenAttribute('class', $arrayMenu['setting']['class']);
+        }
         foreach ($arrayMenu as $key => $m) {
             if ($key != 'setting') {
                 $exist = false;
                 if (empty($m['roles'])) {
-                    $exist=true;
+                    $exist = true;
                 }
                 foreach ($m['roles'] as $r) {
                     if (in_array($r, $array)) {
