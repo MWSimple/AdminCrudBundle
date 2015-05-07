@@ -9,12 +9,12 @@ class Builder extends ContainerAware {
 
     public function adminMenu(FactoryInterface $factory, array $options) {
 
-        $arrayRoles = $this->container->get('security.context')->getToken()->getRoles();
+        $array = $this->container->get('security.context')->getToken()->getRoles();
 
-        $array = array();
-        foreach ($arrayRoles as $valor) {
-            array_push($array, $valor->getName());
-        }
+        // $array = array();
+        // foreach ($arrayRoles as $valor) {
+        //     array_push($array, $valor->getName());
+        // }
 
         $arrayMenu = $this->container->getParameter('mw_simple_admin_crud.menu');
 
