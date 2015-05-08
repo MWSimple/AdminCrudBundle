@@ -6,7 +6,7 @@
 
 {% block page %}
 <div class="row">
-    <div class="col-lg-2">
+    <div class="col-lg-2 col-md-2 col-sm-6">
         {% if filterForm.vars.errors|length > 0 %}
         <div class="alert alert-block alert-danger fade in form-errors">
             {{ form_errors(filterForm) }}
@@ -14,7 +14,7 @@
         {% endif %}
         &nbsp;
     </div>
-    <div class="col-lg-12">
+    <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="filters-right">
             <a class="btn btn-success" href="{{ path(config.new) }}">
                 {{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
@@ -39,7 +39,7 @@
             </a>
         </div>
     </div>
-    <div class="col-lg-12">
+    <div class="col-lg-12 col-md-12 col-sm-12">
         <div id="filters" class="well collapse">
             <div class="form-group">
             {{ form_start(filterForm) }}
@@ -92,10 +92,10 @@
             </tbody>
         </table>
     </div>
-    <div class="col-lg-4 navigation">
+    <div class="col-lg-12 col-md-12 col-sm-12 navigation">
         {{ knp_pagination_render(entities) }}
     </div>
-        <div class="col-lg-8">
+        <div class="col-lg-8 col-md-8 col-sm-8">
             <a class="btn btn-success likepaginator" href="{{ path(config.new) }}">
                 {{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
             </a>

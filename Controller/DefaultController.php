@@ -251,7 +251,7 @@ class DefaultController extends Controller
                 'label'              => 'views.new.saveAndAdd',
                 'attr'               => array(
                     'class' => 'form-control btn-primary',
-                    'col'   => 'col-lg-2',
+                    'col'   => 'col-lg-3',
                 )
                 )
             )
@@ -362,7 +362,7 @@ class DefaultController extends Controller
                 'label'              => 'views.new.saveAndAdd',
                 'attr'               => array(
                     'class' => 'form-control btn-primary',
-                    'col'   => 'col-lg-2',
+                    'col'   => 'col-lg-3',
                 )
                 )
             )
