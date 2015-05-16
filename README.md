@@ -30,7 +30,7 @@ Add following lines to your `composer.json` file:
 ```json
 "require": {
     ...
-    "mwsimple/admin-crud": "2.3.*@dev",
+    "mwsimple/admin-crud": "2.7.*@dev",
 }
 ```
 
