@@ -180,7 +180,7 @@ class DefaultController extends Controller
                 'attr'               => array('class' => 'reset_submit_filters btn btn-danger col-lg-1 col-lg-offset-1'),
             ))
         ;
-
+        
         return $form;
     }
 
