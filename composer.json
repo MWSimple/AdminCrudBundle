@@ -1,5 +1,5 @@
 {
-    "name": "mwsimple/admin-crud",
+    "name": "mwsimple/admincrudbundle",
     "description": "This bundle admin crud",
     "keywords": ["admin", "crud", "bootstrap"],
     "homepage": "https://github.com/MWSimple/AdminCrudBundle",
@@ -28,7 +28,7 @@
     "minimum-stability": "stable",
     "extra": {
         "branch-alias": {
-            "stable-version27": "2.7.x-dev"
+            "stable-version27": "2.7.0"
         }
     }
 }
