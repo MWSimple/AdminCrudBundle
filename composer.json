@@ -12,23 +12,23 @@
         }
     ],
     "require": {
-        "symfony/symfony": ">2.2.0, <2.7-dev",
-        "sensio/generator-bundle": ">2.2.0, <2.4-dev",
-        "knplabs/knp-paginator-bundle": "2.4.2",
+        "symfony/symfony": ">2.2.0, ~2.7",
+        "sensio/generator-bundle": ">2.2.0, ~2.5",
+        "knplabs/knp-paginator-bundle": "~2.4",
         "lexik/form-filter-bundle": "~3.0",
-        "knplabs/knp-menu": "2.0.*@dev",
-        "knplabs/knp-menu-bundle": "2.0.*@dev",
-        "doctrine/orm": ">=2.2.3,<2.5-dev",
-        "sonata-project/exporter": "~1.3"
+        "knplabs/knp-menu": "~2.0",
+        "knplabs/knp-menu-bundle": "~2.0",
+        "doctrine/orm": ">=2.2.3,~2.5",
+        "sonata-project/exporter": "~1.4"
     },
     "autoload": {
         "psr-0": {"MWSimple\\Bundle\\AdminCrudBundle": ""}
     },
     "target-dir": "MWSimple/Bundle/AdminCrudBundle",
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "extra": {
         "branch-alias": {
-            "dev-version27": "2.7.x-dev"
+            "stable-version27": "2.7.x-dev"
         }
     }
 }
