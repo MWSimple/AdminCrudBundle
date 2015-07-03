@@ -76,15 +76,15 @@ class BootstrapDateTimeTransformer implements DataTransformerInterface
             return $value;
         }
 
-        if (null == $value) {
+        if (is_null($value)) {
             return null;
         }
 
-        if ($this->widgetType == 'date') {
+        if ($this->widgetType === 'date') {
             $value = new \DateTime($value->format('Y-m-d'));
         }
 
-        if ($this->widgetType == 'time' || $this->widgetType == 'day') {
+        if ($this->widgetType === 'time' || $this->widgetType === 'day') {
             $value = new \DateTime('1970-01-01 ' . $value->format('H:i:s'));
         }
 
