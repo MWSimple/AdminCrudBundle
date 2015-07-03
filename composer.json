@@ -28,7 +28,7 @@
     "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
-            "dev-version37": "3.7.x-dev"
+            "dev-version27": "3.0.x-dev"
         }
     }
 }
