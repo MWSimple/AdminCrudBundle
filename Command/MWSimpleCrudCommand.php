@@ -9,6 +9,8 @@ use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 //Interact
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
+use Sensio\Bundle\GeneratorBundle\Command\AutoComplete\EntitiesAutoCompleter;
 
 /**
  * Generates a CRUD for a Doctrine entity.
@@ -62,8 +64,8 @@ class MWSimpleCrudCommand extends GenerateDoctrineCrudCommand
 
     protected function interact(InputInterface $input, OutputInterface $output)
     {
-        $dialog = $this->getDialogHelper();
-        $dialog->writeSection($output, 'Welcome to the ADMIN CRUD generator');
+        $questionHelper = $this->getQuestionHelper();
+        $questionHelper->writeSection($output, 'Welcome to the ADMIN CRUD generator');
 
         // namespace
         $output->writeln(array(
@@ -78,8 +80,18 @@ class MWSimpleCrudCommand extends GenerateDoctrineCrudCommand
             '',
         ));
 
-        $bundleNames = array_keys($this->getContainer()->get('kernel')->getBundles());
-        $entity = $dialog->askAndValidate($output, $dialog->getQuestion('The Entity shortcut name', $input->getOption('entity')), array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateEntityName'), false, $input->getOption('entity'), $bundleNames);
+        if ($input->hasArgument('entity') && $input->getArgument('entity') != '') {
+            $input->setOption('entity', $input->getArgument('entity'));
+        }
+
+        $question = new Question($questionHelper->getQuestion('The Entity shortcut name', $input->getOption('entity')), $input->getOption('entity'));
+        $question->setValidator(array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateEntityName'));
+        
+        $autocompleter = new EntitiesAutoCompleter($this->getContainer()->get('doctrine')->getManager());
+        $autocompleteEntities = $autocompleter->getSuggestions();
+        $question->setAutocompleterValues($autocompleteEntities);
+        $entity = $questionHelper->ask($input, $output, $question);
+
         $input->setOption('entity', $entity);
         list($bundle, $entity) = $this->parseShortcutNotation($entity);
 
@@ -109,7 +121,7 @@ class MWSimpleCrudCommand extends GenerateDoctrineCrudCommand
             'prefix: /prefix/, /prefix/new, ...).',
             '',
         ));
-        $prefix = $dialog->ask($output, $dialog->getQuestion('Routes prefix', '/admin/'.$prefix), '/admin/'.$prefix);
+        $prefix = $questionHelper->ask($input, $output, new Question($questionHelper->getQuestion('Routes prefix', '/'.$prefix), '/'.$prefix));
         $input->setOption('route-prefix', $prefix);
 
         // summary
