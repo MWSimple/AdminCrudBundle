@@ -25,10 +25,10 @@
         "psr-0": {"MWSimple\\Bundle\\AdminCrudBundle": ""}
     },
     "target-dir": "MWSimple/Bundle/AdminCrudBundle",
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
-            "stable-version27": "2.7.0"
+            "stable-version27": "2.7.x-dev"
         }
     }
 }
