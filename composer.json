@@ -1,5 +1,5 @@
 {
-    "name": "mwsimple/admincrudbundle",
+    "name": "mwsimple/admin-crud",
     "description": "This bundle admin crud",
     "keywords": ["admin", "crud", "bootstrap"],
     "homepage": "https://github.com/MWSimple/AdminCrudBundle",
