@@ -16,8 +16,8 @@ The mwsimple:generate:admincrud generates a very basic controller for a given en
 
 ## Previews
 
-![List](https://raw.githubusercontent.com/MWSimple/AdminCrudBundle/master/preview_list.png "List")
-![New](https://raw.githubusercontent.com/MWSimple/AdminCrudBundle/master/preview_new.png "New")
+![List](https://raw.githubusercontent.com/MWSimple/AdminCrudBundle/version27/Resources/doc/preview_list.png "List")
+![New](https://raw.githubusercontent.com/MWSimple/AdminCrudBundle/version27/Resources/doc/preview_new.png "New")
 
 ## Installation
 
