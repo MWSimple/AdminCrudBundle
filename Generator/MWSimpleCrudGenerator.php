@@ -202,8 +202,8 @@ class MWSimpleCrudGenerator extends DoctrineCrudGenerator
         $associations = array();
         foreach ($metadata->associationMappings as $value) {
             $parts = explode('\\', $value['targetEntity']);
-            if (count($parts) === 3) {
-                $repository = $parts[0].$parts[1].":".$parts[2];
+            if (count($parts) === 3) {  
+                $repository = $parts[0].":".$parts[2];
                 $actionName = $parts[2];
             } else {
                 if ($parts[1] == "Bundle") {
