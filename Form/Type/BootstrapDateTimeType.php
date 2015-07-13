@@ -54,7 +54,7 @@ class BootstrapDateTimeType extends AbstractType {
 
     private function createDisplayOptions($options = array()) {
         $displayOptions = array();
-        // $displayOptions['format'] = 'dd/mm/yyyy hh:ii';
+        $displayOptions['linkFormat'] = 'yyyy-mm-dd hh:ii';
         $displayOptions['autoclose'] = $options['autoclose'];
         $displayOptions['startView'] = $options['start_view'];
         $displayOptions['daysOfWeekDisabled'] = $options['days_of_week_disabled'];
