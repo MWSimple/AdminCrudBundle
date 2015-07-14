@@ -140,14 +140,14 @@ class DefaultController extends Controller
                 // Build the query from the given form object
                 $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $queryBuilder);
                 // Save filter to session
-                $filterData = $filterForm->getData();
+                $filterData = $request->get($filterForm->getName());
                 $session->set($config['sessionFilter'], $filterData);
             }
         } else {
             // Get filter from session
             if ($session->has($config['sessionFilter'])) {
                 $filterData = $session->get($config['sessionFilter']);
-                $filterForm = $this->createFilterForm($config, $filterData);
+                $filterForm->submit($filterData);                
                 $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $queryBuilder);
             }
         }
