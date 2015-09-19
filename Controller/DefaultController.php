@@ -432,18 +432,18 @@ class DefaultController extends Controller {
         $mensaje = $this->get('translator')->trans('views.recordactions.confirm', array(), 'MWSimpleAdminCrudBundle');
         $onclick = 'return confirm("' . $mensaje . '");';
         return $this->createFormBuilder()
-                        ->setAction($this->generateUrl($config['delete'], array('id' => $id)))
-                        ->setMethod('DELETE')
-                        ->add('submit', 'submit', array(
-                            'translation_domain' => 'MWSimpleAdminCrudBundle',
-                            'label' => 'views.recordactions.delete',
-                            'attr' => array(
-                                'class' => 'form-control btn-danger',
-                                'col' => 'col-lg-2',
-                                'onclick' => $onclick,
-                            )
-                        ))
-                        ->getForm()
+            ->setAction($this->generateUrl($config['delete'], array('id' => $id)))
+            ->setMethod('DELETE')
+            ->add('submit', 'submit', array(
+                'translation_domain' => 'MWSimpleAdminCrudBundle',
+                'label' => 'views.recordactions.delete',
+                'attr' => array(
+                    'class' => 'form-control btn-danger',
+                    'col' => 'col-lg-2',
+                    'onclick' => $onclick,
+                )
+            ))
+            ->getForm()
         ;
     }
 
@@ -524,26 +524,6 @@ class DefaultController extends Controller {
             }
         }
         return false;
-    }
-
-    protected function getParamterBd() {
-
-        $configs = Yaml::parse(file_get_contents($this->get('kernel')->getRootDir() . '/config/parameters.yml'));
-        foreach ($configs as $key => $value) {
-            $config[$key] = $value;
-        }
-        foreach ($this->config as $key => $value) {
-            if ($key != 'yml') {
-                $config[$key] = $value;
-            }
-        }
-        $sql_details = array(
-            'user' => $configs["parameters"]["database_user"],
-            'pass' => $configs["parameters"]["database_password"],
-            'db' => $configs["parameters"]["database_name"],
-            'host' => $configs["parameters"]["database_host"]
-        );
-        return $sql_details;
     }
 
     public function getTable() {
