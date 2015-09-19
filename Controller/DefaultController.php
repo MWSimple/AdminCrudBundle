@@ -555,17 +555,27 @@ class DefaultController extends Controller {
         $leftJoin = array();
         $tipoArray = array();
         $concat = "";
-        foreach ($config['fieldsindex'] as $key => $columnas) {
-            if ($columnas['type'] == 'MANY_TO_ONE') {
-                foreach ($columnas['campos'] as $key => $campo) {
-                    $concat = $concat . $columnas['alias'] . '.' . $campo;
+        $groupBy = false;
+        foreach ($config['fieldsindex'] as $columnas) {
+            //select
+            if ($columnas['type'] == 'MANY_TO_ONE' || $columnas['type'] == 'ONE_TO_ONE' || $columnas['type'] == 'ONE_TO_MANY') {
+                $columnas['type'] = "string";
+                $concat = implode(",", $columnas['alias'] . '.' . $columnas['campos']);
+                if ($columnas['type'] == 'ONE_TO_MANY') {
+                    $concat = "GROUP_CONCAT(" . $concat . " SEPARATOR ',')";
+                    $groupBy = true;
                 }
                 $select[] = $concat;
+                $leftJoin[] = array(
+                    'alias' => $columnas['alias'],
+                    'join' => $columnas['join']
+                );
             } else {
                 $select[] = $alias . '.' . $columnas['name'];
             }
-            if (isset($columnas['format'])) {
-                $formato = $columnas['format'];
+            //formato
+            if (isset($columnas['date']) || isset($columnas['datetime']) || isset($columnas['datetimetz'])) {
+                $formato = $columnas['date'];
             } else {
                 $formato = "";
             }
@@ -578,10 +588,22 @@ class DefaultController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $qb = $em->createQueryBuilder();
         $qb
-                ->select('a')
+                ->select($select)
                 ->from($config['repository'], 'a')
-                ->leftJoin('a.lugar', 'l')
         ;
+
+        if (count($leftJoin) > 0) {
+            foreach ($leftJoin as $j) {
+                if ($j['join'] == 'INNER') {
+                    $qb->join("a." . $j['alias'], $j['alias']);
+                } else {
+                    $qb->leftJoin("a." . $j['alias'], $j['alias']);
+                }
+            }
+            if ($groupBy) {
+                $qb->groupBy("a.id");
+            }
+        }
 
         $query = $qb
                 ->getQuery()

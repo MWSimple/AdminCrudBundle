@@ -133,7 +133,7 @@
                 "processing": true,
                 "serverSide": true,
                 "ajax": {
-                    "url": "{{path('Evento_pagination')}}",
+                    "url": "{{path({{ config.getTable }})}}",
                 },
                 "aoColumnDefs": [
                     {
