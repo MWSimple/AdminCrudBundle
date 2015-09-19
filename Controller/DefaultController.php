@@ -13,33 +13,30 @@ use Exporter\Handler;
  * MWSimpleAdminCrudBundle Default controller.
  * @author Gonzalo Alonso <gonkpo@gmail.com>
  */
-class DefaultController extends Controller
-{
+class DefaultController extends Controller {
+
     /**
      * Configuration file.
      */
     protected $config = array();
 
-	/**
+    /**
      * Index
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $config = $this->getConfig();
         list($filterForm, $queryBuilder) = $this->filter($config);
 
-        $paginator  = $this->get('knp_paginator');
+        $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-            $queryBuilder,
-            $this->get('request')->query->get('page', 1),
-            ($this->container->hasParameter('knp_paginator.page_range')) ? $this->container->getParameter('knp_paginator.page_range'):10
+                $queryBuilder, $this->get('request')->query->get('page', 1), ($this->container->hasParameter('knp_paginator.page_range')) ? $this->container->getParameter('knp_paginator.page_range') : 10
         );
         //remove the form to return to the view
         unset($config['filterType']);
 
         return array(
-        	'config'     => $config,
-            'entities'   => $pagination,
+            'config' => $config,
+            'entities' => $pagination,
             'filterForm' => $filterForm->createView(),
         );
     }
@@ -49,12 +46,11 @@ class DefaultController extends Controller
      * @param string $repository
      * @return Doctrine\ORM\QueryBuilder $queryBuilder
      */
-    protected function createQuery($repository)
-    {
+    protected function createQuery($repository) {
         $em = $this->getDoctrine()->getManager();
         $queryBuilder = $em->getRepository($repository)
-            ->createQueryBuilder('a')
-            ->orderBy('a.id', 'DESC')
+                ->createQueryBuilder('a')
+                ->orderBy('a.id', 'DESC')
         ;
 
         return $queryBuilder;
@@ -63,8 +59,7 @@ class DefaultController extends Controller
     /**
      * Export Csv.
      */
-    public function exportCsvAction($format)
-    {
+    public function exportCsvAction($format) {
         $config = $this->getConfig();
         $queryBuilder = $this->createQuery($config['repository']);
         $campos = array();
@@ -120,8 +115,7 @@ class DefaultController extends Controller
      * @param array $config
      * @return array
      */
-    protected function filter($config)
-    {
+    protected function filter($config) {
         $request = $this->getRequest();
         $session = $request->getSession();
         $filterForm = $this->createFilterForm($config);
@@ -147,7 +141,7 @@ class DefaultController extends Controller
             // Get filter from session
             if ($session->has($config['sessionFilter'])) {
                 $filterData = $session->get($config['sessionFilter']);
-                $filterForm->submit($filterData);                
+                $filterForm->submit($filterData);
                 $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $queryBuilder);
             }
         }
@@ -161,38 +155,36 @@ class DefaultController extends Controller
      * @param $filterData
      * @return \Symfony\Component\Form\Form The form
      */
-    protected function createFilterForm($config, $filterData = null)
-    {
+    protected function createFilterForm($config, $filterData = null) {
         $form = $this->createForm($config['filterType'], $filterData, array(
             'action' => $this->generateUrl($config['index']),
             'method' => 'GET',
         ));
 
         $form
-            ->add('filter', 'submit', array(
-                'translation_domain' => 'MWSimpleAdminCrudBundle',
-                'label'              => 'views.index.filter',
-                'attr'               => array('class' => 'btn btn-success col-lg-1'),
-            ))
-            ->add('reset', 'submit', array(
-                'translation_domain' => 'MWSimpleAdminCrudBundle',
-                'label'              => 'views.index.reset',
-                'attr'               => array('class' => 'reset_submit_filters btn btn-danger col-lg-1 col-lg-offset-1'),
-            ))
+                ->add('filter', 'submit', array(
+                    'translation_domain' => 'MWSimpleAdminCrudBundle',
+                    'label' => 'views.index.filter',
+                    'attr' => array('class' => 'btn btn-success col-lg-1'),
+                ))
+                ->add('reset', 'submit', array(
+                    'translation_domain' => 'MWSimpleAdminCrudBundle',
+                    'label' => 'views.index.reset',
+                    'attr' => array('class' => 'reset_submit_filters btn btn-danger col-lg-1 col-lg-offset-1'),
+                ))
         ;
-        
+
         return $form;
     }
 
     /**
      * Create
      */
-    public function createAction()
-    {
+    public function createAction() {
         $config = $this->getConfig();
-    	$request = $this->getRequest();
+        $request = $this->getRequest();
         $entity = new $config['entity']();
-        $form   = $this->createCreateForm($config, $entity);
+        $form = $this->createCreateForm($config, $entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -203,11 +195,8 @@ class DefaultController extends Controller
 
             $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
 
-            $nextAction = $form->get('saveAndAdd')->isClicked()
-                ? $this->generateUrl($config['new'])
-                : $this->generateUrl($config['show'], array('id' => $entity->getId()));
+            $nextAction = $form->get('saveAndAdd')->isClicked() ? $this->generateUrl($config['new']) : $this->generateUrl($config['show'], array('id' => $entity->getId()));
             return $this->redirect($nextAction);
-
         }
         $this->get('session')->getFlashBag()->add('danger', 'flash.create.error');
 
@@ -215,46 +204,45 @@ class DefaultController extends Controller
         unset($config['newType']);
 
         return array(
-            'config'     => $config,
-            'entity'     => $entity,
-            'form'       => $form->createView(),
+            'config' => $config,
+            'entity' => $entity,
+            'form' => $form->createView(),
         );
     }
 
     /**
-    * Creates a form to create a entity.
-    * @param array $config
-    * @param $entity The entity
-    * @return \Symfony\Component\Form\Form The form
-    */
-    protected function createCreateForm($config, $entity)
-    {
+     * Creates a form to create a entity.
+     * @param array $config
+     * @param $entity The entity
+     * @return \Symfony\Component\Form\Form The form
+     */
+    protected function createCreateForm($config, $entity) {
         $form = $this->createForm($config['newType'], $entity, array(
             'action' => $this->generateUrl($config['create']),
             'method' => 'POST',
         ));
 
         $form
-            ->add(
-                'save', 'submit', array(
-                'translation_domain' => 'MWSimpleAdminCrudBundle',
-                'label'              => 'views.new.save',
-                'attr'               => array(
-                    'class' => 'form-control btn-success',
-                    'col'   => 'col-lg-2',
+                ->add(
+                        'save', 'submit', array(
+                    'translation_domain' => 'MWSimpleAdminCrudBundle',
+                    'label' => 'views.new.save',
+                    'attr' => array(
+                        'class' => 'form-control btn-success',
+                        'col' => 'col-lg-2',
+                    )
+                        )
                 )
+                ->add(
+                        'saveAndAdd', 'submit', array(
+                    'translation_domain' => 'MWSimpleAdminCrudBundle',
+                    'label' => 'views.new.saveAndAdd',
+                    'attr' => array(
+                        'class' => 'form-control btn-primary',
+                        'col' => 'col-lg-3',
+                    )
+                        )
                 )
-            )
-            ->add(
-                'saveAndAdd', 'submit', array(
-                'translation_domain' => 'MWSimpleAdminCrudBundle',
-                'label'              => 'views.new.saveAndAdd',
-                'attr'               => array(
-                    'class' => 'form-control btn-primary',
-                    'col'   => 'col-lg-3',
-                )
-                )
-            )
         ;
 
         return $form;
@@ -263,19 +251,18 @@ class DefaultController extends Controller
     /**
      * New
      */
-    public function newAction()
-    {
+    public function newAction() {
         $config = $this->getConfig();
         $entity = new $config['entity']();
-        $form   = $this->createCreateForm($config, $entity);
+        $form = $this->createCreateForm($config, $entity);
 
         // remove the form to return to the view
         unset($config['newType']);
 
         return array(
-            'config'     => $config,
-            'entity'     => $entity,
-            'form'       => $form->createView(),
+            'config' => $config,
+            'entity' => $entity,
+            'form' => $form->createView(),
         );
     }
 
@@ -283,22 +270,21 @@ class DefaultController extends Controller
      * Show
      * @param $id
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $config = $this->getConfig();
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository($config['repository'])->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find '.$config['entityName'].' entity.');
+            throw $this->createNotFoundException('Unable to find ' . $config['entityName'] . ' entity.');
         }
         $this->useACL($entity, 'show');
         $deleteForm = $this->createDeleteForm($config, $id);
 
         return array(
-            'config'      => $config,
-            'entity'      => $entity,
+            'config' => $config,
+            'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -307,15 +293,14 @@ class DefaultController extends Controller
      * Edit
      * @param $id
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $config = $this->getConfig();
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository($config['repository'])->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find '.$config['entityName'].' entity.');
+            throw $this->createNotFoundException('Unable to find ' . $config['entityName'] . ' entity.');
         }
         $this->useACL($entity, 'edit');
         $editForm = $this->createEditForm($config, $entity);
@@ -325,47 +310,46 @@ class DefaultController extends Controller
         unset($config['editType']);
 
         return array(
-            'config'      => $config,
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'config' => $config,
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
 
     /**
-    * Creates a form to edit a entity.
-    * @param array $config
-    * @param $entity The entity
-    * @return \Symfony\Component\Form\Form The form
-    */
-    protected function createEditForm($config, $entity)
-    {
+     * Creates a form to edit a entity.
+     * @param array $config
+     * @param $entity The entity
+     * @return \Symfony\Component\Form\Form The form
+     */
+    protected function createEditForm($config, $entity) {
         $form = $this->createForm($config['editType'], $entity, array(
             'action' => $this->generateUrl($config['update'], array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
         $form
-            ->add(
-                'save', 'submit', array(
-                'translation_domain' => 'MWSimpleAdminCrudBundle',
-                'label'              => 'views.new.save',
-                'attr'               => array(
-                    'class' => 'form-control btn-success',
-                    'col'   => 'col-lg-2',
+                ->add(
+                        'save', 'submit', array(
+                    'translation_domain' => 'MWSimpleAdminCrudBundle',
+                    'label' => 'views.new.save',
+                    'attr' => array(
+                        'class' => 'form-control btn-success',
+                        'col' => 'col-lg-2',
+                    )
+                        )
                 )
+                ->add(
+                        'saveAndAdd', 'submit', array(
+                    'translation_domain' => 'MWSimpleAdminCrudBundle',
+                    'label' => 'views.new.saveAndAdd',
+                    'attr' => array(
+                        'class' => 'form-control btn-primary',
+                        'col' => 'col-lg-3',
+                    )
+                        )
                 )
-            )
-            ->add(
-                'saveAndAdd', 'submit', array(
-                'translation_domain' => 'MWSimpleAdminCrudBundle',
-                'label'              => 'views.new.saveAndAdd',
-                'attr'               => array(
-                    'class' => 'form-control btn-primary',
-                    'col'   => 'col-lg-3',
-                )
-                )
-            )
         ;
 
         return $form;
@@ -375,16 +359,15 @@ class DefaultController extends Controller
      * Update
      * @param $id
      */
-    public function updateAction($id)
-    {
+    public function updateAction($id) {
         $config = $this->getConfig();
-    	$request = $this->getRequest();
+        $request = $this->getRequest();
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository($config['repository'])->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find '.$config['entityName'].' entity.');
+            throw $this->createNotFoundException('Unable to find ' . $config['entityName'] . ' entity.');
         }
         $this->useACL($entity, 'update');
         $deleteForm = $this->createDeleteForm($config, $id);
@@ -395,9 +378,7 @@ class DefaultController extends Controller
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'flash.update.success');
 
-            $nextAction = $editForm->get('saveAndAdd')->isClicked()
-                        ? $this->generateUrl($config['new'])
-                        : $this->generateUrl($config['show'], array('id' => $id));
+            $nextAction = $editForm->get('saveAndAdd')->isClicked() ? $this->generateUrl($config['new']) : $this->generateUrl($config['show'], array('id' => $id));
             return $this->redirect($nextAction);
         }
 
@@ -407,9 +388,9 @@ class DefaultController extends Controller
         unset($config['editType']);
 
         return array(
-            'config'      => $config,
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'config' => $config,
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -418,10 +399,9 @@ class DefaultController extends Controller
      * Delete
      * @param $id
      */
-    public function deleteAction($id)
-    {
+    public function deleteAction($id) {
         $config = $this->getConfig();
-    	$request = $this->getRequest();
+        $request = $this->getRequest();
         $form = $this->createDeleteForm($config, $id);
         $form->handleRequest($request);
 
@@ -430,7 +410,7 @@ class DefaultController extends Controller
             $entity = $em->getRepository($config['repository'])->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find '.$config['entityName'].' entity.');
+                throw $this->createNotFoundException('Unable to find ' . $config['entityName'] . ' entity.');
             }
 
             $em->remove($entity);
@@ -448,28 +428,27 @@ class DefaultController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    protected function createDeleteForm($config, $id)
-    {
+    protected function createDeleteForm($config, $id) {
         $mensaje = $this->get('translator')->trans('views.recordactions.confirm', array(), 'MWSimpleAdminCrudBundle');
-        $onclick = 'return confirm("'.$mensaje.'");';
+        $onclick = 'return confirm("' . $mensaje . '");';
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl($config['delete'], array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array(
-                'translation_domain' => 'MWSimpleAdminCrudBundle',
-                'label'              => 'views.recordactions.delete',
-                'attr'               => array(
-                    'class'   => 'form-control btn-danger',
-                    'col'     => 'col-lg-2',
-                    'onclick' => $onclick,
-                )
-            ))
-            ->getForm()
+                        ->setAction($this->generateUrl($config['delete'], array('id' => $id)))
+                        ->setMethod('DELETE')
+                        ->add('submit', 'submit', array(
+                            'translation_domain' => 'MWSimpleAdminCrudBundle',
+                            'label' => 'views.recordactions.delete',
+                            'attr' => array(
+                                'class' => 'form-control btn-danger',
+                                'col' => 'col-lg-2',
+                                'onclick' => $onclick,
+                            )
+                        ))
+                        ->getForm()
         ;
     }
 
-    protected function getConfig(){
-        $configs = Yaml::parse(file_get_contents($this->get('kernel')->getRootDir().'/../src/'.$this->config['yml']));
+    protected function getConfig() {
+        $configs = Yaml::parse(file_get_contents($this->get('kernel')->getRootDir() . '/../src/' . $this->config['yml']));
         foreach ($configs as $key => $value) {
             $config[$key] = $value;
         }
@@ -481,8 +460,7 @@ class DefaultController extends Controller
         return $config;
     }
 
-    public function getAutocompleteFormsMwsAction($options)
-    {
+    public function getAutocompleteFormsMwsAction($options) {
         $request = $this->getRequest();
         $term = $request->query->get('q', null);
 
@@ -490,9 +468,9 @@ class DefaultController extends Controller
 
         $qb = $em->getRepository($options['repository'])->createQueryBuilder('a');
         $qb
-            ->add('where', "a.".$options['field']." LIKE ?1")
-            ->add('orderBy', "a.".$options['field']." ASC")
-            ->setParameter(1, "%" . $term . "%")
+                ->add('where', "a." . $options['field'] . " LIKE ?1")
+                ->add('orderBy', "a." . $options['field'] . " ASC")
+                ->setParameter(1, "%" . $term . "%")
         ;
         $entities = $qb->getQuery()->getResult();
 
@@ -500,7 +478,7 @@ class DefaultController extends Controller
 
         foreach ($entities as $entity) {
             $array[] = array(
-                'id'   => $entity->getId(),
+                'id' => $entity->getId(),
                 'text' => $entity->__toString(),
             );
         }
@@ -511,10 +489,9 @@ class DefaultController extends Controller
         return $response;
     }
 
-    protected function useACL($entity, $action)
-    {
+    protected function useACL($entity, $action) {
         $aclConf = $this->container->hasParameter('mw_simple_admin_crud.acl') ?
-            $this->container->getParameter('mw_simple_admin_crud.acl') : null;
+                $this->container->getParameter('mw_simple_admin_crud.acl') : null;
 
         if ($aclConf['use']) {
             if ($this->isInstanceOf($entity, $aclConf['entities'])) {
@@ -540,8 +517,7 @@ class DefaultController extends Controller
         }
     }
 
-    protected function isInstanceOf($object, Array $classnames)
-    {
+    protected function isInstanceOf($object, Array $classnames) {
         foreach ($classnames as $classname) {
             if ($object instanceof $classname) {
                 return true;
@@ -549,4 +525,104 @@ class DefaultController extends Controller
         }
         return false;
     }
+
+    protected function getParamterBd() {
+
+        $configs = Yaml::parse(file_get_contents($this->get('kernel')->getRootDir() . '/config/parameters.yml'));
+        foreach ($configs as $key => $value) {
+            $config[$key] = $value;
+        }
+        foreach ($this->config as $key => $value) {
+            if ($key != 'yml') {
+                $config[$key] = $value;
+            }
+        }
+        $sql_details = array(
+            'user' => $configs["parameters"]["database_user"],
+            'pass' => $configs["parameters"]["database_password"],
+            'db' => $configs["parameters"]["database_name"],
+            'host' => $configs["parameters"]["database_host"]
+        );
+        return $sql_details;
+    }
+
+    public function getTable() {
+        $config = $this->getConfig();
+        // DB table to use
+        $table = $config['table'];
+        $alias = $config['alias'];
+        $select = array();
+        $leftJoin = array();
+        $tipoArray = array();
+        $concat = "";
+        foreach ($config['fieldsindex'] as $key => $columnas) {
+            if ($columnas['type'] == 'MANY_TO_ONE') {
+                foreach ($columnas['campos'] as $key => $campo) {
+                    $concat = $concat . $columnas['alias'] . '.' . $campo;
+                }
+                $select[] = $concat;
+            } else {
+                $select[] = $alias . '.' . $columnas['name'];
+            }
+            if (isset($columnas['format'])) {
+                $formato = $columnas['format'];
+            } else {
+                $formato = "";
+            }
+            $tipoArray[] = array(
+                'type' => $columnas['type'],
+                'format' => $formato
+            );
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em->createQueryBuilder();
+        $qb
+                ->select('a')
+                ->from($config['repository'], 'a')
+                ->leftJoin('a.lugar', 'l')
+        ;
+
+        $query = $qb
+                ->getQuery()
+                ->getSQL()
+        ;
+
+//$query = $em->getRepository($congiguraciones['repository'])->getIndex();
+        //separo el select y from
+        $sql = str_replace("SELECT", "", $query);
+
+        list($select, $from) = explode("FROM", $sql);
+
+        //select        
+        $queryColumn = explode(",", $select);
+        $columns = array();
+        $contador = 0;
+        foreach ($queryColumn as $col) {
+            list($identy, $name) = explode("AS", $col);
+
+            $columns[] = array(
+                'db' => $identy,
+                'dt' => $contador,
+                'name' => trim($name),
+                'type' => $tipoArray[$contador]['type'],
+                'format' => $tipoArray[$contador]['format']
+            );
+            $contador++;
+        }
+
+        //from 
+        $from = " FROM " . $from;
+// Table's primary key
+        $primaryKey = 'id';
+
+
+        $request = $this->getRequest();
+        $response = new JsonResponse();
+
+        $response->setData(SSP::simple($request, $this->getParamterBd(), $table, $primaryKey, $columns, $from));
+
+        return $response;
+    }
+
 }

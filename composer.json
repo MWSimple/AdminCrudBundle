@@ -15,20 +15,23 @@
         "symfony/symfony": ">2.2.0, ~2.7",
         "sensio/generator-bundle": ">2.2.0, ~2.5",
         "knplabs/knp-paginator-bundle": "~2.4",
-        "lexik/form-filter-bundle": "~3.0",
         "knplabs/knp-menu": "~2.0",
         "knplabs/knp-menu-bundle": "~2.0",
         "doctrine/orm": "~2.2,>=2.2.3,<2.5",
-        "sonata-project/exporter": "~1.4"
+        "sonata-project/exporter": "~1.4",
+        "datatable/datatables": "1.10.7",
+        "friendsofsymfony/jsrouting-bundle": "~1.5"
     },
     "autoload": {
-        "psr-0": {"MWSimple\\Bundle\\AdminCrudBundle": ""}
+        "psr-0": {
+            "MWSimple\\Bundle\\AdminCrudBundle": ""
+        }
     },
     "target-dir": "MWSimple/Bundle/AdminCrudBundle",
     "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
-            "dev-version27": "3.0.x-dev"
+            "dev-datatables": "4.0.x-dev"
         }
     }
 }
