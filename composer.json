@@ -19,7 +19,7 @@
         "knplabs/knp-menu-bundle": "~2.0",
         "doctrine/orm": "~2.2,>=2.2.3,<2.5",
         "sonata-project/exporter": "~1.4",
-        "datatable/datatables": "1.10.7",
+        "datatables/datatables": "1.10.9",
         "friendsofsymfony/jsrouting-bundle": "~1.5"
     },
     "autoload": {
