@@ -24,8 +24,15 @@ use PDO;
   if (is_file($file)) {
   include( $file );
   } */
+class SSP
+{
+    private $container;
 
-class SSP {
+    public function __construct($container)
+    {
+        $this->container = $container;
+    }
+
     /**
      * Create the data output array for the DataTables rows
      *
@@ -72,7 +79,14 @@ class SSP {
      *     * pass - user password
      *  @return resource PDO connection
      */
-    static function db($conn) {
+    static function db() {
+        //Obtengo los parametros de la BD
+        $conn = array(
+            'user' => $this->container->getParameter('database_user'),
+            'pass' => $this->container->getParameter('database_password'),
+            'db'   => $this->container->getParameter('database_name'),
+            'host' => $this->container->getParameter('database_host')
+        );
         if (is_array($conn)) {
             return self::sql_connect($conn);
         }
@@ -222,10 +236,10 @@ class SSP {
      *  @param  array $columns Column information array
      *  @return array          Server-side processing response array
      */
-    static function simple($request, $conn, $table, $primaryKey, $columns, $from) {
+    static function simple($request, $table, $primaryKey, $columns, $from) {
 
         $bindings = array();
-        $db = self::db($conn);
+        $db = self::db();
 
         // Build the SQL query string from the request
         $limit = self::limit($request, $columns);
@@ -286,9 +300,9 @@ class SSP {
      *  @param  string $whereAll WHERE condition to apply to all queries
      *  @return array          Server-side processing response array
      */
-    static function complex($request, $conn, $table, $primaryKey, $columns, $whereResult = null, $whereAll = null) {
+    static function complex($request, $table, $primaryKey, $columns, $whereResult = null, $whereAll = null) {
         $bindings = array();
-        $db = self::db($conn);
+        $db = self::db();
         $localWhereResult = array();
         $localWhereAll = array();
         $whereAllSql = '';
