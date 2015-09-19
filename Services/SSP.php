@@ -24,12 +24,11 @@ use PDO;
   if (is_file($file)) {
   include( $file );
   } */
-class SSP
-{
-    private $container;
+class SSP {
 
-    public function __construct($container)
-    {
+    protected $container;
+
+    public function __construct($container) {
         $this->container = $container;
     }
 
@@ -40,7 +39,7 @@ class SSP
      *  @param  array $data    Data from the SQL get
      *  @return array          Formatted data in a row based format
      */
-    static function data_output($columns, $data) {
+    protected function data_output($columns, $data) {
         $out = array();
 
         for ($i = 0, $ien = count($data); $i < $ien; $i++) {
@@ -79,16 +78,16 @@ class SSP
      *     * pass - user password
      *  @return resource PDO connection
      */
-    static function db() {
+    protected function db() {
         //Obtengo los parametros de la BD
         $conn = array(
             'user' => $this->container->getParameter('database_user'),
             'pass' => $this->container->getParameter('database_password'),
-            'db'   => $this->container->getParameter('database_name'),
+            'db' => $this->container->getParameter('database_name'),
             'host' => $this->container->getParameter('database_host')
         );
         if (is_array($conn)) {
-            return self::sql_connect($conn);
+            return $this->sql_connect($conn);
         }
 
         return $conn;
@@ -103,7 +102,7 @@ class SSP
      *  @param  array $columns Column information array
      *  @return string SQL limit clause
      */
-    static function limit($request, $columns) {
+    protected function limit($request, $columns) {
         $limit = '';
         $start = $request->query->get('length');
         if (isset($start) && $request->query->get('length') != -1) {
@@ -122,12 +121,12 @@ class SSP
      *  @param  array $columns Column information array
      *  @return string SQL order by clause
      */
-    static function order($request, $columns) {
+    protected function order($request, $columns) {
         $order = '';
 
         if (count($request->query->get('order'))) {
             $orderBy = array();
-            $dtColumns = self::pluck($columns, 'dt', 'name');
+            $dtColumns = $this->pluck($columns, 'dt', 'name');
 
             for ($i = 0, $ien = count($request->query->get('order')); $i < $ien; $i++) {
                 // Convert the column index into the column data property
@@ -167,10 +166,10 @@ class SSP
      *    sql_exec() function
      *  @return string SQL where clause
      */
-    static function filter($request, $columns, &$bindings) {
+    protected function filter($request, $columns, &$bindings) {
         $globalSearch = array();
         $columnSearch = array();
-        $dtColumns = self::pluck($columns, 'dt', 'name');
+        $dtColumns = $this->pluck($columns, 'dt', 'name');
 
         if ($request->query->get('search')['value'] != '') {
             $str = $request->query->get('search')['value'];
@@ -181,7 +180,7 @@ class SSP
                 $column = $columns[$columnIdx];
 
                 if ($requestColumn['searchable'] == 'true') {
-                    $binding = self::bind($bindings, '%' . $str . '%', PDO::PARAM_STR);
+                    $binding = $this->bind($bindings, '%' . $str . '%', PDO::PARAM_STR);
                     $globalSearch[] = "" . $column['db'] . " LIKE " . $binding;
                 }
             }
@@ -197,7 +196,7 @@ class SSP
 
             if ($requestColumn['searchable'] == 'true' &&
                     $str != '') {
-                $binding = self::bind($bindings, '%' . $str . '%', PDO::PARAM_STR);
+                $binding = $this->bind($bindings, '%' . $str . '%', PDO::PARAM_STR);
                 $columnSearch[] = "" . $column['db'] . " LIKE " . $binding;
             }
         }
@@ -236,19 +235,19 @@ class SSP
      *  @param  array $columns Column information array
      *  @return array          Server-side processing response array
      */
-    static function simple($request, $table, $primaryKey, $columns, $from) {
+    public function simple($request, $table, $primaryKey, $columns, $from) {
 
         $bindings = array();
-        $db = self::db();
+        $db = $this->db();
 
         // Build the SQL query string from the request
-        $limit = self::limit($request, $columns);
-        $order = self::order($request, $columns);
-        $where = self::filter($request, $columns, $bindings);
+        $limit = $this->limit($request, $columns);
+        $order = $this->order($request, $columns);
+        $where = $this->filter($request, $columns, $bindings);
 
 
         // Main query to actually get the data
-        $data = self::sql_exec($db, $bindings, "SELECT SQL_CALC_FOUND_ROWS " . implode(", ", self::pluck($columns, 'db', 'name')) . "
+        $data = $this->sql_exec($db, $bindings, "SELECT SQL_CALC_FOUND_ROWS " . implode(", ", $this->pluck($columns, 'db', 'name')) . "
 			 $from
 			 $where
 			 $order
@@ -256,12 +255,12 @@ class SSP
         );
 
         // Data set length after filtering
-        $resFilterLength = self::sql_exec($db, "SELECT FOUND_ROWS()"
+        $resFilterLength = $this->sql_exec($db, "SELECT FOUND_ROWS()"
         );
         $recordsFiltered = $resFilterLength[0][0];
 
         // Total data set length
-        $resTotalLength = self::sql_exec($db, "SELECT COUNT({$primaryKey})
+        $resTotalLength = $this->sql_exec($db, "SELECT COUNT({$primaryKey})
 			 FROM   `$table`"
         );
         $recordsTotal = $resTotalLength[0][0];
@@ -273,7 +272,7 @@ class SSP
             "draw" => intval($request->query->get('draw')),
             "recordsTotal" => intval($recordsTotal),
             "recordsFiltered" => intval($recordsFiltered),
-            "data" => self::data_output($columns, $data)
+            "data" => $this->data_output($columns, $data)
         );
     }
 
@@ -300,20 +299,20 @@ class SSP
      *  @param  string $whereAll WHERE condition to apply to all queries
      *  @return array          Server-side processing response array
      */
-    static function complex($request, $table, $primaryKey, $columns, $whereResult = null, $whereAll = null) {
+    protected function complex($request, $table, $primaryKey, $columns, $whereResult = null, $whereAll = null) {
         $bindings = array();
-        $db = self::db();
+        $db = $this->db();
         $localWhereResult = array();
         $localWhereAll = array();
         $whereAllSql = '';
 
         // Build the SQL query string from the request
-        $limit = self::limit($request, $columns);
-        $order = self::order($request, $columns);
-        $where = self::filter($request, $columns, $bindings);
+        $limit = $this->limit($request, $columns);
+        $order = $this->order($request, $columns);
+        $where = $this->filter($request, $columns, $bindings);
 
-        $whereResult = self::_flatten($whereResult);
-        $whereAll = self::_flatten($whereAll);
+        $whereResult = $this->_flatten($whereResult);
+        $whereAll = $this->_flatten($whereAll);
 
         if ($whereResult) {
             $where = $where ?
@@ -330,7 +329,7 @@ class SSP
         }
 
         // Main query to actually get the data
-        $data = self::sql_exec($db, $bindings, "SELECT SQL_CALC_FOUND_ROWS `" . implode("`, `", self::pluck($columns, 'db')) . "`
+        $data = $this->sql_exec($db, $bindings, "SELECT SQL_CALC_FOUND_ROWS `" . implode("`, `", $this->pluck($columns, 'db')) . "`
 			 FROM `$table`
 			 $where
 			 $order
@@ -338,12 +337,12 @@ class SSP
         );
 
         // Data set length after filtering
-        $resFilterLength = self::sql_exec($db, "SELECT FOUND_ROWS()"
+        $resFilterLength = $this->sql_exec($db, "SELECT FOUND_ROWS()"
         );
         $recordsFiltered = $resFilterLength[0][0];
 
         // Total data set length
-        $resTotalLength = self::sql_exec($db, $bindings, "SELECT COUNT(`{$primaryKey}`)
+        $resTotalLength = $this->sql_exec($db, $bindings, "SELECT COUNT(`{$primaryKey}`)
 			 FROM   `$table` " .
                         $whereAllSql
         );
@@ -356,7 +355,7 @@ class SSP
             "draw" => intval($request->query->get('draw')),
             "recordsTotal" => intval($recordsTotal),
             "recordsFiltered" => intval($recordsFiltered),
-            "data" => self::data_output($columns, $data)
+            "data" => $this->data_output($columns, $data)
         );
     }
 
@@ -371,13 +370,13 @@ class SSP
      *     * pass - user password
      * @return resource Database connection handle
      */
-    static function sql_connect($sql_details) {
+    protected function sql_connect($sql_details) {
         try {
             $db = @new PDO(
                     "mysql:host={$sql_details['host']};dbname={$sql_details['db']}", $sql_details['user'], $sql_details['pass'], array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION)
             );
         } catch (PDOException $e) {
-            self::fatal(
+            $this->fatal(
                     "An error occurred while connecting to the database. " .
                     "The error reported by the server was: " . $e->getMessage()
             );
@@ -396,7 +395,7 @@ class SSP
      * @param  string   $sql SQL query to execute.
      * @return array         Result from the query (all rows)
      */
-    static function sql_exec($db, $bindings, $sql = null) {
+    protected function sql_exec($db, $bindings, $sql = null) {
 
         // Argument shifting
         if ($sql === null) {
@@ -417,7 +416,7 @@ class SSP
         try {
             $stmt->execute();
         } catch (PDOException $e) {
-            self::fatal("An SQL error occurred: " . $e->getMessage());
+            $this->fatal("An SQL error occurred: " . $e->getMessage());
         }
 
         // Return all
@@ -436,7 +435,7 @@ class SSP
      *
      * @param  string $msg Message to send to the client
      */
-    static function fatal($msg) {
+    protected function fatal($msg) {
         echo json_encode(array(
             "error" => $msg
         ));
@@ -454,7 +453,7 @@ class SSP
      * @return string       Bound key to be used in the SQL where this parameter
      *   would be used.
      */
-    static function bind(&$a, $val, $type) {
+    protected function bind(&$a, $val, $type) {
         $key = ':binding_' . count($a);
 
         $a[] = array(
@@ -474,7 +473,7 @@ class SSP
      *  @param  string $prop Property to read
      *  @return array        Array of property values
      */
-    static function pluck($a, $prop, $prop2) {
+    protected function pluck($a, $prop, $prop2) {
         $out = array();
         for ($i = 0, $len = count($a); $i < $len; $i++) {
 
@@ -491,7 +490,7 @@ class SSP
      * @param  string $join Glue for the concatenation
      * @return string Joined string
      */
-    static function _flatten($a, $join = ' AND ') {
+    protected function _flatten($a, $join = ' AND ') {
         if (!$a) {
             return '';
         } else if ($a && is_array($a)) {

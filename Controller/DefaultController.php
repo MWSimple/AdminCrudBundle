@@ -25,19 +25,19 @@ class DefaultController extends Controller {
      */
     public function indexAction() {
         $config = $this->getConfig();
-        list($filterForm, $queryBuilder) = $this->filter($config);
+        // list($filterForm, $queryBuilder) = $this->filter($config);
 
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-                $queryBuilder, $this->get('request')->query->get('page', 1), ($this->container->hasParameter('knp_paginator.page_range')) ? $this->container->getParameter('knp_paginator.page_range') : 10
-        );
+        /* $paginator = $this->get('knp_paginator');
+          $pagination = $paginator->paginate(
+          $queryBuilder, $this->get('request')->query->get('page', 1), ($this->container->hasParameter('knp_paginator.page_range')) ? $this->container->getParameter('knp_paginator.page_range') : 10
+          ); */
         //remove the form to return to the view
-        unset($config['filterType']);
+        //  unset($config['filterType']);
 
         return array(
-            'config' => $config,
-            'entities' => $pagination,
-            'filterForm' => $filterForm->createView(),
+            'config' => $config
+                //'entities' => $pagination,
+                //'filterForm' => $filterForm->createView(),
         );
     }
 
@@ -432,18 +432,18 @@ class DefaultController extends Controller {
         $mensaje = $this->get('translator')->trans('views.recordactions.confirm', array(), 'MWSimpleAdminCrudBundle');
         $onclick = 'return confirm("' . $mensaje . '");';
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl($config['delete'], array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array(
-                'translation_domain' => 'MWSimpleAdminCrudBundle',
-                'label' => 'views.recordactions.delete',
-                'attr' => array(
-                    'class' => 'form-control btn-danger',
-                    'col' => 'col-lg-2',
-                    'onclick' => $onclick,
-                )
-            ))
-            ->getForm()
+                        ->setAction($this->generateUrl($config['delete'], array('id' => $id)))
+                        ->setMethod('DELETE')
+                        ->add('submit', 'submit', array(
+                            'translation_domain' => 'MWSimpleAdminCrudBundle',
+                            'label' => 'views.recordactions.delete',
+                            'attr' => array(
+                                'class' => 'form-control btn-danger',
+                                'col' => 'col-lg-2',
+                                'onclick' => $onclick,
+                            )
+                        ))
+                        ->getForm()
         ;
     }
 
@@ -540,7 +540,14 @@ class DefaultController extends Controller {
             //select
             if ($columnas['type'] == 'MANY_TO_ONE' || $columnas['type'] == 'ONE_TO_ONE' || $columnas['type'] == 'ONE_TO_MANY') {
                 $columnas['type'] = "string";
-                $concat = implode(",", $columnas['alias'] . '.' . $columnas['campos']);
+                foreach ($columnas['campos'] as $key => $campos) {
+                    if ($key == '0') {
+                        $concat = $columnas['alias'] . '.' . $campos;
+                    } else {
+                        $concat = ',' . $columnas['alias'] . '.' . $campos;
+                    }
+                }
+
                 if ($columnas['type'] == 'ONE_TO_MANY') {
                     $concat = "GROUP_CONCAT(" . $concat . " SEPARATOR ',')";
                     $groupBy = true;
@@ -621,8 +628,9 @@ class DefaultController extends Controller {
 
         $request = $this->getRequest();
         $response = new JsonResponse();
-
-        $response->setData(SSP::simple($request, $this->getParamterBd(), $table, $primaryKey, $columns, $from));
+        $ssp = $this->container->get('mws_datatable_ssp');
+      
+        $response->setData($ssp->simple($request, $table, $primaryKey, $columns, $from));
 
         return $response;
     }

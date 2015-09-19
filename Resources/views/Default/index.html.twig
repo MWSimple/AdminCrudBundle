@@ -20,16 +20,16 @@
                     {{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
                 </a>
                 <!-- Single button -->
-                <div class="btn-group">
-                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        {{ 'views.index.export'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }} <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="{{ path(config.export, { 'format': "xls" }) }}">EXCEL</a></li>
-                        <li><a href="{{ path(config.export, { 'format': "csv" }) }}">CSV</a></li>
-                        <li><a href="{{ path(config.export, { 'format': "json" }) }}">JSON</a></li>
-                    </ul>
-                </div>
+                {# <div class="btn-group">
+                     <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                         {{ 'views.index.export'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }} <span class="caret"></span>
+                     </button>
+                     <ul class="dropdown-menu" role="menu">
+                         <li><a href="{{ path(config.export, { 'format': "xls" }) }}">EXCEL</a></li>
+                         <li><a href="{{ path(config.export, { 'format': "csv" }) }}">CSV</a></li>
+                         <li><a href="{{ path(config.export, { 'format': "json" }) }}">JSON</a></li>
+                     </ul>
+                 </div>#}
                 <a id="reset_index_filters" class="btn btn-danger">
                     {{ 'views.index.reset'|trans({}, 'MWSimpleAdminCrudBundle') }}
                 </a>
@@ -39,14 +39,14 @@
                 </a>
             </div>
         </div>
-        <div class="col-lg-12 col-md-12 col-sm-12">
+        {#<div class="col-lg-12 col-md-12 col-sm-12">
             <div id="filters" class="well collapse">
                 <div class="form-group">
                     {{ form_start(filterForm) }}
                     {{ form_end(filterForm) }}
                 </div>
             </div>
-        </div>
+        </div>#}
     </div>
     <div class="row">
         <div class="panel panel-primary">
@@ -70,7 +70,7 @@
                     <thead>
                         <tr>
                             {% for key, field in config.fieldsindex %}
-                                <th{% if entities.isSorted(key) %} class="sorted"{% endif %}>{{ knp_pagination_sortable(entities, field.label, key) }}</th>
+                                <th data-field="{{key}}" data-sortable="true">{{ field.label }}</th>
                                 {% endfor %}
                             <th>{{ 'views.index.actions'|trans({}, 'MWSimpleAdminCrudBundle') }}</th>
                         </tr>
@@ -120,6 +120,7 @@
 {% endblock %}
 
 {% block javascript %}
+    <script src="{{ asset('bundles/mwsimpleadmincrud/js/datatable/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
     <script type="text/javascript">
@@ -133,7 +134,7 @@
                 "processing": true,
                 "serverSide": true,
                 "ajax": {
-                    "url": "{{path({{ config.getTable }})}}",
+                    "url": "{{path( config.getTable )}}",
                 },
                 "aoColumnDefs": [
                     {
