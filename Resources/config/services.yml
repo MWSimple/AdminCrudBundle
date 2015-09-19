@@ -33,3 +33,8 @@ services:
         class: MWSimple\Bundle\AdminCrudBundle\Form\Type\FieldFileType
         tags:
             - { name: form.type, alias: mws_field_file }
+   #Datatable 
+    mws_datatable_ssp:
+        class: MWSimple\Bundle\AdminCrudBundle\Services\SSP
+        arguments:
+            - "@service_container"
