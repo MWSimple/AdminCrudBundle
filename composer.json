@@ -20,7 +20,9 @@
         "knplabs/knp-menu-bundle": "~2.0",
         "doctrine/orm": "~2.2,>=2.2.3,<2.5",
         "sonata-project/exporter": "~1.4",
-        "friendsofsymfony/jsrouting-bundle": "~1.5"
+        "friendsofsymfony/jsrouting-bundle": "~1.5",
+        "jms/serializer-bundle": "~0.13",
+        "lankit/datatables-bundle": "*"
     },
     "autoload": {
         "psr-0": {"MWSimple\\Bundle\\AdminCrudBundle": ""}

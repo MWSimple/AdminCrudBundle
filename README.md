@@ -48,6 +48,9 @@ new MWSimple\Bundle\AdminCrudBundle\MWSimpleAdminCrudBundle(),
 new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
 new Knp\Bundle\MenuBundle\KnpMenuBundle(),
 new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
+new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+new JMS\SerializerBundle\JMSSerializerBundle(),
+new LanKit\DatatablesBundle\LanKitDatatablesBundle(),
 ```
 
 ### Configure translations (include en, es, ca)
