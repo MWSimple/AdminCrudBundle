@@ -91,6 +91,16 @@
             {% endfor %}
             </tbody>
         </table>
+        <table id="tablaPrincipal" class="table table-striped">
+            <thead>
+                <tr>
+                    {% for key, field in config.fieldsindex %}
+                        <th data-field="{{key}}" data-sortable="true">{{ field.label }}</th>
+                        {% endfor %}
+                    <th>{{ 'views.index.actions'|trans({}, 'MWSimpleAdminCrudBundle') }}</th>
+                </tr>
+            </thead>
+        </table>
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12 navigation">
         {{ knp_pagination_render(entities) }}
@@ -103,11 +113,56 @@
     </div>
 {% endblock %}
 
+{% block jquery %}
+    <script src="{{ asset('bundles/mwsimpleadmincrud/js/datatable/jquery-1.9.1.min.js') }}"></script>
+{% endblock %}
+
 {% block javascript %}
     <script type="text/javascript">
         $('.tooltips').tooltip();
         $( "#reset_index_filters" ).click(function() {
             $(".reset_submit_filters").trigger("click");
+        });
+    </script>
+
+    <script src="{{ asset('bundles/mwsimpleadmincrud/js/datatable/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+    <script type="text/javascript">
+        var oTable;
+        $(document).ready(function () {
+            oTable = $('#tablaPrincipal').dataTable({
+                // "processing": true,
+                "bServerSide": true,
+                "sAjaxSource": "{{ path(config.getDatatable) }}",
+                // "aoColumnDefs": [
+                //     {
+                //         "mRender": function (data, type, row) {
+                //             var acciones = "";
+                //             var array = [
+                //                 '<a href="' + Routing.generate('{{ config.show }}', {id: row[0]}) + '"><span class="glyphicon glyphicon-search"></span></a>',
+                //                 '<a href="' + Routing.generate('{{ config.edit }}', {id: row[0]}) + '"><span class="glyphicon glyphicon-pencil"></span></a>',
+                //             ];
+                //             acciones = array.join("");
+
+                //             return acciones;
+                //         },
+                //         "aTargets": [4]
+                //     },
+                //     {
+                //         "targets": [0],
+                //         "visible": false
+                //     }
+                // ],
+                "aoColumns": [
+                    { "mData": "id" },
+                    { "mData": "nombre" },
+                    { "mData": "direccion" },
+                    // { "mData": "customer.lastName" },
+                    { "mData": "telefono" }
+                ],
+            });
+
         });
     </script>
 {% endblock %}

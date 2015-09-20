@@ -15,7 +15,9 @@
         <link rel="stylesheet" href="{{ asset('bundles/mwsimpleadmincrud/css/bootstrapValidator.min.css') }}">
         <link href="{{ asset('bundles/mwsimpleadmincrud/datetime/css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
         <link href="{{ asset('bundles/mwsimpleadmincrud/css/crud.css') }}" rel="stylesheet">
-        <script src="{{ asset('bundles/mwsimpleadmincrud/js/jquery.min.js') }}"></script>
+        {% block jquery %}
+            <script src="{{ asset('bundles/mwsimpleadmincrud/js/jquery.min.js') }}"></script>
+        {% endblock %}
         <script src="{{ asset('bundles/mwsimpleadmincrud/js/bootstrap.min.js') }}"></script>
         <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>

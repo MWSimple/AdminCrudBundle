@@ -44,6 +44,18 @@ class DefaultController extends Controller
         );
     }
 
+    public function getDatatableAction()
+    {
+        $config    = $this->getConfig();
+        $datatable = $this->get('lankit_datatables')
+            ->getDatatable($config['repository'])
+            // ->setDtRowClass('special-class') // Add whatever class(es) you want. Separate classes with a space.
+            // ->useDtRowId(true)
+        ;
+
+        return $datatable->getSearchResults();
+    }
+
     /**
      * Create query.
      * @param string $repository
