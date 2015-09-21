@@ -31,7 +31,7 @@
     "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
-            "dev-datatablelankit": "5.0.x-dev"
+            "dev-lankit": "5.0.x-dev"
         }
     }
 }
