@@ -23,9 +23,7 @@
         "friendsofsymfony/jsrouting-bundle": "~1.5"
     },
     "autoload": {
-        "psr-0": {
-            "MWSimple\\Bundle\\AdminCrudBundle": ""
-        }
+        "psr-0": {"MWSimple\\Bundle\\AdminCrudBundle": ""}
     },
     "target-dir": "MWSimple/Bundle/AdminCrudBundle",
     "minimum-stability": "dev",
