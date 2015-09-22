@@ -10,67 +10,50 @@ update: '{{ route_name_prefix }}_update'
 delete: '{{ route_name_prefix }}_delete'
 export: '{{ route_name_prefix }}_export'
 getTable: '{{ route_name_prefix }}_table'
+table: {{ entity|lower }}
+alias: a
 fieldsindex:
 {%- for field in fields %}
     
     a.{{ field.fieldName }}:
         label: '{{ field.fieldName|capitalize }}'
-        name: '{{ field.fieldName|capitalize }}'
-        
-    {%- if field.type in ['datetime', 'datetimetz'] %}
+        name: '{{ field.fieldName }}'
         type: '{{ field.type }}'
+    {%- if field.type in ['datetime', 'datetimetz'] %}
         date: 'Y-m-d H:i:s'
     {%- elseif field.type in ['date'] %}
-        type: '{{ field.type }}'
         date: 'Y-m-d'
     {%- elseif field.type in ['time'] %}
-        type: '{{ field.type }}'
-        date: 'H:i:s'
-    {%- endif %}
-    
-     {%- if field.type == 1 %}
-        type: 'ONE_TO_ONE'
-        alias: '{{ field.fieldName }}'
-        campos: 
-            - 'id'
-        join: 'LEFT'
-    {%- elseif field.type == 2 %}
-        type: 'MANY_TO_ONE'
-        alias: '{{ field.fieldName }}'
-        campos: 
-            - 'id'
-        join: 'LEFT'
-    {%- elseif field.type == 4 %}
-        type: 'ONE_TO_MANY'
-        alias: '{{ field.fieldName }}'
-        campos: 
-            - 'id'
-        join: 'LEFT'
-    {% endif %}
-
+        date: 'H:i:s'    
+    {% endif %}       
         export: true
 {%- endfor %}
 {%- for field in associations if field.type not in [4,8] %}
 
     a.{{ field.fieldName }}:
         label: '{{ field.fieldName|capitalize }}'
-        name: '{{ field.fieldName|capitalize }}'
-    {%- if field.type == 1 %}
-
+        name: '{{ field.fieldName }}'
+    {% if field.type == 1 %}
         type: 'ONE_TO_ONE'
+        alias: '{{ field.fieldName }}'
+        campos: 
+            - 'id'
+        join: 'LEFT'
     {%- elseif field.type == 2 %}
-
         type: 'MANY_TO_ONE'
+        alias: '{{ field.fieldName }}'
+        campos: 
+            - 'id'
+        join: 'LEFT'
     {%- elseif field.type == 4 %}
-
         type: 'ONE_TO_MANY'
-    {%- elseif field.type == 8 %}
-
-        type: 'MANY_TO_MANY'
+        alias: '{{ field.fieldName }}'
+        campos: 
+            - 'id'
+        join: 'LEFT'
     {%- else %}
-
         type: 'entity'
-    {%- endif %}
+    {% endif %}
 {%- endfor %}
 
 fieldsshow:

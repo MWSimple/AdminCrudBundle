@@ -3,7 +3,15 @@
 {% block title %}
     {{ parent() }} - {{ 'views.index.list'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
 {% endblock %}
-
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('bundles/mwsimpleadmincrud/js/datatable/css/jquery.dataTables.min.css') }}">
+    <style type="text/css">
+        .trash { color:rgb(209, 91, 71); }
+        .flag { color:rgb(248, 148, 6); }
+        .panel .glyphicon,.list-group-item .glyphicon { margin-right:5px; }
+        .fa-fw {width: 2em;}
+    </style>
+{% endblock %}
 {% block page %}
     <div class="row">
         {#<div class="col-lg-2 col-md-2 col-sm-6">
@@ -16,9 +24,9 @@
         </div>#}
         <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="filters-right">
-                <a class="btn btn-success" href="{{ path(config.new) }}">
+                {#<a class="btn btn-success" href="{{ path(config.new) }}">
                     {{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
-                </a>
+                </a>#}
                 <!-- Single button -->
                 {# <div class="btn-group">
                      <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -30,13 +38,13 @@
                          <li><a href="{{ path(config.export, { 'format': "json" }) }}">JSON</a></li>
                      </ul>
                  </div>#}
-                <a id="reset_index_filters" class="btn btn-danger">
+                {#<a id="reset_index_filters" class="btn btn-danger">
                     {{ 'views.index.reset'|trans({}, 'MWSimpleAdminCrudBundle') }}
                 </a>
                 <a class="btn btn-primary dropdown-toggle" data-toggle="collapse" data-target="#filters">
                     {{ 'views.index.filters'|trans({}, 'MWSimpleAdminCrudBundle') }}
                     <span class="caret"></span>
-                </a>
+                </a>#}
             </div>
         </div>
         {#<div class="col-lg-12 col-md-12 col-sm-12">
@@ -51,19 +59,21 @@
     <div class="row">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h3>{{ 'views.index.list'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}</h3>
-                {#<div class="pull-right action-buttons">
-                             <div class="btn-group pull-right">
-                                 <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                     <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>
-                                 </button>
-                                 <ul class="dropdown-menu slidedown">
-                                     <li><a href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-pencil"></span>Edit</a></li>
-                                     <li><a href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-trash"></span>Delete</a></li>
-                                     <li><a href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-flag"></span>Flag</a></li>
-                                 </ul>
-                             </div>
-                         </div>#}
+                <h4>
+                    {{ 'views.index.list'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
+                    <div class="pull-right action-buttons">
+                        <div class="btn-group pull-right">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-download-alt" style="margin-right: 0px;"></span>
+                            </button>
+                            <ul class="dropdown-menu slidedown">
+                                <li><a href="{{ path(config.export, { 'format': "xls" }) }}">EXCEL</a></li>
+                                <li><a href="{{ path(config.export, { 'format': "csv" }) }}">CSV</a></li>
+                                <li><a href="{{ path(config.export, { 'format': "json" }) }}">JSON</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </h4>
             </div>
             <div class="panel-body">
                 <table id="tablaPrincipal" class="table table-striped">
@@ -109,10 +119,12 @@
                 {#<div class="col-lg-12 col-md-12 col-sm-12 navigation">
                   {{ knp_pagination_render(entities) }}
                </div>#}
-                <div class="col-lg-8 col-md-8 col-sm-8">
-                    <a class="btn btn-success likepaginator" href="{{ path(config.new) }}">
-                        {{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
-                    </a>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <a class="btn btn-success " href="{{ path(config.new) }}">
+                            {{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -120,7 +132,7 @@
 {% endblock %}
 
 {% block javascript %}
-    <script src="{{ asset('bundles/mwsimpleadmincrud/js/datatable/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('bundles/mwsimpleadmincrud/js/datatable/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
     <script type="text/javascript">
@@ -145,17 +157,15 @@
                                 '<a href="' + Routing.generate('{{config.edit}}', {id: row[0]}) + '"><span class="glyphicon glyphicon-pencil"></span></a>',
                             ];
                             acciones = array.join("");
-
                             return acciones;
                         },
-                        "aTargets": [4]
+                        "aTargets": [{{config.fieldsindex|length}}]
                     },
                     {
                         "targets": [0],
                         "visible": false
                     }],
             });
-
         });
     </script>
 {% endblock %}

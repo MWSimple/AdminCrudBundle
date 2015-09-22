@@ -532,31 +532,40 @@ class DefaultController extends Controller {
         $table = $config['table'];
         $alias = $config['alias'];
         $select = array();
-        $leftJoin = array();
+        $join = array();
         $tipoArray = array();
         $concat = "";
         $groupBy = false;
+        $oneToMany = false;
+        $concatBoolean = false;
         foreach ($config['fieldsindex'] as $columnas) {
             //select
             if ($columnas['type'] == 'MANY_TO_ONE' || $columnas['type'] == 'ONE_TO_ONE' || $columnas['type'] == 'ONE_TO_MANY') {
-                $columnas['type'] = "string";
                 foreach ($columnas['campos'] as $key => $campos) {
                     if ($key == '0') {
                         $concat = $columnas['alias'] . '.' . $campos;
                     } else {
-                        $concat = ',' . $columnas['alias'] . '.' . $campos;
+                        $concat = $concat . ",' '," . $columnas['alias'] . '.' . $campos;
                     }
                 }
-
                 if ($columnas['type'] == 'ONE_TO_MANY') {
                     $concat = "GROUP_CONCAT(" . $concat . " SEPARATOR ',')";
                     $groupBy = true;
+                    $oneToMany = true;
+                } else {
+                    //si concat tiene varios campos lo concatena
+                    if (substr_count($concat, ',') > 0) {
+                        $concat = "concat(" . $concat . ")";
+                        $concatBoolean = true;
+                    }
                 }
+
                 $select[] = $concat;
-                $leftJoin[] = array(
+                $join[] = array(
                     'alias' => $columnas['alias'],
                     'join' => $columnas['join']
                 );
+                $columnas['type'] = "string";
             } else {
                 $select[] = $alias . '.' . $columnas['name'];
             }
@@ -579,8 +588,8 @@ class DefaultController extends Controller {
                 ->from($config['repository'], 'a')
         ;
 
-        if (count($leftJoin) > 0) {
-            foreach ($leftJoin as $j) {
+        if (count($join) > 0) {
+            foreach ($join as $j) {
                 if ($j['join'] == 'INNER') {
                     $qb->join("a." . $j['alias'], $j['alias']);
                 } else {
@@ -597,14 +606,16 @@ class DefaultController extends Controller {
                 ->getSQL()
         ;
 
-//$query = $em->getRepository($congiguraciones['repository'])->getIndex();
-        //separo el select y from
         $sql = str_replace("SELECT", "", $query);
 
         list($select, $from) = explode("FROM", $sql);
-
-        //select        
-        $queryColumn = explode(",", $select);
+        if ($oneToMany) {
+            $queryColumn = $this->separarQueryConConcatAndGroupConcat($select);
+        } else if ($concatBoolean) {
+            $queryColumn = $this->separarQueryConConcat($select);
+        } else {
+            $queryColumn = explode(",", $select);
+        }
         $columns = array();
         $contador = 0;
         foreach ($queryColumn as $col) {
@@ -629,10 +640,73 @@ class DefaultController extends Controller {
         $request = $this->getRequest();
         $response = new JsonResponse();
         $ssp = $this->container->get('mws_datatable_ssp');
-      
+
         $response->setData($ssp->simple($request, $table, $primaryKey, $columns, $from));
 
         return $response;
+    }
+
+    private function separarQueryConConcat($query) {
+        $config = $this->getConfig();
+        $queryColumn = array();
+        $tempRem = trim(str_replace("CONCAT", "|", $query));
+        $temp = $tempRem;
+        for ($i = 0; $i < count($config['fieldsindex']); $i++) {
+            if ($temp != "") {
+                if ($temp[0] == "|") {
+                    //caso con concat
+                    $temp = substr($temp, 0, strpos($temp, ")") + 2);
+                    $temp2 = trim(str_replace($temp, "", $tempRem));
+                    $temp = $temp . substr($temp2, 0, strpos($temp2, ",") + 1);
+                } else {
+                    //caso sin concat 
+                    if (strpos($temp, ","))
+                        $temp = substr($temp, 0, strpos($temp, ",") + 1);
+                }
+                $queryColumn[] = str_replace("|", "CONCAT", trim($temp, ','));
+                $temp = trim(str_replace($temp, "", $tempRem));
+                $tempRem = $temp;
+            }
+        }
+        return $queryColumn;
+    }
+
+    private function separarQueryConConcatAndGroupConcat($query) {
+        $config = $this->getConfig();
+        $queryColumn = array();
+        $tempRem = trim(str_replace("GROUP_CONCAT", "?", $query));
+        $tempRem = trim(str_replace("CONCAT", "|", $tempRem));
+       
+        $temp = $tempRem;
+        for ($i = 0; $i < count($config['fieldsindex']); $i++) {
+            if ($temp != "") {
+                if ($temp[0] == "|") {
+                    //caso con concat
+                    $temp = substr($temp, 0, strpos($temp, ")") + 2);
+                    $temp2 = trim(str_replace($temp, "", $tempRem));
+                    if (strpos($temp2, ","))
+                        $temp2 = substr($temp2, 0, strpos($temp2, ",") + 1);
+                    $temp = $temp . $temp2;
+                    $queryColumn[] = str_replace("|", "CONCAT", trim($temp, ','));
+                } else if ($temp[0] == "?") {
+                    //caso con Group concat
+                    $temp = substr($temp, 0, strpos($temp, ")") + 2);
+                    $temp2 = trim(str_replace($temp, "", $tempRem));
+                    if (strpos($temp2, ","))
+                        $temp2 = substr($temp2, 0, strpos($temp2, ",") + 1);
+                    $temp = $temp . $temp2;
+                    $queryColumn[] = str_replace("?", "GROUP_CONCAT", trim($temp, ','));
+                } else {
+                    //caso sin concat 
+                    if (strpos($temp, ","))
+                        $temp = substr($temp, 0, strpos($temp, ",") + 1);
+                    $queryColumn[] = trim($temp, ',');
+                }
+                $temp = trim(str_replace($temp, "", $tempRem));
+                $tempRem = $temp;
+            }
+        }
+        return $queryColumn;
     }
 
 }

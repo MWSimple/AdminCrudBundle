@@ -253,7 +253,7 @@ class SSP {
 			 $order
 			 $limit"
         );
-
+        
         // Data set length after filtering
         $resFilterLength = $this->sql_exec($db, "SELECT FOUND_ROWS()"
         );
@@ -396,7 +396,7 @@ class SSP {
      * @return array         Result from the query (all rows)
      */
     protected function sql_exec($db, $bindings, $sql = null) {
-
+       
         // Argument shifting
         if ($sql === null) {
             $sql = $bindings;
@@ -418,7 +418,7 @@ class SSP {
         } catch (PDOException $e) {
             $this->fatal("An SQL error occurred: " . $e->getMessage());
         }
-
+ 
         // Return all
         return $stmt->fetchAll();
     }

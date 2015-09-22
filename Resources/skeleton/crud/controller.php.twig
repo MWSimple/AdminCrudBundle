@@ -71,5 +71,9 @@ class {{ entity_class }}Controller extends Controller
     {%- for fieldName, field in associations %}
         {%- include 'crud/actions/autocomplete.php.twig' %}
     {%- endfor %}
+    
+  
+    {%- include 'crud/actions/datatable.php.twig' %}
+ 
 {% endblock class_body %}
 }

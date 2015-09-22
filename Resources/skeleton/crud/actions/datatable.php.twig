@@ -1,0 +1,24 @@
+
+    /**
+{% block phpdoc_method_header %}
+     * Datatable {{ entity }}.
+{% endblock phpdoc_method_header %}
+     *
+{% block phpdoc_method_annotations %}
+{% if 'annotation' == format %}
+     * @Route("/get-table/", name="{{ route_name_prefix }}_table")
+{% endif %}
+{% endblock phpdoc_method_annotations %}
+     */
+{% block method_definition %}
+    public function getDatatable()
+{% endblock method_definition %}
+    {
+{% block method_body %}
+        $response = parent::getTable();
+{% endblock method_body %}
+
+{% block method_return %}
+        return $response;
+{% endblock method_return %}
+    }

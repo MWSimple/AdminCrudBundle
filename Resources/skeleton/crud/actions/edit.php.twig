@@ -6,7 +6,7 @@
      *
 {% block phpdoc_method_annotations %}
 {% if 'annotation' == format %}
-     * @Route("/{id}/edit", name="{{ route_name_prefix }}_edit")
+     * @Route("/{id}/edit", name="{{ route_name_prefix }}_edit", options={"expose"=true})
      * @Method("GET")
      * @Template()
 {% endif %}
