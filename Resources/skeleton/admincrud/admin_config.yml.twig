@@ -34,19 +34,19 @@ fieldsindex:
         label: '{{ field.fieldName|capitalize }}'
         name: '{{ field.fieldName }}'
     {% if field.type == 1 %}
-        type: 'ONE_TO_ONE'
+    type: 'ONE_TO_ONE'
         alias: '{{ field.fieldName }}'
         campos: 
             - 'id'
         join: 'LEFT'
     {%- elseif field.type == 2 %}
-        type: 'MANY_TO_ONE'
+    type: 'MANY_TO_ONE'
         alias: '{{ field.fieldName }}'
         campos: 
             - 'id'
         join: 'LEFT'
     {%- elseif field.type == 4 %}
-        type: 'ONE_TO_MANY'
+    type: 'ONE_TO_MANY'
         alias: '{{ field.fieldName }}'
         campos: 
             - 'id'
