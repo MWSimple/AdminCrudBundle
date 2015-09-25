@@ -80,11 +80,21 @@ class SSP {
      */
     protected function db() {
         //Obtengo los parametros de la BD
+        $charset = "";
+        if ($this->container->hasParameter('database_name')) {
+            $nameBd = $this->container->getParameter('database_name');
+        } else {
+            $nameBd = getenv('SYMFONY__DATABASE__NAME');
+        }
+        if ($this->container->hasParameter('charset')) {
+            $charset = $this->container->getParameter('charset');
+        }
         $conn = array(
             'user' => $this->container->getParameter('database_user'),
             'pass' => $this->container->getParameter('database_password'),
-            'db' => $this->container->getParameter('database_name'),
-            'host' => $this->container->getParameter('database_host')
+            'db' => $nameBd,
+            'host' => $this->container->getParameter('database_host'),
+            'charset' => $charset
         );
         if (is_array($conn)) {
             return $this->sql_connect($conn);
@@ -253,7 +263,6 @@ class SSP {
 			 $order
 			 $limit"
         );
-        
         // Data set length after filtering
         $resFilterLength = $this->sql_exec($db, "SELECT FOUND_ROWS()"
         );
@@ -344,7 +353,7 @@ class SSP {
         // Total data set length
         $resTotalLength = $this->sql_exec($db, $bindings, "SELECT COUNT(`{$primaryKey}`)
 			 FROM   `$table` " .
-                        $whereAllSql
+                $whereAllSql
         );
         $recordsTotal = $resTotalLength[0][0];
 
@@ -372,8 +381,15 @@ class SSP {
      */
     protected function sql_connect($sql_details) {
         try {
+            $charset = "";
+            if (isset($sql_details['charset'])) {
+                if ($sql_details['charset'] != "") {
+                    $charset = "charset=" . $sql_details['charset'] . ';';
+                }
+            }
+
             $db = @new PDO(
-                    "mysql:host={$sql_details['host']};dbname={$sql_details['db']}", $sql_details['user'], $sql_details['pass'], array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION)
+                    "mysql:{$charset}host={$sql_details['host']};dbname={$sql_details['db']}", $sql_details['user'], $sql_details['pass'], array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION)
             );
         } catch (PDOException $e) {
             $this->fatal(
@@ -396,7 +412,7 @@ class SSP {
      * @return array         Result from the query (all rows)
      */
     protected function sql_exec($db, $bindings, $sql = null) {
-       
+
         // Argument shifting
         if ($sql === null) {
             $sql = $bindings;
@@ -418,7 +434,7 @@ class SSP {
         } catch (PDOException $e) {
             $this->fatal("An SQL error occurred: " . $e->getMessage());
         }
- 
+
         // Return all
         return $stmt->fetchAll();
     }

@@ -43,17 +43,91 @@ class DefaultController extends Controller {
 
     /**
      * Create query.
-     * @param string $repository
      * @return Doctrine\ORM\QueryBuilder $queryBuilder
      */
-    protected function createQuery($repository) {
+    protected function createQuery() {
+        $config = $this->getConfig();
+        $alias = $config['alias'];
+        $select = array();
+        $join = array();
+        $tipoArray = array();
+        $concat = "";
+        $groupBy = false;
+        $oneToMany = false;
+        $concatBoolean = false;
+        $contador = 0;
+        foreach ($config['fieldsindex'] as $columnas) {
+            //select
+            if ($columnas['type'] == 'MANY_TO_ONE' || $columnas['type'] == 'ONE_TO_ONE' || $columnas['type'] == 'ONE_TO_MANY') {
+                foreach ($columnas['campos'] as $key => $campos) {
+                    if ($key == '0') {
+                        $concat = $columnas['alias'] . '.' . $campos;
+                    } else {
+                        $concat = $concat . ",' '," . $columnas['alias'] . '.' . $campos;
+                    }
+                }
+                if ($columnas['type'] == 'ONE_TO_MANY') {
+                    $concat = "GROUP_CONCAT(" . $concat . " SEPARATOR ',')";
+                    $groupBy = true;
+                    $oneToMany = true;
+                } else {
+                    //si concat tiene varios campos lo concatena
+                    if (substr_count($concat, ',') > 0) {
+                        $concat = "concat(" . $concat . ")";
+                        $concatBoolean = true;
+                    }
+                }
+
+                $select[] = $concat;
+                $join[] = array(
+                    'alias' => $columnas['alias'],
+                    'join' => $columnas['join']
+                );
+                $columnas['type'] = "string";
+            } else {
+                $select[] = $alias . '.' . $columnas['name'];
+            }
+            //formato
+            if (isset($columnas['date']) || isset($columnas['datetime']) || isset($columnas['datetimetz'])) {
+                $formato = $columnas['date'];
+            } else {
+                $formato = "";
+            }
+            $tipoArray[] = array(
+                'column' => $contador,
+                'type' => $columnas['type'],
+                'format' => $formato
+            );
+            $contador++;
+        }
+
         $em = $this->getDoctrine()->getManager();
-        $queryBuilder = $em->getRepository($repository)
-                ->createQueryBuilder('a')
-                ->orderBy('a.id', 'DESC')
+        $qb = $em->createQueryBuilder();
+        $qb
+                ->select($select)
+                ->from($config['repository'], 'a')
         ;
 
-        return $queryBuilder;
+        if (count($join) > 0) {
+            foreach ($join as $j) {
+                if ($j['join'] == 'INNER') {
+                    $qb->join("a." . $j['alias'], $j['alias']);
+                } else {
+                    $qb->leftJoin("a." . $j['alias'], $j['alias']);
+                }
+            }
+            if ($groupBy) {
+                $qb->groupBy("a.id");
+            }
+        }
+
+        $array = array(
+            'query' => $qb,
+            'oneToMany' => $oneToMany,
+            'concatBoolean' => $concatBoolean,
+            'tipoArray' => $tipoArray
+        );
+        return $array;
     }
 
     /**
@@ -528,83 +602,20 @@ class DefaultController extends Controller {
 
     public function getTable() {
         $config = $this->getConfig();
-        // DB table to use
         $table = $config['table'];
-        $alias = $config['alias'];
-        $select = array();
-        $join = array();
-        $tipoArray = array();
-        $concat = "";
-        $groupBy = false;
+        $qb = $this->createQuery();
         $oneToMany = false;
         $concatBoolean = false;
-        foreach ($config['fieldsindex'] as $columnas) {
-            //select
-            if ($columnas['type'] == 'MANY_TO_ONE' || $columnas['type'] == 'ONE_TO_ONE' || $columnas['type'] == 'ONE_TO_MANY') {
-                foreach ($columnas['campos'] as $key => $campos) {
-                    if ($key == '0') {
-                        $concat = $columnas['alias'] . '.' . $campos;
-                    } else {
-                        $concat = $concat . ",' '," . $columnas['alias'] . '.' . $campos;
-                    }
-                }
-                if ($columnas['type'] == 'ONE_TO_MANY') {
-                    $concat = "GROUP_CONCAT(" . $concat . " SEPARATOR ',')";
-                    $groupBy = true;
-                    $oneToMany = true;
-                } else {
-                    //si concat tiene varios campos lo concatena
-                    if (substr_count($concat, ',') > 0) {
-                        $concat = "concat(" . $concat . ")";
-                        $concatBoolean = true;
-                    }
-                }
 
-                $select[] = $concat;
-                $join[] = array(
-                    'alias' => $columnas['alias'],
-                    'join' => $columnas['join']
-                );
-                $columnas['type'] = "string";
-            } else {
-                $select[] = $alias . '.' . $columnas['name'];
-            }
-            //formato
-            if (isset($columnas['date']) || isset($columnas['datetime']) || isset($columnas['datetimetz'])) {
-                $formato = $columnas['date'];
-            } else {
-                $formato = "";
-            }
-            $tipoArray[] = array(
-                'type' => $columnas['type'],
-                'format' => $formato
-            );
-        }
-
-        $em = $this->getDoctrine()->getManager();
-        $qb = $em->createQueryBuilder();
-        $qb
-                ->select($select)
-                ->from($config['repository'], 'a')
-        ;
-
-        if (count($join) > 0) {
-            foreach ($join as $j) {
-                if ($j['join'] == 'INNER') {
-                    $qb->join("a." . $j['alias'], $j['alias']);
-                } else {
-                    $qb->leftJoin("a." . $j['alias'], $j['alias']);
-                }
-            }
-            if ($groupBy) {
-                $qb->groupBy("a.id");
-            }
-        }
-
-        $query = $qb
+        $query = $qb['query']
                 ->getQuery()
                 ->getSQL()
         ;
+        if (isset($qb['oneToMany']))
+            $oneToMany = $qb['oneToMany'];
+
+        if (isset($qb['concatBoolean']))
+            $concatBoolean = $qb['concatBoolean'];
 
         $sql = str_replace("SELECT", "", $query);
 
@@ -618,19 +629,29 @@ class DefaultController extends Controller {
         }
         $columns = array();
         $contador = 0;
+        $tipoArrayExist = true;
+        if (isset($qb['tipoArray']) == false) {
+            $format = "";
+            $type = "string";
+            $tipoArrayExist = false;
+        }
         foreach ($queryColumn as $col) {
             list($identy, $name) = explode("AS", $col);
+
+            if ($tipoArrayExist)
+                list($type, $format) = $this->getTipoFormat($qb['tipoArray'], $contador);
 
             $columns[] = array(
                 'db' => $identy,
                 'dt' => $contador,
                 'name' => trim($name),
-                'type' => $tipoArray[$contador]['type'],
-                'format' => $tipoArray[$contador]['format']
+                'type' => $type,
+                'format' => $format
             );
+
             $contador++;
         }
-
+     
         //from 
         $from = " FROM " . $from;
 // Table's primary key
@@ -644,6 +665,24 @@ class DefaultController extends Controller {
         $response->setData($ssp->simple($request, $table, $primaryKey, $columns, $from));
 
         return $response;
+    }
+
+    private function getTipoFormat($array, $index) {
+        $type = "string";
+        $format = "";
+        foreach ($array as $a) {
+            if ($a['column'] == $index) {
+                if (isset($a['type'])) {
+                    $type = $a['type'];
+                }
+                if (isset($a['format'])) {
+                    $format = $a['format'];
+                }
+                break;
+            }
+        }
+
+        return array($type, $format);
     }
 
     private function separarQueryConConcat($query) {
@@ -676,7 +715,7 @@ class DefaultController extends Controller {
         $queryColumn = array();
         $tempRem = trim(str_replace("GROUP_CONCAT", "?", $query));
         $tempRem = trim(str_replace("CONCAT", "|", $tempRem));
-       
+
         $temp = $tempRem;
         for ($i = 0; $i < count($config['fieldsindex']); $i++) {
             if ($temp != "") {
