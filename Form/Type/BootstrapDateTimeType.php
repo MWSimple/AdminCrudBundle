@@ -1,4 +1,5 @@
 <?php
+
 namespace MWSimple\Bundle\AdminCrudBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
@@ -8,18 +9,22 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use MWSimple\Bundle\AdminCrudBundle\Form\DataTransformer\BootstrapDateTimeTransformer;
 
-class BootstrapDateTimeType extends AbstractType {
-    public function buildForm(FormBuilderInterface $builder, array $options) {
+class BootstrapDateTimeType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
         $transformer = new BootstrapDateTimeTransformer($options['widget_type']);
         $builder->addViewTransformer($transformer, true);
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options) {
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
         $view->vars['widget_type'] = $options['widget_type'];
         $view->vars['options'] = $this->createDisplayOptions($options);
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver) {
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
         $resolver->setDefaults(array(
             'widget' => 'single_text',
             'format' => 'yyyy-MM-dd HH:mm',
@@ -44,15 +49,18 @@ class BootstrapDateTimeType extends AbstractType {
         );
     }
 
-    public function getParent() {
+    public function getParent()
+    {
         return 'datetime';
     }
 
-    public function getName() {
+    public function getName()
+    {
         return 'bootstrapdatetime';
     }
 
-    private function createDisplayOptions($options = array()) {
+    private function createDisplayOptions($options = array())
+    {
         $displayOptions = array();
         $displayOptions['linkFormat'] = 'yyyy-mm-dd hh:ii';
         $displayOptions['autoclose'] = $options['autoclose'];
@@ -89,11 +97,10 @@ class BootstrapDateTimeType extends AbstractType {
                 $displayOptions['startView'] = 1;
                 $displayOptions['minView'] = 1;
                 $displayOptions['maxView'] = 1;
-                $displayOptions['initialDate'] = "00";
+                $displayOptions['initialDate'] = '00';
                 break;
         }
 
         return json_encode($displayOptions);
     }
-
 }

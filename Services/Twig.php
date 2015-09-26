@@ -1,4 +1,5 @@
 <?php
+
 namespace MWSimple\Bundle\AdminCrudBundle\Services;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -8,7 +9,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @author Gonzalo Alonso <gonkpo@gmail.com>
  */
-
 class Twig extends \Twig_Extension
 {
     protected $container;
@@ -22,7 +22,7 @@ class Twig extends \Twig_Extension
     {
         return array(
             'isActive' => new \Twig_Function_Method($this, 'isActive', array(
-                'is_safe' => array('html')
+                'is_safe' => array('html'),
             )),
         );
     }

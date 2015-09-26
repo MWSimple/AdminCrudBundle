@@ -5,17 +5,17 @@ namespace MWSimple\Bundle\AdminCrudBundle\Form\DataTransformer;
 use Symfony\Component\Form\DataTransformerInterface;
 
 /**
- * Entity to JSON Many To Many
+ * Entity to JSON Many To Many.
  */
 class EntityToJsonOneTransformer implements DataTransformerInterface
 {
     /**
-     * Class para conectarse
+     * Class para conectarse.
      */
     private $class;
 
     /**
-     * ObjectManager
+     * ObjectManager.
      */
     private $om;
 
@@ -34,7 +34,7 @@ class EntityToJsonOneTransformer implements DataTransformerInterface
     public function transform($entities)
     {
         if (!$entities) {
-            return null;
+            return;
         };
         $jsonResponse = array();
         if (is_array($entities)) {
@@ -42,13 +42,13 @@ class EntityToJsonOneTransformer implements DataTransformerInterface
                 $jsonResponse = $entities->map(function ($entity) {
                     return array(
                         'id' => $entity->getId(),
-                        'text' => $entity->__toString()
+                        'text' => $entity->__toString(),
                     );
                 })->toArray();
             } else {
                 $jsonResponse = array(
-                    'id'   => $entities->getId(),
-                    'text' => $entities->__toString()
+                    'id' => $entities->getId(),
+                    'text' => $entities->__toString(),
                 );
             }
         } else {
@@ -59,8 +59,8 @@ class EntityToJsonOneTransformer implements DataTransformerInterface
                 ->findOneBy(array('id' => $entities))
             ;
             $jsonResponse = array(
-                'id'   => $entity->getId(),
-                'text' => $entity->__toString()
+                'id' => $entity->getId(),
+                'text' => $entity->__toString(),
             );
         }
 

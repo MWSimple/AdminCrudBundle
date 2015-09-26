@@ -9,7 +9,7 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * FieldFile class
+ * FieldFile class.
  *
  * @author MWS
  */
@@ -21,10 +21,10 @@ class FieldFileType extends FileType
         $resolver->setOptional(array('file_path'));
         $resolver->setOptional(array('show_path'));
         $resolver->setDefaults(array(
-            'compound'   => false,
+            'compound' => false,
             'data_class' => 'Symfony\Component\HttpFoundation\File\File',
             'empty_data' => null,
-            'show_path'  => false,
+            'show_path' => false,
         ));
     }
 
@@ -33,7 +33,7 @@ class FieldFileType extends FileType
         parent::buildView($view, $form, $options);
 
         $view->vars = array_replace($view->vars, array(
-            'type'  => 'file',
+            'type' => 'file',
             'value' => '',
         ));
         if (array_key_exists('file_path', $options)) {
@@ -60,5 +60,4 @@ class FieldFileType extends FileType
     {
         return 'mws_field_file';
     }
-
 }

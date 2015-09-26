@@ -3,10 +3,9 @@
 namespace MWSimple\Bundle\AdminCrudBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
- * Class BootstrapDateTimeTransformer
+ * Class BootstrapDateTimeTransformer.
  */
 class BootstrapDateTimeTransformer implements DataTransformerInterface
 {
@@ -72,12 +71,12 @@ class BootstrapDateTimeTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
-        if (! ($value instanceof \DateTime)) {
+        if (!($value instanceof \DateTime)) {
             return $value;
         }
 
         if (is_null($value)) {
-            return null;
+            return;
         }
 
         if ($this->widgetType === 'date') {
@@ -85,14 +84,14 @@ class BootstrapDateTimeTransformer implements DataTransformerInterface
         }
 
         if ($this->widgetType === 'time' || $this->widgetType === 'day') {
-            $value = new \DateTime('1970-01-01 ' . $value->format('H:i:s'));
+            $value = new \DateTime('1970-01-01 '.$value->format('H:i:s'));
         }
 
         return $value;
     }
 
     /**
-     * Costructor
+     * Costructor.
      *
      * @param string $widgetType Widget Type
      */
@@ -100,5 +99,4 @@ class BootstrapDateTimeTransformer implements DataTransformerInterface
     {
         $this->widgetType = $widgetType;
     }
-
 }

@@ -12,7 +12,6 @@
 namespace MWSimple\Bundle\AdminCrudBundle\Generator;
 
 use Sensio\Bundle\GeneratorBundle\Generator\DoctrineFormGenerator;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 
@@ -33,11 +32,11 @@ class MWSimpleFormGenerator extends DoctrineFormGenerator
      */
     public function generate(BundleInterface $bundle, $entity, ClassMetadataInfo $metadata)
     {
-        $parts       = explode('\\', $entity);
+        $parts = explode('\\', $entity);
         $entityClass = array_pop($parts);
 
         $this->className = $entityClass.'Type';
-        $dirPath         = $bundle->getPath().'/Form';
+        $dirPath = $bundle->getPath().'/Form';
         $this->classPath = $dirPath.'/'.str_replace('\\', '/', $entity).'Type.php';
 
         if (file_exists($this->classPath)) {
@@ -50,16 +49,16 @@ class MWSimpleFormGenerator extends DoctrineFormGenerator
 
         $parts = explode('\\', $entity);
         array_pop($parts);
-        
+
         $this->renderFile('form/FormType.php.twig', $this->classPath, array(
-            'fields'           => $this->getFieldsFromMetadata($metadata),
-            'namespace'        => $bundle->getNamespace(),
+            'fields' => $this->getFieldsFromMetadata($metadata),
+            'namespace' => $bundle->getNamespace(),
             'entity_namespace' => implode('\\', $parts),
-            'entity_class'     => $entityClass,
-            'bundle'           => $bundle->getName(),
-            'form_class'       => $this->className,
-            'form_type_name'   => strtolower(str_replace('\\', '_', $bundle->getNamespace()).($parts ? '_' : '').implode('_', $parts).'_'.substr($this->className, 0, -4)),
-            'associations'     => $this->getFieldsAssociationFromMetadata($metadata),
+            'entity_class' => $entityClass,
+            'bundle' => $bundle->getName(),
+            'form_class' => $this->className,
+            'form_type_name' => strtolower(str_replace('\\', '_', $bundle->getNamespace()).($parts ? '_' : '').implode('_', $parts).'_'.substr($this->className, 0, -4)),
+            'associations' => $this->getFieldsAssociationFromMetadata($metadata),
         ));
     }
 
@@ -67,8 +66,9 @@ class MWSimpleFormGenerator extends DoctrineFormGenerator
      * Returns an array of fields. Fields can be both column fields and
      * association fields.
      *
-     * @param  ClassMetadataInfo $metadata
-     * @return array             $fields
+     * @param ClassMetadataInfo $metadata
+     *
+     * @return array $fields
      */
     private function getFieldsFromMetadata(ClassMetadataInfo $metadata)
     {
@@ -77,7 +77,7 @@ class MWSimpleFormGenerator extends DoctrineFormGenerator
         // Remove the primary key field if it's not managed manually
         if (!$metadata->isIdentifierNatural()) {
             foreach ($metadata->identifier as $id) {
-                if(array_key_exists($id, $fields)) {
+                if (array_key_exists($id, $fields)) {
                     unset($fields[$id]);
                 }
             }
@@ -90,8 +90,9 @@ class MWSimpleFormGenerator extends DoctrineFormGenerator
      * Returns an array of fields data (name and filter widget to use).
      * Fields can be both column fields and association fields.
      *
-     * @param  ClassMetadataInfo $metadata
-     * @return array             $fields
+     * @param ClassMetadataInfo $metadata
+     *
+     * @return array $fields
      */
     private function getFieldsAssociationFromMetadata(ClassMetadataInfo $metadata)
     {
@@ -99,14 +100,14 @@ class MWSimpleFormGenerator extends DoctrineFormGenerator
         foreach ($metadata->associationMappings as $value) {
             $parts = explode('\\', $value['targetEntity']);
             if (count($parts) === 3) {
-                $repository = $parts[0].":".$parts[2];
+                $repository = $parts[0].':'.$parts[2];
                 $actionName = $parts[2];
             } else {
-                if ($parts[1] == "Bundle") {
-                    $repository = $parts[0].$parts[2].":".$parts[4];
+                if ($parts[1] == 'Bundle') {
+                    $repository = $parts[0].$parts[2].':'.$parts[4];
                     $actionName = $parts[4];
                 } else {
-                    $repository = $parts[0].$parts[1].":".$parts[3];
+                    $repository = $parts[0].$parts[1].':'.$parts[3];
                     $actionName = $parts[3];
                 }
             }

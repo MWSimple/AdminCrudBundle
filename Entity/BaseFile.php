@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * Abstract File Base
+ * Abstract File Base.
  *
  * @ORM\MappedSuperclass
  * @ORM\HasLifecycleCallbacks
@@ -39,9 +39,10 @@ class BaseFile
     protected $uploadDir;
 
     /**
-     * Set filePath
+     * Set filePath.
      *
-     * @param  string $filePath
+     * @param string $filePath
+     *
      * @return File
      */
     public function setFilePath($filePath)
@@ -52,7 +53,7 @@ class BaseFile
     }
 
     /**
-     * Get FilePath
+     * Get FilePath.
      *
      * @return string
      */
@@ -62,7 +63,7 @@ class BaseFile
     }
 
     /**
-     * Set file
+     * Set file.
      *
      * @param UploadedFile $file
      */
@@ -77,7 +78,7 @@ class BaseFile
     }
 
     /**
-     * Get file
+     * Get file.
      *
      * @return UploadedFile
      */
@@ -110,7 +111,7 @@ class BaseFile
             $uploadDir = $this->getUploadDir();
         }
 
-        $path = __DIR__ . '/../../../../../../../web/' . $this->getUploadDir();
+        $path = __DIR__.'/../../../../../../../web/'.$this->getUploadDir();
         if (!file_exists($path)) {
             mkdir($path, 0755);
         }
@@ -130,7 +131,7 @@ class BaseFile
 
     public function getFixturesPath()
     {
-        return $this->getAbsolutePath() . 'web/filefixture/';
+        return $this->getAbsolutePath().'web/filefixture/';
     }
 
     /**
@@ -141,7 +142,7 @@ class BaseFile
         if (!is_null($this->getFile())) {
             // do whatever you want to generate a unique name
             $filename = sha1(uniqid(mt_rand(), true));
-            $this->filePath = $filename . '.' . $this->getFile()->guessExtension();
+            $this->filePath = $filename.'.'.$this->getFile()->guessExtension();
         }
     }
 
@@ -152,7 +153,7 @@ class BaseFile
     public function upload()
     {
         if (is_null($this->getFile())) {
-            return null;
+            return;
         }
 
         // if there is an error when moving the file, an exception will

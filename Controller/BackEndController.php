@@ -10,17 +10,17 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 /**
  * @Route("/")
  */
-class BackEndController extends Controller {
-
+class BackEndController extends Controller
+{
     /**
      * @Route("/", name="mws_admin_crud_menu")
      * @Method("GET")
      * @Template()
      */
-    public function indexAction() {
+    public function indexAction()
+    {
         return array(
             'config' => null,
         );
     }
-
 }

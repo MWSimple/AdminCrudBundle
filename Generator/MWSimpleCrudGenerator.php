@@ -19,7 +19,7 @@ class MWSimpleCrudGenerator extends DoctrineCrudGenerator
 
         try {
             $this->generateFormFilter($bundle, $entity, $metadata);
-        } catch (\RuntimeException $e ) {
+        } catch (\RuntimeException $e) {
             // form already exists
         }
 
@@ -29,7 +29,6 @@ class MWSimpleCrudGenerator extends DoctrineCrudGenerator
 
     /**
      * Generates the controller class only.
-     *
      */
     protected function generateControllerClass($forceOverwrite)
     {
@@ -51,16 +50,16 @@ class MWSimpleCrudGenerator extends DoctrineCrudGenerator
         }
 
         $this->renderFile('crud/controller.php.twig', $target, array(
-            'actions'           => $this->actions,
-            'route_prefix'      => $this->routePrefix,
+            'actions' => $this->actions,
+            'route_prefix' => $this->routePrefix,
             'route_name_prefix' => $this->routeNamePrefix,
-            'bundle'            => $this->bundle->getName(),
-            'entity'            => $this->entity,
-            'entity_class'      => $entityClass,
-            'namespace'         => $this->bundle->getNamespace(),
-            'entity_namespace'  => $entityNamespace,
-            'format'            => $this->format,
-            'associations'      => $this->getFieldsAssociationFromMetadata($this->metadata),
+            'bundle' => $this->bundle->getName(),
+            'entity' => $this->entity,
+            'entity_class' => $entityClass,
+            'namespace' => $this->bundle->getNamespace(),
+            'entity_namespace' => $entityNamespace,
+            'format' => $this->format,
+            'associations' => $this->getFieldsAssociationFromMetadata($this->metadata),
         ));
     }
 
@@ -75,11 +74,11 @@ class MWSimpleCrudGenerator extends DoctrineCrudGenerator
      */
     public function generateFormFilter(BundleInterface $bundle, $entity, ClassMetadataInfo $metadata)
     {
-        $parts       = explode('\\', $entity);
+        $parts = explode('\\', $entity);
         $entityClass = array_pop($parts);
 
         $this->className = $entityClass.'FilterType';
-        $dirPath         = $bundle->getPath().'/Form';
+        $dirPath = $bundle->getPath().'/Form';
         $this->classPath = $dirPath.'/'.str_replace('\\', '/', $entity).'FilterType.php';
 
         if (file_exists($this->classPath)) {
@@ -94,13 +93,13 @@ class MWSimpleCrudGenerator extends DoctrineCrudGenerator
         array_pop($parts);
 
         $this->renderFile('form/FormFilterType.php.twig', $this->classPath, array(
-            'fields_data'      => $this->getFieldsDataFromMetadata($metadata),
-            'namespace'        => $bundle->getNamespace(),
+            'fields_data' => $this->getFieldsDataFromMetadata($metadata),
+            'namespace' => $bundle->getNamespace(),
             'entity_namespace' => implode('\\', $parts),
-            'entity_class'     => $entityClass,
-            'bundle'           => $bundle->getName(),
-            'form_class'       => $this->className,
-            'form_filter_type_name'   => strtolower(str_replace('\\', '_', $bundle->getNamespace()).($parts ? '_' : '').implode('_', $parts).'_'.$this->className),
+            'entity_class' => $entityClass,
+            'bundle' => $bundle->getName(),
+            'form_class' => $this->className,
+            'form_filter_type_name' => strtolower(str_replace('\\', '_', $bundle->getNamespace()).($parts ? '_' : '').implode('_', $parts).'_'.$this->className),
         ));
     }
 
@@ -151,6 +150,7 @@ class MWSimpleCrudGenerator extends DoctrineCrudGenerator
      * Fields can be both column fields and association fields.
      *
      * @param ClassMetadataInfo $metadata
+     *
      * @return array $fields
      */
     private function getFieldsDataFromMetadata(ClassMetadataInfo $metadata)
@@ -180,12 +180,12 @@ class MWSimpleCrudGenerator extends DoctrineCrudGenerator
         $entityClass = array_pop($parts);
 
         $this->renderFile('admincrud/admin_config.yml.twig', $dirFileConf.$entityClass.'.yml', array(
-            'bundle'            => $this->bundle->getName(),
-            'namespace'         => $this->bundle->getNamespace(),
-            'entity'            => $this->entity,
-            'entity_class'      => $entityClass,
-            'fields'            => $this->metadata->fieldMappings,
-            'associations'      => $this->metadata->associationMappings,
+            'bundle' => $this->bundle->getName(),
+            'namespace' => $this->bundle->getNamespace(),
+            'entity' => $this->entity,
+            'entity_class' => $entityClass,
+            'fields' => $this->metadata->fieldMappings,
+            'associations' => $this->metadata->associationMappings,
             'route_name_prefix' => $this->routeNamePrefix,
         ));
     }
@@ -195,6 +195,7 @@ class MWSimpleCrudGenerator extends DoctrineCrudGenerator
      * Fields can be both column fields and association fields.
      *
      * @param ClassMetadataInfo $metadata
+     *
      * @return array $fields
      */
     private function getFieldsAssociationFromMetadata(ClassMetadataInfo $metadata)
@@ -202,15 +203,15 @@ class MWSimpleCrudGenerator extends DoctrineCrudGenerator
         $associations = array();
         foreach ($metadata->associationMappings as $value) {
             $parts = explode('\\', $value['targetEntity']);
-            if (count($parts) === 3) {  
-                $repository = $parts[0].":".$parts[2];
+            if (count($parts) === 3) {
+                $repository = $parts[0].':'.$parts[2];
                 $actionName = $parts[2];
             } else {
-                if ($parts[1] == "Bundle") {
-                    $repository = $parts[0].$parts[2].":".$parts[4];
+                if ($parts[1] == 'Bundle') {
+                    $repository = $parts[0].$parts[2].':'.$parts[4];
                     $actionName = $parts[4];
                 } else {
-                    $repository = $parts[0].$parts[1].":".$parts[3];
+                    $repository = $parts[0].$parts[1].':'.$parts[3];
                     $actionName = $parts[3];
                 }
             }

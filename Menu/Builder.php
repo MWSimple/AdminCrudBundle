@@ -5,10 +5,10 @@ namespace MWSimple\Bundle\AdminCrudBundle\Menu;
 use Knp\Menu\FactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerAware;
 
-class Builder extends ContainerAware {
-
-    public function adminMenu(FactoryInterface $factory, array $options) {
-
+class Builder extends ContainerAware
+{
+    public function adminMenu(FactoryInterface $factory, array $options)
+    {
         $array = $this->container->get('security.context')->getToken()->getRoles();
 
         // $array = array();
@@ -42,11 +42,11 @@ class Builder extends ContainerAware {
                     } else {
                         $menu->addChild($m['name']);
                     }
-                    if (!empty($m["icon"])) {
-                        $menu[$m['name']]->setAttribute('icon', $m["icon"]);
+                    if (!empty($m['icon'])) {
+                        $menu[$m['name']]->setAttribute('icon', $m['icon']);
                     }
-                    if (!empty($m["id"])) {
-                        $menu[$m['name']]->setAttribute('id', $m["id"]);
+                    if (!empty($m['id'])) {
+                        $menu[$m['name']]->setAttribute('id', $m['id']);
                     }
 
                     if (!empty($m['subMenu'])) {
@@ -61,5 +61,4 @@ class Builder extends ContainerAware {
 
         return $menu;
     }
-
 }

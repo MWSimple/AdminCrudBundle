@@ -3,7 +3,6 @@
 namespace MWSimple\Bundle\AdminCrudBundle\Form\Type;
 
 use Lexik\Bundle\FormFilterBundle\Filter\FilterOperands;
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -26,7 +25,6 @@ class TextFilterLikeType extends AbstractType
         if (true === $options['compound']) {
             $builder->add('condition_pattern', 'choice', $options['choice_options']);
             $builder->add('text', 'text', $options['text_options']);
-
         } else {
             $builder->setAttribute('filter_options', array(
                 'condition_pattern' => $options['condition_pattern'],
@@ -43,27 +41,27 @@ class TextFilterLikeType extends AbstractType
 
         $resolver
             ->setDefaults(array(
-                'required'               => false,
-                'condition_pattern'      => FilterOperands::STRING_EQUALS,
-                'compound'               => function (Options $options) {
+                'required' => false,
+                'condition_pattern' => FilterOperands::STRING_EQUALS,
+                'compound' => function (Options $options) {
                     return $options['condition_pattern'] == FilterOperands::OPERAND_SELECTOR;
                 },
-                'text_options'           => array(
+                'text_options' => array(
                     'required' => false,
-                    'trim'     => true,
+                    'trim' => true,
                 ),
-                'choice_options'         => array(
-                    'choices'  => FilterOperands::getStringOperandsChoices(),
+                'choice_options' => array(
+                    'choices' => FilterOperands::getStringOperandsChoices(),
                     'required' => false,
-                    'translation_domain' => 'LexikFormFilterBundle'
+                    'translation_domain' => 'LexikFormFilterBundle',
                 ),
                 'data_extraction_method' => function (Options $options) {
                     return $options['compound'] ? 'text' : 'default';
                 },
             ))
             ->setAllowedValues(array(
-                'data_extraction_method' => array('text','default'),
-                'condition_pattern'      => FilterOperands::getStringOperands(true),
+                'data_extraction_method' => array('text', 'default'),
+                'condition_pattern' => FilterOperands::getStringOperands(true),
             ))
         ;
     }

@@ -2,7 +2,7 @@
 
 namespace MWSimple\Bundle\AdminCrudBundle\Form\Type;
 
-/**
+/*
  * This file is part of the GenemuFormBundle package.
  *
  * (c) Olivier Chauvel <olivier@generation-multiple.com>
@@ -18,12 +18,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\OptionsResolver\Options;
-
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
- * Select2Type to JQueryLib
+ * Select2Type to JQueryLib.
  *
  * @author Bilal Amarni <bilal.amarni@gmail.com>
  * @author Chris Tickner <chris.tickner@gmail.com>
@@ -31,8 +29,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 class Select2Type extends AbstractType
 {
     /**
-     * @var ObjectManager
-     */
+      * @var ObjectManager
+      */
      private $om;
 
     /**
@@ -77,18 +75,18 @@ class Select2Type extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $defaults = array(
-            'placeholder'        => 'Ingrese valor...',
-            'allowClear'         => false,
+            'placeholder' => 'Ingrese valor...',
+            'allowClear' => false,
             'minimumInputLength' => 0,
-            'width'              => 'off',
-            'multiple'           => true,
-            'locked'             => false,
+            'width' => 'off',
+            'multiple' => true,
+            'locked' => false,
         );
 
         $resolver
             ->setDefaults(array(
-                'configs'     => $defaults,
-                'url'         => '',
+                'configs' => $defaults,
+                'url' => '',
                 'placeholder' => '',
                 )
             )

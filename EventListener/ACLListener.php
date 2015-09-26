@@ -1,13 +1,14 @@
 <?php
+
 namespace MWSimple\Bundle\AdminCrudBundle\EventListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
 
 class ACLListener
 {
-	private $container;
+    private $container;
 
-	public function __construct($container)
+    public function __construct($container)
     {
         $this->container = $container;
     }
@@ -15,7 +16,7 @@ class ACLListener
     public function preRemove(LifecycleEventArgs $args)
     {
         $control = false;
-        $entity  = $args->getEntity();
+        $entity = $args->getEntity();
 
         $aclConf = $this->container->hasParameter('mw_simple_admin_crud.acl') ?
             $this->container->getParameter('mw_simple_admin_crud.acl') : null;
@@ -32,11 +33,12 @@ class ACLListener
 
     protected function isInstanceOf($object, Array $classnames)
     {
-        foreach($classnames as $classname) {
-            if($object instanceof $classname){
+        foreach ($classnames as $classname) {
+            if ($object instanceof $classname) {
                 return true;
             }
         }
+
         return false;
     }
 }

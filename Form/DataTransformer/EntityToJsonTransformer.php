@@ -6,17 +6,17 @@ use Symfony\Component\Form\DataTransformerInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Entity to JSON Many To Many
+ * Entity to JSON Many To Many.
  */
 class EntityToJsonTransformer implements DataTransformerInterface
 {
     /**
-     * Class para conectarse
+     * Class para conectarse.
      */
     private $class;
 
     /**
-     * ObjectManager
+     * ObjectManager.
      */
     private $om;
 
@@ -35,13 +35,13 @@ class EntityToJsonTransformer implements DataTransformerInterface
     public function transform($entities)
     {
         if (!$entities) {
-            return null;
+            return;
         };
         $jsonResponse = array();
         $jsonResponse = $entities->map(function ($entity) {
             return array(
                 'id' => $entity->getId(),
-                'text' => $entity->__toString()
+                'text' => $entity->__toString(),
             );
         })->toArray();
 
@@ -67,7 +67,7 @@ class EntityToJsonTransformer implements DataTransformerInterface
             ;
             if (!$entitiesResponse->contains($entity)) {
                 $entitiesResponse->add($entity);
-           }
+            }
         }
 
         return $entitiesResponse;

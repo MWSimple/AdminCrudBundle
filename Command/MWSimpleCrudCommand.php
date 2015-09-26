@@ -86,7 +86,7 @@ class MWSimpleCrudCommand extends GenerateDoctrineCrudCommand
 
         $question = new Question($questionHelper->getQuestion('The Entity shortcut name', $input->getOption('entity')), $input->getOption('entity'));
         $question->setValidator(array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateEntityName'));
-        
+
         $autocompleter = new EntitiesAutoCompleter($this->getContainer()->get('doctrine')->getManager());
         $autocompleteEntities = $autocompleter->getSuggestions();
         $question->setAutocompleterValues($autocompleteEntities);
@@ -129,8 +129,8 @@ class MWSimpleCrudCommand extends GenerateDoctrineCrudCommand
             '',
             $this->getHelper('formatter')->formatBlock('Summary before generation', 'bg=blue;fg=white', true),
             '',
-            sprintf("You are going to generate a CRUD controller for \"<info>%s:%s</info>\"", $bundle, $entity),
-            sprintf("using the \"<info>%s</info>\" format.", $format),
+            sprintf('You are going to generate a CRUD controller for "<info>%s:%s</info>"', $bundle, $entity),
+            sprintf('using the "<info>%s</info>" format.', $format),
             '',
         ));
     }
