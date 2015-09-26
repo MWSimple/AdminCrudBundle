@@ -146,25 +146,26 @@
                 "processing": true,
                 "serverSide": true,
                 "ajax": {
-                    "url": "{{path( config.getTable )}}",
+                    "url": "{{ path(config.getTable) }}",
                 },
                 "aoColumnDefs": [
                     {
                         "mRender": function (data, type, row) {
                             var acciones = "";
                             var array = [
-                                '<a href="' + Routing.generate('{{config.show}}', {id: row[0]}) + '"><span class="glyphicon glyphicon-search"></span></a>',
-                                '<a href="' + Routing.generate('{{config.edit}}', {id: row[0]}) + '"><span class="glyphicon glyphicon-pencil"></span></a>',
+                                '<a href="' + Routing.generate('{{ config.show }}', {id: row[0]}) + '"><span class="glyphicon glyphicon-search"></span></a>',
+                                '<a href="' + Routing.generate('{{ config.edit }}', {id: row[0]}) + '"><span class="glyphicon glyphicon-pencil"></span></a>',
                             ];
                             acciones = array.join("");
                             return acciones;
                         },
-                        "aTargets": [{{config.fieldsindex|length}}]
+                        "aTargets": [{{ config.fieldsindex|length }}]
                     },
                     {
                         "targets": [0],
                         "visible": false
-                    }],
+                    }
+                ],
             });
         });
     </script>
