@@ -172,12 +172,18 @@ class DefaultController extends Controller
             ->add('filter', 'submit', array(
                 'translation_domain' => 'MWSimpleAdminCrudBundle',
                 'label'              => 'views.index.filter',
-                'attr'               => array('class' => 'btn btn-success col-lg-1'),
+                'attr'               => array(
+                    'class' => 'form-control btn-success',
+                    'col'   => 'col-lg-2',
+                ),
             ))
             ->add('reset', 'submit', array(
                 'translation_domain' => 'MWSimpleAdminCrudBundle',
                 'label'              => 'views.index.reset',
-                'attr'               => array('class' => 'reset_submit_filters btn btn-danger col-lg-1 col-lg-offset-1'),
+                'attr'               => array(
+                    'class' => 'form-control reset_submit_filters btn-danger',
+                    'col'   => 'col-lg-2 col-lg-offset-1',
+                ),
             ))
         ;
         
@@ -235,26 +241,22 @@ class DefaultController extends Controller
         ));
 
         $form
-            ->add(
-                'save', 'submit', array(
+            ->add('save', 'submit', array(
                 'translation_domain' => 'MWSimpleAdminCrudBundle',
                 'label'              => 'views.new.save',
                 'attr'               => array(
                     'class' => 'form-control btn-success',
                     'col'   => 'col-lg-2',
                 )
-                )
-            )
-            ->add(
-                'saveAndAdd', 'submit', array(
+            ))
+            ->add('saveAndAdd', 'submit', array(
                 'translation_domain' => 'MWSimpleAdminCrudBundle',
                 'label'              => 'views.new.saveAndAdd',
                 'attr'               => array(
                     'class' => 'form-control btn-primary',
                     'col'   => 'col-lg-3',
                 )
-                )
-            )
+            ))
         ;
 
         return $form;

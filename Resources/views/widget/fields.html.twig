@@ -15,7 +15,7 @@
 {%- endblock textarea_widget %}
 
 {% block submit_widget -%}
-    {% set attr = attr|merge({class: (attr.class|default('') ~ ' btn')|trim}) %}
+    {% set attr = attr|merge({class: (attr.class|default(''))|trim}) %}
     {% if attr.col is defined %}
         <div class="{{ attr.col }}">
     {% endif %}
