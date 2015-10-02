@@ -119,13 +119,15 @@
                 {#<div class="col-lg-12 col-md-12 col-sm-12 navigation">
                   {{ knp_pagination_render(entities) }}
                </div>#}
-                <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12">
-                        <a class="btn btn-success " href="{{ path(config.new) }}">
-                            {{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
-                        </a>
+                {% block panelFooter %}
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <a class="btn btn-success " href="{{ path(config.new) }}">
+                                {{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
+                            </a>
+                        </div>
                     </div>
-                </div>
+                {% endblock %}
             </div>
         </div>
     </div>
@@ -145,6 +147,7 @@
             table = $('#tablaPrincipal').dataTable({
                 "processing": true,
                 "serverSide": true,
+                "order": [[0, "desc"]],
                 "ajax": {
                     "url": "{{ path(config.getTable) }}",
                 },
@@ -164,7 +167,7 @@
                     {
                         "targets": [0],
                         "visible": false
-                    }
+                    },
                 ],
             });
         });
