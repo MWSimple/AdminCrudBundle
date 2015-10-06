@@ -5,17 +5,15 @@ namespace MWSimple\Bundle\AdminCrudBundle\Menu;
 use Knp\Menu\FactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerAware;
 
-class Builder extends ContainerAware
-{
-    public function adminMenu(FactoryInterface $factory, array $options)
-    {
-        $array = $this->container->get('security.context')->getToken()->getRoles();
+class Builder extends ContainerAware {
 
-        // $array = array();
-        // foreach ($arrayRoles as $valor) {
-        //     array_push($array, $valor->getName());
-        // }
+    public function adminMenu(FactoryInterface $factory, array $options) {
+        $arrayRoles = $this->container->get('security.context')->getToken()->getRoles();
 
+        $array = array();
+        foreach ($arrayRoles as $valor) {
+            array_push($array, $valor->getRole());
+        }
         $arrayMenu = $this->container->getParameter('mw_simple_admin_crud.menu');
 
         $menu = $factory->createItem('root');
@@ -33,6 +31,7 @@ class Builder extends ContainerAware
                 }
                 foreach ($m['roles'] as $r) {
                     if (in_array($r, $array)) {
+
                         $exist = true;
                     }
                 }
@@ -61,4 +60,5 @@ class Builder extends ContainerAware
 
         return $menu;
     }
+
 }
