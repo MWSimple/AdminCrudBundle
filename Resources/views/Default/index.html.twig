@@ -17,27 +17,28 @@
     {% endif %}
     <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="filters-right">
-            <a class="btn btn-success" href="{{ path(config.new) }}">
-                {{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
-            </a>
-            <!-- Single button -->
-            <div class="btn-group">
-                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    {{ 'views.index.export'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }} <span class="caret"></span>
-                </button>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="{{ path(config.export, { 'format': "xls" }) }}">EXCEL</a></li>
-                <li><a href="{{ path(config.export, { 'format': "csv" }) }}">CSV</a></li>
-                <li><a href="{{ path(config.export, { 'format': "json" }) }}">JSON</a></li>
-              </ul>
-            </div>
-            <a id="reset_index_filters" class="btn btn-danger">
-                {{ 'views.index.reset'|trans({}, 'MWSimpleAdminCrudBundle') }}
-            </a>
-            <a class="btn btn-primary dropdown-toggle" data-toggle="collapse" data-target="#filters">
-                {{ 'views.index.filters'|trans({}, 'MWSimpleAdminCrudBundle') }}
-                <span class="caret"></span>
-            </a>
+            {% block buttons %}
+                <a class="btn btn-success" href="{{ path(config.new) }}">
+                    {{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
+                </a>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        {{ 'views.index.export'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }} <span class="caret"></span>
+                    </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ path(config.export, { 'format': "xls" }) }}">EXCEL</a></li>
+                    <li><a href="{{ path(config.export, { 'format': "csv" }) }}">CSV</a></li>
+                    <li><a href="{{ path(config.export, { 'format': "json" }) }}">JSON</a></li>
+                  </ul>
+                </div>
+                <a id="reset_index_filters" class="btn btn-danger">
+                    {{ 'views.index.reset'|trans({}, 'MWSimpleAdminCrudBundle') }}
+                </a>
+                <a class="btn btn-primary dropdown-toggle" data-toggle="collapse" data-target="#filters">
+                    {{ 'views.index.filters'|trans({}, 'MWSimpleAdminCrudBundle') }}
+                    <span class="caret"></span>
+                </a>
+            {% endblock %}
         </div>
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12">

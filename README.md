@@ -156,9 +156,14 @@ php app/console mwsimple:generate:admincrud
 ```
 ## List
 
-### New block override actions
+### New block override Index list
+#### actions
 ```twig
     {% block actions %}{% endblock %}
+```
+#### buttons
+```twig
+    {% block buttons %}{% endblock %}
 ```
 
 ### New Export list to csv.
