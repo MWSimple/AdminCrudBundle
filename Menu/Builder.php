@@ -7,6 +7,8 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 
 class Builder extends ContainerAware {
 
+    private $roles;
+
     public function adminMenu(FactoryInterface $factory, array $options) {
         $arrayRoles = $this->container->get('security.context')->getToken()->getRoles();
 
@@ -14,51 +16,74 @@ class Builder extends ContainerAware {
         foreach ($arrayRoles as $valor) {
             array_push($array, $valor->getRole());
         }
+        $this->roles = $array;
         $arrayMenu = $this->container->getParameter('mw_simple_admin_crud.menu');
 
         $menu = $factory->createItem('root');
-        if (!empty($arrayMenu['setting']['id'])) {
-            $menu->setChildrenAttribute('id', $arrayMenu['setting']['id']);
-        }
-        if (!empty($arrayMenu['setting']['class'])) {
-            $menu->setChildrenAttribute('class', $arrayMenu['setting']['class']);
-        }
-        foreach ($arrayMenu as $key => $m) {
-            if ($key != 'setting') {
-                $exist = false;
-                if (empty($m['roles'])) {
-                    $exist = true;
-                }
-                foreach ($m['roles'] as $r) {
-                    if (in_array($r, $array)) {
+        $this->setConfiguracionMenuRoot($menu, $arrayMenu);
 
-                        $exist = true;
-                    }
-                }
+        $this->crearChildren($menu, $arrayMenu);
+
+        return $menu;
+    }
+
+    public function crearChildren(&$menu, $children) {
+
+        foreach ($children as $key => $m) {
+            if ($key != 'setting') {
+                //controla si tiene el role para dibujar el menu
+                $exist = $this->contralRole($m['roles']);
+
                 if ($exist) {
-                    if (!empty($m['url'])) {
+
+                    if (isset($m['url'])) {
                         $menu->addChild($m['name'], array('route' => $m['url']));
                     } else {
                         $menu->addChild($m['name']);
                     }
-                    if (!empty($m['icon'])) {
-                        $menu[$m['name']]->setAttribute('icon', $m['icon']);
-                    }
-                    if (!empty($m['id'])) {
-                        $menu[$m['name']]->setAttribute('id', $m['id']);
+                    if (isset($m['setting'])) {
+                        $this->setConfiguracionMenuChildren($menu, $m);
                     }
 
                     if (!empty($m['subMenu'])) {
-                        foreach ($m['subMenu'] as $subMenu) {
-                            $menu[$m['name']]->setChildrenAttribute('class', 'dropdown-menu');
-                            $menu[$m['name']]->addChild($subMenu['name'], array('route' => $subMenu['url']));
-                        }
+                        if (isset($m['subMenu']['setting']))
+                            $this->setConfiguracionMenuRoot($menu[$m['name']], $m['subMenu']);
+                        $this->crearChildren($menu[$m['name']], $m['subMenu']);
                     }
                 }
             }
         }
+    }
 
-        return $menu;
+    public function setConfiguracionMenuRoot(&$menu, $configuracion) {
+
+        $settings = array_keys($configuracion['setting']);
+        foreach ($settings as $setting) {
+            if (!empty($configuracion['setting'][$setting]))
+                $menu->setChildrenAttribute($setting, $configuracion['setting'][$setting]);
+        }
+    }
+
+    public function setConfiguracionMenuChildren(&$menu, $configuracion) {
+        $settings = array_keys($configuracion['setting']);
+        foreach ($settings as $setting) {
+            if (!empty($configuracion['setting'][$setting]))
+                $menu[$configuracion['name']]->setAttribute($setting, $configuracion['setting'][$setting]);
+        }
+    }
+
+    public function contralRole($role) {
+        $exist = false;
+        if (!empty($role)) {
+            foreach ($role as $r) {
+                if (in_array($r, $this->roles)) {
+
+                    $exist = true;
+                }
+            }
+        }
+
+        return $exist;
     }
 
 }
