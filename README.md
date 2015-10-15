@@ -106,18 +106,27 @@ knp_menu:
 
 mw_simple_admin_crud:
     menu:
+        setting: { class: nav nav-sidebar}
         child: { name: inicio, url: mws_admin_crud_menu }
-        #child: { name: inicio, url: mws_admin_crud_menu, icon: glyphicon glyphicon-home }
+        #child: { name: inicio, url: mws_admin_crud_menu, setting: { class: classLi} }
         #child2:  
         #    name: help
         #    url: null
         #    subMenu:
-        #         indice: { name: indice , url: admin_indice, icon: glyphicon glyphicon-home }
+        #         child3: 
+        #           name: Usuario
+        #           url: admin_user 
+        #           roles:
+        #               ['ROLE_SUPERADMIN']
+        #    roles:
+        #         ['ROLE_SUPERADMIN']
+        #    setting: { class: classLi}
         #child3: 
         #    name: Usuario
         #    url: admin_user 
         #    roles:
         #        ['ROLE_SUPERADMIN']
+        #    setting: { class: classLi}
 ```
 
 ### Configuration routing admin

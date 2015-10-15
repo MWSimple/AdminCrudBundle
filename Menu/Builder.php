@@ -32,8 +32,11 @@ class Builder extends ContainerAware {
         foreach ($children as $key => $m) {
             if ($key != 'setting') {
                 //controla si tiene el role para dibujar el menu
-                $exist = $this->contralRole($m['roles']);
-
+                if (empty($m['roles'])) {
+                    $exist = true;
+                } else {
+                    $exist = $this->contralRole($m['roles']);
+                }
                 if ($exist) {
 
                     if (isset($m['url'])) {
