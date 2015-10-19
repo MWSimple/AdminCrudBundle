@@ -138,7 +138,6 @@
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
     <script type="text/javascript">
-        $('.tooltips').tooltip();
         var table;
         $("#reset_index_filters").click(function () {
             $(".reset_submit_filters").trigger("click");
@@ -156,8 +155,8 @@
                         "mRender": function (data, type, row) {
                             var acciones = "";
                             var array = [
-                                '<a href="' + Routing.generate('{{ config.show }}', {id: row[0]}) + '"><span class="glyphicon glyphicon-search"></span></a>',
-                                '<a href="' + Routing.generate('{{ config.edit }}', {id: row[0]}) + '"><span class="glyphicon glyphicon-pencil"></span></a>',
+                                '<a  href="' + Routing.generate('{{ config.show }}', {id: row[0]}) + '" title="{{ 'views.actions.show'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}" data-toggle="tooltip" data-placement="top" ><span class="glyphicon glyphicon-search"></span></a>',
+                                '<a  href="' + Routing.generate('{{ config.edit }}', {id: row[0]}) + '" title="{{ 'views.actions.edit'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}" data-toggle="tooltip" data-placement="top" ><span class="glyphicon glyphicon-pencil"></span></a>',
                             ];
                             acciones = array.join("");
                             return acciones;
@@ -169,7 +168,11 @@
                         "visible": false
                     },
                 ],
+                "fnDrawCallback": function (oSettings) {
+                      $('[data-toggle="tooltip"]').tooltip();
+                }
             });
         });
+
     </script>
 {% endblock %}
