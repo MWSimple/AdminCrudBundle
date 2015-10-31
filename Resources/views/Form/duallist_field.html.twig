@@ -35,7 +35,7 @@
                     {%- for child in form if not child.vars.checked %}
                         <li class="list-group-item" data-id="{{ child.vars.value }}">
                             {{ child.vars.label }}
-                            <input type="checkbox" id="{{ child.vars.id }}" name="{{ child.vars.full_name }}" {% if child.vars.value is defined %}value="{{ child.vars.value }}"{% endif %}{% if child.vars.checked %} checked="checked"{% endif %} style="display: true;" />
+                            <input type="checkbox" id="{{ child.vars.id }}" name="{{ child.vars.full_name }}" {% if child.vars.value is defined %}value="{{ child.vars.value }}"{% endif %}{% if child.vars.checked %} checked="checked"{% endif %} style="display: none;" />
                         </li>
                     {% endfor -%}
                 </ul>
@@ -71,7 +71,7 @@
                     {%- for child in form if child.vars.checked %}
                         <li class="list-group-item" data-id="{{ child.vars.value }}">
                             {{ child.vars.label }}
-                            <input type="checkbox" id="{{ child.vars.id }}" name="{{ child.vars.full_name }}" {% if child.vars.value is defined %}value="{{ child.vars.value }}"{% endif %}{% if child.vars.checked %} checked="checked"{% endif %} style="display: true;" />
+                            <input type="checkbox" id="{{ child.vars.id }}" name="{{ child.vars.full_name }}" {% if child.vars.value is defined %}value="{{ child.vars.value }}"{% endif %}{% if child.vars.checked %} checked="checked"{% endif %} style="display: none;" />
                         </li>
                     {% endfor -%}
                 </ul>
