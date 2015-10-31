@@ -1,4 +1,4 @@
-{% block duallist_widget %}
+{%- block duallist_widget -%}
     <style type="text/css">
         {{ '.dual-list-' ~ form.vars.name }} {{ '.list-' ~ form.vars.name }} {
             margin-top: 8px;
@@ -15,7 +15,7 @@
     </style>
 
     <br />
-    <div class="row">
+    <div {{ block('widget_container_attributes') }}>
         <div class="{{ 'list-' ~ form.vars.name }} {{ 'list-left-' ~ form.vars.name }} col-md-5">
             <div class="well text-right">
                 <div class="row">
@@ -35,7 +35,7 @@
                     {%- for child in form if not child.vars.checked %}
                         <li class="list-group-item" data-id="{{ child.vars.value }}">
                             {{ child.vars.label }}
-                            <input type="checkbox" {{ block('widget_attributes') }}{% if child.vars.value is defined %} value="{{ child.vars.value }}"{% endif %}{% if child.vars.checked %} checked="checked"{% endif %} style="display: true;" />
+                            <input type="checkbox" id="{{ child.vars.id }}" name="{{ child.vars.full_name }}" {% if child.vars.value is defined %}value="{{ child.vars.value }}"{% endif %}{% if child.vars.checked %} checked="checked"{% endif %} style="display: true;" />
                         </li>
                     {% endfor -%}
                 </ul>
@@ -71,7 +71,7 @@
                     {%- for child in form if child.vars.checked %}
                         <li class="list-group-item" data-id="{{ child.vars.value }}">
                             {{ child.vars.label }}
-                            <input type="checkbox" {{ block('widget_attributes') }}{% if child.vars.value is defined %} value="{{ child.vars.value }}"{% endif %}{% if child.vars.checked %} checked="checked"{% endif %} style="display: true;" />
+                            <input type="checkbox" id="{{ child.vars.id }}" name="{{ child.vars.full_name }}" {% if child.vars.value is defined %}value="{{ child.vars.value }}"{% endif %}{% if child.vars.checked %} checked="checked"{% endif %} style="display: true;" />
                         </li>
                     {% endfor -%}
                 </ul>
@@ -90,19 +90,11 @@
             $("{{ '.list-arrows-' ~ form.vars.name }} button").click(function () {
                 var $button = $(this), actives = '';
                 if ($button.hasClass("{{ 'move-left-' ~ form.vars.name }}")) {
-                    // actives = $("{{ '.list-right-' ~ form.vars.name }} ul li.active");
-                    // actives.each(function () {
-                    //     $(this).children().prop('checked', false);
-                    // });
                     $("{{ '.list-right-' ~ form.vars.name }} ul li.active").children().prop('checked', false);
                     actives = $("{{ '.list-right-' ~ form.vars.name }} ul li.active");
                     actives.clone().appendTo("{{ '.list-left-' ~ form.vars.name }} ul");
                     actives.remove();
                 } else if ($button.hasClass("{{ 'move-right-' ~ form.vars.name }}")) {
-                    // actives = $("{{ '.list-left-' ~ form.vars.name }} ul li.active");
-                    // actives.each(function () {
-                    //     $(this).children().prop('checked', true);
-                    // });
                     $("{{ '.list-left-' ~ form.vars.name }} ul li.active").children().prop('checked', true);
                     actives = $("{{ '.list-left-' ~ form.vars.name }} ul li.active");
                     actives.clone().appendTo("{{ '.list-right-' ~ form.vars.name }} ul");
@@ -132,4 +124,4 @@
             });
         });
     </script>
-{% endblock %}
+{%- endblock duallist_widget -%}
