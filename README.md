@@ -204,7 +204,19 @@ class Demo extends BaseFile {
     //'show_path' => true
 ))
 ```
-
+### Use DualList.
+#### FormType duallist [Documentation](http://bootsnipp.com/snippets/featured/bootstrap-dual-list)
+```php
+    $builder
+        ->add('field', 'duallist', array(
+            'class'    => 'AppDemoBundle:Entity',
+            'property' => 'name',
+            'multiple' => true,
+            'required' => false,
+            'expanded' => true,
+        ))
+    ;
+```
 ### Use Select2: If entity relationship generates select autocomplete.
 #### Entities required method toString()
 ```php

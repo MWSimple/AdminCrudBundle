@@ -3,6 +3,7 @@ twig:
         resources:
             - MWSimpleAdminCrudBundle:Form:bootstrap.datepicker.html.twig
             - MWSimpleAdminCrudBundle:Form:select2_field.html.twig
+            - MWSimpleAdminCrudBundle:Form:duallist_field.html.twig
             - MWSimpleAdminCrudBundle:Form:field_file.html.twig
 #Services
 services:
@@ -29,6 +30,11 @@ services:
         arguments: ['@doctrine.orm.entity_manager']
         tags:
             - { name: form.type, alias: select2 }
+    form.type.duallist:
+        class: MWSimple\Bundle\AdminCrudBundle\Form\Type\DualListType
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - { name: form.type, alias: duallist }
     mws_field_file_type:
         class: MWSimple\Bundle\AdminCrudBundle\Form\Type\FieldFileType
         tags:

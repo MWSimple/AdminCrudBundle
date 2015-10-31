@@ -1,0 +1,135 @@
+{% block duallist_widget %}
+    <style type="text/css">
+        {{ '.dual-list-' ~ form.vars.name }} {{ '.list-' ~ form.vars.name }} {
+            margin-top: 8px;
+        }
+        {{ '.list-left-' ~ form.vars.name }} li, {{ '.list-right-' ~ form.vars.name }} li {
+            cursor: pointer;
+        }
+        {{ '.list-arrows-' ~ form.vars.name }} {
+            padding-top: 100px;
+        }
+        {{ '.list-arrows-' ~ form.vars.name }} button {
+            margin-bottom: 20px;
+        }
+    </style>
+
+    <br />
+    <div class="row">
+        <div class="{{ 'list-' ~ form.vars.name }} {{ 'list-left-' ~ form.vars.name }} col-md-5">
+            <div class="well text-right">
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="input-group">
+                            <span class="input-group-addon glyphicon glyphicon-search"></span>
+                            <input type="text" name="{{ 'SearchDualList-' ~ form.vars.name }}" class="form-control" placeholder="search" />
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="btn-group">
+                            <a class="btn btn-default selector" title="select all"><i class="glyphicon glyphicon-unchecked"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <ul class="{{ 'list-' ~ form.vars.name }}">
+                    {%- for child in form if not child.vars.checked %}
+                        <li class="list-group-item" data-id="{{ child.vars.value }}">
+                            {{ child.vars.label }}
+                            <input type="checkbox" {{ block('widget_attributes') }}{% if child.vars.value is defined %} value="{{ child.vars.value }}"{% endif %}{% if child.vars.checked %} checked="checked"{% endif %} style="display: true;" />
+                        </li>
+                    {% endfor -%}
+                </ul>
+            </div>
+        </div>
+
+        <div class="{{ 'list-arrows-' ~ form.vars.name }} col-md-1 text-center">
+            <button class="btn btn-default btn-sm {{ 'move-left-' ~ form.vars.name }} btn-not-validate">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </button>
+
+            <button class="btn btn-default btn-sm {{ 'move-right-' ~ form.vars.name }} btn-not-validate">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </button>
+        </div>
+
+        <div class="{{ 'list-' ~ form.vars.name }} {{ 'list-right-' ~ form.vars.name }} col-md-5">
+            <div class="well">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="btn-group">
+                            <a class="btn btn-default selector" title="select all"><i class="glyphicon glyphicon-unchecked"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="input-group">
+                            <input type="text" name="{{ 'SearchDualList-' ~ form.vars.name }}" class="form-control" placeholder="search" />
+                            <span class="input-group-addon glyphicon glyphicon-search"></span>
+                        </div>
+                    </div>
+                </div>
+                <ul class="{{ 'list-' ~ form.vars.name }}">
+                    {%- for child in form if child.vars.checked %}
+                        <li class="list-group-item" data-id="{{ child.vars.value }}">
+                            {{ child.vars.label }}
+                            <input type="checkbox" {{ block('widget_attributes') }}{% if child.vars.value is defined %} value="{{ child.vars.value }}"{% endif %}{% if child.vars.checked %} checked="checked"{% endif %} style="display: true;" />
+                        </li>
+                    {% endfor -%}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(".btn-not-validate").click(function() {
+            return false;
+        });
+        $(function () {
+            $('body').on('click', "{{ '.list-' ~ form.vars.name }} .list-group-item", function () {
+                $(this).toggleClass('active');
+            });
+            $("{{ '.list-arrows-' ~ form.vars.name }} button").click(function () {
+                var $button = $(this), actives = '';
+                if ($button.hasClass("{{ 'move-left-' ~ form.vars.name }}")) {
+                    // actives = $("{{ '.list-right-' ~ form.vars.name }} ul li.active");
+                    // actives.each(function () {
+                    //     $(this).children().prop('checked', false);
+                    // });
+                    $("{{ '.list-right-' ~ form.vars.name }} ul li.active").children().prop('checked', false);
+                    actives = $("{{ '.list-right-' ~ form.vars.name }} ul li.active");
+                    actives.clone().appendTo("{{ '.list-left-' ~ form.vars.name }} ul");
+                    actives.remove();
+                } else if ($button.hasClass("{{ 'move-right-' ~ form.vars.name }}")) {
+                    // actives = $("{{ '.list-left-' ~ form.vars.name }} ul li.active");
+                    // actives.each(function () {
+                    //     $(this).children().prop('checked', true);
+                    // });
+                    $("{{ '.list-left-' ~ form.vars.name }} ul li.active").children().prop('checked', true);
+                    actives = $("{{ '.list-left-' ~ form.vars.name }} ul li.active");
+                    actives.clone().appendTo("{{ '.list-right-' ~ form.vars.name }} ul");
+                    actives.remove();
+                }
+            });
+            $("{{ '.dual-list-' ~ form.vars.name }} .selector").click(function () {
+                var $checkBox = $(this);
+                if (!$checkBox.hasClass('selected')) {
+                    $checkBox.addClass('selected').closest('.well').find('ul li:not(.active)').addClass('active');
+                    $checkBox.children('i').removeClass('glyphicon-unchecked').addClass('glyphicon-check');
+                } else {
+                    $checkBox.removeClass('selected').closest('.well').find('ul li.active').removeClass('active');
+                    $checkBox.children('i').removeClass('glyphicon-check').addClass('glyphicon-unchecked');
+                }
+            });
+            $('[name="{{ 'SearchDualList-' ~ form.vars.name }}"]').keyup(function (e) {
+                var code = e.keyCode || e.which;
+                if (code == '9') return;
+                if (code == '27') $(this).val(null);
+                var $rows = $(this).closest("{{ '.dual-list-' ~ form.vars.name }}").find("{{ '.list-' ~ form.vars.name }} li");
+                var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+                $rows.show().filter(function () {
+                    var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+                    return !~text.indexOf(val);
+                }).hide();
+            });
+        });
+    </script>
+{% endblock %}
