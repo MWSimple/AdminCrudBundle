@@ -105,7 +105,7 @@ knp_menu:
     default_renderer: twig # The renderer to use, list is also available by default
 
 mw_simple_admin_crud:
-    #menu_setting: { id: id, class: nav nav-sidebar } # default false
+    menu_setting: { class: nav nav-sidebar } # use nav sidebar
     menu:
         child: { name: inicio, url: mws_admin_crud_menu }
         #child: { name: inicio, url: mws_admin_crud_menu, icon: glyphicon glyphicon-home }
