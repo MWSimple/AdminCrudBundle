@@ -7,6 +7,7 @@ use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Exporter\Source\DoctrineORMQuerySourceIterator;
+use Exporter\Source\ArraySourceIterator;
 use Exporter\Handler;
 
 /**
@@ -14,8 +15,8 @@ use Exporter\Handler;
  *
  * @author Gonzalo Alonso <gonkpo@gmail.com>
  */
-class DefaultController extends Controller
-{
+class DefaultController extends Controller {
+
     /**
      * Configuration file.
      */
@@ -24,8 +25,7 @@ class DefaultController extends Controller
     /**
      * Index.
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $config = $this->getConfig();
 
         return array(
@@ -38,8 +38,7 @@ class DefaultController extends Controller
      *
      * @return Doctrine\ORM\QueryBuilder $queryBuilder
      */
-    protected function createQuery()
-    {
+    protected function createQuery() {
         $config = $this->getConfig();
         $alias = $config['alias'];
         $select = array();
@@ -55,19 +54,19 @@ class DefaultController extends Controller
             if ($columnas['type'] == 'MANY_TO_ONE' || $columnas['type'] == 'ONE_TO_ONE' || $columnas['type'] == 'ONE_TO_MANY') {
                 foreach ($columnas['campos'] as $key => $campos) {
                     if ($key == '0') {
-                        $concat = $columnas['alias'].'.'.$campos;
+                        $concat = $columnas['alias'] . '.' . $campos;
                     } else {
-                        $concat = $concat.",' ',".$columnas['alias'].'.'.$campos;
+                        $concat = $concat . ",' '," . $columnas['alias'] . '.' . $campos;
                     }
                 }
                 if ($columnas['type'] == 'ONE_TO_MANY') {
-                    $concat = 'GROUP_CONCAT('.$concat." SEPARATOR ',')";
+                    $concat = 'GROUP_CONCAT(' . $concat . " SEPARATOR ',')";
                     $groupBy = true;
                     $oneToMany = true;
                 } else {
                     //si concat tiene varios campos lo concatena
                     if (substr_count($concat, ',') > 0) {
-                        $concat = 'concat('.$concat.')';
+                        $concat = 'concat(' . $concat . ')';
                         $concatBoolean = true;
                     }
                 }
@@ -79,7 +78,7 @@ class DefaultController extends Controller
                 );
                 $columnas['type'] = 'string';
             } else {
-                $select[] = $alias.'.'.$columnas['name'];
+                $select[] = $alias . '.' . $columnas['name'];
             }
             //formato
             if (isset($columnas['date']) || isset($columnas['datetime']) || isset($columnas['datetimetz'])) {
@@ -98,16 +97,16 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $qb = $em->createQueryBuilder();
         $qb
-            ->select($select)
-            ->from($config['repository'], 'a')
+                ->select($select)
+                ->from($config['repository'], 'a')
         ;
 
         if (count($join) > 0) {
             foreach ($join as $j) {
                 if ($j['join'] == 'INNER') {
-                    $qb->join('a.'.$j['alias'], $j['alias']);
+                    $qb->join('a.' . $j['alias'], $j['alias']);
                 } else {
-                    $qb->leftJoin('a.'.$j['alias'], $j['alias']);
+                    $qb->leftJoin('a.' . $j['alias'], $j['alias']);
                 }
             }
             if ($groupBy) {
@@ -126,18 +125,32 @@ class DefaultController extends Controller
     /**
      * Export Csv.
      */
-    public function exportCsvAction($format)
-    {
+    public function exportCsvAction($format) {
         $config = $this->getConfig();
         $queryBuilder = $this->createQuery($config['repository']);
         $campos = array();
+        //array
         foreach ($config['fieldsindex'] as $key => $value) {
             //if is defined and true
             if (!empty($value['export']) && $value['export']) {
-                $campos[] = $value['name'];
+                if ($value['type'] == 'ONE_TO_ONE' || $value['type'] == 'ONE_TO_ONE' || $value['type'] == 'MANY_TO_ONE') {
+                    $campos[] = $value['alias'] . '.' . $value['name'];
+                } elseif ($value['type'] == 'datetime' || $value['type'] == 'datetimetz') {
+                    $campos[] = "DATE_FORMAT(" . $key . ", '%d/%m/%Y %H:%s')";
+                } elseif ($value['type'] == 'date') {
+                    $campos[] = "DATE_FORMAT(" . $key . ", '%d/%m/%Y')";
+                } elseif ($value['type'] == 'time') {
+                    $campos[] = "DATE_FORMAT(" . $key . ", '%H:%s')";
+                } else {
+                    $campos[] = $key;
+                }
             }
         }
-        $query = $queryBuilder->getQuery();
+
+        $queryBuilder['query']->select($campos);
+
+        $array = $queryBuilder['query']->getQuery()->getArrayResult();
+
         // Pick a format to export to
         //$format = 'csv';
         // Set Content-Type
@@ -158,9 +171,10 @@ class DefaultController extends Controller
         // Location to Export this to
         $export_to = 'php://output';
         // Data to export
-        $exporter_source = new DoctrineORMQuerySourceIterator($query, $campos, 'Y-m-d H:i:s');
+        //$exporter_source = new DoctrineORMQuerySourceIterator($query, $campos, 'Y-m-d H:i:s');      
+        $exporter_source = new ArraySourceIterator($array);
         // Get an Instance of the Writer
-        $exporter_writer = '\Exporter\Writer\\'.ucfirst($format).'Writer';
+        $exporter_writer = '\Exporter\Writer\\' . ucfirst($format) . 'Writer';
         $exporter_writer = new $exporter_writer($export_to);
         // Generate response
         $response = new Response();
@@ -185,8 +199,7 @@ class DefaultController extends Controller
      *
      * @return array
      */
-    protected function filter($config)
-    {
+    protected function filter($config) {
         $request = $this->getRequest();
         $session = $request->getSession();
         $filterForm = $this->createFilterForm($config);
@@ -204,7 +217,7 @@ class DefaultController extends Controller
             if ($filterForm->isValid()) {
                 // Build the query from the given form object
                 $this->get('lexik_form_filter.query_builder_updater')
-                    ->addFilterConditions($filterForm, $queryBuilder);
+                        ->addFilterConditions($filterForm, $queryBuilder);
                 // Save filter to session
                 $filterData = $request->get($filterForm->getName());
                 $session->set($config['sessionFilter'], $filterData);
@@ -215,7 +228,7 @@ class DefaultController extends Controller
                 $filterData = $session->get($config['sessionFilter']);
                 $filterForm->submit($filterData);
                 $this->get('lexik_form_filter.query_builder_updater')
-                    ->addFilterConditions($filterForm, $queryBuilder);
+                        ->addFilterConditions($filterForm, $queryBuilder);
             }
         }
 
@@ -230,8 +243,7 @@ class DefaultController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    protected function createFilterForm($config, $filterData = null)
-    {
+    protected function createFilterForm($config, $filterData = null) {
         $form = $this->createForm($config['filterType'], $filterData, array(
             'action' => $this->generateUrl($config['index']),
             'method' => 'GET',
@@ -256,8 +268,7 @@ class DefaultController extends Controller
     /**
      * Create.
      */
-    public function createAction()
-    {
+    public function createAction() {
         $config = $this->getConfig();
         $request = $this->getRequest();
         $entity = new $config['entity']();
@@ -296,30 +307,29 @@ class DefaultController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    protected function createCreateForm($config, $entity)
-    {
+    protected function createCreateForm($config, $entity) {
         $form = $this->createForm($config['newType'], $entity, array(
             'action' => $this->generateUrl($config['create']),
             'method' => 'POST',
         ));
 
         $form
-            ->add('save', 'submit', array(
-                'translation_domain' => 'MWSimpleAdminCrudBundle',
-                'label' => 'views.new.save',
-                'attr' => array(
-                    'class' => 'form-control btn-success',
-                    'col' => 'col-lg-2',
-                ),
-            ))
-            ->add('saveAndAdd', 'submit', array(
-                'translation_domain' => 'MWSimpleAdminCrudBundle',
-                'label' => 'views.new.saveAndAdd',
-                'attr' => array(
-                    'class' => 'form-control btn-primary',
-                    'col' => 'col-lg-3',
-                ),
-            ))
+                ->add('save', 'submit', array(
+                    'translation_domain' => 'MWSimpleAdminCrudBundle',
+                    'label' => 'views.new.save',
+                    'attr' => array(
+                        'class' => 'form-control btn-success',
+                        'col' => 'col-lg-2',
+                    ),
+                ))
+                ->add('saveAndAdd', 'submit', array(
+                    'translation_domain' => 'MWSimpleAdminCrudBundle',
+                    'label' => 'views.new.saveAndAdd',
+                    'attr' => array(
+                        'class' => 'form-control btn-primary',
+                        'col' => 'col-lg-3',
+                    ),
+                ))
         ;
 
         return $form;
@@ -328,8 +338,7 @@ class DefaultController extends Controller
     /**
      * New.
      */
-    public function newAction()
-    {
+    public function newAction() {
         $config = $this->getConfig();
         $entity = new $config['entity']();
         $form = $this->createCreateForm($config, $entity);
@@ -349,15 +358,14 @@ class DefaultController extends Controller
      *
      * @param $id
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $config = $this->getConfig();
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository($config['repository'])->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find '.$config['entityName'].' entity.');
+            throw $this->createNotFoundException('Unable to find ' . $config['entityName'] . ' entity.');
         }
         $this->useACL($entity, 'show');
         $deleteForm = $this->createDeleteForm($config, $id);
@@ -374,15 +382,14 @@ class DefaultController extends Controller
      *
      * @param $id
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $config = $this->getConfig();
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository($config['repository'])->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find '.$config['entityName'].' entity.');
+            throw $this->createNotFoundException('Unable to find ' . $config['entityName'] . ' entity.');
         }
         $this->useACL($entity, 'edit');
         $editForm = $this->createEditForm($config, $entity);
@@ -407,30 +414,29 @@ class DefaultController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    protected function createEditForm($config, $entity)
-    {
+    protected function createEditForm($config, $entity) {
         $form = $this->createForm($config['editType'], $entity, array(
             'action' => $this->generateUrl($config['update'], array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
         $form
-            ->add('save', 'submit', array(
-                'translation_domain' => 'MWSimpleAdminCrudBundle',
-                'label' => 'views.new.save',
-                'attr' => array(
-                    'class' => 'form-control btn-success',
-                    'col' => 'col-lg-2',
-                ),
-            ))
-            ->add('saveAndAdd', 'submit', array(
-                'translation_domain' => 'MWSimpleAdminCrudBundle',
-                'label' => 'views.new.saveAndAdd',
-                'attr' => array(
-                    'class' => 'form-control btn-primary',
-                    'col' => 'col-lg-3',
-                ),
-            ))
+                ->add('save', 'submit', array(
+                    'translation_domain' => 'MWSimpleAdminCrudBundle',
+                    'label' => 'views.new.save',
+                    'attr' => array(
+                        'class' => 'form-control btn-success',
+                        'col' => 'col-lg-2',
+                    ),
+                ))
+                ->add('saveAndAdd', 'submit', array(
+                    'translation_domain' => 'MWSimpleAdminCrudBundle',
+                    'label' => 'views.new.saveAndAdd',
+                    'attr' => array(
+                        'class' => 'form-control btn-primary',
+                        'col' => 'col-lg-3',
+                    ),
+                ))
         ;
 
         return $form;
@@ -441,8 +447,7 @@ class DefaultController extends Controller
      *
      * @param $id
      */
-    public function updateAction($id)
-    {
+    public function updateAction($id) {
         $config = $this->getConfig();
         $request = $this->getRequest();
         $em = $this->getDoctrine()->getManager();
@@ -450,7 +455,7 @@ class DefaultController extends Controller
         $entity = $em->getRepository($config['repository'])->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find '.$config['entityName'].' entity.');
+            throw $this->createNotFoundException('Unable to find ' . $config['entityName'] . ' entity.');
         }
         $this->useACL($entity, 'update');
         $deleteForm = $this->createDeleteForm($config, $id);
@@ -462,8 +467,8 @@ class DefaultController extends Controller
             $this->get('session')->getFlashBag()->add('success', 'flash.update.success');
 
             $nextAction = $editForm->get('saveAndAdd')->isClicked() ?
-                $this->generateUrl($config['new']) :
-                $this->generateUrl($config['show'], array('id' => $id))
+                    $this->generateUrl($config['new']) :
+                    $this->generateUrl($config['show'], array('id' => $id))
             ;
 
             return $this->redirect($nextAction);
@@ -487,8 +492,7 @@ class DefaultController extends Controller
      *
      * @param $id
      */
-    public function deleteAction($id)
-    {
+    public function deleteAction($id) {
         $config = $this->getConfig();
         $request = $this->getRequest();
         $form = $this->createDeleteForm($config, $id);
@@ -499,7 +503,7 @@ class DefaultController extends Controller
             $entity = $em->getRepository($config['repository'])->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find '.$config['entityName'].' entity.');
+                throw $this->createNotFoundException('Unable to find ' . $config['entityName'] . ' entity.');
             }
 
             $em->remove($entity);
@@ -517,31 +521,29 @@ class DefaultController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    protected function createDeleteForm($config, $id)
-    {
+    protected function createDeleteForm($config, $id) {
         $mensaje = $this->get('translator')
-            ->trans('views.recordactions.confirm', array(), 'MWSimpleAdminCrudBundle');
-        $onclick = 'return confirm("'.$mensaje.'");';
+                ->trans('views.recordactions.confirm', array(), 'MWSimpleAdminCrudBundle');
+        $onclick = 'return confirm("' . $mensaje . '");';
 
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl($config['delete'], array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array(
-                'translation_domain' => 'MWSimpleAdminCrudBundle',
-                'label' => 'views.recordactions.delete',
-                'attr' => array(
-                    'class' => 'form-control btn-danger',
-                    'col' => 'col-lg-2',
-                    'onclick' => $onclick,
-                ),
-            ))
-            ->getForm()
+                        ->setAction($this->generateUrl($config['delete'], array('id' => $id)))
+                        ->setMethod('DELETE')
+                        ->add('submit', 'submit', array(
+                            'translation_domain' => 'MWSimpleAdminCrudBundle',
+                            'label' => 'views.recordactions.delete',
+                            'attr' => array(
+                                'class' => 'form-control btn-danger',
+                                'col' => 'col-lg-2',
+                                'onclick' => $onclick,
+                            ),
+                        ))
+                        ->getForm()
         ;
     }
 
-    protected function getConfig()
-    {
-        $configs = Yaml::parse(file_get_contents($this->get('kernel')->getRootDir().'/../src/'.$this->config['yml']));
+    protected function getConfig() {
+        $configs = Yaml::parse(file_get_contents($this->get('kernel')->getRootDir() . '/../src/' . $this->config['yml']));
         foreach ($configs as $key => $value) {
             $config[$key] = $value;
         }
@@ -554,8 +556,7 @@ class DefaultController extends Controller
         return $config;
     }
 
-    public function getAutocompleteFormsMwsAction($options)
-    {
+    public function getAutocompleteFormsMwsAction($options) {
         $request = $this->getRequest();
         $term = $request->query->get('q', null);
 
@@ -563,9 +564,9 @@ class DefaultController extends Controller
 
         $qb = $em->getRepository($options['repository'])->createQueryBuilder('a');
         $qb
-                ->add('where', 'a.'.$options['field'].' LIKE ?1')
-                ->add('orderBy', 'a.'.$options['field'].' ASC')
-                ->setParameter(1, '%'.$term.'%')
+                ->add('where', 'a.' . $options['field'] . ' LIKE ?1')
+                ->add('orderBy', 'a.' . $options['field'] . ' ASC')
+                ->setParameter(1, '%' . $term . '%')
         ;
         $entities = $qb->getQuery()->getResult();
 
@@ -584,8 +585,7 @@ class DefaultController extends Controller
         return $response;
     }
 
-    protected function useACL($entity, $action)
-    {
+    protected function useACL($entity, $action) {
         $aclConf = $this->container->hasParameter('mw_simple_admin_crud.acl') ?
                 $this->container->getParameter('mw_simple_admin_crud.acl') : null;
 
@@ -613,8 +613,7 @@ class DefaultController extends Controller
         }
     }
 
-    protected function isInstanceOf($object, Array $classnames)
-    {
+    protected function isInstanceOf($object, Array $classnames) {
         foreach ($classnames as $classname) {
             if ($object instanceof $classname) {
                 return true;
@@ -624,8 +623,7 @@ class DefaultController extends Controller
         return false;
     }
 
-    public function getTable()
-    {
+    public function getTable() {
         $config = $this->getConfig();
         $table = $config['table'];
         $qb = $this->createQuery();
@@ -633,8 +631,8 @@ class DefaultController extends Controller
         $concatBoolean = false;
 
         $query = $qb['query']
-            ->getQuery()
-            ->getSQL()
+                ->getQuery()
+                ->getSQL()
         ;
         if (isset($qb['oneToMany'])) {
             $oneToMany = $qb['oneToMany'];
@@ -681,7 +679,7 @@ class DefaultController extends Controller
         }
 
         //from 
-        $from = ' FROM '.$from;
+        $from = ' FROM ' . $from;
         // Table's primary key
         $primaryKey = 'id';
 
@@ -694,8 +692,7 @@ class DefaultController extends Controller
         return $response;
     }
 
-    private function getTipoFormat($array, $index)
-    {
+    private function getTipoFormat($array, $index) {
         $type = 'string';
         $format = '';
         foreach ($array as $a) {
@@ -713,8 +710,7 @@ class DefaultController extends Controller
         return array($type, $format);
     }
 
-    private function separarQueryConConcat($query)
-    {
+    private function separarQueryConConcat($query) {
         $config = $this->getConfig();
         $queryColumn = array();
         $tempRem = trim(str_replace('CONCAT', '|', $query));
@@ -725,7 +721,7 @@ class DefaultController extends Controller
                     //caso con concat
                     $temp = substr($temp, 0, strpos($temp, ')') + 2);
                     $temp2 = trim(str_replace($temp, '', $tempRem));
-                    $temp = $temp.substr($temp2, 0, strpos($temp2, ',') + 1);
+                    $temp = $temp . substr($temp2, 0, strpos($temp2, ',') + 1);
                 } else {
                     //caso sin concat 
                     if (strpos($temp, ',')) {
@@ -741,8 +737,7 @@ class DefaultController extends Controller
         return $queryColumn;
     }
 
-    private function separarQueryConConcatAndGroupConcat($query)
-    {
+    private function separarQueryConConcatAndGroupConcat($query) {
         $config = $this->getConfig();
         $queryColumn = array();
         $tempRem = trim(str_replace('GROUP_CONCAT', '?', $query));
@@ -758,7 +753,7 @@ class DefaultController extends Controller
                     if (strpos($temp2, ',')) {
                         $temp2 = substr($temp2, 0, strpos($temp2, ',') + 1);
                     }
-                    $temp = $temp.$temp2;
+                    $temp = $temp . $temp2;
                     $queryColumn[] = str_replace('|', 'CONCAT', trim($temp, ','));
                 } elseif ($temp[0] == '?') {
                     //caso con Group concat
@@ -767,7 +762,7 @@ class DefaultController extends Controller
                     if (strpos($temp2, ',')) {
                         $temp2 = substr($temp2, 0, strpos($temp2, ',') + 1);
                     }
-                    $temp = $temp.$temp2;
+                    $temp = $temp . $temp2;
                     $queryColumn[] = str_replace('?', 'GROUP_CONCAT', trim($temp, ','));
                 } else {
                     //caso sin concat 
@@ -783,4 +778,5 @@ class DefaultController extends Controller
 
         return $queryColumn;
     }
+
 }
