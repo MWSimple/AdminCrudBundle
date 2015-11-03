@@ -19,6 +19,15 @@ function addForm(collection,target) {
             $('form').bootstrapValidator('addField', $option);
         };
     });
+    //render checkbox
+    if ($(".mws_checkbox").size()){
+        $('input[type="checkbox"].mws_checkbox').checkbox({
+            buttonStyle: 'btn btn-base',
+            buttonStyleChecked: 'btn btn-success',
+            checkedClass: 'glyphicon glyphicon-check',
+            uncheckedClass: 'glyphicon glyphicon-unchecked'
+        });
+    }
     return index;
 }
 
