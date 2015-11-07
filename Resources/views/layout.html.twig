@@ -46,11 +46,13 @@
             </nav>
             <div class="row">
                 <div class="col-md-2 col-sm-3 sidebar">
+                    <div class="row">
                     {% block menu %}
                         <div id="navbar" class="navbar-collapse collapse">
                             {{ knp_menu_render('MWSimpleAdminCrudBundle:Builder:adminMenu') }}
                         </div>
                     {% endblock %}
+                    </div>
                 </div>
                 <div class="col-md-10 col-sm-9 col-md-offset-2 col-sm-offset-3 main">
                     {% for type, flashMessages in app.session.flashbag.all() %}
