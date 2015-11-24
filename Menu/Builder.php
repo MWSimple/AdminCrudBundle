@@ -7,16 +7,8 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 
 class Builder extends ContainerAware {
 
-    private $roles;
-
     public function adminMenu(FactoryInterface $factory, array $options) {
-        $arrayRoles = $this->container->get('security.context')->getToken()->getRoles();
 
-        $array = array();
-        foreach ($arrayRoles as $valor) {
-            array_push($array, $valor->getRole());
-        }
-        $this->roles = $array;
         $arrayMenu = $this->container->getParameter('mw_simple_admin_crud.menu');
 
         $menu = $factory->createItem('root');
@@ -31,11 +23,14 @@ class Builder extends ContainerAware {
 
         foreach ($children as $key => $m) {
             if ($key != 'setting') {
-                //controla si tiene el role para dibujar el menu
+//controla si tiene el role para dibujar el menu
                 if (empty($m['roles'])) {
                     $exist = true;
                 } else {
-                    $exist = $this->contralRole($m['roles']);
+                    $exist = false;
+                    if ($this->container->get('security.authorization_checker')->isGranted($m['roles'])) {
+                        $exist = true;
+                    }
                 }
                 if ($exist) {
 
@@ -73,20 +68,6 @@ class Builder extends ContainerAware {
             if (!empty($configuracion['setting'][$setting]))
                 $menu[$configuracion['name']]->setAttribute($setting, $configuracion['setting'][$setting]);
         }
-    }
-
-    public function contralRole($role) {
-        $exist = false;
-        if (!empty($role)) {
-            foreach ($role as $r) {
-                if (in_array($r, $this->roles)) {
-
-                    $exist = true;
-                }
-            }
-        }
-
-        return $exist;
     }
 
 }

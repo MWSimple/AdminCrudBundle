@@ -24,12 +24,11 @@ use PDO;
   if (is_file($file)) {
   include( $file );
   } */
-class SSP
-{
+class SSP {
+
     protected $container;
 
-    public function __construct($container)
-    {
+    public function __construct($container) {
         $this->container = $container;
     }
 
@@ -41,8 +40,7 @@ class SSP
      *
      *  @return array          Formatted data in a row based format
      */
-    protected function data_output($columns, $data)
-    {
+    protected function data_output($columns, $data) {
         $out = array();
 
         for ($i = 0, $ien = count($data); $i < $ien; ++$i) {
@@ -82,10 +80,10 @@ class SSP
      *
      *  @return resource PDO connection
      */
-    protected function db()
-    {
+    protected function db() {
         //Obtengo los parametros de la BD
         $charset = '';
+        $port = 3306;
         if ($this->container->hasParameter('database_name')) {
             $nameBd = $this->container->getParameter('database_name');
         } else {
@@ -94,12 +92,17 @@ class SSP
         if ($this->container->hasParameter('charset')) {
             $charset = $this->container->getParameter('charset');
         }
+        if ($this->container->hasParameter('port')) {
+            $port = $this->container->getParameter('port');
+        }
+
         $conn = array(
             'user' => $this->container->getParameter('database_user'),
             'pass' => $this->container->getParameter('database_password'),
             'db' => $nameBd,
             'host' => $this->container->getParameter('database_host'),
             'charset' => $charset,
+            'port' => $port,
         );
         if (is_array($conn)) {
             return $this->sql_connect($conn);
@@ -118,12 +121,11 @@ class SSP
      *
      *  @return string SQL limit clause
      */
-    protected function limit($request, $columns)
-    {
+    protected function limit($request, $columns) {
         $limit = '';
         $start = $request->query->get('length');
         if (isset($start) && $request->query->get('length') != -1) {
-            $limit = 'LIMIT '.intval($request->query->get('start')).', '.intval($request->query->get('length'));
+            $limit = 'LIMIT ' . intval($request->query->get('start')) . ', ' . intval($request->query->get('length'));
         }
 
         return $limit;
@@ -139,8 +141,7 @@ class SSP
      *
      *  @return string SQL order by clause
      */
-    protected function order($request, $columns)
-    {
+    protected function order($request, $columns) {
         $order = '';
 
         if (count($request->query->get('order'))) {
@@ -160,11 +161,11 @@ class SSP
                             'ASC' :
                             'DESC';
 
-                    $orderBy[] = ''.$column['db'].' '.$dir;
+                    $orderBy[] = '' . $column['db'] . ' ' . $dir;
                 }
             }
 
-            $order = 'ORDER BY '.implode(', ', $orderBy);
+            $order = 'ORDER BY ' . implode(', ', $orderBy);
         }
 
         return $order;
@@ -186,8 +187,7 @@ class SSP
      *
      *  @return string SQL where clause
      */
-    protected function filter($request, $columns, &$bindings)
-    {
+    protected function filter($request, $columns, &$bindings) {
         $globalSearch = array();
         $columnSearch = array();
         $dtColumns = $this->pluck($columns, 'dt', 'name');
@@ -201,8 +201,8 @@ class SSP
                 $column = $columns[$columnIdx];
 
                 if ($requestColumn['searchable'] == 'true') {
-                    $binding = $this->bind($bindings, '%'.$str.'%', PDO::PARAM_STR);
-                    $globalSearch[] = ''.$column['db'].' LIKE '.$binding;
+                    $binding = $this->bind($bindings, '%' . $str . '%', PDO::PARAM_STR);
+                    $globalSearch[] = '' . $column['db'] . ' LIKE ' . $binding;
                 }
             }
         }
@@ -217,8 +217,8 @@ class SSP
 
             if ($requestColumn['searchable'] == 'true' &&
                     $str != '') {
-                $binding = $this->bind($bindings, '%'.$str.'%', PDO::PARAM_STR);
-                $columnSearch[] = ''.$column['db'].' LIKE '.$binding;
+                $binding = $this->bind($bindings, '%' . $str . '%', PDO::PARAM_STR);
+                $columnSearch[] = '' . $column['db'] . ' LIKE ' . $binding;
             }
         }
 
@@ -226,17 +226,17 @@ class SSP
         $where = '';
 
         if (count($globalSearch)) {
-            $where = '('.implode(' OR ', $globalSearch).')';
+            $where = '(' . implode(' OR ', $globalSearch) . ')';
         }
 
         if (count($columnSearch)) {
             $where = $where === '' ?
                     implode(' AND ', $columnSearch) :
-                    $where.' AND '.implode(' AND ', $columnSearch);
+                    $where . ' AND ' . implode(' AND ', $columnSearch);
         }
 
         if ($where !== '') {
-            $where = 'WHERE '.$where;
+            $where = 'WHERE ' . $where;
         }
 
         return $where;
@@ -257,8 +257,7 @@ class SSP
      *
      *  @return array          Server-side processing response array
      */
-    public function simple($request, $table, $primaryKey, $columns, $from)
-    {
+    public function simple($request, $table, $primaryKey, $columns, $from) {
         $bindings = array();
         $db = $this->db();
 
@@ -268,7 +267,7 @@ class SSP
         $where = $this->filter($request, $columns, $bindings);
 
         // Main query to actually get the data
-        $data = $this->sql_exec($db, $bindings, 'SELECT SQL_CALC_FOUND_ROWS '.implode(', ', $this->pluck($columns, 'db', 'name'))."
+        $data = $this->sql_exec($db, $bindings, 'SELECT SQL_CALC_FOUND_ROWS ' . implode(', ', $this->pluck($columns, 'db', 'name')) . "
 			 $from
 			 $where
 			 $order
@@ -320,8 +319,7 @@ class SSP
      *
      *  @return array          Server-side processing response array
      */
-    protected function complex($request, $table, $primaryKey, $columns, $whereResult = null, $whereAll = null)
-    {
+    protected function complex($request, $table, $primaryKey, $columns, $whereResult = null, $whereAll = null) {
         $bindings = array();
         $db = $this->db();
         $localWhereResult = array();
@@ -338,20 +336,20 @@ class SSP
 
         if ($whereResult) {
             $where = $where ?
-                    $where.' AND '.$whereResult :
-                    'WHERE '.$whereResult;
+                    $where . ' AND ' . $whereResult :
+                    'WHERE ' . $whereResult;
         }
 
         if ($whereAll) {
             $where = $where ?
-                    $where.' AND '.$whereAll :
-                    'WHERE '.$whereAll;
+                    $where . ' AND ' . $whereAll :
+                    'WHERE ' . $whereAll;
 
-            $whereAllSql = 'WHERE '.$whereAll;
+            $whereAllSql = 'WHERE ' . $whereAll;
         }
 
         // Main query to actually get the data
-        $data = $this->sql_exec($db, $bindings, 'SELECT SQL_CALC_FOUND_ROWS `'.implode('`, `', $this->pluck($columns, 'db'))."`
+        $data = $this->sql_exec($db, $bindings, 'SELECT SQL_CALC_FOUND_ROWS `' . implode('`, `', $this->pluck($columns, 'db')) . "`
 			 FROM `$table`
 			 $where
 			 $order
@@ -365,7 +363,7 @@ class SSP
 
         // Total data set length
         $resTotalLength = $this->sql_exec($db, $bindings, "SELECT COUNT(`{$primaryKey}`)
-			 FROM   `$table` ".
+			 FROM   `$table` " .
                 $whereAllSql
         );
         $recordsTotal = $resTotalLength[0][0];
@@ -393,13 +391,12 @@ class SSP
      *
      * @return resource Database connection handle
      */
-    protected function sql_connect($sql_details)
-    {
+    protected function sql_connect($sql_details) {
         try {
             $charset = '';
             if (isset($sql_details['charset'])) {
                 if ($sql_details['charset'] != '') {
-                    $charset = 'charset='.$sql_details['charset'].';';
+                    $charset = 'charset=' . $sql_details['charset'] . ';';
                 }
             }
 
@@ -408,8 +405,8 @@ class SSP
             );
         } catch (PDOException $e) {
             $this->fatal(
-                    'An error occurred while connecting to the database. '.
-                    'The error reported by the server was: '.$e->getMessage()
+                    'An error occurred while connecting to the database. ' .
+                    'The error reported by the server was: ' . $e->getMessage()
             );
         }
 
@@ -427,8 +424,7 @@ class SSP
      *
      * @return array Result from the query (all rows)
      */
-    protected function sql_exec($db, $bindings, $sql = null)
-    {
+    protected function sql_exec($db, $bindings, $sql = null) {
 
         // Argument shifting
         if ($sql === null) {
@@ -449,7 +445,7 @@ class SSP
         try {
             $stmt->execute();
         } catch (PDOException $e) {
-            $this->fatal('An SQL error occurred: '.$e->getMessage());
+            $this->fatal('An SQL error occurred: ' . $e->getMessage());
         }
 
         // Return all
@@ -468,8 +464,7 @@ class SSP
      *
      * @param string $msg Message to send to the client
      */
-    protected function fatal($msg)
-    {
+    protected function fatal($msg) {
         echo json_encode(array(
             'error' => $msg,
         ));
@@ -488,9 +483,8 @@ class SSP
      * @return string Bound key to be used in the SQL where this parameter
      *                would be used.
      */
-    protected function bind(&$a, $val, $type)
-    {
-        $key = ':binding_'.count($a);
+    protected function bind(&$a, $val, $type) {
+        $key = ':binding_' . count($a);
 
         $a[] = array(
             'key' => $key,
@@ -510,11 +504,10 @@ class SSP
      *
      *  @return array        Array of property values
      */
-    protected function pluck($a, $prop, $prop2)
-    {
+    protected function pluck($a, $prop, $prop2) {
         $out = array();
         for ($i = 0, $len = count($a); $i < $len; ++$i) {
-            $out[] = $a[$i][$prop].' as '.$a[$i][$prop2];
+            $out[] = $a[$i][$prop] . ' as ' . $a[$i][$prop2];
         }
 
         return $out;
@@ -528,8 +521,7 @@ class SSP
      *
      * @return string Joined string
      */
-    protected function _flatten($a, $join = ' AND ')
-    {
+    protected function _flatten($a, $join = ' AND ') {
         if (!$a) {
             return '';
         } elseif ($a && is_array($a)) {
@@ -538,4 +530,5 @@ class SSP
 
         return $a;
     }
+
 }
