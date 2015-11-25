@@ -89,11 +89,11 @@ class SSP {
         } else {
             $nameBd = getenv('SYMFONY__DATABASE__NAME');
         }
-        if ($this->container->hasParameter('charset')) {
-            $charset = $this->container->getParameter('charset');
+        if ($this->container->hasParameter('database_charset')) {
+            $charset = $this->container->getParameter('database_charset');
         }
-        if ($this->container->hasParameter('port')) {
-            $port = $this->container->getParameter('port');
+        if ($this->container->hasParameter('database_port')) {
+            $port = $this->container->getParameter('database_port');
         }
 
         $conn = array(
