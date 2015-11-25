@@ -492,9 +492,9 @@ class DefaultController extends Controller
 
         $qb = $em->getRepository($options['repository'])->createQueryBuilder('a');
         $qb
-            ->add('where', "a.".$options['field']." LIKE ?1")
-            ->add('orderBy', "a.".$options['field']." ASC")
-            ->setParameter(1, "%" . $term . "%")
+            ->where("a.".$options['field']." LIKE :term")
+            ->orderBy("a.".$options['field'], "ASC")
+            ->setParameter("term", "%" . $term . "%")
         ;
         $entities = $qb->getQuery()->getResult();
 
