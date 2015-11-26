@@ -45,9 +45,9 @@ Add it to the `AppKernel.php` class:
 ```php
 // ...
 new MWSimple\Bundle\AdminCrudBundle\MWSimpleAdminCrudBundle(),
-new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
 new Knp\Bundle\MenuBundle\KnpMenuBundle(),
-new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
+new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+
 ```
 
 ### Configure translations (include en, es, ca)
@@ -138,6 +138,9 @@ mw_simple_admin_crud:
     resource: "@MWSimpleAdminCrudBundle/Controller/"
     type:     annotation
     prefix:   /admin
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
 ```
 
 ### Install assets
