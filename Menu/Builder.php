@@ -44,7 +44,10 @@ class Builder extends ContainerAware {
 
                 if (!empty($m['subMenu'])) {
                     foreach ($m['subMenu'] as $subMenu) {
-                        $menu[$m['name']]->setChildrenAttribute('class', 'dropdown-menu');
+                        if (!empty($m["id"])) {
+                            $menu[$m['name']]->setChildrenAttribute('id', $m["id"]."List");
+                        }
+                        $menu[$m['name']]->setChildrenAttribute('class', 'nav collapse');
                         $menu[$m['name']]->addChild($subMenu['name'], array('route' => $subMenu['url']));
                     }
                 }

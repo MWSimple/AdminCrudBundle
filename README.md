@@ -107,16 +107,18 @@ knp_menu:
 mw_simple_admin_crud:
     menu_setting: { class: nav } # use nav
     menu:
-        child: { name: inicio, url: mws_admin_crud_menu }
-        #child: { name: inicio, url: mws_admin_crud_menu, icon: glyphicon glyphicon-home }
+        child: { name: inicio, url: mws_admin_crud_menu, id: inicio }
+        #child: { name: inicio, url: mws_admin_crud_menu, id: inicio, icon: glyphicon glyphicon-home }
         #child2:  
         #    name: help
         #    url: null
+        #    id: help
         #    subMenu:
         #         indice: { name: indice , url: admin_indice, icon: glyphicon glyphicon-home }
         #child3: 
         #    name: Usuario
-        #    url: admin_user 
+        #    url: admin_user
+        #    id: usuario
         #    roles:
         #        ['ROLE_SUPERADMIN']
 ```
