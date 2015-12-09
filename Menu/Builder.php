@@ -9,8 +9,6 @@ class Builder extends ContainerAware {
 
     public function adminMenu(FactoryInterface $factory, array $options) 
     {
-        $array = $this->container->get('security.context')->getToken()->getRoles();
-
         $menu  = $factory->createItem('root');
 
         $arrayMenuSetting = $this->container->getParameter('mw_simple_admin_crud.menu_setting');
@@ -20,16 +18,18 @@ class Builder extends ContainerAware {
 
         $arrayMenu  = $this->container->getParameter('mw_simple_admin_crud.menu');
         foreach ($arrayMenu as $key => $m) {
-            $exist = false;
+            $hasRole = false;
             if (empty($m['roles'])) {
-                $exist = true;
-            }
-            foreach ($m['roles'] as $r) {
-                if (in_array($r, $array)) {
-                    $exist = true;
+                $hasRole = true;
+            } else {
+                foreach ($m['roles'] as $r) {
+                    if ($this->container->get('security.authorization_checker')->isGranted($r)) {
+                        $hasRole = true;
+                        break;
+                    }
                 }
             }
-            if ($exist) {
+            if ($hasRole) {
                 if (!empty($m['url'])) {
                     $menu->addChild($m['name'], array('route' => $m['url']));
                 } else {
