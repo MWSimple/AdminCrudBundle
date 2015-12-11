@@ -114,13 +114,17 @@ mw_simple_admin_crud:
         #    url: null
         #    id: help
         #    subMenu:
-        #         indice: { name: indice , url: admin_indice, icon: glyphicon glyphicon-home }
+        #        indice:
+        #            name: indice
+        #            url: admin_indice
+        #            icon: glyphicon glyphicon-home
+        #            roles: ['ROLE_ADMIN']
+        #    roles: ['ROLE_USER']
         #child3: 
         #    name: Usuario
         #    url: admin_user
         #    id: usuario
-        #    roles:
-        #        ['ROLE_SUPERADMIN']
+        #    roles: ['ROLE_SUPERADMIN']
 ```
 
 ### Configuration routing admin
