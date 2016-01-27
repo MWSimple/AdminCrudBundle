@@ -70,7 +70,7 @@ You can configure `config.yml` find Twig Configuration
 ```yaml
 twig:
     ...
-    form:
+    form_themes:
         resources:
             - LexikFormFilterBundle:Form:form_div_layout.html.twig
 ```
@@ -141,7 +141,7 @@ mw_simple_admin_crud:
 ### Install assets
 
 ```cli
-app/console assets:install
+bin/console assets:install
 ```
 
 ## Dependencies

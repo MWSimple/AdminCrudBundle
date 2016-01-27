@@ -1,10 +1,10 @@
 twig:
-    form:
-        resources:
-            - MWSimpleAdminCrudBundle:Form:bootstrap.datepicker.html.twig
-            - MWSimpleAdminCrudBundle:Form:select2_field.html.twig
-            - MWSimpleAdminCrudBundle:Form:duallist_field.html.twig
-            - MWSimpleAdminCrudBundle:Form:field_file.html.twig
+    form_themes:
+        - MWSimpleAdminCrudBundle:Form:bootstrap.datepicker.html.twig
+        - MWSimpleAdminCrudBundle:Form:select2_field.html.twig
+        - MWSimpleAdminCrudBundle:Form:duallist_field.html.twig
+        - MWSimpleAdminCrudBundle:Form:field_file.html.twig
+
 #Services
 services:
     mws.twig.extension:
