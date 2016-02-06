@@ -66,7 +66,15 @@ framework:
 ### Configuration filter example
 
 You can configure `config.yml` find Twig Configuration
-
+2.8
+```yaml
+twig:
+    ...
+    form:
+        resources:
+            - LexikFormFilterBundle:Form:form_div_layout.html.twig
+```
+3.0
 ```yaml
 twig:
     ...
@@ -139,9 +147,13 @@ mw_simple_admin_crud:
 ```
 
 ### Install assets
-
+2.8
 ```cli
-bin/console assets:install
+php app/console assets:install
+```
+3.0
+```cli
+php bin/console assets:install
 ```
 
 ## Dependencies
