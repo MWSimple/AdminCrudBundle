@@ -15,7 +15,7 @@
         "symfony/framework-bundle": "~2.8|~3.0",
         "sensio/generator-bundle": "~3.0",
         "knplabs/knp-paginator-bundle": "~2.5",
-        "lexik/form-filter-bundle": "~5.0",
+        "lexik/form-filter-bundle": "~4.0",
         "knplabs/knp-menu": "~2.1",
         "knplabs/knp-menu-bundle": "~2.1",
         "sonata-project/exporter": "~1.4"
