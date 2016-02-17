@@ -13,6 +13,18 @@ use Doctrine\ORM\Mapping\ClassMetadataInfo;
  */
 class MWSimpleCrudGenerator extends DoctrineCrudGenerator
 {
+    /**
+     * Generate the CRUD controller.
+     *
+     * @param BundleInterface   $bundle           A bundle object
+     * @param string            $entity           The entity relative class name
+     * @param ClassMetadataInfo $metadata         The entity class metadata
+     * @param string            $format           The configuration format (xml, yaml, annotation)
+     * @param string            $routePrefix      The route name prefix
+     * @param array             $needWriteActions Whether or not to generate write actions
+     *
+     * @throws \RuntimeException
+     */
     public function generate(BundleInterface $bundle, $entity, ClassMetadataInfo $metadata, $format, $routePrefix, $needWriteActions, $forceOverwrite)
     {
         parent::generate($bundle, $entity, $metadata, $format, $routePrefix, $needWriteActions, $forceOverwrite);

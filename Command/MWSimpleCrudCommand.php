@@ -26,12 +26,16 @@ class MWSimpleCrudCommand extends GenerateDoctrineCrudCommand
         parent::configure();
 
         $this->setName('mwsimple:generate:admincrud');
+        $this->setAliases(array('mwsimple:generate:admincrud'))
         $this->setDescription('Generates a ADMINCRUD and paginator based on a Doctrine entity');
     }
 
     protected function createGenerator($bundle = null)
     {
-        return new MWSimpleCrudGenerator($this->getContainer()->get('filesystem'));
+        return new MWSimpleCrudGenerator(
+            $this->getContainer()->get('filesystem'),
+            $this->getContainer()->getParameter('kernel.root_dir')
+        );
     }
 
     protected function getFormGenerator($bundle = null)
@@ -56,8 +60,10 @@ class MWSimpleCrudCommand extends GenerateDoctrineCrudCommand
             $skeletonDirs[] = $dir;
         }
 
-        $skeletonDirs[] = __DIR__.'/../Resources/skeleton';
-        $skeletonDirs[] = __DIR__.'/../Resources';
+        // $skeletonDirs[] = __DIR__.'/../Resources/skeleton';
+        // $skeletonDirs[] = __DIR__.'/../Resources';
+        $skeletonDirs[] = $this->getContainer()->get('kernel')->locateResource('@MWSimpleAdminCrudBundle/Resources/skeleton');
+        $skeletonDirs[] = $this->getContainer()->get('kernel')->locateResource('@MWSimpleAdminCrudBundle/Resources');
 
         return $skeletonDirs;
     }
@@ -95,6 +101,13 @@ class MWSimpleCrudCommand extends GenerateDoctrineCrudCommand
         $input->setOption('entity', $entity);
         list($bundle, $entity) = $this->parseShortcutNotation($entity);
 
+        try {
+            $entityClass = $this->getContainer()->get('doctrine')->getAliasNamespace($bundle).'\\'.$entity;
+            $metadata = $this->getEntityMetadata($entityClass);
+        } catch (\Exception $e) {
+            throw new \RuntimeException(sprintf('Entity "%s" does not exist in the "%s" bundle. You may have mistyped the bundle name or maybe the entity doesn\'t exist yet (create it first with the "doctrine:generate:entity" command).', $entity, $bundle));
+        }
+
         // write?
         $withWrite = $input->getOption('with-write') ?: true;
         $output->writeln(array(
@@ -129,8 +142,8 @@ class MWSimpleCrudCommand extends GenerateDoctrineCrudCommand
             '',
             $this->getHelper('formatter')->formatBlock('Summary before generation', 'bg=blue;fg=white', true),
             '',
-            sprintf("You are going to generate a CRUD controller for \"<info>%s:%s</info>\"", $bundle, $entity),
-            sprintf("using the \"<info>%s</info>\" format.", $format),
+            sprintf('You are going to generate a CRUD controller for "<info>%s:%s</info>"', $bundle, $entity),
+            sprintf('using the "<info>%s</info>" format.', $format),
             '',
         ));
     }
