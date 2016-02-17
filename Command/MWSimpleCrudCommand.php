@@ -26,7 +26,7 @@ class MWSimpleCrudCommand extends GenerateDoctrineCrudCommand
         parent::configure();
 
         $this->setName('mwsimple:generate:admincrud');
-        $this->setAliases(array('mwsimple:generate:admincrud'))
+        $this->setAliases(array('mwsimple:generate:admincrud'));
         $this->setDescription('Generates a ADMINCRUD and paginator based on a Doctrine entity');
     }
 
