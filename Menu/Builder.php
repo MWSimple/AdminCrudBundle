@@ -7,19 +7,32 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 
 class Builder extends ContainerAware {
 
+    private $translator;
+
     public function adminMenu(FactoryInterface $factory, array $options) {
 
         $arrayMenu = $this->container->getParameter('mw_simple_admin_crud.menu');
 
+        $arrayMenuConfig = $this->container->getParameter('mw_simple_admin_crud.menu_setting');
+
+        $translator = $this->container->get('translator');       
+
+        if($arrayMenuConfig['translation'] != false) {
+
+            $translator->setLocale($arrayMenuConfig['translation']);
+        }
+
         $menu = $factory->createItem('root');
         $this->setConfiguracionMenuRoot($menu, $arrayMenu);
 
-        $this->crearChildren($menu, $arrayMenu);
+        $this->crearChildren($menu, $arrayMenu, $arrayMenuConfig);
 
         return $menu;
     }
 
     public function crearChildren(&$menu, $children) {
+
+        ladybug_dump_die($translator);
 
         foreach ($children as $key => $m) {
             if ($key != 'setting') {
@@ -46,7 +59,7 @@ class Builder extends ContainerAware {
                     if (!empty($m['subMenu'])) {
                         if (isset($m['subMenu']['setting']))
                             $this->setConfiguracionMenuRoot($menu[$m['name']], $m['subMenu']);
-                        $this->crearChildren($menu[$m['name']], $m['subMenu']);
+                        $this->crearChildren($translator->trans($menu[$m['name']]), $m['subMenu']);
                     }
                 }
             }

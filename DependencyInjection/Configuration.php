@@ -22,11 +22,28 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('mw_simple_admin_crud');
 
         $this->addMenuSection($rootNode);
+        $this->addMenuSettingSection($rootNode);
         $this->addAclSection($rootNode);
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
         // more information on that topic.
         return $treeBuilder;
+    }
+
+    private function addMenuSettingSection(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode
+            ->children()
+                ->arrayNode('menu_setting')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('id')->defaultValue(false)->end()
+                        ->scalarNode('class')->defaultValue(false)->end()
+                        ->scalarNode('translation')->defaultValue(false)->end()                        
+                    ->end()
+                ->end() //setting
+            ->end()
+        ;
     }
 
     private function addMenuSection(ArrayNodeDefinition $rootNode)
@@ -38,7 +55,7 @@ class Configuration implements ConfigurationInterface
                         ->children()
                             ->scalarNode('class')->end()
                             ->scalarNode('id')->end()
-                         ->end()
+                        ->end()
                         ->children()
                             ->scalarNode('name')->end()
                             ->scalarNode('url')->end()
@@ -49,7 +66,7 @@ class Configuration implements ConfigurationInterface
                                         ->children()
                                             ->scalarNode('class')->end()
                                             ->scalarNode('id')->end()
-                                         ->end()
+                                        ->end()
                                         ->children()
                                             ->scalarNode('name')->end()
                                             ->scalarNode('url')->end()
