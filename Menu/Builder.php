@@ -7,59 +7,72 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 
 class Builder extends ContainerAware {
 
-    private $translator;
-
     public function adminMenu(FactoryInterface $factory, array $options) {
 
         $arrayMenu = $this->container->getParameter('mw_simple_admin_crud.menu');
 
         $arrayMenuConfig = $this->container->getParameter('mw_simple_admin_crud.menu_setting');
 
-        $translator = $this->container->get('translator');       
-
-        if($arrayMenuConfig['translation'] != false) {
-
-            $translator->setLocale($arrayMenuConfig['translation']);
-        }
-
         $menu = $factory->createItem('root');
+
         $this->setConfiguracionMenuRoot($menu, $arrayMenu);
 
-        $this->crearChildren($menu, $arrayMenu, $arrayMenuConfig);
+        $this->crearChildren($menu, $arrayMenu, $arrayMenuConfig);die;
 
         return $menu;
     }
 
     public function crearChildren(&$menu, $children) {
 
-        ladybug_dump_die($translator);
+        $translator = $this->container->get('translator');
 
         foreach ($children as $key => $m) {
+            
             if ($key != 'setting') {
-//controla si tiene el role para dibujar el menu
+
                 if (empty($m['roles'])) {
+
                     $exist = true;
                 } else {
+
                     $exist = false;
+
                     if ($this->container->get('security.authorization_checker')->isGranted($m['roles'])) {
+
                         $exist = true;
                     }
                 }
                 if ($exist) {
 
                     if (isset($m['url'])) {
+
+                        $name_traslated = $translator->trans($m['name']);
+
+                        $m['name'] = $name_traslated;
+
                         $menu->addChild($m['name'], array('route' => $m['url']));
+
                     } else {
+
                         $menu->addChild($m['name']);
                     }
                     if (isset($m['setting'])) {
+
                         $this->setConfiguracionMenuChildren($menu, $m);
                     }
 
                     if (!empty($m['subMenu'])) {
-                        if (isset($m['subMenu']['setting']))
+
+                        if (isset($m['subMenu']['setting'])) {
+
                             $this->setConfiguracionMenuRoot($menu[$m['name']], $m['subMenu']);
-                        $this->crearChildren($translator->trans($menu[$m['name']]), $m['subMenu']);
+                        }
+
+                        $name_traslated = $translator->trans($menu[$m['name']]->getName());
+
+                        $menu[$m['name']]->setName($name_traslated);
+
+                        $this->crearChildren($menu[$m['name']], $m['subMenu']);
                     }
                 }
             }
@@ -82,5 +95,4 @@ class Builder extends ContainerAware {
                 $menu[$configuracion['name']]->setAttribute($setting, $configuracion['setting'][$setting]);
         }
     }
-
 }
