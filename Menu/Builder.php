@@ -17,14 +17,25 @@ class Builder extends ContainerAware {
 
         $this->setConfiguracionMenuRoot($menu, $arrayMenu);
 
-        $this->crearChildren($menu, $arrayMenu, $arrayMenuConfig);die;
+        $this->crearChildren($menu, $arrayMenu, $arrayMenuConfig);
 
         return $menu;
     }
 
-    public function crearChildren(&$menu, $children) {
+    public function crearChildren(&$menu, $children, &$arrayMenuConfig) {
+
+        //ladybug_dump_die($menu_translated);
 
         $translator = $this->container->get('translator');
+        
+        $translation = null;
+
+        if(isset($arrayMenuConfig['translation'])) {
+
+            $translation = $arrayMenuConfig['translation'];
+        }
+
+        //ladybug_dump_die($children);
 
         foreach ($children as $key => $m) {
             
@@ -42,13 +53,14 @@ class Builder extends ContainerAware {
                         $exist = true;
                     }
                 }
+
+                $name_traslated = $translator->trans($m['name'], array(), $translation);
+
+                $m['name'] = $name_traslated;
+
                 if ($exist) {
 
                     if (isset($m['url'])) {
-
-                        $name_traslated = $translator->trans($m['name']);
-
-                        $m['name'] = $name_traslated;
 
                         $menu->addChild($m['name'], array('route' => $m['url']));
 
@@ -68,11 +80,13 @@ class Builder extends ContainerAware {
                             $this->setConfiguracionMenuRoot($menu[$m['name']], $m['subMenu']);
                         }
 
-                        $name_traslated = $translator->trans($menu[$m['name']]->getName());
+                        $menu_translated = $menu;
 
-                        $menu[$m['name']]->setName($name_traslated);
+                        $name_traslated = $translator->trans($menu->getName(), array(), $translation);
 
-                        $this->crearChildren($menu[$m['name']], $m['subMenu']);
+                        $menu_translated->setName($name_traslated);
+
+                        $this->crearChildren($menu_translated[$m['name']], $m['subMenu'], $arrayMenuConfig);
                     }
                 }
             }
