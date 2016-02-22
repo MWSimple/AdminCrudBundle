@@ -15,13 +15,12 @@ class Builder extends ContainerAware {
 
         $arrayMenuConfig = $this->container->getParameter('mw_simple_admin_crud.menu_setting');
 
-        $translator = $this->container->get('translator');       
+        $this->translator = $this->container->get('translator');
 
-        if($arrayMenuConfig['translation'] != false) {
+        if ($arrayMenuConfig['translation'] != false) {
 
-            $translator->setLocale($arrayMenuConfig['translation']);
+            $this->translator->setLocale($arrayMenuConfig['translation']);
         }
-
         $menu = $factory->createItem('root');
         $this->setConfiguracionMenuRoot($menu, $arrayMenu);
 
@@ -31,8 +30,6 @@ class Builder extends ContainerAware {
     }
 
     public function crearChildren(&$menu, $children) {
-
-        ladybug_dump_die($translator);
 
         foreach ($children as $key => $m) {
             if ($key != 'setting') {
@@ -59,7 +56,7 @@ class Builder extends ContainerAware {
                     if (!empty($m['subMenu'])) {
                         if (isset($m['subMenu']['setting']))
                             $this->setConfiguracionMenuRoot($menu[$m['name']], $m['subMenu']);
-                        $this->crearChildren($translator->trans($menu[$m['name']]), $m['subMenu']);
+                        $this->crearChildren($this->translator->trans($menu[$m['name']]), $m['subMenu']);
                     }
                 }
             }
