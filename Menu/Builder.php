@@ -56,7 +56,8 @@ class Builder extends ContainerAware {
                     if (!empty($m['subMenu'])) {
                         if (isset($m['subMenu']['setting']))
                             $this->setConfiguracionMenuRoot($menu[$m['name']], $m['subMenu']);
-                        $this->crearChildren($this->translator->trans($menu[$m['name']]), $m['subMenu']);
+                        //  $this->crearChildren($this->translator->trans($menu[$m['name']]), $m['subMenu']);
+                        $this->crearChildren($menu[$m['name']], $m['subMenu']);
                     }
                 }
             }
