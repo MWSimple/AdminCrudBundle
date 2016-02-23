@@ -36,7 +36,14 @@ class Builder extends ContainerAware {
         }
 
         foreach ($children as $key => $m) {
-            
+
+            if (isset($m['setting']['title'])) {
+
+                $name_traslated = $translator->trans($m['setting']['title'], array(), $translation);
+
+                $m['setting']['title'] = $name_traslated;
+            }
+
             if ($key != 'setting') {
 
                 if (empty($m['roles'])) {
