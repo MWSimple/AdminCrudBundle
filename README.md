@@ -129,6 +129,17 @@ mw_simple_admin_crud:
         #    setting: { class: classLi}
 ```
 
+### How to translate menu items?
+
+You can load your own translation files to translate:
+
+```yaml
+    mw_simple_admin_crud:
+        menu_settings: 
+            translation: 'YourBundle'
+
+```
+
 ### Configuration routing admin
 
 You can configure `routing.yml` default query parameter names and templates
