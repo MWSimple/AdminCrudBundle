@@ -161,6 +161,35 @@ php app/console generate:doctrine:entity
 ```cli
 php app/console mwsimple:generate:admincrud
 ```
+## Config Crud
+
+### file is generate: Bundle/Resources/config/Post.yml
+```yaml
+entityName: 'Post'
+entity: 'Sistema\CPCEBundle\Entity\Post'
+repository: 'SistemaCPCEBundle:Post'
+index: 'admin_post'
+new: 'admin_post_new'
+edit: 'admin_post_edit'
+show: 'admin_post_show'
+create: 'admin_post_create'
+update: 'admin_post_update'
+delete: 'admin_post_delete'
+export: 'admin_post_export'
+sessionFilter: 'TrabajoControllerFilter'
+fieldsindex:    
+    a.id:
+        label: 'Id'
+        name: 'Id'
+        type: 'integer' #'datetime', 'datetimetz', 'date', 'time', 'boolean', 'ONE_TO_MANY', 'MANY_TO_MANY', 'string', 'string_html', 'text', 'text_html'
+        export: true
+fieldsshow:
+    a.id:
+        label: 'Codigo'
+        name: 'Id'
+        type: 'integer' #'datetime', 'datetimetz', 'date', 'time', 'boolean', 'ONE_TO_MANY', 'MANY_TO_MANY', 'string', 'string_html', 'text', 'text_html'
+```
+#### option 'string_html' or 'text_html' add raw ```twig {{ value|raw }} ```
 ## List
 
 ### New block override Index list

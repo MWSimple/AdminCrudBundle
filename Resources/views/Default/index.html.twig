@@ -78,6 +78,8 @@
                             {% for key, field in many_entity %}
                                 {{ field }} |
                             {% endfor %}
+                        {% elseif field.type in ['string_html', 'text_html'] %}
+                            {{ attribute(entity, field.name)|raw }}
                         {% else %}
                             {{ attribute(entity, field.name) }}
                         {% endif %}
