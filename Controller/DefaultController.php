@@ -182,7 +182,7 @@ class DefaultController extends Controller
                 'label'              => 'views.index.reset',
                 'attr'               => array(
                     'class' => 'form-control reset_submit_filters btn-danger',
-                    'col'   => 'col-lg-2 col-lg-offset-1',
+                    'col'   => 'col-lg-2',
                 ),
             ))
         ;
@@ -348,26 +348,22 @@ class DefaultController extends Controller
         ));
 
         $form
-            ->add(
-                'save', 'submit', array(
+            ->add('save', 'submit', array(
                 'translation_domain' => 'MWSimpleAdminCrudBundle',
                 'label'              => 'views.new.save',
                 'attr'               => array(
                     'class' => 'form-control btn-success',
                     'col'   => 'col-lg-2',
                 )
-                )
-            )
-            ->add(
-                'saveAndAdd', 'submit', array(
+            ))
+            ->add('saveAndAdd', 'submit', array(
                 'translation_domain' => 'MWSimpleAdminCrudBundle',
                 'label'              => 'views.new.saveAndAdd',
                 'attr'               => array(
                     'class' => 'form-control btn-primary',
                     'col'   => 'col-lg-3',
                 )
-                )
-            )
+            ))
         ;
 
         return $form;
@@ -398,8 +394,8 @@ class DefaultController extends Controller
             $this->get('session')->getFlashBag()->add('success', 'flash.update.success');
 
             $nextAction = $editForm->get('saveAndAdd')->isClicked()
-                        ? $this->generateUrl($config['new'])
-                        : $this->generateUrl($config['show'], array('id' => $id));
+                ? $this->generateUrl($config['new'])
+                : $this->generateUrl($config['show'], array('id' => $id));
             return $this->redirect($nextAction);
         }
 
