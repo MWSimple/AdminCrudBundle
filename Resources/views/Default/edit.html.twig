@@ -21,12 +21,14 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-3 col-md-3 col-sm-3">
-            <a class="form-control btn btn-info" href="{{ path(config.index) }}">
-                {{ 'views.recordactions.backtothelist'|trans({}, 'MWSimpleAdminCrudBundle') }}
-            </a>
-        </div>
-        <div class="col-lg-2 col-md-2 col-sm-2">{{ form(delete_form) }}</div>
+        {% block buttonsbelow %}
+            <div class="col-lg-3 col-md-3 col-sm-3">
+                <a class="form-control btn btn-info" href="{{ path(config.index) }}">
+                    {{ 'views.recordactions.backtothelist'|trans({}, 'MWSimpleAdminCrudBundle') }}
+                </a>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2">{{ form(delete_form) }}</div>
+        {% endblock %}
     </div>
 {% endblock %}
 
