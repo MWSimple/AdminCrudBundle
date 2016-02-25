@@ -95,12 +95,14 @@
     <div class="col-lg-12 col-md-12 col-sm-12 navigation">
         {{ knp_pagination_render(entities) }}
     </div>
+    {% block buttonsbelow %}
         <div class="col-lg-8 col-md-8 col-sm-8">
             <a class="btn btn-success likepaginator" href="{{ path(config.new) }}">
                 {{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
             </a>
         </div>
-    </div>
+    {% endblock %}
+</div>
 {% endblock %}
 
 {% block javascript %}
