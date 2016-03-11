@@ -2,7 +2,7 @@ AdminCrudBundle
 ===============
 
 Description
--------
+------
 
 The mwsimple:generate:admincrud generates a very basic controller for a given entity located in a given bundle. This controller extend the default controller implements [paginator], [filter] and allows to perform the [five basic operations] on a model, allows rewriting actions and views.
 
