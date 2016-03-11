@@ -36,14 +36,14 @@
                                         {% endfor %}
                                     </span>
                                 </div>
-                            {% elseif field.type == 'text' %}
-                                <textarea class="form-control" rows="3">
+                            {% elseif field.type in ['text', 'text_html'] %}
+                                <div class="well">
                                     {% if field.type == 'text_html' %}
                                         {{ attribute(entity, field.name)|raw }}
                                     {% else %}
                                         {{ attribute(entity, field.name) }}
                                     {% endif %}
-                                </textarea>
+                                </div>
                             {% else %}
                                 <div class="form-control">
                                     <span class="input-xlarge uneditable-input">
