@@ -98,7 +98,7 @@ form.well ul li {
     color: #FFFFFF;
     background-color: #B94A48;
 }
-+/*PARA LOS BOTONES DISABLED PONGO LA LETRA EN NEGRO*/
+/*PARA LOS BOTONES DISABLED PONGO LA LETRA EN NEGRO*/
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
     color: #000000;
 }
