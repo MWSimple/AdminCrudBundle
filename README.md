@@ -188,6 +188,7 @@ fieldsshow:
         label: 'Codigo'
         name: 'Id'
         type: 'integer' #'datetime', 'datetimetz', 'date', 'time', 'boolean', 'ONE_TO_MANY', 'MANY_TO_MANY', 'string', 'string_html', 'text', 'text_html'
+        separator: '<br>' #optional tag html by ONE_TO_MANY || MANY_TO_MANY
 ```
 #### option 'string_html' or 'text_html' add raw ```twig {{ value|raw }} ```
 ## List
