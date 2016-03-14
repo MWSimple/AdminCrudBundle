@@ -242,7 +242,8 @@ class Demo extends BaseFile {
     'required'  => false,
     'file_path' => 'webPath',
     'label'     => 'Image',
-    //'show_path' => true
+    //'show_path' => true,
+    //'preview_image' => true,
 ))
 ```
 ### Use DualList.
