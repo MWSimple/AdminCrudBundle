@@ -9,6 +9,14 @@
                         <img src="{{ asset('bundles/mwsimpleadmincrud/img/no_image.gif') }}" />
                     {% endif %}
                     </div>
+                {% else %}
+                    <div class="fileupload-new">
+                    {% if file_url is not null %}
+                        <a class="btn btn-default btn-lg glyphicon glyphicon-save"></a>
+                    {% else %}
+                        <span class="glyphicon glyphicon-remove"></span>
+                    {% endif %}    
+                    </div>
                 {% endif %}    
             <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;">
             </div>
