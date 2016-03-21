@@ -177,6 +177,7 @@ update: 'admin_post_update'
 delete: 'admin_post_delete'
 export: 'admin_post_export'
 sessionFilter: 'TrabajoControllerFilter'
+saveAndAdd: true
 fieldsindex:    
     a.id:
         label: 'Id'
