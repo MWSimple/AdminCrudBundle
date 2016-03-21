@@ -147,7 +147,7 @@ class DefaultController extends Controller
             // Get filter from session
             if ($session->has($config['sessionFilter'])) {
                 $filterData = $session->get($config['sessionFilter']);
-                $filterForm->submit($filterData);                
+                $filterForm->submit($filterData);
                 $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $queryBuilder);
             }
         }
@@ -186,7 +186,7 @@ class DefaultController extends Controller
                 ),
             ))
         ;
-        
+
         return $form;
     }
 
@@ -249,15 +249,26 @@ class DefaultController extends Controller
                     'col'   => 'col-lg-2',
                 )
             ))
-            ->add('saveAndAdd', 'submit', array(
-                'translation_domain' => 'MWSimpleAdminCrudBundle',
-                'label'              => 'views.new.saveAndAdd',
-                'attr'               => array(
-                    'class' => 'form-control btn-primary',
-                    'col'   => 'col-lg-3',
-                )
-            ))
         ;
+
+        if (!array_key_exists('saveAndAdd', $config)) {
+            $config['saveAndAdd'] = true;
+        } elseif ($config['saveAndAdd'] != false) {
+            $config['saveAndAdd'] = true;
+        }
+
+        if ($config['saveAndAdd']) {
+            $form
+                ->add('saveAndAdd', 'submit', array(
+                    'translation_domain' => 'MWSimpleAdminCrudBundle',
+                    'label'              => 'views.new.saveAndAdd',
+                    'attr'               => array(
+                        'class' => 'form-control btn-primary',
+                        'col'   => 'col-lg-3',
+                    )
+                ))
+            ;
+        }
 
         return $form;
     }
@@ -356,15 +367,26 @@ class DefaultController extends Controller
                     'col'   => 'col-lg-2',
                 )
             ))
-            ->add('saveAndAdd', 'submit', array(
-                'translation_domain' => 'MWSimpleAdminCrudBundle',
-                'label'              => 'views.new.saveAndAdd',
-                'attr'               => array(
-                    'class' => 'form-control btn-primary',
-                    'col'   => 'col-lg-3',
-                )
-            ))
         ;
+
+        if (!array_key_exists('saveAndAdd', $config)) {
+            $config['saveAndAdd'] = true;
+        } elseif ($config['saveAndAdd'] != false) {
+            $config['saveAndAdd'] = true;
+        }
+
+        if ($config['saveAndAdd']) {
+            $form
+                ->add('saveAndAdd', 'submit', array(
+                    'translation_domain' => 'MWSimpleAdminCrudBundle',
+                    'label'              => 'views.new.saveAndAdd',
+                    'attr'               => array(
+                        'class' => 'form-control btn-primary',
+                        'col'   => 'col-lg-3',
+                    )
+                ))
+            ;
+        }
 
         return $form;
     }
@@ -376,7 +398,7 @@ class DefaultController extends Controller
     public function updateAction($id)
     {
         $config = $this->getConfig();
-    	$request = $this->getRequest();
+        $request = $this->getRequest();
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository($config['repository'])->find($id);

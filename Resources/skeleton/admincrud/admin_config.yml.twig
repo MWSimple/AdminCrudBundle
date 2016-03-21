@@ -10,9 +10,10 @@ update: '{{ route_name_prefix }}_update'
 delete: '{{ route_name_prefix }}_delete'
 export: '{{ route_name_prefix }}_export'
 sessionFilter: '{{ entity_class }}ControllerFilter'
+saveAndAdd: true
 fieldsindex:
 {%- for field in fields %}
-    
+
     a.{{ field.fieldName }}:
         label: '{{ field.fieldName|capitalize }}'
         name: '{{ field.fieldName|capitalize }}'
