@@ -51,7 +51,7 @@ class FieldFileType extends FileType
             $view->vars['value'] = $value;
         }
         if (array_key_exists('preview_image', $options)) {
-            $view->vars['preview_image'] = $value;   
+            $view->vars['preview_image'] = $value;
         } else {
             $view->vars['preview_image'] = null;
         }
