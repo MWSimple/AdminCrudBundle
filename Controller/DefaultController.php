@@ -209,15 +209,16 @@ class DefaultController extends Controller
 
             $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
 
-	    if (!array_key_exists('saveAndAdd', $config)) {
-		$config['saveAndAdd'] = true;
-	    } elseif ($config['saveAndAdd'] != false) {
-		$config['saveAndAdd'] = true;
-	    }
+    	    if (!array_key_exists('saveAndAdd', $config)) {
+    		    $config['saveAndAdd'] = true;
+    	    } elseif ($config['saveAndAdd'] != false) {
+    		    $config['saveAndAdd'] = true;
+    	    }
+
             if ($config['saveAndAdd']) {
-		$nextAction = $form->get('saveAndAdd')->isClicked()
-                    ? $this->generateUrl($config['new'])
-                    : $this->generateUrl($config['show'], array('id' => $entity->getId()));
+		        $nextAction = $form->get('saveAndAdd')->isClicked()
+                ? $this->generateUrl($config['new'])
+                : $this->generateUrl($config['show'], array('id' => $entity->getId()));
             } else {
             	$nextAction = $this->generateUrl($config['show'], array('id' => $entity->getId()));
             }
@@ -426,18 +427,17 @@ class DefaultController extends Controller
             $this->get('session')->getFlashBag()->add('success', 'flash.update.success');
 
 	    if (!array_key_exists('saveAndAdd', $config)) {
-		$config['saveAndAdd'] = true;
+		    $config['saveAndAdd'] = true;
 	    } elseif ($config['saveAndAdd'] != false) {
-		$config['saveAndAdd'] = true;
+		    $config['saveAndAdd'] = true;
 	    }
             if ($config['saveAndAdd']) {
-		$nextAction = $form->get('saveAndAdd')->isClicked()
+		        $nextAction = $form->get('saveAndAdd')->isClicked()
                     ? $this->generateUrl($config['new'])
                     : $this->generateUrl($config['show'], array('id' => $id));
             } else {
             	$nextAction = $this->generateUrl($config['show'], array('id' => $id));
             }
-
             return $this->redirect($nextAction);
         }
 

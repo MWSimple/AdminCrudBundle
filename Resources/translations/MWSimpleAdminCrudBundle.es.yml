@@ -44,6 +44,7 @@ flash:
 
 Previous: 'Anterior'
 Next: 'Siguiente'
+Download: 'Descargar'
 
 ROLE_ADMIN: Administrador
 ROLE_USER: Usuario

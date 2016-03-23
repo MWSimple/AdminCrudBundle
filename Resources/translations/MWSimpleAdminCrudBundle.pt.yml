@@ -1,0 +1,49 @@
+views:
+    layout:
+        bannersadmin: Administrador
+    index:
+        filters: Filtros
+        filter: filtro
+        reset: Limpiar
+        list: %entity%: lista
+        actions: ações
+        createnew: Criar %entity%
+        export: exportação
+    actions:
+        show: ver %entity%
+        edit: editar %entity%
+    recordactions:
+        backtothelist: Voltar para a lista
+        edit: Editar
+        delete: Eliminar
+        confirm: Excluir o Item?
+        disableConfirm: Desativar o Item?
+        disable: Desativar
+    new:
+        creation: Criar %entity%
+        create: Criar
+        save: Salvar
+        saveAndAdd: Salvar y Adicionar
+    edit:
+        edit: Editar %entity%
+        editbutton: Editar
+    show:
+        show: Ver %entity%
+
+flash:
+    create:
+        success: item criado com sucesso.
+        error: Ocorreu um erro durante a criação do item.
+    update:
+        success: Item atualizado com sucesso.
+        error: Ocorreu um erro durante a atualização do item.
+    delete:
+        success: Item excluído com sucesso.
+        error: Um erro ocorreu durante a eliminaçao do elemento.
+
+Previous: 'Anterior'
+Next: 'Avançar'
+Download: 'Baixar'
+
+ROLE_ADMIN: Administrador
+ROLE_USER: Usuario
