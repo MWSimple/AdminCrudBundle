@@ -432,7 +432,7 @@ class DefaultController extends Controller
 		    $config['saveAndAdd'] = true;
 	    }
             if ($config['saveAndAdd']) {
-		        $nextAction = $form->get('saveAndAdd')->isClicked()
+		        $nextAction = $editForm->get('saveAndAdd')->isClicked()
                     ? $this->generateUrl($config['new'])
                     : $this->generateUrl($config['show'], array('id' => $id));
             } else {
