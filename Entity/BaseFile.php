@@ -14,8 +14,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  *
  * @author MWS
  */
-class BaseFile
-{
+class BaseFile {
+
     /**
      * @Assert\File()
      */
@@ -45,8 +45,7 @@ class BaseFile
      *
      * @return File
      */
-    public function setFilePath($filePath)
-    {
+    public function setFilePath($filePath) {
         $this->filePath = $filePath;
 
         return $this;
@@ -57,18 +56,16 @@ class BaseFile
      *
      * @return string
      */
-    public function getFilePath()
-    {
+    public function getFilePath() {
         return $this->filePath;
     }
 
     /**
      * Set file.
      *
-     * @param UploadedFile $file
+     * @param  $file
      */
-    public function setFile(UploadedFile $file = null)
-    {
+    public function setFile( $file = null) {
         $this->file = $file;
         // check if we have an old image path
         if (is_file($this->getAbsolutePath())) {
@@ -82,36 +79,28 @@ class BaseFile
      *
      * @return UploadedFile
      */
-    public function getFile()
-    {
+    public function getFile() {
         return $this->file;
     }
 
-    public function getAbsolutePath()
-    {
-        return is_null($this->filePath)
-            ? null
-            : $this->getUploadRootDir().'/'.$this->filePath
+    public function getAbsolutePath() {
+        return is_null($this->filePath) ? null : $this->getUploadRootDir() . '/' . $this->filePath
         ;
     }
 
-    public function getWebPath()
-    {
-        return is_null($this->filePath)
-            ? null
-            : $this->getUploadDir().'/'.$this->filePath
+    public function getWebPath() {
+        return is_null($this->filePath) ? null : $this->getUploadDir() . '/' . $this->filePath
         ;
     }
 
-    protected function getUploadRootDir()
-    {
+    protected function getUploadRootDir() {
         if (!$this->getUploadDir()) {
             $uploadDir = 'uploads';
         } else {
             $uploadDir = $this->getUploadDir();
         }
 
-        $path = __DIR__.'/../../../../../../../web/'.$this->getUploadDir();
+        $path = __DIR__ . '/../../../../../../../web/' . $this->getUploadDir();
         if (!file_exists($path)) {
             mkdir($path, 0755);
         }
@@ -119,30 +108,26 @@ class BaseFile
         return $path;
     }
 
-    public function setUploadDir($uploadDir)
-    {
+    public function setUploadDir($uploadDir) {
         $this->uploadDir = $uploadDir;
     }
 
-    public function getUploadDir()
-    {
+    public function getUploadDir() {
         return $this->uploadDir;
     }
 
-    public function getFixturesPath()
-    {
-        return $this->getAbsolutePath().'web/filefixture/';
+    public function getFixturesPath() {
+        return $this->getAbsolutePath() . 'web/filefixture/';
     }
 
     /**
      * @ORM\PreFlush()
      */
-    public function preUpload()
-    {
+    public function preUpload() {
         if (!is_null($this->getFile())) {
             // do whatever you want to generate a unique name
             $filename = sha1(uniqid(mt_rand(), true));
-            $this->filePath = $filename.'.'.$this->getFile()->guessExtension();
+            $this->filePath = $filename . '.' . $this->getFile()->guessExtension();
         }
     }
 
@@ -150,8 +135,7 @@ class BaseFile
      * @ORM\PostPersist()
      * @ORM\PostUpdate()
      */
-    public function upload()
-    {
+    public function upload() {
         if (is_null($this->getFile())) {
             return;
         }
@@ -175,20 +159,19 @@ class BaseFile
     /**
      * @ORM\PreRemove()
      */
-    public function storeFilenameForRemove()
-    {
+    public function storeFilenameForRemove() {
         $this->temp = $this->getAbsolutePath();
     }
 
     /**
      * @ORM\PostRemove()
      */
-    public function removeUpload()
-    {
+    public function removeUpload() {
         if (isset($this->temp)) {
             if (file_exists($this->temp)) {
                 unlink($this->temp);
             }
         }
     }
+
 }
