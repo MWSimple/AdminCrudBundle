@@ -20,7 +20,7 @@ class DefaultController extends Controller
      */
     protected $config = array();
 
-	/**
+    /**
      * Index
      */
     public function indexAction()
@@ -38,7 +38,7 @@ class DefaultController extends Controller
         unset($config['filterType']);
 
         return array(
-        	'config'     => $config,
+            'config'     => $config,
             'entities'   => $pagination,
             'filterForm' => $filterForm->createView(),
         );
@@ -196,7 +196,7 @@ class DefaultController extends Controller
     public function createAction()
     {
         $config = $this->getConfig();
-    	$request = $this->getRequest();
+        $request = $this->getRequest();
         $entity = new $config['entity']();
         $form   = $this->createCreateForm($config, $entity);
         $form->handleRequest($request);
@@ -209,18 +209,18 @@ class DefaultController extends Controller
 
             $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
 
-    	    if (!array_key_exists('saveAndAdd', $config)) {
-    		    $config['saveAndAdd'] = true;
-    	    } elseif ($config['saveAndAdd'] != false) {
-    		    $config['saveAndAdd'] = true;
-    	    }
+            if (!array_key_exists('saveAndAdd', $config)) {
+                $config['saveAndAdd'] = true;
+            } elseif ($config['saveAndAdd'] != false) {
+                $config['saveAndAdd'] = true;
+            }
 
             if ($config['saveAndAdd']) {
-		        $nextAction = $form->get('saveAndAdd')->isClicked()
+                $nextAction = $form->get('saveAndAdd')->isClicked()
                 ? $this->generateUrl($config['new'])
                 : $this->generateUrl($config['show'], array('id' => $entity->getId()));
             } else {
-            	$nextAction = $this->generateUrl($config['show'], array('id' => $entity->getId()));
+                $nextAction = $this->generateUrl($config['show'], array('id' => $entity->getId()));
             }
 
             return $this->redirect($nextAction);
@@ -426,17 +426,17 @@ class DefaultController extends Controller
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'flash.update.success');
 
-	    if (!array_key_exists('saveAndAdd', $config)) {
-		    $config['saveAndAdd'] = true;
-	    } elseif ($config['saveAndAdd'] != false) {
-		    $config['saveAndAdd'] = true;
-	    }
+        if (!array_key_exists('saveAndAdd', $config)) {
+            $config['saveAndAdd'] = true;
+        } elseif ($config['saveAndAdd'] != false) {
+            $config['saveAndAdd'] = true;
+        }
             if ($config['saveAndAdd']) {
-		        $nextAction = $form->get('saveAndAdd')->isClicked()
+                $nextAction = $editForm->get('saveAndAdd')->isClicked()
                     ? $this->generateUrl($config['new'])
                     : $this->generateUrl($config['show'], array('id' => $id));
             } else {
-            	$nextAction = $this->generateUrl($config['show'], array('id' => $id));
+                $nextAction = $this->generateUrl($config['show'], array('id' => $id));
             }
             return $this->redirect($nextAction);
         }
@@ -461,7 +461,7 @@ class DefaultController extends Controller
     public function deleteAction($id)
     {
         $config = $this->getConfig();
-    	$request = $this->getRequest();
+        $request = $this->getRequest();
         $form = $this->createDeleteForm($config, $id);
         $form->handleRequest($request);
 
