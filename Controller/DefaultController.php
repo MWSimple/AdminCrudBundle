@@ -224,17 +224,17 @@ class DefaultController extends Controller
             }
 
             return $this->redirect($nextAction);
-
         }
+
         $this->get('session')->getFlashBag()->add('danger', 'flash.create.error');
 
         // remove the form to return to the view
         unset($config['newType']);
 
         return array(
-            'config'     => $config,
-            'entity'     => $entity,
-            'form'       => $form->createView(),
+            'config' => $config,
+            'entity' => $entity,
+            'form'   => $form->createView(),
         );
     }
 
@@ -297,9 +297,9 @@ class DefaultController extends Controller
         unset($config['newType']);
 
         return array(
-            'config'     => $config,
-            'entity'     => $entity,
-            'form'       => $form->createView(),
+            'config' => $config,
+            'entity' => $entity,
+            'form'   => $form->createView(),
         );
     }
 
