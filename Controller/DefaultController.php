@@ -426,11 +426,11 @@ class DefaultController extends Controller
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'flash.update.success');
 
-            if (!array_key_exists('saveAndAdd', $config)) {
-                $config['saveAndAdd'] = true;
-            } elseif ($config['saveAndAdd'] != false) {
-                $config['saveAndAdd'] = true;
-            }
+        if (!array_key_exists('saveAndAdd', $config)) {
+            $config['saveAndAdd'] = true;
+        } elseif ($config['saveAndAdd'] != false) {
+            $config['saveAndAdd'] = true;
+        }
             if ($config['saveAndAdd']) {
                 $nextAction = $editForm->get('saveAndAdd')->isClicked()
                     ? $this->generateUrl($config['new'])

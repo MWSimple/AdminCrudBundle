@@ -189,6 +189,8 @@ fieldsshow:
         label: 'Codigo'
         name: 'Id'
         type: 'integer' #'datetime', 'datetimetz', 'date', 'time', 'boolean', 'ONE_TO_MANY', 'MANY_TO_MANY', 'string', 'string_html', 'text', 'text_html'
+        class: 'col-lg-8 col-md-6 col-sm-12' #or other class. Default is col-12
+        #closerow: true #this close row for the separators of col
         separator: '<br>' #optional tag html by ONE_TO_MANY || MANY_TO_MANY
 ```
 #### option 'string_html' or 'text_html' add raw ```twig {{ value|raw }} ```
