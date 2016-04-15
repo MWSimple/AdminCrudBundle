@@ -2,7 +2,7 @@ AdminCrudBundle
 ===============
 
 Description
------
+------
 
 The mwsimple:generate:admincrud generates a very basic controller for a given entity located in a given bundle. This controller extend the default controller implements [paginator], [filter] and allows to perform the [five basic operations] on a model, allows rewriting actions and views.
 
@@ -173,6 +173,39 @@ php app/console generate:doctrine:entity
 ```cli
 php app/console mwsimple:generate:admincrud
 ```
+## Config Crud
+
+### file is generate: Bundle/Resources/config/Post.yml
+```yaml
+entityName: 'Post'
+entity: 'Sistema\CPCEBundle\Entity\Post'
+repository: 'SistemaCPCEBundle:Post'
+index: 'admin_post'
+new: 'admin_post_new'
+edit: 'admin_post_edit'
+show: 'admin_post_show'
+create: 'admin_post_create'
+update: 'admin_post_update'
+delete: 'admin_post_delete'
+export: 'admin_post_export'
+sessionFilter: 'TrabajoControllerFilter'
+saveAndAdd: true
+fieldsindex:    
+    a.id:
+        label: 'Id'
+        name: 'Id'
+        type: 'integer' #'datetime', 'datetimetz', 'date', 'time', 'boolean', 'ONE_TO_MANY', 'MANY_TO_MANY', 'string', 'string_html', 'text', 'text_html'
+        export: true
+fieldsshow:
+    a.id:
+        label: 'Codigo'
+        name: 'Id'
+        type: 'integer' #'datetime', 'datetimetz', 'date', 'time', 'boolean', 'ONE_TO_MANY', 'MANY_TO_MANY', 'string', 'string_html', 'text', 'text_html'
+        class: 'col-lg-8 col-md-6 col-sm-12' #or other class. Default is col-12
+        #closerow: true #this close row for the separators of col
+        separator: '<br>' #optional tag html by ONE_TO_MANY || MANY_TO_MANY
+```
+#### option 'string_html' or 'text_html' add raw ```twig {{ value|raw }} ```
 ## List
 
 ### New block override Index list
@@ -183,6 +216,10 @@ php app/console mwsimple:generate:admincrud
 #### buttons
 ```twig
     {% block buttons %}{% endblock %}
+```
+#### buttons below
+```twig
+    {% block buttonsbelow %}{% endblock %}
 ```
 
 ### New Export list to csv.
@@ -220,7 +257,8 @@ class Demo extends BaseFile {
     'required'  => false,
     'file_path' => 'webPath',
     'label'     => 'Image',
-    //'show_path' => true
+    //'show_path' => true,
+    //'preview_image' => true,
 ))
 ```
 ### Use DualList.

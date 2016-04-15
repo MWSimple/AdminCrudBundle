@@ -20,7 +20,7 @@ class DefaultController extends Controller
      */
     protected $config = array();
 
-	/**
+    /**
      * Index
      */
     public function indexAction()
@@ -38,7 +38,7 @@ class DefaultController extends Controller
         unset($config['filterType']);
 
         return array(
-        	'config'     => $config,
+            'config'     => $config,
             'entities'   => $pagination,
             'filterForm' => $filterForm->createView(),
         );
@@ -147,7 +147,7 @@ class DefaultController extends Controller
             // Get filter from session
             if ($session->has($config['sessionFilter'])) {
                 $filterData = $session->get($config['sessionFilter']);
-                $filterForm->submit($filterData);                
+                $filterForm->submit($filterData);
                 $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $queryBuilder);
             }
         }
@@ -182,11 +182,11 @@ class DefaultController extends Controller
                 'label'              => 'views.index.reset',
                 'attr'               => array(
                     'class' => 'form-control reset_submit_filters btn-danger',
-                    'col'   => 'col-lg-2 col-lg-offset-1',
+                    'col'   => 'col-lg-2',
                 ),
             ))
         ;
-        
+
         return $form;
     }
 
@@ -196,7 +196,7 @@ class DefaultController extends Controller
     public function createAction()
     {
         $config = $this->getConfig();
-    	$request = $this->getRequest();
+        $request = $this->getRequest();
         $entity = new $config['entity']();
         $form   = $this->createCreateForm($config, $entity);
         $form->handleRequest($request);
@@ -209,21 +209,32 @@ class DefaultController extends Controller
 
             $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
 
-            $nextAction = $form->get('saveAndAdd')->isClicked()
+            if (!array_key_exists('saveAndAdd', $config)) {
+                $config['saveAndAdd'] = true;
+            } elseif ($config['saveAndAdd'] != false) {
+                $config['saveAndAdd'] = true;
+            }
+
+            if ($config['saveAndAdd']) {
+                $nextAction = $form->get('saveAndAdd')->isClicked()
                 ? $this->generateUrl($config['new'])
                 : $this->generateUrl($config['show'], array('id' => $entity->getId()));
-            return $this->redirect($nextAction);
+            } else {
+                $nextAction = $this->generateUrl($config['show'], array('id' => $entity->getId()));
+            }
 
+            return $this->redirect($nextAction);
         }
+
         $this->get('session')->getFlashBag()->add('danger', 'flash.create.error');
 
         // remove the form to return to the view
         unset($config['newType']);
 
         return array(
-            'config'     => $config,
-            'entity'     => $entity,
-            'form'       => $form->createView(),
+            'config' => $config,
+            'entity' => $entity,
+            'form'   => $form->createView(),
         );
     }
 
@@ -249,15 +260,26 @@ class DefaultController extends Controller
                     'col'   => 'col-lg-2',
                 )
             ))
-            ->add('saveAndAdd', 'submit', array(
-                'translation_domain' => 'MWSimpleAdminCrudBundle',
-                'label'              => 'views.new.saveAndAdd',
-                'attr'               => array(
-                    'class' => 'form-control btn-primary',
-                    'col'   => 'col-lg-3',
-                )
-            ))
         ;
+
+        if (!array_key_exists('saveAndAdd', $config)) {
+            $config['saveAndAdd'] = true;
+        } elseif ($config['saveAndAdd'] != false) {
+            $config['saveAndAdd'] = true;
+        }
+
+        if ($config['saveAndAdd']) {
+            $form
+                ->add('saveAndAdd', 'submit', array(
+                    'translation_domain' => 'MWSimpleAdminCrudBundle',
+                    'label'              => 'views.new.saveAndAdd',
+                    'attr'               => array(
+                        'class' => 'form-control btn-primary',
+                        'col'   => 'col-lg-3',
+                    )
+                ))
+            ;
+        }
 
         return $form;
     }
@@ -275,9 +297,9 @@ class DefaultController extends Controller
         unset($config['newType']);
 
         return array(
-            'config'     => $config,
-            'entity'     => $entity,
-            'form'       => $form->createView(),
+            'config' => $config,
+            'entity' => $entity,
+            'form'   => $form->createView(),
         );
     }
 
@@ -348,27 +370,34 @@ class DefaultController extends Controller
         ));
 
         $form
-            ->add(
-                'save', 'submit', array(
+            ->add('save', 'submit', array(
                 'translation_domain' => 'MWSimpleAdminCrudBundle',
                 'label'              => 'views.new.save',
                 'attr'               => array(
                     'class' => 'form-control btn-success',
                     'col'   => 'col-lg-2',
                 )
-                )
-            )
-            ->add(
-                'saveAndAdd', 'submit', array(
-                'translation_domain' => 'MWSimpleAdminCrudBundle',
-                'label'              => 'views.new.saveAndAdd',
-                'attr'               => array(
-                    'class' => 'form-control btn-primary',
-                    'col'   => 'col-lg-3',
-                )
-                )
-            )
+            ))
         ;
+
+        if (!array_key_exists('saveAndAdd', $config)) {
+            $config['saveAndAdd'] = true;
+        } elseif ($config['saveAndAdd'] != false) {
+            $config['saveAndAdd'] = true;
+        }
+
+        if ($config['saveAndAdd']) {
+            $form
+                ->add('saveAndAdd', 'submit', array(
+                    'translation_domain' => 'MWSimpleAdminCrudBundle',
+                    'label'              => 'views.new.saveAndAdd',
+                    'attr'               => array(
+                        'class' => 'form-control btn-primary',
+                        'col'   => 'col-lg-3',
+                    )
+                ))
+            ;
+        }
 
         return $form;
     }
@@ -380,7 +409,7 @@ class DefaultController extends Controller
     public function updateAction($id)
     {
         $config = $this->getConfig();
-    	$request = $this->getRequest();
+        $request = $this->getRequest();
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository($config['repository'])->find($id);
@@ -397,9 +426,18 @@ class DefaultController extends Controller
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'flash.update.success');
 
-            $nextAction = $editForm->get('saveAndAdd')->isClicked()
-                        ? $this->generateUrl($config['new'])
-                        : $this->generateUrl($config['show'], array('id' => $id));
+        if (!array_key_exists('saveAndAdd', $config)) {
+            $config['saveAndAdd'] = true;
+        } elseif ($config['saveAndAdd'] != false) {
+            $config['saveAndAdd'] = true;
+        }
+            if ($config['saveAndAdd']) {
+                $nextAction = $editForm->get('saveAndAdd')->isClicked()
+                    ? $this->generateUrl($config['new'])
+                    : $this->generateUrl($config['show'], array('id' => $id));
+            } else {
+                $nextAction = $this->generateUrl($config['show'], array('id' => $id));
+            }
             return $this->redirect($nextAction);
         }
 
@@ -423,7 +461,7 @@ class DefaultController extends Controller
     public function deleteAction($id)
     {
         $config = $this->getConfig();
-    	$request = $this->getRequest();
+        $request = $this->getRequest();
         $form = $this->createDeleteForm($config, $id);
         $form->handleRequest($request);
 

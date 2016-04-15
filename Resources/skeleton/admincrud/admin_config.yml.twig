@@ -10,9 +10,10 @@ update: '{{ route_name_prefix }}_update'
 delete: '{{ route_name_prefix }}_delete'
 export: '{{ route_name_prefix }}_export'
 sessionFilter: '{{ entity_class }}ControllerFilter'
+saveAndAdd: true
 fieldsindex:
 {%- for field in fields %}
-    
+
     a.{{ field.fieldName }}:
         label: '{{ field.fieldName|capitalize }}'
         name: '{{ field.fieldName|capitalize }}'
@@ -70,6 +71,9 @@ fieldsshow:
 
         date: 'H:i:s'
     {%- endif %}
+
+        #class: 'col-lg-12'
+        #closerow: true
 {%- endfor %}
 {%- for field in associations %}
 
@@ -92,4 +96,7 @@ fieldsshow:
 
         type: 'entity'
     {%- endif %}
+
+        #class: 'col-lg-12'
+        #closerow: true
 {%- endfor %}
