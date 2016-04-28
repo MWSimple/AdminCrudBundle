@@ -35,6 +35,10 @@ services:
         arguments: ['@doctrine.orm.entity_manager']
         tags:
             - { name: form.type, alias: duallist }
+    form.type.mwspeso:
+        class: MWSimple\Bundle\AdminCrudBundle\Form\Type\PesoType
+        tags:
+            - { name: form.type, alias: mwspeso }
     mws_field_file_type:
         class: MWSimple\Bundle\AdminCrudBundle\Form\Type\FieldFileType
         tags:

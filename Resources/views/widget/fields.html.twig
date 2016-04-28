@@ -87,6 +87,15 @@
     {% endif %}
 {%- endblock time_widget %}
 
+{%- block mwspeso_widget -%}
+    {# type="number" doesn't work with floats #}
+    {%- set type = type|default('text') -%}
+    <div class="input-group">
+        {{ block('form_widget_simple') }}
+        <span class="input-group-addon">$</span>
+    </div>
+{%- endblock mwspeso_widget -%}
+
 {% block choice_widget_collapsed -%}
     {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) %}
     {{- parent() -}}

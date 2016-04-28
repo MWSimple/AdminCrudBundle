@@ -224,6 +224,12 @@ fieldsshow:
 ))
 ```
 
+### Form type: mwspeso - Use Type Number add $
+#### Example field form
+```php
+->add('numero', 'mwspeso')
+```
+
 ### File upload
 #### Entity
 ```php
