@@ -9,7 +9,7 @@
 {% if 'annotation' == format %}
      * @Route("/", name="{{ route_name_prefix }}")
      * @Method("GET")
-     * @Template()
+     * @Template("{{ bundle }}:{{ entity|lower }}:index.html.twig")
 {% endif %}
 {% endblock phpdoc_method_annotations %}
      */

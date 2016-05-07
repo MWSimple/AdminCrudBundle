@@ -27,6 +27,8 @@ class MWSimpleCrudGenerator extends DoctrineCrudGenerator
      */
     public function generate(BundleInterface $bundle, $entity, ClassMetadataInfo $metadata, $format, $routePrefix, $needWriteActions, $forceOverwrite)
     {
+        //Reescribo el root dir para que sea el del bundle y cree ahi las views
+        $this->rootDir = $bundle->getPath();
         parent::generate($bundle, $entity, $metadata, $format, $routePrefix, $needWriteActions, $forceOverwrite);
 
         try {
