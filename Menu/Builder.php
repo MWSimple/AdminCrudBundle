@@ -41,8 +41,14 @@ class Builder extends ContainerAware
                             if (!empty($m["id"])) {
                                 $menu[$m['name']]->setChildrenAttribute('id', $m["id"]."List");
                             }
-                            $menu[$m['name']]->setChildrenAttribute('class', 'nav collapse');
+                            $menu[$m['name']]->setChildrenAttribute('class', 'nav collapse sub-menu');
                             $menu[$m['name']]->addChild($subMenu['name'], array('route' => $subMenu['url']));
+                            if (!empty($subMenu["icon"])) {
+                                $menu[$m['name']][$subMenu['name']]->setAttribute('icon', $subMenu["icon"]);
+                            }
+                            if (!empty($subMenu["id"])) {
+                                $menu[$m['name']][$subMenu['name']]->setAttribute('id', $subMenu["id"]);
+                            }
                         }
                     }
                 }

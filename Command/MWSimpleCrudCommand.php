@@ -19,7 +19,7 @@ use Sensio\Bundle\GeneratorBundle\Command\AutoComplete\EntitiesAutoCompleter;
  */
 class MWSimpleCrudCommand extends GenerateDoctrineCrudCommand
 {
-    private $formGenerator;
+    protected $formGenerator;
 
     protected function configure()
     {
@@ -48,25 +48,23 @@ class MWSimpleCrudCommand extends GenerateDoctrineCrudCommand
         return $this->formGenerator;
     }
 
-    protected function getSkeletonDirs(BundleInterface $bundle = null)
-    {
-        $skeletonDirs = array();
+    // protected function getSkeletonDirs(BundleInterface $bundle = null)
+    // {
+    //     $skeletonDirs = array();
 
-        if (isset($bundle) && is_dir($dir = $bundle->getPath().'/Resources/SensioGeneratorBundle/skeleton')) {
-            $skeletonDirs[] = $dir;
-        }
+    //     if (isset($bundle) && is_dir($dir = $bundle->getPath().'/Resources/SensioGeneratorBundle/skeleton')) {
+    //         $skeletonDirs[] = $dir;
+    //     }
 
-        if (is_dir($dir = $this->getContainer()->get('kernel')->getRootdir().'/Resources/SensioGeneratorBundle/skeleton')) {
-            $skeletonDirs[] = $dir;
-        }
+    //     if (is_dir($dir = $this->getContainer()->get('kernel')->getRootdir().'/Resources/SensioGeneratorBundle/skeleton')) {
+    //         $skeletonDirs[] = $dir;
+    //     }
 
-        // $skeletonDirs[] = __DIR__.'/../Resources/skeleton';
-        // $skeletonDirs[] = __DIR__.'/../Resources';
-        $skeletonDirs[] = $this->getContainer()->get('kernel')->locateResource('@MWSimpleAdminCrudBundle/Resources/skeleton');
-        $skeletonDirs[] = $this->getContainer()->get('kernel')->locateResource('@MWSimpleAdminCrudBundle/Resources');
+    //     $skeletonDirs[] = __DIR__.'/../Resources/skeleton';
+    //     $skeletonDirs[] = __DIR__.'/../Resources';
 
-        return $skeletonDirs;
-    }
+    //     return $skeletonDirs;
+    // }
 
     protected function interact(InputInterface $input, OutputInterface $output)
     {

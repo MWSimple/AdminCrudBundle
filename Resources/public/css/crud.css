@@ -102,3 +102,9 @@ form.well ul li {
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
     color: #000000;
 }
+ul.sub-menu {
+    background: #FFFFFF;
+}
+ul.sub-menu li {
+    padding-left: 5px;
+}

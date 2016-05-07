@@ -30,7 +30,7 @@ class MWSimpleCrudGenerator extends DoctrineCrudGenerator
         parent::generate($bundle, $entity, $metadata, $format, $routePrefix, $needWriteActions, $forceOverwrite);
 
         try {
-            $this->generateFormFilter($bundle, $entity, $metadata);
+            $this->generateFormFilter($bundle, $entity, $metadata, $forceOverwrite);
         } catch (\RuntimeException $e ) {
             // form already exists
         }
@@ -85,7 +85,7 @@ class MWSimpleCrudGenerator extends DoctrineCrudGenerator
      * @param string            $entity   The entity relative class name
      * @param ClassMetadataInfo $metadata The entity metadata class
      */
-    public function generateFormFilter(BundleInterface $bundle, $entity, ClassMetadataInfo $metadata)
+    public function generateFormFilter(BundleInterface $bundle, $entity, ClassMetadataInfo $metadata, $forceOverwrite)
     {
         $parts       = explode('\\', $entity);
         $entityClass = array_pop($parts);
@@ -94,7 +94,7 @@ class MWSimpleCrudGenerator extends DoctrineCrudGenerator
         $dirPath         = $bundle->getPath().'/Form';
         $this->classPath = $dirPath.'/'.str_replace('\\', '/', $entity).'FilterType.php';
 
-        if (file_exists($this->classPath)) {
+        if (!$forceOverwrite && file_exists($this->classPath)) {
             throw new \RuntimeException(sprintf('Unable to generate the %s form class as it already exists under the %s file', $this->className, $this->classPath));
         }
 
