@@ -39,6 +39,7 @@ class DefaultController extends Controller {
      * @return Doctrine\ORM\QueryBuilder $queryBuilder
      */
     protected function createQuery() {
+
         $config = $this->getConfig();
         $alias = $config['alias'];
         $select = array();
@@ -623,10 +624,14 @@ class DefaultController extends Controller {
         return false;
     }
 
-    public function getTable() {
+    public function getTable($_qb = null) {
         $config = $this->getConfig();
         $table = $config['table'];
-        $qb = $this->createQuery();
+        if (is_null($_qb)) {
+            $qb = $this->createQuery();
+        } else {
+            $qb = $_qb;
+        }
         $oneToMany = false;
         $concatBoolean = false;
 

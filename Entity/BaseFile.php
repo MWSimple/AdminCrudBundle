@@ -67,7 +67,7 @@ class BaseFile
      *
      * @param UploadedFile $file
      */
-    public function setFile(UploadedFile $file = null)
+    public function setFile($file = null)
     {
         $this->file = $file;
         // check if we have an old image path
