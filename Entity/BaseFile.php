@@ -65,12 +65,7 @@ class BaseFile {
      *
      * @param  $file
      */
-<<<<<<< HEAD
-    public function setFile($file = null)
-    {
-=======
-    public function setFile( $file = null) {
->>>>>>> fc046ad1b851e8a6f90ff44c3b535b350348e629
+    public function setFile($file = null) {
         $this->file = $file;
         // check if we have an old image path
         if (is_file($this->getAbsolutePath())) {
