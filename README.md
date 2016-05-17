@@ -25,6 +25,15 @@ The mwsimple:generate:admincrud generates a very basic controller for a given en
 
 Add following lines to your `composer.json` file:
 
+### Support Symfony 2.8.* + Include Boostrap 3
+
+```json
+"require": {
+    ...
+    "mwsimple/admin-crud": "4.0.*@dev",
+}
+```
+
 ### Support Symfony 2.7.* + Include Boostrap 3
 
 ```json
