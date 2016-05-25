@@ -265,12 +265,19 @@ class SSP {
         $limit = $this->limit($request, $columns);
         $order = $this->order($request, $columns);
         $where = $this->filter($request, $columns, $bindings);
-
+      
         $and = strstr($from, 'WHERE');
-        if ($and != false && $where !== "") {
+        $groupConcat = strstr($where, 'GROUP_CONCAT');
+        
+        if ($and != false && $where !== "" && $groupConcat !== false) {
+            $from = $from . " HAVING ";
+            $where = str_replace("WHERE", "", $where);
+            
+        }else if ($and != false && $where !== "") {
             $from = $from . " and ";
             $where = str_replace("WHERE", "", $where);
         }
+        
         // Main query to actually get the data
         $data = $this->sql_exec($db, $bindings, 'SELECT SQL_CALC_FOUND_ROWS ' . implode(', ', $this->pluck($columns, 'db', 'name')) . "
 			 $from
