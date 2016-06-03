@@ -72,17 +72,15 @@
                         {% elseif field.type in ['ONE_TO_MANY', 'MANY_TO_MANY'] %}
                             {% set many_entity = attribute(entity, field.name) %}
                             {% for key, field_many in many_entity %}
-                                {{ field_many }}
+                                {{ field_many|raw }}
                                 {% if field.separator is defined %}
                                     {{ field.separator|raw }}
                                 {% else %}
                                     |
                                 {% endif %}
                             {% endfor %}
-                        {% elseif field.type in ['string_html', 'text_html'] %}
-                            {{ attribute(entity, field.name)|raw }}
                         {% else %}
-                            {{ attribute(entity, field.name) }}
+                            {{ attribute(entity, field.name)|raw }}
                         {% endif %}
                         </td>
                     {% endfor %}
