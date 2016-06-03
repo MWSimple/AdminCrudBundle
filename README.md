@@ -187,6 +187,7 @@ delete: 'admin_post_delete'
 export: 'admin_post_export'
 sessionFilter: 'TrabajoControllerFilter'
 saveAndAdd: true
+validator: true
 fieldsindex:    
     a.id:
         label: 'Id'
@@ -335,6 +336,8 @@ mw_simple_admin_crud:
 ##Is included in the forms: jQuery plugin to validate form fields with Bootstrap 3+
 
 [GitHub](https://github.com/nghuuphuoc/bootstrapvalidator)
+
+You can setear true or false in the config entity, example: Bundle/Resources/config/Post.yml
 
 ##If Embed a Collection of Forms
 
