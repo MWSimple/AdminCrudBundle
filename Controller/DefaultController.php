@@ -521,19 +521,21 @@ class DefaultController extends Controller
         return $config;
     }
 
-    public function getAutocompleteFormsMwsAction($options)
+    public function getAutocompleteFormsMwsAction($options, $qb = null)
     {
         $request = $this->getRequest();
         $term = $request->query->get('q', null);
 
-        $em = $this->getDoctrine()->getManager();
+        if (is_null($qb)) {
+            $em = $this->getDoctrine()->getManager();
 
-        $qb = $em->getRepository($options['repository'])->createQueryBuilder('a');
-        $qb
-            ->where("a.".$options['field']." LIKE :term")
-            ->orderBy("a.".$options['field'], "ASC")
-            ->setParameter("term", "%" . $term . "%")
-        ;
+            $qb = $em->getRepository($options['repository'])->createQueryBuilder('a');
+            $qb
+                ->where("a.".$options['field']." LIKE :term")
+                ->orderBy("a.".$options['field'], "ASC")
+            ;
+        }
+        $qb->setParameter("term", "%" . $term . "%");
         $entities = $qb->getQuery()->getResult();
 
         $array = array();
