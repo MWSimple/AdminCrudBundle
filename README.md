@@ -288,8 +288,7 @@ public function __toString()
     return (string)$this->getId();
 }
 ```
-
-#### Personalize
+#### Personalize field
 ```php
 public function getAutocompleteEntity()
 {
@@ -299,6 +298,39 @@ public function getAutocompleteEntity()
     );
     ...
 }
+```
+#### Personalize query join field
+```php
+public function getAutocompleteEntity()
+{
+    $options = array(
+        'repository' => "AppBundle:Example",
+        'field'      => "id",
+    );
+    //querybuilder $qb
+    $em = $this->getDoctrine()->getManager();
+
+    $qb = $em->getRepository($options['repository'])->createQueryBuilder('a');
+    $qb
+        ->where("a.".$options['field']." LIKE :term")
+        ->orderBy("a.".$options['field'], "ASC")
+    ;
+    //set querybuilder $qb
+    $response = parent::getAutocompleteFormsMwsAction($options, $qb);
+
+    return $response;
+}
+```
+#### Type Form. correct settings with boostrap view, use 'class' and 'col'.
+```php
+    $builder
+        ->add('field', 'select2', array(
+            'attr' => array(
+                'class' => "col-lg-12 col-md-12",
+                'col'   => "col-lg-8 col-md-8",
+            )
+        )
+    ;
 ```
 
 ##ACL
