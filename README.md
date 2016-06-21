@@ -68,6 +68,8 @@ twig:
         - LexikFormFilterBundle:Form:form_div_layout.html.twig
 ```
 
+Mayor configuracion: [LexikFormFilterBundle](https://github.com/lexik/LexikFormFilterBundle/blob/v5.0.1/Resources/doc/configuration.md)
+
 ### Configuration paginator example
 
 You can configure `config.yml` default query parameter names and templates
@@ -145,13 +147,13 @@ This bundle extends [SensioGeneratorBundle](https://github.com/sensio/SensioGene
 ### Create entity
 
 ```cli
-php app/console generate:doctrine:entity
+php bin/console generate:doctrine:entity
 ```
 
 ### Generate ADMIN CRUD Controller
 
 ```cli
-php app/console mwsimple:generate:admincrud
+php bin/console mwsimple:generate:admincrud
 ```
 ## Config Crud
 
