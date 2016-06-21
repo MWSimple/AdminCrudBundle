@@ -1,7 +1,8 @@
 AdminCrudBundle
 ===============
+![sensiolabs](https://insight.sensiolabs.com/projects/4bd204f1-2be2-4022-8a2e-6b70c0065cba/big.png "sensiolabs")
 
-Descripcion
+Descripción
 ------
 
 El comando mwsimple:generate:admincrud genera un controlador muy básico para una Entity dada.
