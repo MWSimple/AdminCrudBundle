@@ -12,22 +12,15 @@
 {% endblock phpdoc_method_annotations %}
      */
 {% block method_definition %}
-    public function createAction()
+    public function createAction(Request $request)
 {% endblock method_definition %}
     {
 {% block method_body %}
-        $this->config['newType'] = new {{ entity_class }}Type();
-        $response = parent::createAction();
+        $this->config['newType'] = {{ entity_class }}Type::class;
+        $response = parent::createAction($request);
 {% endblock method_body %}
 
 {% block method_return %}
-{% if 'annotation' == format %}
         return $response;
-{% else %}
-        return $this->render('{{ bundle }}:{{ entity|replace({'\\': '/'}) }}:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
-{% endif %}
 {% endblock method_return %}
     }

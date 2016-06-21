@@ -206,10 +206,9 @@ class DefaultController extends Controller
     /**
      * Create
      */
-    public function createAction()
+    public function createAction(Request $request)
     {
         $config = $this->getConfig();
-        $request = $this->getRequest();
         $entity = new $config['entity']();
         $form   = $this->createCreateForm($config, $entity);
         $form->handleRequest($request);
@@ -402,10 +401,9 @@ class DefaultController extends Controller
      * Update
      * @param $id
      */
-    public function updateAction($id)
+    public function updateAction(Request $request, $id)
     {
         $config = $this->getConfig();
-        $request = $this->getRequest();
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository($config['repository'])->find($id);
@@ -449,10 +447,9 @@ class DefaultController extends Controller
      * Delete
      * @param $id
      */
-    public function deleteAction($id)
+    public function deleteAction(Request $request, $id)
     {
         $config = $this->getConfig();
-        $request = $this->getRequest();
         $form = $this->createDeleteForm($config, $id);
         $form->handleRequest($request);
 
@@ -469,7 +466,7 @@ class DefaultController extends Controller
             $this->get('session')->getFlashBag()->add('success', 'flash.delete.success');
         }
 
-        return $this->redirect($this->generateUrl($config['index']));
+        return $this->redirectToRoute($config['index']);
     }
 
     /**

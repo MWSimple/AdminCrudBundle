@@ -70,6 +70,8 @@ class MWSimpleCrudGenerator extends DoctrineCrudGenerator
             'route_name_prefix' => $this->routeNamePrefix,
             'bundle'            => $this->bundle->getName(),
             'entity'            => $this->entity,
+            'entity_singularized' => $this->entitySingularized,
+            'entity_pluralized' => $this->entityPluralized,
             'entity_class'      => $entityClass,
             'namespace'         => $this->bundle->getNamespace(),
             'entity_namespace'  => $entityNamespace,

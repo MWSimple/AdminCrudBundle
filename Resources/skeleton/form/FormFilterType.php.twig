@@ -33,7 +33,7 @@ class {{ form_class }} extends AbstractType
     {
         $builder
         {%- for data in fields_data if data.fieldName != 'id' %}
-            {%- if "'" ~ data.filterWidget ~ "'" != 'Filters\TextFilterType::class' %}
+            {%- if data.filterWidget != "Filters\\TextFilterType::class" %}
 
             ->add('{{ data.fieldName }}', {{ data.filterWidget }})
                     

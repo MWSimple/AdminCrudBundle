@@ -12,11 +12,11 @@
 {% endblock phpdoc_method_annotations %}
      */
 {% block method_definition %}
-    public function deleteAction($id)
+    public function deleteAction(Request $request, $id)
 {% endblock method_definition %}
     {
 {% block method_body %}
-        $response = parent::deleteAction($id);
+        $response = parent::deleteAction($request, $id);
 {% endblock method_body %}
 
 {% block method_return %}

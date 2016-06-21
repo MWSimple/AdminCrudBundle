@@ -16,19 +16,11 @@
 {% endblock method_definition %}
     {
 {% block method_body %}
-        $this->config['editType'] = new {{ entity_class }}Type();
+        $this->config['editType'] = {{ entity_class }}Type::class;
         $response = parent::editAction($id);
 {% endblock method_body %}
 
 {% block method_return %}
-{% if 'annotation' == format %}
         return $response;
-{% else %}
-        return $this->render('{{ bundle }}:{{ entity|replace({'\\': '/'}) }}:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-{% endif %}
 {% endblock method_return %}
     }
