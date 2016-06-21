@@ -1,31 +1,26 @@
 AdminCrudBundle
 ===============
 
-Description
+Descripcion
 ------
 
-The mwsimple:generate:admincrud generates a very basic controller for a given entity located in a given bundle. This controller extend the default controller implements [paginator], [filter] and allows to perform the [five basic operations] on a model, allows rewriting actions and views.
+El comando mwsimple:generate:admincrud genera un controlador muy básico para una Entity dada.
+Este controlador extiende e implementa un controlador por defecto con paginador, filtro y realizar las operaciones básicas (Listar, Ver, Crear, Editar, Eliminar), permite ademas la reescritura de acciones y vistas.
 
-    Listing all records,
-    Showing one given record identified by its primary key,
-    Creating a new record,
-    Editing an existing record,
-    Deleting an existing record.
+* Actualmente permite utilizar solamente annotation en el controller.
 
-* Use only annotation in controller.
+## Vista previa Lista y Crear
 
-## Previews
+![Lista](https://raw.githubusercontent.com/MWSimple/AdminCrudBundle/version27/Resources/doc/preview_list.png "Lista")
+![Crear](https://raw.githubusercontent.com/MWSimple/AdminCrudBundle/version27/Resources/doc/preview_new.png "Crear")
 
-![List](https://raw.githubusercontent.com/MWSimple/AdminCrudBundle/version27/Resources/doc/preview_list.png "List")
-![New](https://raw.githubusercontent.com/MWSimple/AdminCrudBundle/version27/Resources/doc/preview_new.png "New")
+## Instalacion
 
-## Installation
+### Usar composer
 
-### Using composer
+Añadir la siguiente línea a su archivo `composer.json`:
 
-Add following lines to your `composer.json` file:
-
-### Support Symfony 2.8 and 3 + Include Boostrap 3
+### Support Symfony 3 + Include Boostrap 3
 
 ```json
 "require": {
@@ -50,7 +45,7 @@ new Knp\Bundle\MenuBundle\KnpMenuBundle(),
 new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
 ```
 
-### Configure translations (include en, es, ca)
+### Configure imports services and translations (include en, es, ca)
 
 You can configure `config.yml`
 
@@ -66,21 +61,11 @@ framework:
 ### Configuration filter example
 
 You can configure `config.yml` find Twig Configuration
-2.8
-```yaml
-twig:
-    ...
-    form:
-        resources:
-            - LexikFormFilterBundle:Form:form_div_layout.html.twig
-```
-3.0
 ```yaml
 twig:
     ...
     form_themes:
-        resources:
-            - LexikFormFilterBundle:Form:form_div_layout.html.twig
+        - LexikFormFilterBundle:Form:form_div_layout.html.twig
 ```
 
 ### Configuration paginator example
@@ -147,11 +132,6 @@ mw_simple_admin_crud:
 ```
 
 ### Install assets
-2.8
-```cli
-php app/console assets:install
-```
-3.0
 ```cli
 php bin/console assets:install
 ```
