@@ -3,9 +3,11 @@
 namespace MWSimple\Bundle\AdminCrudBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Yaml\Yaml;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Exporter\Source\DoctrineORMQuerySourceIterator;
 use Exporter\Handler;
 
@@ -23,25 +25,25 @@ class DefaultController extends Controller
     /**
      * Index
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $config = $this->getConfig();
-        list($filterForm, $queryBuilder) = $this->filter($config);
+        list($filterForm, $queryBuilder) = $this->filter($config, $request);
 
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $queryBuilder,
-            $this->get('request')->query->get('page', 1),
+            $request->query->get('page', 1),
             ($this->container->hasParameter('knp_paginator.page_range')) ? $this->container->getParameter('knp_paginator.page_range'):10
         );
         //remove the form to return to the view
         unset($config['filterType']);
 
-        return array(
+        return $this->render($config['view_index'], array(
             'config'     => $config,
             'entities'   => $pagination,
             'filterForm' => $filterForm->createView(),
-        );
+        ));
     }
 
     /**
@@ -132,9 +134,8 @@ class DefaultController extends Controller
      * @param array $config
      * @return array
      */
-    protected function filter($config)
+    protected function filter($config, Request $request)
     {
-        $request = $this->getRequest();
         $session = $request->getSession();
         $filterForm = $this->createFilterForm($config);
         $queryBuilder = $this->createQuery($config['repository']);
@@ -181,7 +182,7 @@ class DefaultController extends Controller
         ));
 
         $form
-            ->add('filter', 'submit', array(
+            ->add('filter', SubmitType::class, array(
                 'translation_domain' => 'MWSimpleAdminCrudBundle',
                 'label'              => 'views.index.filter',
                 'attr'               => array(
@@ -189,7 +190,7 @@ class DefaultController extends Controller
                     'col'   => 'col-lg-2',
                 ),
             ))
-            ->add('reset', 'submit', array(
+            ->add('reset', SubmitType::class, array(
                 'translation_domain' => 'MWSimpleAdminCrudBundle',
                 'label'              => 'views.index.reset',
                 'attr'               => array(
@@ -238,11 +239,11 @@ class DefaultController extends Controller
         // remove the form to return to the view
         unset($config['newType']);
 
-        return array(
+        return $this->render($config['view_new'], array(
             'config' => $config,
             'entity' => $entity,
             'form'   => $form->createView(),
-        );
+        ));
     }
 
     /**
@@ -259,7 +260,7 @@ class DefaultController extends Controller
         ));
 
         $form
-            ->add('save', 'submit', array(
+            ->add('save', SubmitType::class, array(
                 'translation_domain' => 'MWSimpleAdminCrudBundle',
                 'label'              => 'views.new.save',
                 'attr'               => array(
@@ -271,7 +272,7 @@ class DefaultController extends Controller
 
         if ($config['saveAndAdd']) {
             $form
-                ->add('saveAndAdd', 'submit', array(
+                ->add('saveAndAdd', SubmitType::class, array(
                     'translation_domain' => 'MWSimpleAdminCrudBundle',
                     'label'              => 'views.new.saveAndAdd',
                     'attr'               => array(
@@ -297,11 +298,11 @@ class DefaultController extends Controller
         // remove the form to return to the view
         unset($config['newType']);
 
-        return array(
+        return $this->render($config['view_new'], array(
             'config' => $config,
             'entity' => $entity,
             'form'   => $form->createView(),
-        );
+        ));
     }
 
     /**
@@ -321,11 +322,11 @@ class DefaultController extends Controller
         $this->useACL($entity, 'show');
         $deleteForm = $this->createDeleteForm($config, $id);
 
-        return array(
+        return $this->render($config['view_show'], array(
             'config'      => $config,
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
-        );
+        ));
     }
 
     /**
@@ -349,12 +350,12 @@ class DefaultController extends Controller
         // remove the form to return to the view
         unset($config['editType']);
 
-        return array(
+        return $this->render($config['view_edit'], array(
             'config'      => $config,
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ));
     }
 
     /**
@@ -371,7 +372,7 @@ class DefaultController extends Controller
         ));
 
         $form
-            ->add('save', 'submit', array(
+            ->add('save', SubmitType::class, array(
                 'translation_domain' => 'MWSimpleAdminCrudBundle',
                 'label'              => 'views.new.save',
                 'attr'               => array(
@@ -383,7 +384,7 @@ class DefaultController extends Controller
 
         if ($config['saveAndAdd']) {
             $form
-                ->add('saveAndAdd', 'submit', array(
+                ->add('saveAndAdd', SubmitType::class, array(
                     'translation_domain' => 'MWSimpleAdminCrudBundle',
                     'label'              => 'views.new.saveAndAdd',
                     'attr'               => array(
@@ -436,12 +437,12 @@ class DefaultController extends Controller
         // remove the form to return to the view
         unset($config['editType']);
 
-        return array(
+        return $this->render($config['view_edit'], array(
             'config'      => $config,
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ));
     }
 
     /**
@@ -485,7 +486,7 @@ class DefaultController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl($config['delete'], array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array(
+            ->add('submit', SubmitType::class, array(
                 'translation_domain' => 'MWSimpleAdminCrudBundle',
                 'label'              => 'views.recordactions.delete',
                 'attr'               => array(

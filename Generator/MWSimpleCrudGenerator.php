@@ -122,31 +122,31 @@ class MWSimpleCrudGenerator extends DoctrineCrudGenerator
     {
         switch ($dbType) {
             case 'boolean':
-                return 'filter_choice';
+                return 'Filters\BooleanFilterType::class';
             case 'datetime':
             case 'vardatetime':
             case 'datetimetz':
-                return 'filter_date_range';
+                return 'Filters\DateTimeRangeFilterType::class';
             case 'date':
-                return 'filter_date_range';
+                return 'Filters\DateRangeFilterType::class';
                 break;
             case 'decimal':
             case 'float':
             case 'integer':
             case 'bigint':
             case 'smallint':
-                return 'filter_number_range';
+                return 'Filters\NumberRangeFilterType::class';
                 break;
             case 'string':
             case 'text':
-                return 'filter_text_like';
+                return 'Filters\TextFilterType::class';
                 break;
             case 'time':
-                return 'filter_text';
+                return 'Filters\TextFilterType::class';
                 break;
             case 'entity':
             case 'collection':
-                return 'filter_entity';
+                return 'EntityFilterType';
                 break;
             case 'array':
                 throw new \Exception('The dbType "'.$dbType.'" is only for list implemented (column "'.$columnName.'")');
@@ -173,7 +173,7 @@ class MWSimpleCrudGenerator extends DoctrineCrudGenerator
 
         // Convert type to filter widget
         foreach ($fieldsData as $fieldName => $data) {
-            $fieldsData[$fieldName]['fieldName'] = $fieldName;
+            $fieldsData[$fieldName]['fieldName']    = $fieldName;
             $fieldsData[$fieldName]['filterWidget'] = $this->getFilterType($fieldsData[$fieldName]['type'], $fieldName);
         }
 

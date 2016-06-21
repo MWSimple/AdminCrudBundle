@@ -5,7 +5,9 @@ namespace {{ namespace }}\Form{{ entity_namespace ? '\\' ~ entity_namespace : ''
 {% block use_statements %}
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Lexik\Bundle\FormFilterBundle\Filter\Form\Type as Filters;
+use Lexik\Bundle\FormFilterBundle\Filter\FilterOperands;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormError;
@@ -31,10 +33,17 @@ class {{ form_class }} extends AbstractType
     {
         $builder
         {%- for data in fields_data if data.fieldName != 'id' %}
+            {%- if "'" ~ data.filterWidget ~ "'" != 'Filters\TextFilterType::class' %}
 
-            ->add('{{ data.fieldName }}', '{{ data.filterWidget }}')
+            ->add('{{ data.fieldName }}', {{ data.filterWidget }})
                     
+            {%- else %}
+
+            ->add('{{ data.fieldName }}', {{ data.filterWidget }}, array(
+                'condition_pattern' => FilterOperands::OPERAND_SELECTOR,
+            ))
                     
+            {%- endif %}
         {%- endfor %}
 
         ;
@@ -62,9 +71,9 @@ class {{ form_class }} extends AbstractType
     {% endif %}
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => '{{ namespace }}\Entity{{ entity_namespace ? '\\' ~ entity_namespace : '' }}\{{ entity_class }}'
@@ -74,7 +83,7 @@ class {{ form_class }} extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return '{{ form_filter_type_name }}';
     }

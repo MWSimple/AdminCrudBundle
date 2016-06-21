@@ -9,17 +9,16 @@
 {% if 'annotation' == format %}
      * @Route("/", name="{{ route_name_prefix }}")
      * @Method("GET")
-     * @Template("{{ bundle }}:{{ entity|lower }}:index.html.twig")
 {% endif %}
 {% endblock phpdoc_method_annotations %}
      */
 {% block method_definition %}
-    public function indexAction()
+    public function indexAction(Request $request)
 {% endblock method_definition %}
     {
 {% block method_body %}
-        $this->config['filterType'] = new {{ entity_class }}FilterType();
-        $response = parent::indexAction();
+        $this->config['filterType'] = {{ entity_class }}FilterType::class;
+        $response = parent::indexAction($request);
 {% endblock method_body %}
 
 {% block method_return %}
