@@ -5,9 +5,10 @@ views:
         filters: Filtros
         filter: filtro
         reset: Limpiar
-        list: %entity%: lista
+        list: %entity% lista
         actions: ações
         createnew: Criar %entity%
+        actions: Ações
         export: exportação
     actions:
         show: ver %entity%

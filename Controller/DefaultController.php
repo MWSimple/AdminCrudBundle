@@ -66,32 +66,9 @@ class DefaultController extends Controller
     public function exportCsvAction($format)
     {
         $config = $this->getConfig();
-        $queryBuilder = $this->createQuery($config['repository']);
-        $campos = array();
-        foreach ($config['fieldsindex'] as $key => $value) {
-            //if is defined and true
-            if (!empty($value['export']) && $value['export']) {
-                $campos[] = $value['name'];
-            }
-        }
-        $query = $queryBuilder->getQuery();
-        // Pick a format to export to
-        //$format = 'csv';
-        // Set Content-Type
-        switch ($format) {
-            case 'xls':
-                $content_type = 'application/vnd.ms-excel';
-                break;
-            case 'json':
-                $content_type = 'application/json';
-                break;
-            case 'csv':
-                $content_type = 'text/csv';
-                break;
-            default:
-                $content_type = 'text/csv';
-                break;
-        }
+        $query  = $this->createQuery($config['repository'])->getQuery();
+        $campos = $this->getCampos($config);
+        $content_type = $this->getContentType($format);
         // Location to Export this to
         $export_to = 'php://output';
         // Data to export
@@ -113,6 +90,41 @@ class DefaultController extends Controller
         Handler::create($exporter_source, $exporter_writer)->export();
 
         return $response;
+    }
+
+    protected function getCampos($config)
+    {
+        $campos = array();
+        foreach ($config['fieldsindex'] as $key => $value) {
+            //if is defined and true
+            if (!empty($value['export']) && $value['export']) {
+                $campos[] = $value['name'];
+            }
+        }
+
+        return $campos;
+    }
+
+    protected function getContentType($format)
+    {
+        // Pick a format to export to
+        // Set Content-Type
+        switch ($format) {
+            case 'xls':
+                $content_type = 'application/vnd.ms-excel';
+                break;
+            case 'json':
+                $content_type = 'application/json';
+                break;
+            case 'csv':
+                $content_type = 'text/csv';
+                break;
+            default:
+                $content_type = 'text/csv';
+                break;
+        }
+
+        return $content_type;
     }
 
     /**
@@ -205,15 +217,10 @@ class DefaultController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
+            //Crear ACL
             $this->useACL($entity, 'create');
-
+            //Set session mensaje
             $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
-
-            if (!array_key_exists('saveAndAdd', $config)) {
-                $config['saveAndAdd'] = true;
-            } elseif ($config['saveAndAdd'] != false) {
-                $config['saveAndAdd'] = true;
-            }
 
             if ($config['saveAndAdd']) {
                 $nextAction = $form->get('saveAndAdd')->isClicked()
@@ -261,12 +268,6 @@ class DefaultController extends Controller
                 )
             ))
         ;
-
-        if (!array_key_exists('saveAndAdd', $config)) {
-            $config['saveAndAdd'] = true;
-        } elseif ($config['saveAndAdd'] != false) {
-            $config['saveAndAdd'] = true;
-        }
 
         if ($config['saveAndAdd']) {
             $form
@@ -380,12 +381,6 @@ class DefaultController extends Controller
             ))
         ;
 
-        if (!array_key_exists('saveAndAdd', $config)) {
-            $config['saveAndAdd'] = true;
-        } elseif ($config['saveAndAdd'] != false) {
-            $config['saveAndAdd'] = true;
-        }
-
         if ($config['saveAndAdd']) {
             $form
                 ->add('saveAndAdd', 'submit', array(
@@ -426,11 +421,6 @@ class DefaultController extends Controller
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'flash.update.success');
 
-        if (!array_key_exists('saveAndAdd', $config)) {
-            $config['saveAndAdd'] = true;
-        } elseif ($config['saveAndAdd'] != false) {
-            $config['saveAndAdd'] = true;
-        }
             if ($config['saveAndAdd']) {
                 $nextAction = $editForm->get('saveAndAdd')->isClicked()
                     ? $this->generateUrl($config['new'])
@@ -508,7 +498,8 @@ class DefaultController extends Controller
         ;
     }
 
-    protected function getConfig(){
+    protected function getConfig()
+    {
         $configs = Yaml::parse(file_get_contents($this->get('kernel')->getRootDir().'/../src/'.$this->config['yml']));
         foreach ($configs as $key => $value) {
             $config[$key] = $value;
@@ -518,6 +509,9 @@ class DefaultController extends Controller
                 $config[$key] = $value;
             }
         }
+        //Set opcion saveAndAdd en la configuracion
+        $this->setSaveAndAdd($config);
+
         return $config;
     }
 
@@ -590,5 +584,15 @@ class DefaultController extends Controller
             }
         }
         return false;
+    }
+
+    //FUNCIONES VARIAS
+    protected function setSaveAndAdd($config)
+    {
+        if (!array_key_exists('saveAndAdd', $config)) {
+            $config['saveAndAdd'] = true;
+        } elseif ($config['saveAndAdd'] != false) {
+            $config['saveAndAdd'] = true;
+        }
     }
 }

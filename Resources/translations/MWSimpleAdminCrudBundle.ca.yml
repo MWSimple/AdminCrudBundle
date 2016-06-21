@@ -5,7 +5,7 @@ views:
         filters: Filtres
         filter: Filtrar
         reset: Netejar
-        list: %entity%: llista
+        list: %entity% llista
         actions: Accions
         createnew: Crear %entity%
         actions: Accions

@@ -3,10 +3,13 @@
 namespace MWSimple\Bundle\AdminCrudBundle\Menu;
 
 use Knp\Menu\FactoryInterface;
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
-class Builder extends ContainerAware
+class Builder implements ContainerAwareInterface
 {
+    use ContainerAwareTrait;
+
     private $hasRole;
 
     public function adminMenu(FactoryInterface $factory, array $options) 
