@@ -60,8 +60,8 @@ class MWSimpleCrudCommand extends GenerateDoctrineCrudCommand
             $skeletonDirs[] = $dir;
         }
 
-        $skeletonDirs[] = __DIR__.'/../Resources/skeleton';
-        $skeletonDirs[] = __DIR__.'/../Resources';
+        $skeletonDirs[] = $this->getContainer()->get('kernel')->locateResource('@MWSimpleAdminCrudBundle/Resources/skeleton');
+        $skeletonDirs[] = $this->getContainer()->get('kernel')->locateResource('@MWSimpleAdminCrudBundle/Resources');
 
         return $skeletonDirs;
     }
