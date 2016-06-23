@@ -33,5 +33,13 @@
 
 {% block javascript %}
     {{ parent() }}
-    <script src="{{ asset('bundles/mwsimpleadmincrud/js/widget.js') }}"></script>
+    {% if config.validator is defined %}
+        {% if config.validator == true %}
+            <script src="{{ asset('bundles/mwsimpleadmincrud/js/widget.js') }}"></script>
+        {% else %}
+            <script src="{{ asset('bundles/mwsimpleadmincrud/js/widget_not_validator.js') }}"></script>
+        {% endif %}
+    {% else %}
+        <script src="{{ asset('bundles/mwsimpleadmincrud/js/widget.js') }}"></script>
+    {% endif %}
 {% endblock %}
