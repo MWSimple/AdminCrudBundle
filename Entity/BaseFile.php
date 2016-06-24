@@ -110,7 +110,7 @@ class BaseFile
             $uploadDir = $this->getUploadDir();
         }
 
-        $path = __DIR__ . '/../../../../../../../web/' . $this->getUploadDir();
+        $path = __DIR__ . '/../../../../../../../web/' . $uploadDir;
         if (!file_exists($path)) {
             mkdir($path, 0755);
         }
