@@ -200,6 +200,7 @@ class MWSimpleCrudGenerator extends DoctrineCrudGenerator
             'namespace'         => $this->bundle->getNamespace(),
             'entity'            => $this->entity,
             'entity_class'      => $entityClass,
+            'entity_dir_view'   => str_replace('\\', '/', strtolower($this->entity)),
             'fields'            => $this->metadata->fieldMappings,
             'associations'      => $this->metadata->associationMappings,
             'route_name_prefix' => $this->routeNamePrefix,
