@@ -5,14 +5,14 @@ twig:
         - MWSimpleAdminCrudBundle:Form:duallist_field.html.twig
         - MWSimpleAdminCrudBundle:Form:field_file.html.twig
 
-#Services
+#Services pasando a services.xml
 services:
-    mws.twig.extension:
-        class: MWSimple\Bundle\AdminCrudBundle\Services\Twig
-        arguments:
-            - '@service_container'
-        tags:
-            - { name: twig.extension }
+    # mws.twig.extension:
+    #     class: MWSimple\Bundle\AdminCrudBundle\Services\Twig
+    #     arguments:
+    #         - '@service_container'
+    #     tags:
+    #         - { name: twig.extension }
     form.type.bootstrapdatetime:
         class: MWSimple\Bundle\AdminCrudBundle\Form\Type\BootstrapDateTimeType
         tags:
