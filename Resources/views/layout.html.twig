@@ -17,20 +17,10 @@
         <link href="{{ asset('bundles/mwsimpleadmincrud/css/crud.css') }}" rel="stylesheet">
         
         {% block scripts_head %}
-            {% javascripts filter='?yui_js' output='assetic/js/compiled/components.min.js'
-                'components/jquery/jquery.js'
-                'components/jquery-ui/jquery-ui.js'
-            %}
-                <script type="text/javascript" src="{{ asset_url }}"></script>
-            {% endjavascripts %}
-
-            {% javascripts filter='?yui_js' output='assetic/js/compiled/components/html5shiv.min.js'
-                'components/html5shiv/dist/html5shiv.js'
-            %}
+            <script src="{{ asset('components/jquery/jquery.min.js') }}"></script>
             <!--[if lt IE 9]>
-                <script type="text/javascript" src="{{ asset_url }}"></script>
+                <script src="{{ asset('components/html5shiv/dist/html5shiv.js') }}"></script>
             <![endif]-->
-            {% endjavascripts %}
         {% endblock %}
 
         <script src="{{ asset('bundles/mwsimpleadmincrud/datetime/js/bootstrap-datetimepicker.js') }}"></script>
@@ -85,11 +75,7 @@
         <script src="{{ asset('bundles/mwsimpleadmincrud/js/validator/bootstrapValidator.min.js') }}"></script>
         <script src="{{ asset('bundles/mwsimpleadmincrud/js/validator/language/es_ES.js') }}"></script>
         {% block javascripts %}
-            {% javascripts filter='?yui_js' output='assetic/js/compiled/admincrudbootstrap.min.js'
-                'components/bootstrap/js/bootstrap.js'
-            %}
-                <script type="text/javascript" src="{{ asset_url }}"></script>
-            {% endjavascripts %}
+            <script src="{{ asset('components/jquery/bootstrap.min.js') }}"></script>
         {% endblock %}
     </body>
 </html>
