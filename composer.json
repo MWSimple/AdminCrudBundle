@@ -19,6 +19,7 @@
         "knplabs/knp-menu": "~2.1",
         "knplabs/knp-menu-bundle": "~2.1",
         "sonata-project/exporter": "~1.4",
+        "genemu/form-bundle": "^3.0@dev",
         "components/jquery" : ">= 1.9.0, < 2.0.0",
         "components/jqueryui" : ">= 1.9.0",
         "components/bootstrap" : "~3.0",
