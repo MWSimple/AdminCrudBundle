@@ -11,7 +11,7 @@
 {% endblock phpdoc_method_annotations %}
      */
 {% block method_definition %}
-    public function getAutocomplete{{ field.actionName }}()
+    public function getAutocomplete{{ field.actionName }}(Request $request)
 {% endblock method_definition %}
     {
 {% block method_body %}
@@ -19,7 +19,7 @@
             'repository' => "{{ field.repository }}",
             'field'      => "id",
         );
-        $response = parent::getAutocompleteFormsMwsAction($options);
+        $response = parent::getAutocompleteFormsMwsAction($request, $options);
 {% endblock method_body %}
 
 {% block method_return %}

@@ -11,24 +11,24 @@ namespace MWSimple\Bundle\AdminCrudBundle\Form\Type;
  * file that was distributed with this source code.
  */
 
-use MWSimple\Bundle\AdminCrudBundle\Form\DataTransformer\EntityToJsonTransformer;
-use MWSimple\Bundle\AdminCrudBundle\Form\DataTransformer\EntityToJsonOneTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\Options;
-
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Doctrine\Common\Persistence\ObjectManager;
+use MWSimple\Bundle\AdminCrudBundle\Form\DataTransformer\EntityToJsonTransformer;
+use MWSimple\Bundle\AdminCrudBundle\Form\DataTransformer\EntityToJsonOneTransformer;
 
 /**
- * Select2Type to JQueryLib
+ * Select2entityType to JQueryLib
  *
  * @author Bilal Amarni <bilal.amarni@gmail.com>
  * @author Chris Tickner <chris.tickner@gmail.com>
  */
-class Select2Type extends AbstractType
+class Select2entityType extends AbstractType
 {
     /**
      * @var ObjectManager
@@ -43,9 +43,6 @@ class Select2Type extends AbstractType
         $this->om = $om;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $dataConnect = array('class' => $options['class'], 'om' => $this->om);
@@ -59,9 +56,6 @@ class Select2Type extends AbstractType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         if ($options['placeholder'] != '') {
@@ -71,10 +65,7 @@ class Select2Type extends AbstractType
         $view->vars['configs'] = $options['configs'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $defaults = array(
             'placeholder'        => 'Ingrese valor...',
@@ -104,14 +95,21 @@ class Select2Type extends AbstractType
 
     public function getParent()
     {
-        return 'hidden';
+        return HiddenType::class;
+    }
+
+    public function getName()
+    {
+        return $this->getBlockPrefix();
     }
 
     /**
-     * {@inheritdoc}
+     * Symfony 2.8+
+     *
+     * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
-        return 'select2';
+        return 'mws_select2entity';
     }
 }

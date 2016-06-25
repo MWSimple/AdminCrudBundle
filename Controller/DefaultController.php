@@ -513,9 +513,8 @@ class DefaultController extends Controller
         return $config;
     }
 
-    public function getAutocompleteFormsMwsAction($options, $qb = null)
+    public function getAutocompleteFormsMwsAction(Request $request, $options, $qb = null)
     {
-        $request = $this->getRequest();
         $term = $request->query->get('q', null);
 
         if (is_null($qb)) {

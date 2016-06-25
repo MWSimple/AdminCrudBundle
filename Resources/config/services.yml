@@ -1,7 +1,7 @@
 twig:
     form_themes:
         - MWSimpleAdminCrudBundle:Form:bootstrap.datepicker.html.twig
-        - MWSimpleAdminCrudBundle:Form:select2_field.html.twig
+        - MWSimpleAdminCrudBundle:Form:select2entity_type.html.twig
         - MWSimpleAdminCrudBundle:Form:duallist_field.html.twig
         - MWSimpleAdminCrudBundle:Form:field_file.html.twig
 
@@ -25,11 +25,7 @@ services:
         class: MWSimple\Bundle\AdminCrudBundle\Form\Listener\FilterSubscriber
         tags:
             - { name: kernel.event_subscriber }
-    form.type.select2:
-        class: MWSimple\Bundle\AdminCrudBundle\Form\Type\Select2Type
-        arguments: ['@doctrine.orm.entity_manager']
-        tags:
-            - { name: form.type, alias: select2 }
+
     form.type.duallist:
         class: MWSimple\Bundle\AdminCrudBundle\Form\Type\DualListType
         arguments: ['@doctrine.orm.entity_manager']
