@@ -24,9 +24,6 @@
         "components/bootstrap" : "~3.0",
         "components/font-awesome" : "~4.0"
     },
-    "require-dev" : {
-        "genemu/form-bundle": "^3.0@dev"
-    },
     "autoload": {
         "psr-0": {"MWSimple\\Bundle\\AdminCrudBundle": ""}
     },
