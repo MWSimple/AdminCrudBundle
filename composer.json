@@ -18,7 +18,11 @@
         "lexik/form-filter-bundle": "~5.0",
         "knplabs/knp-menu": "~2.1",
         "knplabs/knp-menu-bundle": "~2.1",
-        "sonata-project/exporter": "~1.4"
+        "sonata-project/exporter": "~1.4",
+        "components/jquery" : ">= 1.9.0, < 2.0.0",
+        "components/jqueryui" : ">= 1.9.0",
+        "components/bootstrap" : "~3.0",
+        "components/font-awesome" : "~4.0"
     },
     "autoload": {
         "psr-0": {"MWSimple\\Bundle\\AdminCrudBundle": ""}
