@@ -12,7 +12,7 @@
         }
     ],
     "require": {
-        "symfony/framework-bundle": "~2.8|~3.0",
+        "symfony/framework-bundle": "~2.8 || ~3.0",
         "sensio/generator-bundle": "~3.0",
         "knplabs/knp-paginator-bundle": "~2.5",
         "lexik/form-filter-bundle": "~5.0",
