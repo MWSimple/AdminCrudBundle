@@ -19,7 +19,7 @@
         "knplabs/knp-menu": "~2.1",
         "knplabs/knp-menu-bundle": "~2.1",
         "sonata-project/exporter": "~1.4",
-        "stephanecollot/datetimepicker-bundle": "dev-master"
+        "mwsimple/datetimepicker-bundle": "dev-master"
     },
     "autoload": {
         "psr-0": {"MWSimple\\Bundle\\AdminCrudBundle": ""}
