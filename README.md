@@ -44,34 +44,27 @@ new MWSimple\Bundle\AdminCrudBundle\MWSimpleAdminCrudBundle(),
 new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
 new Knp\Bundle\MenuBundle\KnpMenuBundle(),
 new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
+new SC\DatetimepickerBundle\SCDatetimepickerBundle(),
 ```
 
-### Configure imports services and translations (include en, es, ca)
+### Configure imports config and translations (include en, es, ca)
 
 You can configure `config.yml`
 
 ```yaml
 imports:
     ...
-    - { resource: "@MWSimpleAdminCrudBundle/Resources/config/services.yml" }
+    - { resource: "@MWSimpleAdminCrudBundle/Resources/config/config.yml" }
 framework:
     ...
     translator:      { fallback: %locale% } # uncomment line
 ```
 
-### Configuration filter example
-
-You can configure `config.yml` find Twig Configuration
-```yaml
-twig:
-    ...
-    form_themes:
-        - LexikFormFilterBundle:Form:form_div_layout.html.twig
-```
+### Configuration filter
 
 Mayor configuracion: [LexikFormFilterBundle](https://github.com/lexik/LexikFormFilterBundle/blob/v5.0.1/Resources/doc/configuration.md)
 
-### Configuration paginator example
+### Configuration paginator and menu
 
 You can configure `config.yml` default query parameter names and templates
 
@@ -87,19 +80,14 @@ knp_paginator:
         # pagination: KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig # bootstrap 3 sliding pagination controls template
         pagination: MWSimpleAdminCrudBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig # bootstrap 3 sliding pagination controls template
         sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link template
-```
 
-### Configuration menu example
-
-You can configure `config.yml` default query parameter names and templates option add icon and roles
-
-```yaml
 knp_menu:
     twig:  # use "twig: false" to disable the Twig extension and the TwigRenderer
         template: MWSimpleAdminCrudBundle:Menu:knp_menu.html.twig
     templating: false # if true, enables the helper for PHP templates
     default_renderer: twig # The renderer to use, list is also available by default
 
+#Los child son indices no deben ser iguales, aqui se agregan y configuran los item del menu
 mw_simple_admin_crud:
     menu_setting: { class: nav } # use nav
     menu:
