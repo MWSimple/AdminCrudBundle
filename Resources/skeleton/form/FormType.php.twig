@@ -28,34 +28,22 @@ class {{ form_class }} extends AbstractType
         {%- for field in fields %}
             {%- if field.type in ['datetime', 'datetimetz'] %}
 
-            ->add('{{ field.fieldName }}', 'bootstrapdatetime', array(
-                'required'   => true,
-                'label'      => '{{ field.fieldName |title}}',
-                'label_attr' => array(
-                    'class' => 'col-lg-2 col-md-2 col-sm-2',
-                ),
-                'widget_type' => 'both',
-            ))
+            ->add('{{ field.fieldName }}', \SC\DatetimepickerBundle\Form\Type\SCDatetimeType::class, array('pickerOptions' =>
+                array(
+                    'format' => 'mm/dd/yyyy',
+                )))
             {%- elseif field.type in ['date'] %}
 
-            ->add('{{ field.fieldName }}', 'bootstrapdatetime', array(
-                'required'   => true,
-                'label'      => '{{ field.fieldName |title}}',
-                'label_attr' => array(
-                    'class' => 'col-lg-2 col-md-2 col-sm-2',
-                ),
-                'widget_type' => 'date',
-            ))
+            ->add('{{ field.fieldName }}', \SC\DatetimepickerBundle\Form\Type\SCDatetimeType::class, array('pickerOptions' =>
+                array(
+                    'format' => 'mm/dd/yyyy',
+                )))
             {%- elseif field.type in ['time'] %}
 
-            ->add('{{ field.fieldName }}', 'bootstrapdatetime', array(
-                'required'   => true,
-                'label'      => '{{ field.fieldName|title }}',
-                'label_attr' => array(
-                    'class' => 'col-lg-2 col-md-2 col-sm-2',
-                ),
-                'widget_type' => 'time',
-            ))
+            ->add('{{ field.fieldName }}', \SC\DatetimepickerBundle\Form\Type\SCDatetimeType::class, array('pickerOptions' =>
+                array(
+                    'format' => 'mm/dd/yyyy',
+                )))
             {%- else %}
 
             ->add('{{ field.fieldName }}')
