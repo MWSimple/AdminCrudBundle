@@ -30,7 +30,7 @@ class {{ form_class }} extends AbstractType
 
             ->add('{{ field.fieldName }}', \SC\DatetimepickerBundle\Form\Type\SCDatetimeType::class, array('pickerOptions' =>
                 array(
-                    'format' => 'mm/dd/yyyy hh:ii',
+                    'format' => 'mm/dd/yyyy HH:ii',
                 )))
             {%- elseif field.type in ['date'] %}
 
@@ -42,7 +42,7 @@ class {{ form_class }} extends AbstractType
 
             ->add('{{ field.fieldName }}', \SC\DatetimepickerBundle\Form\Type\SCDatetimeType::class, array('pickerOptions' =>
                 array(
-                    'format' => 'hh:ii',
+                    'format' => 'HH:ii',
                 )))
             {%- else %}
 
