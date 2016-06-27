@@ -32,6 +32,12 @@
     </div>
 {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {# DatetimepickerBundle #}
+    {{ form_stylesheet(form) }}
+{% endblock %}
+
 {% block javascript %}
     {{ parent() }}
     {% if config.validator is defined %}
@@ -43,4 +49,6 @@
     {% else %}
         <script src="{{ asset('bundles/mwsimpleadmincrud/js/widget.js') }}"></script>
     {% endif %}
+    {# DatetimepickerBundle #}
+    {{ form_javascript(form) }}
 {% endblock %}

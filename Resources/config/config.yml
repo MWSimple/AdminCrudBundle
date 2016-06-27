@@ -1,7 +1,7 @@
 twig:
     form_themes:
         - LexikFormFilterBundle:Form:form_div_layout.html.twig
-        - MWSimpleAdminCrudBundle:Form:bootstrap.datepicker.html.twig
+#        - MWSimpleAdminCrudBundle:Form:bootstrap.datepicker.html.twig
         - MWSimpleAdminCrudBundle:Form:select2entity_type.html.twig
         - MWSimpleAdminCrudBundle:Form:duallist_field.html.twig
         - MWSimpleAdminCrudBundle:Form:field_file.html.twig
@@ -17,10 +17,10 @@ services:
     #         - '@service_container'
     #     tags:
     #         - { name: twig.extension }
-    form.type.bootstrapdatetime:
-        class: MWSimple\Bundle\AdminCrudBundle\Form\Type\BootstrapDateTimeType
-        tags:
-            - { name: form.type, alias: bootstrapdatetime }
+    # form.type.bootstrapdatetime:
+    #     class: MWSimple\Bundle\AdminCrudBundle\Form\Type\BootstrapDateTimeType
+    #     tags:
+    #         - { name: form.type, alias: bootstrapdatetime }
     form.type.filter_text_like:
         class: MWSimple\Bundle\AdminCrudBundle\Form\Type\TextFilterLikeType
         tags:
