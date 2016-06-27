@@ -1,10 +1,10 @@
 twig:
     form_themes:
-        - LexikFormFilterBundle:Form:form_div_layout.html.twig
-#        - MWSimpleAdminCrudBundle:Form:bootstrap.datepicker.html.twig
-        - MWSimpleAdminCrudBundle:Form:select2entity_type.html.twig
-        - MWSimpleAdminCrudBundle:Form:duallist_field.html.twig
-        - MWSimpleAdminCrudBundle:Form:field_file.html.twig
+        - 'MWSimpleAdminCrudBundle:Form:fields.html.twig'
+        - 'LexikFormFilterBundle:Form:form_div_layout.html.twig'
+        - 'MWSimpleAdminCrudBundle:Form:select2entity_type.html.twig'
+        - 'MWSimpleAdminCrudBundle:Form:duallist_field.html.twig'
+        - 'MWSimpleAdminCrudBundle:Form:field_file.html.twig'
 
 sc_datetimepicker:
     picker: ~
