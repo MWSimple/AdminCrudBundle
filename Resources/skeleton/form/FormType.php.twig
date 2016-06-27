@@ -30,19 +30,30 @@ class {{ form_class }} extends AbstractType
 
             ->add('{{ field.fieldName }}', \SC\DatetimepickerBundle\Form\Type\SCDatetimeType::class, array('pickerOptions' =>
                 array(
-                    'format' => 'mm/dd/yyyy HH:ii',
+                    'format'    => 'mm/dd/yyyy hh:ii',
+                    'startView' => 'month',
+                    'minView'   => 'hour',
+                    'maxView'   => 'decade',
+                    'todayBtn'  => true,
                 )))
             {%- elseif field.type in ['date'] %}
 
             ->add('{{ field.fieldName }}', \SC\DatetimepickerBundle\Form\Type\SCDatetimeType::class, array('pickerOptions' =>
                 array(
-                    'format' => 'mm/dd/yyyy',
+                    'format'    => 'mm/dd/yyyy',
+                    'startView' => 'month',
+                    'minView'   => 'month',
+                    'maxView'   => 'decade',
+                    'todayBtn'  => true,
                 )))
             {%- elseif field.type in ['time'] %}
 
             ->add('{{ field.fieldName }}', \SC\DatetimepickerBundle\Form\Type\SCDatetimeType::class, array('pickerOptions' =>
                 array(
-                    'format' => 'HH:ii',
+                    'format'    => 'hh:ii',
+                    'startView' => 'day',
+                    'minView'   => 'hour',
+                    'maxView'   => 'day',
                 )))
             {%- else %}
 
