@@ -11,25 +11,6 @@ sc_datetimepicker:
 
 #Services pasando a services.xml
 services:
-    # mws.twig.extension:
-    #     class: MWSimple\Bundle\AdminCrudBundle\Services\Twig
-    #     arguments:
-    #         - '@service_container'
-    #     tags:
-    #         - { name: twig.extension }
-    # form.type.bootstrapdatetime:
-    #     class: MWSimple\Bundle\AdminCrudBundle\Form\Type\BootstrapDateTimeType
-    #     tags:
-    #         - { name: form.type, alias: bootstrapdatetime }
-    form.type.filter_text_like:
-        class: MWSimple\Bundle\AdminCrudBundle\Form\Type\TextFilterLikeType
-        tags:
-            - { name: form.type, alias: filter_text_like }
-    lexik_form_filter.doctrine_subscriber_like:
-        class: MWSimple\Bundle\AdminCrudBundle\Form\Listener\FilterSubscriber
-        tags:
-            - { name: kernel.event_subscriber }
-
     form.type.duallist:
         class: MWSimple\Bundle\AdminCrudBundle\Form\Type\DualListType
         arguments: ['@doctrine.orm.entity_manager']
