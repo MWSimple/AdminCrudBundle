@@ -10,20 +10,21 @@ Descripción
 ------
 
 El comando mwsimple:generate:admincrud genera un controlador muy básico para una Entity dada.
-Este controlador extiende e implementa un controlador por defecto con paginador, filtro y realizar las operaciones básicas (Listar, Ver, Crear, Editar, Eliminar), permite ademas la reescritura de acciones y vistas.
+Este controlador extiende e implementa un controlador por defecto con paginador, filtro y permite realizar las operaciones básicas (Listar, Ver, Crear, Editar, Eliminar), además la reescritura de acciones y vistas.
 
-* Actualmente permite utilizar solamente annotation en el controller.
+## Vista previa Listar y Crear
 
-## Vista previa Lista y Crear
-
-![Lista](https://raw.githubusercontent.com/MWSimple/AdminCrudBundle/version30/Resources/doc/preview_list.png "Lista")
+![Listar](https://raw.githubusercontent.com/MWSimple/AdminCrudBundle/version30/Resources/doc/preview_list.png "Listar")
 ![Crear](https://raw.githubusercontent.com/MWSimple/AdminCrudBundle/version30/Resources/doc/preview_new.png "Crear")
 
-Documentation
+Documentación
 -------------
 
-La [Documentacion](Resources/doc/documentacion.md) a continuacion se detalla como realizar la instalacion y configuracion para el uso correcto del Admin Crud Bundle, y asi lograr una excelente administracion de su aplicacion.
+* [Instalación](Resources/doc/instalacion.md)
 
+La [Documentación](Resources/doc/documentacion.md) a continuación detalla como realizar la instalación y configuración para el uso correcto del Admin Crud Bundle, y poder lograr una excelente administración de su aplicación.
+
+* [Subiendo archivos](Resources/doc/subirarchivos.md)
 
 ## Author
 Gonzalo Alonso - gonkpo@gmail.com

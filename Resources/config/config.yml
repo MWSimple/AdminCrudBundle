@@ -1,16 +1,13 @@
 twig:
     form_themes:
-        - 'MWSimpleAdminCrudBundle:Form:fields.html.twig'
         - 'LexikFormFilterBundle:Form:form_div_layout.html.twig'
+        - 'MWSimpleAdminCrudBundle:Form:fields.html.twig'
         - 'MWSimpleAdminCrudBundle:Form:select2entity_type.html.twig'
         - 'MWSimpleAdminCrudBundle:Form:duallist_field.html.twig'
         - 'MWSimpleAdminCrudBundle:Form:field_file.html.twig'
 
 sc_datetimepicker:
     picker: ~
-
-vich_uploader:
-    db_driver: orm # or mongodb or propel or phpcr
 
 #Services pasando a services.xml
 services:
