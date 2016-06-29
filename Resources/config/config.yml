@@ -1,6 +1,7 @@
 twig:
     form_themes:
         - 'LexikFormFilterBundle:Form:form_div_layout.html.twig'
+        - 'VichUploaderBundle:Form:fields.html.twig'
         - 'MWSimpleAdminCrudBundle:Form:fields.html.twig'
         - 'MWSimpleAdminCrudBundle:Form:select2entity_type.html.twig'
         - 'MWSimpleAdminCrudBundle:Form:duallist_field.html.twig'
