@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @ORM\MappedSuperclass
  * @ORM\HasLifecycleCallbacks
  *
- * @author MWS
+ * @author Tecspro
  */
 class BaseFile
 {
@@ -126,11 +126,6 @@ class BaseFile
     public function getUploadDir()
     {
         return $this->uploadDir;
-    }
-
-    public function getFixturesPath()
-    {
-        return $this->getAbsolutePath() . 'web/filefixture/';
     }
 
     /**
