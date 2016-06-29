@@ -343,7 +343,7 @@ class DefaultController extends Controller
             throw $this->createNotFoundException('Unable to find '.$config['entityName'].' entity.');
         }
         $this->useACL($entity, 'edit');
-        $editForm = $this->createEditForm($config, $entity);
+        $form = $this->createEditForm($config, $entity);
         $deleteForm = $this->createDeleteForm($config, $id);
 
         // remove the form to return to the view
@@ -352,7 +352,7 @@ class DefaultController extends Controller
         return $this->render($config['view_edit'], array(
             'config'      => $config,
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'form'        => $form->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -413,15 +413,15 @@ class DefaultController extends Controller
         }
         $this->useACL($entity, 'update');
         $deleteForm = $this->createDeleteForm($config, $id);
-        $editForm = $this->createEditForm($config, $entity);
-        $editForm->handleRequest($request);
+        $form = $this->createEditForm($config, $entity);
+        $form->handleRequest($request);
 
-        if ($editForm->isValid()) {
+        if ($form->isValid()) {
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'flash.update.success');
 
             if ($config['saveAndAdd']) {
-                $nextAction = $editForm->get('saveAndAdd')->isClicked()
+                $nextAction = $form->get('saveAndAdd')->isClicked()
                     ? $this->generateUrl($config['new'])
                     : $this->generateUrl($config['show'], array('id' => $id));
             } else {
@@ -438,7 +438,7 @@ class DefaultController extends Controller
         return $this->render($config['view_edit'], array(
             'config'      => $config,
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'form'        => $form->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
