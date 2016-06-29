@@ -108,3 +108,6 @@ mw_simple_admin_crud:
 ```cli
 php bin/console assets:install
 ```
+
+[Documentación](Resources/doc/documentacion.md)
+[README](README.md)
