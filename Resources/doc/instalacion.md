@@ -109,5 +109,5 @@ mw_simple_admin_crud:
 php bin/console assets:install
 ```
 
-[Documentación](Resources/doc/documentacion.md)
+[AdminCrud Documentación](Resources/doc/documentacion.md)
 [README](README.md)

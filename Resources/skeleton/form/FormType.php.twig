@@ -25,7 +25,7 @@ class {{ form_class }} extends AbstractType
     {
         $builder
 
-        {%- for field in fields %}
+        {%- for field in fields -%}
             {%- if field.type in ['datetime', 'datetimetz'] %}
 
             ->add('{{ field.fieldName }}', \SC\DatetimepickerBundle\Form\Type\SCDatetimeType::class, array('pickerOptions' =>
@@ -58,7 +58,8 @@ class {{ form_class }} extends AbstractType
             {%- else %}
 
             ->add('{{ field.fieldName }}')
-            {%- endif %}    
+
+            {%- endif -%}
         {%- endfor %}
         {%- for fieldName, field in associations %}
 

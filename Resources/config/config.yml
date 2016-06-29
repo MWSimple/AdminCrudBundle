@@ -20,7 +20,3 @@ services:
         class: MWSimple\Bundle\AdminCrudBundle\Form\Type\PesoType
         tags:
             - { name: form.type, alias: mwspeso }
-    mws_field_file_type:
-        class: MWSimple\Bundle\AdminCrudBundle\Form\Type\FieldFileType
-        tags:
-            - { name: form.type, alias: mws_field_file }

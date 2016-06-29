@@ -1,5 +1,8 @@
 ### Subir archivos
-Se incluye VichUploaderBundle para configurar [Documentación](https://github.com/dustin10/VichUploaderBundle/blob/master/Resources/doc/usage.md)
+Se incluye VichUploaderBundle para configurar
+* [Documentación](https://github.com/dustin10/VichUploaderBundle/blob/master/Resources/doc/usage.md)
+* [file form type](https://github.com/dustin10/VichUploaderBundle/blob/master/Resources/doc/form/vich_file_type.md)
+* [image form type](https://github.com/dustin10/VichUploaderBundle/blob/master/Resources/doc/form/vich_image_type.md)
 
-[Documentación](Resources/doc/documentacion.md)
+[AdminCrud Documentación](Resources/doc/documentacion.md)
 [README](README.md)
