@@ -5,6 +5,7 @@ AdminCrudBundle
 [![Coverage Status](https://coveralls.io/repos/github/MWSimple/AdminCrudBundle/badge.svg?branch=version30)](https://coveralls.io/github/MWSimple/AdminCrudBundle?branch=version30)
 [![Latest Stable Version](https://poser.pugx.org/mwsimple/admin-crud/version)](https://packagist.org/packages/mwsimple/admin-crud) [![Total Downloads](https://poser.pugx.org/mwsimple/admin-crud/downloads)](https://packagist.org/packages/mwsimple/admin-crud) [![composer.lock available](https://poser.pugx.org/mwsimple/admin-crud/composerlock)](https://packagist.org/packages/mwsimple/admin-crud)
 <sup><kbd>**SOPORTA SYMFONY 3.x**</kbd></sup>
+![Argentina](http://www.messentools.com/images/emoticones/banderas/MessenTools.com-Flag-of-Argentina.png "Argentina")
 
 Descripción
 ------
