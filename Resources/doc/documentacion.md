@@ -28,6 +28,7 @@ new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
 new Knp\Bundle\MenuBundle\KnpMenuBundle(),
 new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
 new SC\DatetimepickerBundle\SCDatetimepickerBundle(),
+new Vich\UploaderBundle\VichUploaderBundle(),
 ```
 
 ### Configure imports config and translations (include en, es, ca)

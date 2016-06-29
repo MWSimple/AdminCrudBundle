@@ -9,6 +9,9 @@ twig:
 sc_datetimepicker:
     picker: ~
 
+vich_uploader:
+    db_driver: orm # or mongodb or propel or phpcr
+
 #Services pasando a services.xml
 services:
     form.type.duallist:
