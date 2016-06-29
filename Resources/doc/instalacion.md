@@ -108,12 +108,3 @@ mw_simple_admin_crud:
 ```cli
 php bin/console assets:install
 ```
-
-## Dependencias
-
-El bundle extiende de    [SensioGeneratorBundle](https://github.com/sensio/SensioGeneratorBundle) .
-Para el menu             [KnpMenuBundle](https://github.com/KnpLabs/KnpMenuBundle) .
-Para el paginador        [KnpPaginatorBundle](https://github.com/KnpLabs/KnpPaginatorBundle) .
-Para los filtros         [LexikFormFilterBundle](https://github.com/lexik/LexikFormFilterBundle) .
-Formulario datetime type [DatetimepickerBundle](https://github.com/lexik/LexikFormFilterBundle) .
-Subir archivos           [VichUploaderBundle](https://github.com/dustin10/VichUploaderBundle) .
