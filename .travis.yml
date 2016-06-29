@@ -11,3 +11,6 @@ before_script:
   - php composer.phar install
 
 script: phpunit
+
+after_success:
+  - coveralls
