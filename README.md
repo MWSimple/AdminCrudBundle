@@ -2,7 +2,7 @@ AdminCrudBundle
 ===============
 [![Build Status](https://api.travis-ci.org/MWSimple/AdminCrudBundle.svg?branch=version30)](https://travis-ci.org/MWSimple/AdminCrudBundle)
 ![sensiolabs](https://insight.sensiolabs.com/projects/4bd204f1-2be2-4022-8a2e-6b70c0065cba/big.png "sensiolabs")
-[![Coverage Status](https://coveralls.io/repos/MWSimple/AdminCrudBundle/badge.svg?branch=version30)](https://coveralls.io/r/MWSimple/AdminCrudBundle?branch=version30)
+[![Coverage Status](https://coveralls.io/repos/github/MWSimple/AdminCrudBundle/badge.svg?branch=version30)](https://coveralls.io/github/MWSimple/AdminCrudBundle?branch=version30)
 <sup><kbd>**SOPORTA SYMFONY 3.x**</kbd></sup>
 
 Descripción
