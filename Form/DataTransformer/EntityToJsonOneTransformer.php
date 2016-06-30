@@ -39,12 +39,13 @@ class EntityToJsonOneTransformer implements DataTransformerInterface
             $jsonResponse = array();
             if (is_array($entities)) {
                 if (array_key_exists(0, $entities)) {
-                    $jsonResponse = $entities->map(function ($entity) {
-                        return array(
+                    foreach ($entities as $entity) {
+                        $arrayEntity = array(
                             'id' => $entity->getId(),
                             'text' => $entity->__toString()
                         );
-                    })->toArray();
+                        array_push($jsonResponse, $arrayEntity);
+                    }
                 } else {
                     $jsonResponse = array(
                         'id'   => $entities->getId(),

@@ -32,42 +32,43 @@ class EntityToJsonTransformer implements DataTransformerInterface
     /**
      * {@inheritdoc}
      */
-    public function transform($entities)
+    public function transform($entities = null)
     {
-        if (!$entities) {
-            return null;
-        };
-        $jsonResponse = array();
-        $jsonResponse = $entities->map(function ($entity) {
-            return array(
-                'id' => $entity->getId(),
-                'text' => $entity->__toString()
-            );
-        })->toArray();
+        if (is_null($entities)) {
+            $return = null;
+        } else {
+            $jsonResponse = array();
+            foreach ($entities as $entity) {
+                $arrayEntity = array(
+                    'id' => $entity->getId(),
+                    'text' => $entity->__toString()
+                );
+                array_push($jsonResponse, $arrayEntity);
+            }
 
-        return json_encode($jsonResponse);
+            $return = json_encode($jsonResponse);
+        }
+
+        return $return;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function reverseTransform($json)
+    public function reverseTransform($json = null)
     {
-        $om = $this->om;
-        $class = $this->class;
         $entitiesResponse = new ArrayCollection();
-        if (!$json) {
-            return $entitiesResponse;
-        }
-        $jEntities = json_decode($json, true);
-        foreach ($jEntities as $j) {
-            $entity = $om
-                ->getRepository($class)
-                ->findOneBy(array('id' => $j['id']))
-            ;
-            if (!$entitiesResponse->contains($entity)) {
-                $entitiesResponse->add($entity);
-           }
+        if (!is_null($json)) {
+            $jEntities = json_decode($json, true);
+            foreach ($jEntities as $j) {
+                $entity = $this->om
+                    ->getRepository($this->class)
+                    ->findOneBy(array('id' => $j['id']))
+                ;
+                if (!$entitiesResponse->contains($entity)) {
+                    $entitiesResponse->add($entity);
+               }
+            }
         }
 
         return $entitiesResponse;
