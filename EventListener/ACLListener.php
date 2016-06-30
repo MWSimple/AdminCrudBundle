@@ -14,7 +14,6 @@ class ACLListener
 
     public function preRemove(LifecycleEventArgs $args)
     {
-        $control = false;
         $entity  = $args->getEntity();
 
         $aclConf = $this->container->hasParameter('mw_simple_admin_crud.acl') ?

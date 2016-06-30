@@ -84,7 +84,6 @@ class DefaultController extends Controller
         $response->headers->set('Cache-Control', 'must-revalidate, post-check=0, pre-check=0');
         $response->headers->set('Content-type', $content_type);
         $response->headers->set('Expires', 0);
-        //$response->headers->set('Content-length', filesize($filename));
         $response->headers->set('Pragma', 'public');
         // Send headers before outputting anything
         $response->sendHeaders();
@@ -588,7 +587,7 @@ class DefaultController extends Controller
     {
         if (!array_key_exists('saveAndAdd', $config)) {
             $config['saveAndAdd'] = true;
-        } elseif ($config['saveAndAdd'] != false) {
+        } elseif ($config['saveAndAdd'] !== false) {
             $config['saveAndAdd'] = true;
         }
     }
