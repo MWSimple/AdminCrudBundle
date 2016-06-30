@@ -38,13 +38,12 @@ class EntityToJsonTransformer implements DataTransformerInterface
             return null;
         };
         $jsonResponse = array();
-        $entitiesToArray = function ($entity = null) {
+        $jsonResponse = $entities->map(function ($entity) {
             return array(
                 'id' => $entity->getId(),
                 'text' => $entity->__toString()
             );
-        };
-        $jsonResponse = $entities->map($entitiesToArray())->toArray();
+        })->toArray();
 
         return json_encode($jsonResponse);
     }
