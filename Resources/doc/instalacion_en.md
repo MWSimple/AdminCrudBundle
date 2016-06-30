@@ -1,22 +1,9 @@
-## Instalación
+## Installation
 
-### composer
-
-Añadir la siguiente línea a su archivo `composer.json`:
-
-### Support Symfony 3.x
-
-```json
-"require": {
-    ...
-    "mwsimple/admin-crud": "4.0.*@dev",
-}
-```
-
+### Using composer
 Execute:
-
 ```cli
-php composer.phar update "mwsimple/admin-crud"
+php composer.phar require mwsimple/admin-crud
 ```
 
 Add it to the `AppKernel.php` class:
@@ -44,9 +31,9 @@ framework:
     translator:      { fallback: %locale% } # uncomment line
 ```
 
-### Configuration filter
+### Configuration filter default
 
-Mayor configuracion: [LexikFormFilterBundle](https://github.com/lexik/LexikFormFilterBundle/blob/v5.0.1/Resources/doc/configuration.md)
+En caso de necesitar mayor configuración: [LexikFormFilterBundle](https://github.com/lexik/LexikFormFilterBundle/blob/v5.0.1/Resources/doc/configuration.md)
 
 ### Configuration paginator and menu
 

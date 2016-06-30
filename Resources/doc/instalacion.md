@@ -1,6 +1,6 @@
 ## Instalación
 
-### composer
+### Composer
 Ejecutar el comando por consola
 ```cli
 php composer.phar require mwsimple/admin-crud
