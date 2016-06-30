@@ -14,10 +14,8 @@
         {% block stylesheets %}
             <link href="{{ asset('bundles/mwsimpleadmincrud/css/bootstrap.min.css') }}" rel="stylesheet">
             <link href="{{ asset('bundles/mwsimpleadmincrud/css/bootstrap-checkbox.css') }}" rel="stylesheet">
-            <link href="{{ asset('bundles/mwsimpleadmincrud/js/bootstrap-fileupload/bootstrap-fileupload.min.css') }}" rel="stylesheet" id="bootstrap-style">
             <link rel="stylesheet" href="{{ asset('bundles/mwsimpleadmincrud/select2/select2.css') }}">
             <link rel="stylesheet" href="{{ asset('bundles/mwsimpleadmincrud/css/bootstrapValidator.min.css') }}">
-            {# <link href="{{ asset('bundles/mwsimpleadmincrud/datetime/css/bootstrap-datetimepicker.css') }}" rel="stylesheet"> #}
             <link href="{{ asset('bundles/mwsimpleadmincrud/css/crud.css') }}" rel="stylesheet">
         {% endblock %}
 
@@ -28,9 +26,6 @@
             <!--[if lt IE 9]>
             <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
             <![endif]-->
-
-            {# <script src="{{ asset('bundles/mwsimpleadmincrud/datetime/js/bootstrap-datetimepicker.js') }}"></script> #}
-            {# <script src="{{ asset('bundles/mwsimpleadmincrud/datetime/js/locales/bootstrap-datetimepicker.es.js') }}"></script> #}
             <script src="{{ asset('bundles/mwsimpleadmincrud/select2/select2.min.js') }}"></script>
         {% endblock %}
         
@@ -80,7 +75,6 @@
 
         {% block javascript %}
             <script src="{{ asset('bundles/mwsimpleadmincrud/js/bootstrap-checkbox.js') }}"></script>
-            <script src="{{ asset('bundles/mwsimpleadmincrud/js/bootstrap-fileupload/bootstrap-fileupload.min.js') }}"></script>
             <script src="{{ asset('bundles/mwsimpleadmincrud/js/validator/bootstrapValidator.min.js') }}"></script>
             <script src="{{ asset('bundles/mwsimpleadmincrud/js/validator/language/es_ES.js') }}"></script>
        {% endblock %}

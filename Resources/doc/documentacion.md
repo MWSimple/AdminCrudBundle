@@ -134,10 +134,10 @@ public function getAutocompleteEntity()
     return $response;
 }
 ```
-#### Type Form. correct settings with boostrap view, use 'class' and 'col'.
+#### Type Form. Configuración correcta para el type select2 utilizando boostrap, usar 'class' y 'col'.
 ```php
     $builder
-        ->add('field', 'select2', array(
+        ->add('field', \MWSimple\Bundle\AdminCrudBundle\Form\Type\Select2entityType::class, array(
             'attr' => array(
                 'class' => "col-lg-12 col-md-12",
                 'col'   => "col-lg-8 col-md-8",
