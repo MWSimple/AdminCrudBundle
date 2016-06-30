@@ -8,7 +8,6 @@ views:
         list: %entity% lista
         actions: Acciones
         createnew: Crear %entity%
-        actions: Acciones
         export: Exportar
     actions:
         show: ver %entity%

@@ -1,0 +1,49 @@
+views:
+    layout:
+        bannersadmin: Administrator
+    index:
+        filters: Filtry
+        filter: Filtr
+        reset: Reset
+        list: %entity% lista
+        actions: Akcje
+        createnew: Utwórz %entity%
+        export: Eksport
+    actions:
+        show: podgląd %entity%
+        edit: edycja %entity%
+    recordactions:
+        backtothelist: Wróć do listy
+        edit: Edycja
+        delete: Usuń
+        confirm: Usunąć element?
+        disableConfirm: Wyłącz element?
+        disable: Wyłączyć
+    new:
+        creation: Utwórz %entity%
+        create: Utwórz
+        save: Zapisać
+        saveAndAdd: Zapisz i dodaj
+    edit:
+        edit: Edytuj %entity%
+        editbutton: Edytuj
+    show:
+        show: Podgląd %entity%
+
+flash:
+    create:
+        success: Element utworzony prawidłowo.
+        error: Tworzenie nowego elementu zakończone błędem.
+    update:
+        success: Aktualizacja powidoła się.
+        error: Aktualizacja zakończona błędem.
+    delete:
+        success: Element został usunięty.
+        error: Próba usunięcia zakończona błędem.
+
+Previous: 'Poprzednia'
+Next: 'Następna'
+Download: 'ściągać'
+
+ROLE_ADMIN: Administrator
+ROLE_USER: Użytkownik
