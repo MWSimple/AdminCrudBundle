@@ -15,7 +15,6 @@
         </service>
         <service id="mws.twig_extension" class="%mws.twig_extension.class%">
             <tag name="twig.extension" />
-            <argument type="service" id="service_container" />
         </service>
         <service id="mws.select2entity_type" class="%mws.select2entity_type.class%">
             <tag name="form.type" alias="mws_select2entity" />

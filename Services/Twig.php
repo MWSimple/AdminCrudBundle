@@ -1,8 +1,6 @@
 <?php
 namespace MWSimple\Bundle\AdminCrudBundle\Services;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
 /**
  * Twig Extension.
  *
@@ -11,13 +9,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class Twig extends \Twig_Extension
 {
-    protected $container;
-
-    public function __construct(ContainerInterface $container = null)
-    {
-        $this->container = $container;
-    }
-
     public function getFunctions()
     {
         return array(
