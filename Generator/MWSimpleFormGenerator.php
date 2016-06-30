@@ -24,6 +24,12 @@ use Doctrine\ORM\Mapping\ClassMetadataInfo;
  */
 class MWSimpleFormGenerator extends DoctrineFormGenerator
 {
+    private $mws_tecspro_comun;
+
+    public function setMwsTecsproComun($mws_tecspro_comun) {
+        $this->mws_tecspro_comun = $mws_tecspro_comun;
+    }
+
     /**
      * Generates the entity form class.
      *
@@ -34,11 +40,11 @@ class MWSimpleFormGenerator extends DoctrineFormGenerator
      */
     public function generate(BundleInterface $bundle, $entity, ClassMetadataInfo $metadata, $forceOverwrite = false)
     {
-        $parts       = explode('\\', $entity);
+        $parts = explode('\\', $entity);
         $entityClass = array_pop($parts);
 
         $this->className = $entityClass.'Type';
-        $dirPath         = $bundle->getPath().'/Form';
+        $dirPath = $bundle->getPath().'/Form';
         $this->classPath = $dirPath.'/'.str_replace('\\', '/', $entity).'Type.php';
 
         if (!$forceOverwrite && file_exists($this->classPath)) {
@@ -53,20 +59,20 @@ class MWSimpleFormGenerator extends DoctrineFormGenerator
         array_pop($parts);
         
         $this->renderFile('form/FormType.php.twig', $this->classPath, array(
-            'fields'           => $this->getFieldsFromMetadata($metadata),
-            'fields_mapping'   => $metadata->fieldMappings,
-            'namespace'        => $bundle->getNamespace(),
+            'fields' => $this->getFieldsFromMetadata($metadata),
+            'fields_mapping' => $metadata->fieldMappings,
+            'namespace' => $bundle->getNamespace(),
             'entity_namespace' => implode('\\', $parts),
-            'entity_class'     => $entityClass,
-            'bundle'           => $bundle->getName(),
-            'form_class'       => $this->className,
-            'form_type_name'   => strtolower(str_replace('\\', '_', $bundle->getNamespace()).($parts ? '_' : '').implode('_', $parts).'_'.substr($this->className, 0, -4)),
+            'entity_class' => $entityClass,
+            'bundle' => $bundle->getName(),
+            'form_class' => $this->className,
+            'form_type_name' => strtolower(str_replace('\\', '_', $bundle->getNamespace()).($parts ? '_' : '').implode('_', $parts).'_'.substr($this->className, 0, -4)),
 
             // Add 'setDefaultOptions' method with deprecated type hint, if the new 'configureOptions' isn't available.
             // Required as long as Symfony 2.6 is supported.
             'configure_options_available' => method_exists('Symfony\Component\Form\AbstractType', 'configureOptions'),
             'get_name_required' => !method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix'),
-            'associations'     => $this->getFieldsAssociationFromMetadata($metadata),
+            'associations' => $this->mws_tecspro_comun->getFieldsAssociationFromMetadata($metadata),
         ));
     }
 
@@ -74,55 +80,25 @@ class MWSimpleFormGenerator extends DoctrineFormGenerator
      * Returns an array of fields. Fields can be both column fields and
      * association fields.
      *
-     * @param  ClassMetadataInfo $metadata
-     * @return array             $fields
+     * @param ClassMetadataInfo $metadata
+     *
+     * @return array $fields
      */
     private function getFieldsFromMetadata(ClassMetadataInfo $metadata)
     {
-        $fields = (array) $metadata->fieldMappings;
+        $fields = (array) $metadata->fieldNames;
 
         // Remove the primary key field if it's not managed manually
         if (!$metadata->isIdentifierNatural()) {
-            foreach ($metadata->identifier as $id) {
-                if(array_key_exists($id, $fields)) {
-                    unset($fields[$id]);
-                }
+            $fields = array_diff($fields, $metadata->identifier);
+        }
+
+        foreach ($metadata->associationMappings as $fieldName => $relation) {
+            if ($relation['type'] !== ClassMetadataInfo::ONE_TO_MANY) {
+                $fields[] = $fieldName;
             }
         }
 
         return $fields;
-    }
-
-    /**
-     * Returns an array of fields data (name and filter widget to use).
-     * Fields can be both column fields and association fields.
-     *
-     * @param  ClassMetadataInfo $metadata
-     * @return array             $fields
-     */
-    private function getFieldsAssociationFromMetadata(ClassMetadataInfo $metadata)
-    {
-        $associations = array();
-        foreach ($metadata->associationMappings as $value) {
-            $parts = explode('\\', $value['targetEntity']);
-            if (count($parts) === 3) {
-                $repository = $parts[0].":".$parts[2];
-                $actionName = $parts[2];
-            } else {
-                if ($parts[1] == "Bundle") {
-                    $repository = $parts[0].$parts[2].":".$parts[4];
-                    $actionName = $parts[4];
-                } else {
-                    $repository = $parts[0].$parts[1].":".$parts[3];
-                    $actionName = $parts[3];
-                }
-            }
-            $associations[$value['fieldName']]['targetEntity'] = $value['targetEntity'];
-            $associations[$value['fieldName']]['repository'] = $repository;
-            $associations[$value['fieldName']]['actionName'] = $actionName;
-            $associations[$value['fieldName']]['type'] = $value['type'];
-        }
-
-        return $associations;
     }
 }

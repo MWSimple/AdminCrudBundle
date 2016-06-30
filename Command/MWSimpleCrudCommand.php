@@ -32,16 +32,22 @@ class MWSimpleCrudCommand extends GenerateDoctrineCrudCommand
 
     protected function createGenerator($bundle = null)
     {
-        return new MWSimpleCrudGenerator(
+        $crudGenerator = new MWSimpleCrudGenerator(
             $this->getContainer()->get('filesystem'),
             $this->getContainer()->getParameter('kernel.root_dir')
         );
+        //Agregado por Tecspro para setear el servicio
+        $crudGenerator->setMwsTecsproComun($this->getContainer()->get('mws.tecspro.comun'));
+
+        return $crudGenerator;
     }
 
     protected function getFormGenerator($bundle = null)
     {
         if (null === $this->formGenerator) {
             $this->formGenerator = new MWSimpleFormGenerator($this->getContainer()->get('filesystem'));
+            //Agregado por Tecspro para setear el servicio
+            $this->formGenerator->setMwsTecsproComun($this->getContainer()->get('mws.tecspro.comun'));
             $this->formGenerator->setSkeletonDirs($this->getSkeletonDirs($bundle));
         }
 

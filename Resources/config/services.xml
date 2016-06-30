@@ -5,11 +5,14 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
+        <parameter key="mws.tecspro.comun.class">MWSimple\Bundle\AdminCrudBundle\Services\TecsproComun</parameter>
         <parameter key="mws.twig_extension.class">MWSimple\Bundle\AdminCrudBundle\Services\Twig</parameter>
         <parameter key="mws.select2entity_type.class">MWSimple\Bundle\AdminCrudBundle\Form\Type\Select2entityType</parameter>
     </parameters>
 
     <services>
+        <service id="mws.tecspro.comun" class="%mws.tecspro.comun.class%">
+        </service>
         <service id="mws.twig_extension" class="%mws.twig_extension.class%">
             <tag name="twig.extension" />
             <argument type="service" id="service_container" />

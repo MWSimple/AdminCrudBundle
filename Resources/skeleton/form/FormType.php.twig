@@ -26,9 +26,9 @@ class {{ form_class }} extends AbstractType
         $builder
 
         {%- for field in fields -%}
-            {%- if field.type in ['datetime', 'datetimetz'] %}
+            {%- if fields_mapping[field] is defined and fields_mapping[field]['type'] in ['datetime', 'datetimetz'] %}
 
-            ->add('{{ field.fieldName }}', \SC\DatetimepickerBundle\Form\Type\SCDatetimeType::class, array('pickerOptions' =>
+            ->add('{{ field }}', \SC\DatetimepickerBundle\Form\Type\SCDatetimeType::class, array('pickerOptions' =>
                 array(
                     'format'    => 'mm/dd/yyyy hh:ii',
                     'startView' => 'month',
@@ -36,9 +36,9 @@ class {{ form_class }} extends AbstractType
                     'maxView'   => 'decade',
                     'todayBtn'  => true,
                 )))
-            {%- elseif field.type in ['date'] %}
+            {%- elseif fields_mapping[field] is defined and fields_mapping[field]['type'] == 'date' %}
 
-            ->add('{{ field.fieldName }}', \SC\DatetimepickerBundle\Form\Type\SCDatetimeType::class, array('pickerOptions' =>
+            ->add('{{ field }}', \SC\DatetimepickerBundle\Form\Type\SCDatetimeType::class, array('pickerOptions' =>
                 array(
                     'format'    => 'mm/dd/yyyy',
                     'startView' => 'month',
@@ -46,9 +46,9 @@ class {{ form_class }} extends AbstractType
                     'maxView'   => 'decade',
                     'todayBtn'  => true,
                 )))
-            {%- elseif field.type in ['time'] %}
+            {%- elseif fields_mapping[field] is defined and fields_mapping[field]['type'] == 'time' %}
 
-            ->add('{{ field.fieldName }}', \SC\DatetimepickerBundle\Form\Type\SCDatetimeType::class, array('pickerOptions' =>
+            ->add('{{ field }}', \SC\DatetimepickerBundle\Form\Type\SCDatetimeType::class, array('pickerOptions' =>
                 array(
                     'format'    => 'hh:ii',
                     'startView' => 'day',
@@ -57,7 +57,7 @@ class {{ form_class }} extends AbstractType
                 )))
             {%- else %}
 
-            ->add('{{ field.fieldName }}')
+            ->add('{{ field }}')
 
             {%- endif -%}
         {%- endfor %}
