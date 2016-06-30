@@ -4,18 +4,13 @@ twig:
         - 'MWSimpleAdminCrudBundle:Form:mws_vich_fields.html.twig'
         - 'MWSimpleAdminCrudBundle:Form:fields.html.twig'
         - 'MWSimpleAdminCrudBundle:Form:select2entity_type.html.twig'
-        - 'MWSimpleAdminCrudBundle:Form:duallist_field.html.twig'
+        - 'MWSimpleAdminCrudBundle:Form:duallist_type.html.twig'
 
 sc_datetimepicker:
     picker: ~
 
 #Services pasando a services.xml
 services:
-    form.type.duallist:
-        class: MWSimple\Bundle\AdminCrudBundle\Form\Type\DualListType
-        arguments: ['@doctrine.orm.entity_manager']
-        tags:
-            - { name: form.type, alias: duallist }
     form.type.mwspeso:
         class: MWSimple\Bundle\AdminCrudBundle\Form\Type\PesoType
         tags:

@@ -84,7 +84,7 @@ fieldsshow:
 #### FormType duallist [Documentation](http://bootsnipp.com/snippets/featured/bootstrap-dual-list)
 ```php
     $builder
-        ->add('field', 'duallist', array(
+        ->add('field', \MWSimple\Bundle\AdminCrudBundle\Form\Type\DualListType::class, array(
             'class'    => 'AppDemoBundle:Entity',
             'property' => 'name',
             'multiple' => true,

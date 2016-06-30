@@ -8,6 +8,7 @@
         <parameter key="mws.tecspro.comun.class">MWSimple\Bundle\AdminCrudBundle\Services\TecsproComun</parameter>
         <parameter key="mws.twig_extension.class">MWSimple\Bundle\AdminCrudBundle\Services\Twig</parameter>
         <parameter key="mws.select2entity_type.class">MWSimple\Bundle\AdminCrudBundle\Form\Type\Select2entityType</parameter>
+        <parameter key="mws.duallist_type.class">MWSimple\Bundle\AdminCrudBundle\Form\Type\DualListType</parameter>
     </parameters>
 
     <services>
@@ -18,6 +19,10 @@
         </service>
         <service id="mws.select2entity_type" class="%mws.select2entity_type.class%">
             <tag name="form.type" alias="mws_select2entity" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+        <service id="mws.duallist_type" class="%mws.duallist_type.class%">
+            <tag name="form.type" alias="mws_duallist" />
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
     </services>
