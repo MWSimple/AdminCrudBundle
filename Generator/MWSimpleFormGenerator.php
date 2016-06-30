@@ -12,7 +12,6 @@
 namespace MWSimple\Bundle\AdminCrudBundle\Generator;
 
 use Sensio\Bundle\GeneratorBundle\Generator\DoctrineFormGenerator;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 

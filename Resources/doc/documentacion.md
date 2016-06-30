@@ -11,6 +11,10 @@ php bin/console generate:doctrine:entity
 ```cli
 php bin/console mwsimple:generate:admincrud
 ```
+#### Si se necesita re generar el crud se puede pasar la opción --overwrite (*) Cuidado, pisa el código generado anteriormente.
+```cli
+php bin/console mwsimple:generate:admincrud --overwrite
+```
 ## Config Crud
 
 ### archivo de configuración generado en: Bundle/Resources/config/Post.yml
@@ -94,7 +98,7 @@ fieldsshow:
     ;
 ```
 ### Use Select2: If entity relationship generates select autocomplete.
-#### Entities required method toString()
+#### En las Entities se requiere tener el mótodo toString()
 ```php
 public function __toString()
 {
