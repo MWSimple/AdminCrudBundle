@@ -1,20 +1,9 @@
 ## Instalación
 
 ### composer
-
-Añadir la siguiente línea a su archivo `composer.json`:
-
-```json
-"require": {
-    ...
-    "mwsimple/admin-crud": "4.0.*@dev",
-}
-```
-
-Ejecutar:
-
+Ejecutar el comando por consola
 ```cli
-php composer.phar update "mwsimple/admin-crud"
+php composer.phar require mwsimple/admin-crud
 ```
 
 Agregar a la clase `app/AppKernel.php`:
