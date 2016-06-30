@@ -78,7 +78,7 @@ fieldsshow:
 ### Form type: mwspeso - Use Type Number add $
 #### Example field form
 ```php
-->add('numero', 'mwspeso')
+->add('numero', \MWSimple\Bundle\AdminCrudBundle\Form\Type\PesoType::class)
 ```
 ### Use DualList.
 #### FormType duallist [Documentation](http://bootsnipp.com/snippets/featured/bootstrap-dual-list)

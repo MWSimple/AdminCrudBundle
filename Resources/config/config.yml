@@ -8,10 +8,3 @@ twig:
 
 sc_datetimepicker:
     picker: ~
-
-#Services pasando a services.xml
-services:
-    form.type.mwspeso:
-        class: MWSimple\Bundle\AdminCrudBundle\Form\Type\PesoType
-        tags:
-            - { name: form.type, alias: mwspeso }
