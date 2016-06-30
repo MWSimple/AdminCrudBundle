@@ -9,7 +9,6 @@ use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 //Interact
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Sensio\Bundle\GeneratorBundle\Command\AutoComplete\EntitiesAutoCompleter;
 
 /**
  * Generates a CRUD for a Doctrine entity.
