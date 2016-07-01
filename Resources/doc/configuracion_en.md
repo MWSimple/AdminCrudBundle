@@ -33,5 +33,5 @@ fieldsshow: #Fields displayed in the show Entity
 ```
 #### Por defecto no escapa ```twig {{ value|raw }} ```
 
-* [Generar CRUD](configuracion_en.md)
+* [DOC](documentacion_en.md)
 * [README](README_EN.md)

@@ -16,5 +16,5 @@ php bin/console mwsimple:generate:admincrud
 php bin/console mwsimple:generate:admincrud --overwrite
 ```
 
-* [Generar CRUD](configuracion.md)
+* [Configuración](configuracion.md)
 * [README](https://github.com/MWSimple/AdminCrudBundle/blob/version30/README.md)
