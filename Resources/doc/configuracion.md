@@ -33,5 +33,5 @@ fieldsshow: #Los campos que aparecen en el ver Entity
 ```
 #### Por defecto no escapa ```twig {{ value|raw }} ```
 
-* [DOC](documentacion.md)
+* [Vistas](vistas.md)
 * [README](https://github.com/MWSimple/AdminCrudBundle/blob/version30/README.md)

@@ -31,7 +31,7 @@ fieldsshow: #Fields displayed in the show Entity
         #closerow: true #this close row for the separators of col (http://getbootstrap.com/)
         separator: '<br>' #optional tag html by ONE_TO_MANY || MANY_TO_MANY
 ```
-#### Por defecto no escapa ```twig {{ value|raw }} ```
+#### Default not escape ```twig {{ value|raw }} ```
 
-* [DOC](documentacion_en.md)
+* [Views](vistas_en.md)
 * [README](README_EN.md)
