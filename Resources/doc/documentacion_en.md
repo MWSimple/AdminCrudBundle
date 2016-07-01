@@ -1,21 +1,3 @@
-## List
-
-### New block override Index list
-#### actions
-```twig
-    {% block actions %}{% endblock %}
-```
-#### buttons
-```twig
-    {% block buttons %}{% endblock %}
-```
-#### buttons below
-```twig
-    {% block buttonsbelow %}{% endblock %}
-```
-
-### New Export list to csv.
-
 ## Forms
 
 ### New attr boostrap col

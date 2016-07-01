@@ -1,4 +1,4 @@
-## Layout
+## Diseño
 ### Bloques en layout.html.twig
 #### A continuación se detallan los bloques posibles a reescribir que contiene el layout
 ```twig
@@ -34,5 +34,5 @@
     {% block buttonsbelow %}{% endblock %}
 ```
 
-* [DOC](documentacion.md)
+* [Formularios](forms.md)
 * [README](https://github.com/MWSimple/AdminCrudBundle/blob/version30/README.md)

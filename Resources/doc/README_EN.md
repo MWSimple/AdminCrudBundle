@@ -25,7 +25,9 @@ Documentation
 
 * [Generate CRUD](generacion_en.md)
 
-* [Views](Resources/doc/vistas_en.md)
+* [Views](vistas_en.md)
+
+* [Forms](forms_en.md)
 
 * [Documentation](documentacion_en.md) Detail functionalities for the correct use of Crud Admin Bundle, and to achieve excellent management application.
 

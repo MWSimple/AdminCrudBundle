@@ -34,5 +34,5 @@
     {% block buttonsbelow %}{% endblock %}
 ```
 
-* [DOC](documentacion.md)
+* [Forms](forms_en.md)
 * [README](https://github.com/MWSimple/AdminCrudBundle/blob/version30/README.md)
