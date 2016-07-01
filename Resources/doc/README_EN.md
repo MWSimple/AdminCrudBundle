@@ -6,7 +6,7 @@ AdminCrudBundle
 [![Latest Stable Version](https://poser.pugx.org/mwsimple/admin-crud/version)](https://packagist.org/packages/mwsimple/admin-crud) [![Total Downloads](https://poser.pugx.org/mwsimple/admin-crud/downloads)](https://packagist.org/packages/mwsimple/admin-crud) [![composer.lock available](https://poser.pugx.org/mwsimple/admin-crud/composerlock)](https://packagist.org/packages/mwsimple/admin-crud)
 <sup><kbd>**SOPORTA SYMFONY 3.x**</kbd></sup>
 
-[Español](README.md)
+<b>[ES](README.md) / [EN](Resources/doc/README_EN.md)</b>
 
 Description
 -----------
@@ -19,10 +19,10 @@ The mwsimple:generate:admincrud generates a very basic controller for a given en
     Editing an existing record,
     Deleting an existing record.
 
-## Previews
+##<p align="right">Previews</p>
 
-![Listar](https://raw.githubusercontent.com/MWSimple/AdminCrudBundle/version30/Resources/doc/preview_list.png "Listar")
-![Crear](https://raw.githubusercontent.com/MWSimple/AdminCrudBundle/version30/Resources/doc/preview_new.png "Crear")
+<img src="https://raw.githubusercontent.com/MWSimple/AdminCrudBundle/version30/Resources/doc/preview_list.png" alt="Listar" width="50%" align="right" />
+<img src="https://raw.githubusercontent.com/MWSimple/AdminCrudBundle/version30/Resources/doc/preview_new.png" alt="Crear" width="50%" align="right" />
 
 Documentation
 -------------
@@ -31,7 +31,7 @@ Documentation
 
 * [Documentation](Resources/doc/documentacion_en.md) a continuación se detalla las funcionalidades para el uso correcto del Admin Crud Bundle, y poder lograr una excelente administración de su aplicación.
 
-* [Subiendo archivos](Resources/doc/subirarchivos.md)
+* [Uploads files](Resources/doc/subirarchivos_en.md)
 
 ## Dependencias
 

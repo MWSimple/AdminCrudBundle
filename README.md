@@ -6,7 +6,7 @@ AdminCrudBundle
 [![Latest Stable Version](https://poser.pugx.org/mwsimple/admin-crud/version)](https://packagist.org/packages/mwsimple/admin-crud) [![Total Downloads](https://poser.pugx.org/mwsimple/admin-crud/downloads)](https://packagist.org/packages/mwsimple/admin-crud) [![composer.lock available](https://poser.pugx.org/mwsimple/admin-crud/composerlock)](https://packagist.org/packages/mwsimple/admin-crud)
 <sup><kbd>**SOPORTA SYMFONY 3.x**</kbd></sup>
 
-[English](Resources/doc/README_EN.md)
+<b>[EN](Resources/doc/README_EN.md) / [ES](README.md)</b>
 
 Descripción
 -----------
