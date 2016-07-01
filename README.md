@@ -16,7 +16,7 @@ Este controlador extiende e implementa un controlador por defecto con paginador,
 
 ## Vista previa Listar y Crear
 
-<img src="https://raw.githubusercontent.com/MWSimple/AdminCrudBundle/version30/Resources/doc/preview_list.png" alt="Listar" width="50%" />
+<img src="https://raw.githubusercontent.com/MWSimple/AdminCrudBundle/version30/Resources/doc/preview_list.png" alt="Listar" width="50%" align="right" />
 <img src="https://raw.githubusercontent.com/MWSimple/AdminCrudBundle/version30/Resources/doc/preview_new.png" alt="Crear" width="50%" align="right" />
 
 Documentación
