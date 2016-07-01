@@ -199,3 +199,5 @@ mw_simple_admin_crud:
 ```
 
 *if not using the validation does not work
+
+[README](https://github.com/MWSimple/AdminCrudBundle/blob/version30/README.md)

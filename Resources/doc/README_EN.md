@@ -6,18 +6,12 @@ AdminCrudBundle
 [![Latest Stable Version](https://poser.pugx.org/mwsimple/admin-crud/version)](https://packagist.org/packages/mwsimple/admin-crud) [![Total Downloads](https://poser.pugx.org/mwsimple/admin-crud/downloads)](https://packagist.org/packages/mwsimple/admin-crud) [![composer.lock available](https://poser.pugx.org/mwsimple/admin-crud/composerlock)](https://packagist.org/packages/mwsimple/admin-crud)
 <sup><kbd>**SOPORTA SYMFONY 3.x**</kbd></sup>
 
-<b>[ES](README.md) / [EN](Resources/doc/README_EN.md)</b>
+<b>[ES](https://github.com/MWSimple/AdminCrudBundle/blob/version30/README.md) / [EN](README_EN.md)</b>
 
 Description
 -----------
 
-The mwsimple:generate:admincrud generates a very basic controller for a given entity located in a given bundle. This controller extend the default controller implements [paginator], [filter] and allows to perform the [five basic operations] on a model, allows rewriting actions and views.
-
-    Listing all records,
-    Showing one given record identified by its primary key,
-    Creating a new record,
-    Editing an existing record,
-    Deleting an existing record.
+The mwsimple:generate:admincrud generates a very basic controller for a given entity located in a given bundle. This controller extend the default controller implements [paginator], [filter] and allows to perform the [five basic operations List, Show, New, Edit, Delete] on a model, allows rewriting actions and views.
 
 ##<p align="right">Previews</p>
 
@@ -27,25 +21,25 @@ The mwsimple:generate:admincrud generates a very basic controller for a given en
 Documentation
 -------------
 
-* [Installation](Resources/doc/instalacion_en.md)
+* [Installation](instalacion_en.md)
 
-* [Documentation](Resources/doc/documentacion_en.md) a continuación se detalla las funcionalidades para el uso correcto del Admin Crud Bundle, y poder lograr una excelente administración de su aplicación.
+* [Documentation](documentacion_en.md) Detail functionalities for the correct use of Crud Admin Bundle, and to achieve excellent management application.
 
-* [Uploads files](Resources/doc/subirarchivos_en.md)
+* [Uploads files](subirarchivos_en.md)
 
-## Dependencias
+## Dependencies
 
-El bundle extiende de    [SensioGeneratorBundle](https://github.com/sensio/SensioGeneratorBundle) .
-Para el menu             [KnpMenuBundle](https://github.com/KnpLabs/KnpMenuBundle) .
-Para el paginador        [KnpPaginatorBundle](https://github.com/KnpLabs/KnpPaginatorBundle) .
-Para los filtros         [LexikFormFilterBundle](https://github.com/lexik/LexikFormFilterBundle) .
-Formulario datetime type [DatetimepickerBundle](https://github.com/lexik/LexikFormFilterBundle) .
-Subir archivos           [VichUploaderBundle](https://github.com/dustin10/VichUploaderBundle) .
+This bundle extends [SensioGeneratorBundle](https://github.com/sensio/SensioGeneratorBundle) .
+Menu using          [KnpMenuBundle](https://github.com/KnpLabs/KnpMenuBundle) .
+paginator using     [KnpPaginatorBundle](https://github.com/KnpLabs/KnpPaginatorBundle) .
+Filter using        [LexikFormFilterBundle](https://github.com/lexik/LexikFormFilterBundle) .
+Form datetime type  [DatetimepickerBundle](https://github.com/lexik/LexikFormFilterBundle) .
+Uploads files       [VichUploaderBundle](https://github.com/dustin10/VichUploaderBundle) .
 
 ## Author
 Gonzalo Alonso - gonkpo@gmail.com
 
 ![Argentina](http://www.messentools.com/images/emoticones/banderas/MessenTools.com-Flag-of-Argentina.png "Argentina")
 
-## Soporte
+## Supports
 [Tecspro](http://www.tecspro.com.ar)

@@ -98,6 +98,4 @@ mw_simple_admin_crud:
 php bin/console assets:install
 ```
 
-## Dependencies
-
-This bundle extends [SensioGeneratorBundle](https://github.com/sensio/SensioGeneratorBundle) and add a paginator using [KnpPaginatorBundle](https://github.com/KnpLabs/KnpPaginatorBundle) and filter using [LexikFormFilterBundle](https://github.com/lexik/LexikFormFilterBundle) and menu using [KnpMenuBundle](https://github.com/KnpLabs/KnpMenuBundle) .
+[README](README_EN.md)

@@ -5,4 +5,4 @@ Se incluye VichUploaderBundle para configurar
 * [image form type](https://github.com/dustin10/VichUploaderBundle/blob/master/Resources/doc/form/vich_image_type.md)
 
 [AdminCrud Documentación](Resources/doc/documentacion.md)
-[README](README.md)
+[README](README_EN.md)
