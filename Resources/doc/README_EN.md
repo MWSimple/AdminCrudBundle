@@ -23,6 +23,8 @@ Documentation
 
 * [Installation](instalacion_en.md)
 
+* [Generate CRUD](generacion_en.md)
+
 * [Documentation](documentacion_en.md) Detail functionalities for the correct use of Crud Admin Bundle, and to achieve excellent management application.
 
 * [Uploads files](subirarchivos_en.md)

@@ -58,12 +58,12 @@ knp_menu:
     templating: false # if true, enables the helper for PHP templates
     default_renderer: twig # The renderer to use, list is also available by default
 
-#Los child son indices no deben ser iguales, aqui se agregan y configuran los item del menu
+#The Child are indices should not be the same, here are added and set the menu item.
+#Permite Set the name, url, id, icon, roles who displayed, if you have submenu can be added.
 mw_simple_admin_crud:
     menu_setting: { class: nav } # use nav
     menu:
-        child: { name: inicio, url: mws_admin_crud_menu, id: inicio }
-        #child: { name: inicio, url: mws_admin_crud_menu, id: inicio, icon: glyphicon glyphicon-home }
+        child: { name: inicio, url: mws_admin_crud_menu, id: inicio, icon: glyphicon glyphicon-home }
         #child2:  
         #    name: help
         #    url: null
@@ -75,11 +75,7 @@ mw_simple_admin_crud:
         #            icon: glyphicon glyphicon-home
         #            roles: ['ROLE_ADMIN']
         #    roles: ['ROLE_USER']
-        #child3: 
-        #    name: Usuario
-        #    url: admin_user
-        #    id: usuario
-        #    roles: ['ROLE_SUPERADMIN']
+        #child3: { name: Users, url: admin_user, id: user, roles: ['ROLE_SUPER_ADMIN'], icon: glyphicon glyphicon-user }
 ```
 
 ### Configuration routing admin
@@ -98,4 +94,5 @@ mw_simple_admin_crud:
 php bin/console assets:install
 ```
 
-[README](README_EN.md)
+* [Generate CRUD](generacion_en.md)
+* [README](README_EN.md)

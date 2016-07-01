@@ -24,6 +24,8 @@ Documentación
 
 * [Instalación](Resources/doc/instalacion.md)
 
+* [Generar CRUD](Resources/doc/generacion.md)
+
 * [Documentación](Resources/doc/documentacion.md) a continuación se detalla las funcionalidades para el uso correcto del Admin Crud Bundle, y poder lograr una excelente administración de su aplicación.
 
 * [Subiendo archivos](Resources/doc/subirarchivos.md)

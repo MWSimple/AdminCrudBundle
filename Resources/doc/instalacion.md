@@ -18,7 +18,7 @@ new SC\DatetimepickerBundle\SCDatetimepickerBundle(),
 new Vich\UploaderBundle\VichUploaderBundle(),
 ```
 
-### Importar configuración y configurar traducciones (incluye en, es, ca, pt)
+### Importar configuración y permitir traducciones (incluye en, es, ca, pt, fr, pl)
 
 En el archivo `app/config/config.yml`
 
@@ -41,7 +41,7 @@ En el archivo `app/config/config.yml`
 
 ```yaml
 knp_paginator:
-    page_range: 10                      # default page range used in pagination control
+    page_range: 10                     # default page range used in pagination control
     default_options:
         page_name: page                # page query parameter name
         sort_field_name: sort          # sort field query parameter name
@@ -58,12 +58,12 @@ knp_menu:
     templating: false # if true, enables the helper for PHP templates
     default_renderer: twig # The renderer to use, list is also available by default
 
-#Los child son índices no deben ser iguales, aquí se agregan y configuran los item del menu. Permite configurar el nombre, url, id, icono, roles a quien visualiza, si tiene submenu se puede agregar.
+#Los child son índices no deben ser iguales, aquí se agregan y configuran los item del menu.
+#Permite configurar el nombre, url, id, icono, roles a quien visualiza, si tiene submenu se puede agregar.
 mw_simple_admin_crud:
     menu_setting: { class: nav } # use nav
     menu:
-        child: { name: inicio, url: mws_admin_crud_menu, id: inicio }
-        #child: { name: inicio, url: mws_admin_crud_menu, id: inicio, icon: glyphicon glyphicon-home }
+        child: { name: inicio, url: mws_admin_crud_menu, id: inicio, icon: glyphicon glyphicon-home }
         #child2:  
         #    name: help
         #    url: null
@@ -75,11 +75,7 @@ mw_simple_admin_crud:
         #            icon: glyphicon glyphicon-home
         #            roles: ['ROLE_ADMIN']
         #    roles: ['ROLE_USER']
-        #child3: 
-        #    name: Usuario
-        #    url: admin_user
-        #    id: usuario
-        #    roles: ['ROLE_SUPERADMIN']
+        #child3: { name: Usuarios, url: admin_usuario, id: usuario, roles: ['ROLE_SUPERADMIN'], icon: glyphicon glyphicon-user }
 ```
 
 ### Configurar la ruta admin
@@ -98,5 +94,5 @@ mw_simple_admin_crud:
 php bin/console assets:install
 ```
 
-[AdminCrud Documentación](documentacion.md)
-[README](https://github.com/MWSimple/AdminCrudBundle/blob/version30/README.md)
+* [Generar CRUD](generacion.md)
+* [README](https://github.com/MWSimple/AdminCrudBundle/blob/version30/README.md)
