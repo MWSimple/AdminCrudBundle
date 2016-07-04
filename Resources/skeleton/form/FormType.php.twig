@@ -28,7 +28,7 @@ class {{ form_class }} extends AbstractType
         {%- for field in fields -%}
             {%- if fields_mapping[field] is defined and fields_mapping[field]['type'] in ['datetime', 'datetimetz'] %}
 
-            ->add('{{ field }}', \SC\DatetimepickerBundle\Form\Type\SCDatetimeType::class, array('pickerOptions' =>
+            ->add('{{ field }}', \SC\DatetimepickerBundle\Form\Type\DatetimeType::class, array('pickerOptions' =>
                 array(
                     'format'    => 'mm/dd/yyyy hh:ii',
                     'startView' => 'month',
@@ -38,7 +38,7 @@ class {{ form_class }} extends AbstractType
                 )))
             {%- elseif fields_mapping[field] is defined and fields_mapping[field]['type'] == 'date' %}
 
-            ->add('{{ field }}', \SC\DatetimepickerBundle\Form\Type\SCDatetimeType::class, array('pickerOptions' =>
+            ->add('{{ field }}', \SC\DatetimepickerBundle\Form\Type\DatetimeType::class, array('pickerOptions' =>
                 array(
                     'format'    => 'mm/dd/yyyy',
                     'startView' => 'month',
@@ -48,7 +48,7 @@ class {{ form_class }} extends AbstractType
                 )))
             {%- elseif fields_mapping[field] is defined and fields_mapping[field]['type'] == 'time' %}
 
-            ->add('{{ field }}', \SC\DatetimepickerBundle\Form\Type\SCDatetimeType::class, array('pickerOptions' =>
+            ->add('{{ field }}', \SC\DatetimepickerBundle\Form\Type\DatetimeType::class, array('pickerOptions' =>
                 array(
                     'format'    => 'hh:ii',
                     'startView' => 'day',
