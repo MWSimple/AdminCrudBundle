@@ -15,8 +15,10 @@ new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
 new Knp\Bundle\MenuBundle\KnpMenuBundle(),
 new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
 new SC\DatetimepickerBundle\SCDatetimepickerBundle(),
-new Vich\UploaderBundle\VichUploaderBundle(),
+// new Vich\UploaderBundle\VichUploaderBundle(),
 ```
+
+Para instanciar Vich Uploader Ver: [Subiendo archivos](Resources/doc/subirarchivos.md)
 
 ### Importar configuración y permitir traducciones (incluye en, es, ca, pt, fr, pl)
 
