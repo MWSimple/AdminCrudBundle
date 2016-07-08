@@ -126,31 +126,37 @@ class DefaultController extends Controller {
     /**
      * Export Csv.
      */
-    public function exportCsvAction($format) {
+    public function exportCsvAction($format, $query = null) {
         $config = $this->getConfig();
-        $queryBuilder = $this->createQuery($config['repository']);
-        $campos = array();
-        //array
-        foreach ($config['fieldsindex'] as $key => $value) {
-            //if is defined and true
-            if (!empty($value['export']) && $value['export']) {
-                if ($value['type'] == 'ONE_TO_ONE' || $value['type'] == 'ONE_TO_ONE' || $value['type'] == 'MANY_TO_ONE') {
-                    $campos[] = $value['alias'] . '.' . $value['name'];
-                } elseif ($value['type'] == 'datetime' || $value['type'] == 'datetimetz') {
-                    $campos[] = "DATE_FORMAT(" . $key . ", '%d/%m/%Y %H:%s')";
-                } elseif ($value['type'] == 'date') {
-                    $campos[] = "DATE_FORMAT(" . $key . ", '%d/%m/%Y')";
-                } elseif ($value['type'] == 'time') {
-                    $campos[] = "DATE_FORMAT(" . $key . ", '%H:%s')";
-                } else {
-                    $campos[] = $key;
+        if (is_null($query)) {
+            $queryBuilder = $this->createQuery($config['repository']);
+            $campos = array();
+            //array
+            foreach ($config['fieldsindex'] as $key => $value) {
+                //if is defined and true
+                if (!empty($value['export']) && $value['export']) {
+                    if ($value['type'] == 'ONE_TO_ONE' || $value['type'] == 'ONE_TO_ONE' || $value['type'] == 'MANY_TO_ONE') {
+                        $campos[] = $value['alias'] . '.' . $value['name'];
+                    } elseif ($value['type'] == 'datetime' || $value['type'] == 'datetimetz') {
+                        $campos[] = "DATE_FORMAT(" . $key . ", '%d/%m/%Y %H:%s')";
+                    } elseif ($value['type'] == 'date') {
+                        $campos[] = "DATE_FORMAT(" . $key . ", '%d/%m/%Y')";
+                    } elseif ($value['type'] == 'time') {
+                        $campos[] = "DATE_FORMAT(" . $key . ", '%H:%s')";
+                    } else {
+                        $campos[] = $key;
+                    }
                 }
             }
+
+            $queryBuilder['query']->select($campos);
+
+            $array = $queryBuilder['query']->getQuery()->getArrayResult();
+        } else {
+            $array = $query->getQuery()->getArrayResult();
         }
 
-        $queryBuilder['query']->select($campos);
 
-        $array = $queryBuilder['query']->getQuery()->getArrayResult();
 
         // Pick a format to export to
         //$format = 'csv';
