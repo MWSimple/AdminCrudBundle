@@ -59,10 +59,14 @@ class EntityToJsonOneTransformer implements DataTransformerInterface
                     ->getRepository($class)
                     ->findOneBy(array('id' => $entities))
                 ;
-                $jsonResponse = array(
-                    'id'   => $entity->getId(),
-                    'text' => $entity->__toString()
-                );
+                if (is_null($entity)) {
+                    $jsonResponse = null;
+                } else {
+                    $jsonResponse = array(
+                        'id'   => $entity->getId(),
+                        'text' => $entity->__toString()
+                    );
+                }
             }
 
             $return = json_encode($jsonResponse);            
