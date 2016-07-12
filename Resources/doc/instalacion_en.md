@@ -15,8 +15,10 @@ new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
 new Knp\Bundle\MenuBundle\KnpMenuBundle(),
 new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
 new SC\DatetimepickerBundle\SCDatetimepickerBundle(),
-new Vich\UploaderBundle\VichUploaderBundle(),
+// new Vich\UploaderBundle\VichUploaderBundle(),
 ```
+
+For instance Vich Uploader View: [Uploads files](subirarchivos_en.md)
 
 ### Configure imports config and translations (include en, es, ca, pt)
 
