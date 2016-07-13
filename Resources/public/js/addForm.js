@@ -10,7 +10,7 @@ function addForm(collection,target) {
 
     // increase the index with one for the next item
     collection.data('index', index + 1);
-    target.append(newForm);
+    target.before(newForm);
     //recorro los input del newForm para validarlos
     collection.find(':input').each(function() {
         if (this.type !== 'hidden') {
