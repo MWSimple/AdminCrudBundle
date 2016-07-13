@@ -16,9 +16,11 @@ new Knp\Bundle\MenuBundle\KnpMenuBundle(),
 new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
 new SC\DatetimepickerBundle\SCDatetimepickerBundle(),
 // new Vich\UploaderBundle\VichUploaderBundle(),
+// new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
 ```
 
-Para instanciar Vich Uploader Ver: [Subiendo archivos](Resources/doc/subirarchivos.md)
+Para instanciar VichUploaderBundle descomentar y Ver: [Subiendo archivos](Resources/doc/subirarchivos.md)
+Para instanciar IvoryCKEditorBundle descomentar y Ver: [Formularios Editor de texto](Resources/doc/forms.md)
 
 ### Importar configuración y permitir traducciones (incluye en, es, ca, pt, fr, pl)
 

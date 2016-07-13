@@ -16,11 +16,13 @@ new Knp\Bundle\MenuBundle\KnpMenuBundle(),
 new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
 new SC\DatetimepickerBundle\SCDatetimepickerBundle(),
 // new Vich\UploaderBundle\VichUploaderBundle(),
+// new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
 ```
 
-For instance Vich Uploader View: [Uploads files](subirarchivos_en.md)
+For instance VichUploaderBundle uncomment and View: [Uploads files](subirarchivos_en.md)
+For instance IvoryCKEditorBundle uncomment and View: [Forms Text editor](Resources/doc/forms_en.md)
 
-### Configure imports config and translations (include en, es, ca, pt)
+### Configure imports config and translations (include en, es, ca, pt, fr, pl)
 
 You can configure `config.yml`
 

@@ -41,6 +41,7 @@ paginator using     [KnpPaginatorBundle](https://github.com/KnpLabs/KnpPaginator
 Filter using        [LexikFormFilterBundle](https://github.com/lexik/LexikFormFilterBundle) .
 Form datetime type  [DatetimepickerBundle](https://github.com/lexik/LexikFormFilterBundle) .
 Uploads files       [VichUploaderBundle](https://github.com/dustin10/VichUploaderBundle) .
+Text editor         [IvoryCKEditorBundle](https://github.com/egeloen/IvoryCKEditorBundle) .
 
 ## Author
 Gonzalo Alonso - gonkpo@gmail.com

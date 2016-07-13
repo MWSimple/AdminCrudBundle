@@ -17,18 +17,35 @@
 ->add('numero', \MWSimple\Bundle\AdminCrudBundle\Form\Type\PesoType::class)
 ```
 
-### Use DualList.
-#### FormType duallist [Documentation](http://bootsnipp.com/snippets/featured/bootstrap-dual-list)
+### Use Text editor.
+#### Campo CKEditorType::class [Documentación](http://symfony.com/doc/master/bundles/IvoryCKEditorBundle/index.html). Example
 ```php
-    $builder
-        ->add('field', \MWSimple\Bundle\AdminCrudBundle\Form\Type\DualListType::class, array(
-            'class'    => 'AppDemoBundle:Entity',
-            'property' => 'name',
-            'multiple' => true,
-            'required' => false,
-            'expanded' => true,
-        ))
-    ;
+use Ivory\CKEditorBundle\Form\Type\CKEditorType;
+
+$builder
+    ->add('field', CKEditorType::class, array(
+        'config' => array(
+            'uiColor' => '#ffffff',
+            //...
+        ),
+    ))
+;
+```
+
+### Use DualList.
+#### FormType DualListType::class [Documentation](http://bootsnipp.com/snippets/featured/bootstrap-dual-list). Example
+```php
+use MWSimple\Bundle\AdminCrudBundle\Form\Type\DualListType;
+
+$builder
+    ->add('field', DualListType::class, array(
+        'class'    => 'AppDemoBundle:Entity',
+        'property' => 'name',
+        'multiple' => true,
+        'required' => false,
+        'expanded' => true,
+    ))
+;
 ```
 
 ### Use Select2.

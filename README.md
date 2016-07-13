@@ -42,6 +42,7 @@ Para el paginador        [KnpPaginatorBundle](https://github.com/KnpLabs/KnpPagi
 Para los filtros         [LexikFormFilterBundle](https://github.com/lexik/LexikFormFilterBundle) .
 Formulario datetime type [DatetimepickerBundle](https://github.com/lexik/LexikFormFilterBundle) .
 Subir archivos           [VichUploaderBundle](https://github.com/dustin10/VichUploaderBundle) .
+Editor de texto          [IvoryCKEditorBundle](https://github.com/egeloen/IvoryCKEditorBundle) .
 
 ## Author
 Gonzalo Alonso - gonkpo@gmail.com
