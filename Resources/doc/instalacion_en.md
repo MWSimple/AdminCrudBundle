@@ -19,8 +19,8 @@ new SC\DatetimepickerBundle\SCDatetimepickerBundle(),
 // new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
 ```
 
-For instance VichUploaderBundle uncomment and View: [Uploads files](subirarchivos_en.md)
-For instance IvoryCKEditorBundle uncomment and View: [Forms Text editor](Resources/doc/forms_en.md)
+#### For instance VichUploaderBundle uncomment and View: [Uploads files](subirarchivos_en.md)
+#### For instance IvoryCKEditorBundle uncomment and View: [Forms Text editor](forms_en.md)
 
 ### Configure imports config and translations (include en, es, ca, pt, fr, pl)
 
