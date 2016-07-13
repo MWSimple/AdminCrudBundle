@@ -18,6 +18,11 @@
 ```
 
 ### Utilizar Editor de texto.
+
+#### Recordar instalar assets
+```cli
+php bin/console assets:install
+```
 #### Campo CKEditorType::class [Documentación](http://symfony.com/doc/master/bundles/IvoryCKEditorBundle/index.html). Ejemplo
 ```php
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
