@@ -19,8 +19,8 @@ new SC\DatetimepickerBundle\SCDatetimepickerBundle(),
 // new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
 ```
 
-Para instanciar VichUploaderBundle descomentar y Ver: [Subiendo archivos](Resources/doc/subirarchivos.md)
-Para instanciar IvoryCKEditorBundle descomentar y Ver: [Formularios Editor de texto](Resources/doc/forms.md)
+#### Para instanciar VichUploaderBundle descomentar y Ver: [Subiendo archivos](subirarchivos.md)
+#### Para instanciar IvoryCKEditorBundle descomentar y Ver: [Formularios Editor de texto](forms.md)
 
 ### Importar configuración y permitir traducciones (incluye en, es, ca, pt, fr, pl)
 
