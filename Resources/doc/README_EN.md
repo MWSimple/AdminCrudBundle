@@ -18,6 +18,10 @@ The mwsimple:generate:admincrud generates a very basic controller for a given en
 <img src="https://raw.githubusercontent.com/MWSimple/AdminCrudBundle/version30/Resources/doc/preview_list.png" alt="Listar" width="50%" align="right" />
 <img src="https://raw.githubusercontent.com/MWSimple/AdminCrudBundle/version30/Resources/doc/preview_new.png" alt="Crear" width="50%" align="right" />
 
+Demo
+----
+[https://admincrud-tecspro.c9users.io/](https://admincrud-tecspro.c9users.io/)
+
 Documentation
 -------------
 
