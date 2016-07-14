@@ -40,10 +40,12 @@ mw_simple_admin_crud:
 
 [Documentation](http://symfony.com/doc/current/cookbook/form/form_collections.html)
 
-###Using methods: addForm() and removeForm(), included in:
+###Using methods: addForm() and removeForm(), included in: addForm.js
+###Create Buttons: addLink() and deleteLink(), for uses with addForm() included in: collection.js
 
 ```twig
 <script src="{{ asset('bundles/mwsimpleadmincrud/js/addForm.js') }}"></script>
+<script src="{{ asset('bundles/mwsimpleadmincrud/js/collection.js') }}"></script>
 ```
 
 *if not using the validation does not work
