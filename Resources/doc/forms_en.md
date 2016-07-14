@@ -22,7 +22,7 @@
 ```cli
 php bin/console assets:install
 ```
-#### Campo CKEditorType::class [Documentación](http://symfony.com/doc/master/bundles/IvoryCKEditorBundle/index.html). Example
+#### Field CKEditorType::class [Documentación](http://symfony.com/doc/master/bundles/IvoryCKEditorBundle/index.html). Example
 ```php
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 
@@ -105,5 +105,23 @@ public function getAutocompleteEntity(Request $request)
     ;
 ```
 
-* [DOC](documentacion.md)
+##Is included in the forms: jQuery plugin to validate form fields with Bootstrap 3+
+
+[GitHub](https://github.com/nghuuphuoc/bootstrapvalidator)
+
+##If Embed a Collection of Forms
+
+[Documentation](http://symfony.com/doc/current/cookbook/form/form_collections.html)
+
+###Using methods: addForm() and removeForm(), included in:
+###Create Buttons: addLink() and deleteLink(), for uses with addForm() included in: collection.js
+
+```twig
+<script src="{{ asset('bundles/mwsimpleadmincrud/js/addForm.js') }}"></script>
+<script src="{{ asset('bundles/mwsimpleadmincrud/js/collection.js') }}"></script>
+```
+
+*if not using the validation does not work
+
+* [SECURITY](seguridad_en.md)
 * [README](https://github.com/MWSimple/AdminCrudBundle/blob/version30/README.md)
