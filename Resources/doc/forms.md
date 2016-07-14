@@ -122,7 +122,5 @@ public function getAutocompleteEntity(Request $request)
 <script src="{{ asset('bundles/mwsimpleadmincrud/js/collection.js') }}"></script>
 ```
 
-*Si no usas el validador de bootstrap no funciona
-
 * [SEGURIDAD](seguridad.md)
 * [README](https://github.com/MWSimple/AdminCrudBundle/blob/version30/README.md)

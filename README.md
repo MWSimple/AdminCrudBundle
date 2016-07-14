@@ -30,7 +30,7 @@ Documentación
 
 * [Formularios](Resources/doc/forms.md)
 
-* [Documentación](Resources/doc/documentacion.md) a continuación se detalla las funcionalidades para el uso correcto del Admin Crud Bundle, y poder lograr una excelente administración de su aplicación.
+* [Seguridad](Resources/doc/seguridad.md)
 
 * [Subiendo archivos](Resources/doc/subirarchivos.md)
 
