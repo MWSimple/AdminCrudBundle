@@ -63,7 +63,7 @@ class EntityToJsonOneTransformer implements DataTransformerInterface
                 'text' => $entity->__toString(),
             );
         }
-
+        
         return json_encode($jsonResponse);
     }
 
