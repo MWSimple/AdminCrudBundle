@@ -653,9 +653,25 @@ class DefaultController extends Controller {
             $concatBoolean = $qb['concatBoolean'];
         }
 
-        $sql = str_replace('SELECT', '', $query);
+        $sql = preg_replace('/SELECT/', '', $query, 1); //str_replace('SELECT', '', $query);
+        $array = explode('FROM', $sql);
 
-        list($select, $from) = explode('FROM', $sql);
+        $select = "";
+        $from = "";
+        foreach ($array as $key => $item) {
+            if ($key === count($array) - 1) {
+                $from = $item;
+            } else {
+                if ($key === 0) {
+                    $select .= $item;
+                } else {
+                    $select .= "FROM" . $item;
+                }
+            }
+        }
+
+
+        // list($select, $from) = explode('FROM', $sql);
         if ($oneToMany) {
             $queryColumn = $this->separarQueryConConcatAndGroupConcat($select);
         } elseif ($concatBoolean) {
@@ -663,6 +679,7 @@ class DefaultController extends Controller {
         } else {
             $queryColumn = explode(',', $select);
         }
+
         $columns = array();
         $contador = 0;
         $tipoArrayExist = true;
@@ -671,8 +688,29 @@ class DefaultController extends Controller {
             $type = 'string';
             $tipoArrayExist = false;
         }
+
+
         foreach ($queryColumn as $col) {
-            list($identy, $name) = explode('AS', $col);
+            $arrayQ = explode('AS', $col);
+            if (count($arrayQ) > 2) {
+                $identy = "";
+                $name = "";
+                foreach ($arrayQ as $key => $item) {
+                    if ($key === count($arrayQ) - 1) {
+                        $name = $item;
+                    } else {
+                        if ($key === 0) {
+                            $identy .= $item;
+                        } else {
+                            $identy .= "AS" . $item;
+                        }
+                    }
+                }
+            } else {
+                list($identy, $name) = explode('AS', $col);
+            }
+
+
 
             if ($tipoArrayExist) {
                 list($type, $format) = $this->getTipoFormat($qb['tipoArray'], $contador);

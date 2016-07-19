@@ -265,19 +265,18 @@ class SSP {
         $limit = $this->limit($request, $columns);
         $order = $this->order($request, $columns);
         $where = $this->filter($request, $columns, $bindings);
-      
+
         $and = strstr($from, 'WHERE');
         $groupConcat = strstr($where, 'GROUP_CONCAT');
-        
+
         if ($and != false && $where !== "" && $groupConcat !== false) {
             $from = $from . " HAVING ";
             $where = str_replace("WHERE", "", $where);
-            
-        }else if ($and != false && $where !== "") {
+        } else if ($and != false && $where !== "") {
             $from = $from . " and ";
             $where = str_replace("WHERE", "", $where);
         }
-        
+
         // Main query to actually get the data
         $data = $this->sql_exec($db, $bindings, 'SELECT SQL_CALC_FOUND_ROWS ' . implode(', ', $this->pluck($columns, 'db', 'name')) . "
 			 $from
@@ -443,7 +442,9 @@ class SSP {
             $sql = $bindings;
         }
 
+
         $stmt = $db->prepare($sql);
+
         //echo $sql;
         // Bind parameters
         if (is_array($bindings)) {
@@ -455,12 +456,10 @@ class SSP {
 
         // Execute
         try {
-
             $stmt->execute();
         } catch (PDOException $e) {
             $this->fatal('An SQL error occurred: ' . $e->getMessage());
         }
-
         // Return all
         return $stmt->fetchAll();
     }
@@ -518,11 +517,11 @@ class SSP {
      *  @return array        Array of property values
      */
     protected function pluck($a, $prop, $prop2) {
+
         $out = array();
         for ($i = 0, $len = count($a); $i < $len; ++$i) {
             $out[] = $a[$i][$prop] . ' as ' . $a[$i][$prop2];
         }
-
         return $out;
     }
 
