@@ -189,13 +189,9 @@ class MWSimpleCrudGenerator extends DoctrineCrudGenerator
         return $fieldsData;
     }
 
-    /** (c) Gonzalo Alonso <gonkpo.com> */
     /**
-     * Generates the config entity yml.
-     *
-     * @param BundleInterface   $bundle   The bundle in which to create the class
-     * @param string            $entity   The entity relative class name
-     * @param ClassMetadataInfo $metadata The entity metadata class
+     * (c) Gonzalo Alonso <gonkpo.com>
+     * Genero el archivo de configuracion para el
      */
     public function generateConfAdminCrud($dirFileConf)
     {

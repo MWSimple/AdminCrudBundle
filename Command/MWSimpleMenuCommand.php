@@ -32,12 +32,65 @@ class MWSimpleMenuCommand extends ContainerAwareCommand
     private function updateConfig(InputInterface $input, OutputInterface $output)
     {
         $name = $input->getArgument('name');
+        $name_min = strtolower($name);
         $url = $input->getArgument('url');
+        $url_min = strtolower($url);
         $configPath = $input->getArgument('config');
 
-        $configs = Yaml::parse(file_get_contents($this->getContainer()->getParameter('kernel.root_dir').'/../'.$configPath));
-        foreach ($configs as $key => $value) {
-            $output->writeln($key);
+        $file = $this->getContainer()->getParameter('kernel.root_dir').'/../'.$configPath;
+        // if the config.yml file doesn't exist, don't even try.
+        if (!file_exists($file)) {
+            throw new \RuntimeException(sprintf('The target config file %s does not exist', $file));
+        }
+
+        $currentContents = file_get_contents($file);
+        $configs = Yaml::parse($currentContents);
+
+        // Add if exist config
+        if (!array_key_exists('mw_simple_admin_crud', $configs)) {
+            throw new \RuntimeException(sprintf(
+                'The %s configuration file from %s is not exist',
+                $configPath,
+                'mw_simple_admin_crud:'
+            ));
+        }
+        if (!array_key_exists('menu', $configs['mw_simple_admin_crud'])) {
+            throw new \RuntimeException(sprintf(
+                'The %s configuration file from %s is not exist',
+                $configPath,
+                'menu:'
+            ));
+        }
+        foreach ($configs['mw_simple_admin_crud']['menu'] as $key => $child) {
+            if (strtolower($key) === $name_min) {
+                throw new \RuntimeException(sprintf(
+                    'In menu: already defined index: %s',
+                    $name_min
+                ));
+            }
+        }
+        // find menu:
+        $importsPosition = strpos($currentContents, 'menu:');
+        // find the last url entry
+        $lastImport = end($configs['mw_simple_admin_crud']['menu']);
+        if (!isset($lastImport['url'])) {
+            $lastImportedPath = false;
+        } else {
+            $lastImportedPath = $lastImport['url'];
+        }
+        if (!$lastImportedPath) {
+            throw new \RuntimeException(sprintf('Could not find the url key in %s', $configPath));
+        }
+        // find the last url
+        $lastImportPosition = strpos($currentContents, $lastImportedPath, $importsPosition);
+        // find the line break after the last import
+        $targetLinebreakPosition = strpos($currentContents, "\n", $lastImportPosition);
+
+        $code = sprintf("        %s: { name: %s, url: %s, id: %s, icon: glyphicon glyphicon-home }", $name_min, $name, $url, $name_min);
+
+        $newContents = substr($currentContents, 0, $targetLinebreakPosition)."\n".$code.substr($currentContents, $targetLinebreakPosition);
+        if (false === file_put_contents($file, $newContents)) {
+            throw new \RuntimeException(sprintf('Could not write file %s ', $file));
         }
     }
 

@@ -15,6 +15,10 @@ php bin/console mwsimple:generate:admincrud
 ```cli
 php bin/console mwsimple:generate:admincrud --overwrite
 ```
+#### Generar el item para el menu.
+```cli
+php bin/console mwsimple:menu:additem
+```
 
 * [Configuración](configuracion.md)
 * [README](https://github.com/MWSimple/AdminCrudBundle/blob/version30/README.md)
