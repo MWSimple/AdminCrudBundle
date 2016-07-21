@@ -91,12 +91,12 @@ class MWSimpleFormGenerator extends DoctrineFormGenerator
         if (!$metadata->isIdentifierNatural()) {
             $fields = array_diff($fields, $metadata->identifier);
         }
-
-        foreach ($metadata->associationMappings as $fieldName => $relation) {
-            if ($relation['type'] !== ClassMetadataInfo::ONE_TO_MANY) {
-                $fields[] = $fieldName;
-            }
-        }
+        // Comento porque retorno en generate associations utilizando mws_tecspro_comun
+        // foreach ($metadata->associationMappings as $fieldName => $relation) {
+        //     if ($relation['type'] !== ClassMetadataInfo::ONE_TO_MANY) {
+        //         $fields[] = $fieldName;
+        //     }
+        // }
 
         return $fields;
     }
