@@ -487,7 +487,6 @@ class DefaultController extends Controller
                 'label'              => 'views.recordactions.delete',
                 'attr'               => array(
                     'class'   => 'form-control btn-danger',
-                    'col'     => 'col-lg-2',
                     'onclick' => $onclick,
                 )
             ))
