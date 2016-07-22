@@ -8,3 +8,15 @@ twig:
 
 sc_datetimepicker:
     picker: ~
+
+liip_imagine:
+    resolvers:
+       default:
+          web_path: ~
+
+    filter_sets:
+        cache: ~
+        my_thumb_list:
+            quality: 75
+            filters:
+                thumbnail: { size: [50, 50], mode: outbound }

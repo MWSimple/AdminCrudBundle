@@ -20,6 +20,7 @@
         "knplabs/knp-menu-bundle": "~2.1",
         "sonata-project/exporter": "~1.4",
         "mwsimple/datetimepicker-bundle": "2.0.0",
+        "liip/imagine-bundle": "^1.5",
         "vich/uploader-bundle": "^1.1",
         "egeloen/ckeditor-bundle": "^4.0"
     },

@@ -4,7 +4,7 @@
 ```twig
     {% block title %}{% endblock %}
     {% block stylesheets %}{% endblock %}
-    {% block scripts_head %}{% endblock %}
+    {% block head_javascript %}{% endblock %}
     {% block favicon %}{% endblock %}
     {% block menu %}{% endblock %}
     {% block page %}{% endblock %}
@@ -25,13 +25,25 @@
 ```twig
     {% block buttons %}{% endblock %}
 ```
-#### acciones: Permite reescribir el bloque que contiene las acciones del listado (ver, edtar)
+#### tabla head: Permite reescribir el bloque head de tabla
+```twig
+    {% block table_head %}{% endblock %}
+```
+#### tabla body: Permite reescribir el bloque body de tabla
+```twig
+    {% block table_body %}{% endblock %}
+```
+#### acciones: Permite reescribir el bloque que contiene las acciones del listado (ver, editar)
 ```twig
     {% block actions %}{% endblock %}
 ```
 #### botones abajo: Permite reescribir el bloque de botones de abajo (crear)
 ```twig
     {% block buttonsbelow %}{% endblock %}
+```
+### Vista previa de imagenes en lista index.html.twig uso imagine_filter
+```twig
+    <img src="{{ vich_uploader_asset(entity, field.file)|imagine_filter('my_thumb_list') }}">
 ```
 
 * [Formularios](forms.md)

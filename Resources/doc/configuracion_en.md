@@ -20,8 +20,14 @@ fieldsindex: #Fields displayed in the index list
     a.id:
         label: 'Code' #Label
         name: 'Id' #Field name
-        type: 'integer' #Types: 'datetime', 'datetimetz', 'date', 'time', 'boolean', 'ONE_TO_MANY', 'MANY_TO_MANY', 'string'
+        type: 'integer' #Types: 'string', 'datetime', 'datetimetz', 'date', 'time', 'boolean', 'ONE_TO_MANY', 'MANY_TO_MANY', 'vich_file'
         export: true #Exports the field
+    a.image:
+        label: 'Image' #Label
+        name: 'Image' #Field name
+        type: 'vich_file' #Type for preview image
+        file: 'imageFile' #Field @Vich\UploadableField of the entity
+        export: false #Setear false
 fieldsshow: #Fields displayed in the show Entity
     a.id:
         label: 'Codigo' #Label

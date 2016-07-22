@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ app.request.locale|split('_')|first|default('en') }}">
     <head>
         <meta charset="utf-8">
-        <title>
-            {% block title %}
-                {{ 'views.layout.bannersadmin'|trans({}, 'MWSimpleAdminCrudBundle') }}
-            {% endblock %}
-        </title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <meta name="description" content="">
         <meta name="author" content="">
+
+        <title>{% block title %}
+            {{ 'views.layout.bannersadmin'|trans({}, 'MWSimpleAdminCrudBundle') }}
+        {% endblock %}</title>
 
         {% block stylesheets %}
             <link href="{{ asset('bundles/mwsimpleadmincrud/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -19,7 +19,7 @@
             <link href="{{ asset('bundles/mwsimpleadmincrud/css/crud.css') }}" rel="stylesheet">
         {% endblock %}
 
-        {% block scripts_head %}
+        {% block head_javascript %}
             <script src="{{ asset('bundles/mwsimpleadmincrud/js/jquery.min.js') }}"></script>
             <script src="{{ asset('bundles/mwsimpleadmincrud/js/bootstrap.min.js') }}"></script>
             <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->

@@ -47,6 +47,7 @@ Para los filtros         [LexikFormFilterBundle](https://github.com/lexik/LexikF
 Formulario datetime type [DatetimepickerBundle](https://github.com/lexik/LexikFormFilterBundle) .
 Subir archivos           [VichUploaderBundle](https://github.com/dustin10/VichUploaderBundle) .
 Editor de texto          [IvoryCKEditorBundle](https://github.com/egeloen/IvoryCKEditorBundle) .
+Manipulador de imagenes  [LiipImagineBundle](https://github.com/liip/LiipImagineBundle) .
 
 ## Author
 Gonzalo Alonso - gonkpo@gmail.com

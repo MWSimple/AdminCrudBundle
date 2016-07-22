@@ -20,8 +20,14 @@ fieldsindex: #Los campos que aparecen en la lista de índices
     a.id:
         label: 'Código' #Nombre que muestra
         name: 'Id' #Nombre del campo
-        type: 'integer' #Tipos: 'datetime', 'datetimetz', 'date', 'time', 'boolean', 'ONE_TO_MANY', 'MANY_TO_MANY', 'string'
+        type: 'integer' #Tipos: 'string', 'datetime', 'datetimetz', 'date', 'time', 'boolean', 'ONE_TO_MANY', 'MANY_TO_MANY', 'vich_file'
         export: true #Permite exportar el campo
+    a.image:
+        label: 'Imagen' #Nombre que muestra
+        name: 'Imagen' #Nombre del campo
+        type: 'vich_file' #Tipo para la vista previa de la imagen
+        file: 'imageFile' #El campo @Vich\UploadableField de la entidad
+        export: false #Setear en false
 fieldsshow: #Los campos que aparecen en el ver Entity
     a.id:
         label: 'Código' #Nombre que muestra
