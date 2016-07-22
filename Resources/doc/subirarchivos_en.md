@@ -1,6 +1,7 @@
 ### Uploads files
 Se incluye VichUploaderBundle para configurar
 * [Documentación](https://github.com/dustin10/VichUploaderBundle/blob/master/Resources/doc/usage.md)
+* [Save files name](https://github.com/dustin10/VichUploaderBundle/blob/master/Resources/doc/namers.md)
 * [image form type](https://github.com/dustin10/VichUploaderBundle/blob/master/Resources/doc/form/vich_image_type.md)
 
 #### Use the VichImageType::class to specify the field type:
