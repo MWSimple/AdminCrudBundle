@@ -78,6 +78,8 @@ class MWSimpleFormGenerator extends DoctrineFormGenerator
     /**
      * Returns an array of fields. Fields can be both column fields and
      * association fields.
+     * Comento parte del codigo porque retorno en generate associations
+     * utilizando mws_tecspro_comun.
      *
      * @param ClassMetadataInfo $metadata
      *
@@ -91,12 +93,6 @@ class MWSimpleFormGenerator extends DoctrineFormGenerator
         if (!$metadata->isIdentifierNatural()) {
             $fields = array_diff($fields, $metadata->identifier);
         }
-        // Comento porque retorno en generate associations utilizando mws_tecspro_comun
-        // foreach ($metadata->associationMappings as $fieldName => $relation) {
-        //     if ($relation['type'] !== ClassMetadataInfo::ONE_TO_MANY) {
-        //         $fields[] = $fieldName;
-        //     }
-        // }
 
         return $fields;
     }
