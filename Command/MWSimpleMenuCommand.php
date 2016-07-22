@@ -33,7 +33,6 @@ class MWSimpleMenuCommand extends ContainerAwareCommand
         $name = $input->getArgument('name');
         $name_min = strtolower($name);
         $url = $input->getArgument('url');
-        $url_min = strtolower($url);
         $configPath = $input->getArgument('config');
 
         $file = $this->getContainer()->getParameter('kernel.root_dir').'/../'.$configPath;
