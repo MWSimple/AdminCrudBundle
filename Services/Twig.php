@@ -18,7 +18,7 @@ class Twig extends \Twig_Extension
         );
     }
 
-    public function isActive($active, $title_true = null, $title_false = null)
+    public function isActive($active, $id = null, $field_name = null, $title_true = null, $title_false = null)
     {
         if ($active) {
             if ($title_true) {
@@ -33,6 +33,8 @@ class Twig extends \Twig_Extension
                 $res = '<i style="color: darkred;" class="glyphicon glyphicon-ban-circle"></i>';
             }
         }
+
+        $res = '<input data-id="'.$id.'" class="mws_checkbox" type="checkbox" value="'.$active.'" data-name="'.$field_name.'">';
 
         return $res;
     }

@@ -38,6 +38,8 @@
 
 {% block javascript %}
     {{ parent() }}
+    <script src="{{ asset('bundles/mwsimpleadmincrud/js/validator/bootstrapValidator.min.js') }}"></script>
+    <script src="{{ asset('bundles/mwsimpleadmincrud/js/validator/language/es_ES.js') }}"></script>
     {% if config.validator is defined %}
         {% if config.validator == true %}
             <script src="{{ asset('bundles/mwsimpleadmincrud/js/widget.js') }}"></script>
