@@ -36,6 +36,11 @@ fieldsshow: #Fields displayed in the show Entity
         class: 'col-lg-8 col-md-6 col-sm-12' #or other class. Default is col-12
         #closerow: true #this close row for the separators of col (http://getbootstrap.com/)
         separator: '<br>' #optional tag html by ONE_TO_MANY || MANY_TO_MANY
+    a.image:
+        ...
+        type: 'vich_file' #Type for preview image
+        file: 'imageFile' #Field @Vich\UploadableField of the entity
+        ...
 ```
 #### Default not escape ```twig {{ value|raw }} ```
 

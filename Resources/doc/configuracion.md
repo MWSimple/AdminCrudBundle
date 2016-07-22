@@ -22,7 +22,7 @@ fieldsindex: #Los campos que aparecen en la lista de índices
         name: 'Id' #Nombre del campo
         type: 'integer' #Tipos: 'string', 'datetime', 'datetimetz', 'date', 'time', 'boolean', 'ONE_TO_MANY', 'MANY_TO_MANY', 'vich_file'
         export: true #Permite exportar el campo
-    a.image:
+    a.imagen:
         label: 'Imagen' #Nombre que muestra
         name: 'Imagen' #Nombre del campo
         type: 'vich_file' #Tipo para la vista previa de la imagen
@@ -36,6 +36,11 @@ fieldsshow: #Los campos que aparecen en el ver Entity
         class: 'col-lg-8 col-md-6 col-sm-12' #Permite agregar class. Por defecto es col-12
         #closerow: true #Permite cerrar un row para dar inicio a otro row (http://getbootstrap.com/)
         separator: '<br>' #Opcionalmente se puede agregar separador html para ONE_TO_MANY || MANY_TO_MANY
+    a.imagen:
+        ...
+        type: 'vich_file' #Tipo para la vista previa de la imagen
+        file: 'imageFile' #El campo @Vich\UploadableField de la entidad
+        ...
 ```
 #### Por defecto no escapa ```twig {{ value|raw }} ```
 

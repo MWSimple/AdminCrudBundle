@@ -34,7 +34,7 @@
         {% if download_uri is defined and download_uri %}
          <a href="{{ download_uri }}"><img class="img-responsive" src="{{ download_uri }}" alt="" /></a>
         {% endif %}
-        {% if show_download_link and download_uri is defined and download_uri%}
+        {% if show_download_link and download_uri is defined and download_uri %}
         <a href="{{ download_uri }}">{{ 'download'|trans({}, 'VichUploaderBundle') }}</a>
         {% endif %}
     </div>
