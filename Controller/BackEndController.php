@@ -49,25 +49,16 @@ class BackendController extends Controller
 
                 $em->flush();
 
-                $array = array(
-                    'resultado' => true,
-                    'mensaje'   => "Ok"
-                );
+                $res = true;
             } catch (Exception $e) {
-                $array = array(
-                    'resultado' => false,
-                    'mensaje'   => "Error"
-                );
+                $res = false;
             }
         } else {
-            $array = array(
-                'resultado' => false,
-                'mensaje'   => "Error"
-            );
+            $res = false;
         }
 
         $response = new JsonResponse();
-        $response->setData($array);
+        $response->setData($res);
 
         return $response;
     }

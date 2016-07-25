@@ -126,8 +126,10 @@
     </script>
     <script src="{{ asset('bundles/mwsimpleadmincrud/js/widget_not_validator.js') }}"></script>
     <script type="text/javascript">
-        var AjaxOptions = {
-            url: "{{ path('mws_ajax_enabled_disabled') }}"
+        var JsOptions = {
+            url: "{{ path('mws_ajax_enabled_disabled') }}",
+            messageSuccess: "{{ 'flash.update.success'|trans({}, 'MWSimpleAdminCrudBundle') }}",
+            messageError: "{{ 'flash.update.error'|trans({}, 'MWSimpleAdminCrudBundle') }}"
         };
     </script>
     <script src="{{ asset('bundles/mwsimpleadmincrud/ajax/enabled_disabled.js') }}"></script>
