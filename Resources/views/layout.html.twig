@@ -58,7 +58,7 @@
             </nav>
             <div id="page-wrapper">
                 <div class="row">
-                    <div class="col-md-12 col-sm-12">
+                    <div id="tecspro-errors" class="col-md-12 col-sm-12">
                         {% for type, flashMessages in app.session.flashbag.all() %}
                             {% for flashMessage in flashMessages %}
                                 <div class="alert alert-{{ type }}">

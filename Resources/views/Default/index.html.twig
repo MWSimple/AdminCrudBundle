@@ -71,7 +71,7 @@
                         {% if field.type in ['datetime', 'datetimetz', 'date', 'time'] %}
                             {{ attribute(entity, field.name)|date(field.date) }}
                         {% elseif field.type == 'boolean' %}
-                            {{ isActive(attribute(entity, field.name), entity.id, field.name) }}
+                            {{ ajaxActive(attribute(entity, field.name), config.repository, field.name, entity.id) }}
                         {% elseif field.type in ['ONE_TO_MANY', 'MANY_TO_MANY'] %}
                             {% set many_entity = attribute(entity, field.name) %}
                             {% for key, field_many in many_entity %}
@@ -125,39 +125,10 @@
         });
     </script>
     <script src="{{ asset('bundles/mwsimpleadmincrud/js/widget_not_validator.js') }}"></script>
-    {#<script src="{{ asset('bundles/mwsimpleadmincrud/ajax/enabled_disabled.js') }}"></script>#}
-<script type="text/javascript">
-$(document).ready(function() {
-    $('input[type="checkbox"].mws_checkbox').click(function() {
-        console.log($(this).data('name'));
-        if ($(this).is(':checked')) {
-            $value = 1;
-        } else {
-            $value = 0;
-        }
-        $.ajax({
-            type: "POST",
-            url: "{{ path('mws_ajax_enabled_disabled') }}",
-            data: {id: $(this).data('id')},
-            success: function (array) {
-                if (array.resultado) {
-                    if (array.mostrarModal) {
-                        actualizarListaAsitencia(array);
-                        $('#modalAsistencia').modal('show');
-                    } else {
-                        $.pnotify({title: 'Asistencia Confirmada', text: 'Registro Guardado', type: 'success'});
-                    }
-                } else {
-                    $.pnotify({title: 'Disculpe', text: array.mensaje, type: 'error'});
-                }
-                $("#buscarAsistencia").attr('disabled', false);
-            },
-            error: function (data) {
-                $("#buscarAsistencia").attr('disabled', false);
-                $.pnotify({title: 'Disculpe, existió un problema', text: array.mensaje, type: 'error'});
-            }
-        });
-    });
-});
-</script>
+    <script type="text/javascript">
+        var AjaxOptions = {
+            url: "{{ path('mws_ajax_enabled_disabled') }}"
+        };
+    </script>
+    <script src="{{ asset('bundles/mwsimpleadmincrud/ajax/enabled_disabled.js') }}"></script>
 {% endblock %}

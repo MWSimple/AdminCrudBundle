@@ -15,10 +15,13 @@ class Twig extends \Twig_Extension
             'isActive' => new \Twig_Function_Method($this, 'isActive', array(
                 'is_safe' => array('html')
             )),
+            'ajaxActive' => new \Twig_Function_Method($this, 'ajaxActive', array(
+                'is_safe' => array('html')
+            )),
         );
     }
-
-    public function isActive($active, $id = null, $field_name = null, $title_true = null, $title_false = null)
+    //Return icon by Enabled or Disabled
+    public function isActive($active, $title_true = null, $title_false = null)
     {
         if ($active) {
             if ($title_true) {
@@ -34,7 +37,17 @@ class Twig extends \Twig_Extension
             }
         }
 
-        $res = '<input data-id="'.$id.'" class="mws_checkbox" type="checkbox" value="'.$active.'" data-name="'.$field_name.'">';
+        return $res;
+    }
+    //Enabled or Disabled by Ajax
+    public function ajaxActive($active, $repository = null, $field_name = null, $id = null, $title_true = null, $title_false = null)
+    {
+        $res = '<input class="mws_checkbox" type="checkbox" value="'.$active.'" data-repository="'.$repository.'" data-fieldname="'.$field_name.'" data-id="'.$id.'"';
+        if ($active) {
+            $res = $res.' checked="checked">';
+        } else {
+            $res = $res.'>';
+        }
 
         return $res;
     }
