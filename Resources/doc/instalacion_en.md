@@ -23,7 +23,7 @@ new Liip\ImagineBundle\LiipImagineBundle(),
 #### For instance VichUploaderBundle uncomment and View: [Uploads files](subirarchivos_en.md)
 #### For instance IvoryCKEditorBundle uncomment and View: [Forms Text editor](forms_en.md)
 
-### Configure imports config and translations (include en, es, ca, pt, fr, pl)
+### Configure imports config and translations (include en_US, es_AR, ca_ES, pt_BR, fr, pl)
 
 You can configure `config.yml`
 

@@ -20,19 +20,24 @@ fieldsindex: #Los campos que aparecen en la lista de índices
     a.id:
         label: 'Código' #Nombre que muestra
         name: 'Id' #Nombre del campo
-        type: 'integer' #Tipos: 'string', 'datetime', 'datetimetz', 'date', 'time', 'boolean', 'ONE_TO_MANY', 'MANY_TO_MANY', 'vich_file'
+        type: 'integer' #Tipos: 'string', 'datetime', 'datetimetz', 'date', 'time', 'boolean', 'ONE_TO_MANY', 'MANY_TO_MANY', 'vich_file', 'money'
         export: true #Permite exportar el campo
     a.imagen:
-        label: 'Imagen' #Nombre que muestra
-        name: 'Imagen' #Nombre del campo
+        ...
         type: 'vich_file' #Tipo para la vista previa de la imagen
         file: 'imageFile' #El campo @Vich\UploadableField de la entidad
         export: false #Setear en false
+    a.moneda:
+        ...
+        type: 'money'
+        currency_style: 'currency'
+        currency_type: 'double'
+        ...
 fieldsshow: #Los campos que aparecen en el ver Entity
     a.id:
         label: 'Código' #Nombre que muestra
         name: 'Id' #Nombre del campo
-        type: 'integer' #Tipos: 'datetime', 'datetimetz', 'date', 'time', 'boolean', 'ONE_TO_MANY', 'MANY_TO_MANY', 'string'
+        type: 'integer' #Tipos: 'string', 'datetime', 'datetimetz', 'date', 'time', 'boolean', 'ONE_TO_MANY', 'MANY_TO_MANY', 'vich_file', 'money'
         class: 'col-lg-8 col-md-6 col-sm-12' #Permite agregar class. Por defecto es col-12
         #closerow: true #Permite cerrar un row para dar inicio a otro row (http://getbootstrap.com/)
         separator: '<br>' #Opcionalmente se puede agregar separador html para ONE_TO_MANY || MANY_TO_MANY
@@ -41,8 +46,16 @@ fieldsshow: #Los campos que aparecen en el ver Entity
         type: 'vich_file' #Tipo para la vista previa de la imagen
         file: 'imageFile' #El campo @Vich\UploadableField de la entidad
         ...
+    a.moneda:
+        ...
+        type: 'money'
+        currency_style: 'currency'
+        currency_type: 'double'
+        ...
 ```
 #### Por defecto no escapa ```twig {{ value|raw }} ```
+
+#### Documentacion para el campo money se utiliza localizedcurrency: [TwigExtensions](http://twig.sensiolabs.org/doc/extensions/intl.html) .
 
 * [Vistas](vistas.md)
 * [README](https://github.com/MWSimple/AdminCrudBundle/blob/version30/README.md)

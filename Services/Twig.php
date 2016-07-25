@@ -9,6 +9,7 @@ namespace MWSimple\Bundle\AdminCrudBundle\Services;
 
 class Twig extends \Twig_Extension
 {
+    //Functions
     public function getFunctions()
     {
         return array(

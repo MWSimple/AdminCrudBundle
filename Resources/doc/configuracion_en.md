@@ -20,19 +20,24 @@ fieldsindex: #Fields displayed in the index list
     a.id:
         label: 'Code' #Label
         name: 'Id' #Field name
-        type: 'integer' #Types: 'string', 'datetime', 'datetimetz', 'date', 'time', 'boolean', 'ONE_TO_MANY', 'MANY_TO_MANY', 'vich_file'
+        type: 'integer' #Types: 'string', 'datetime', 'datetimetz', 'date', 'time', 'boolean', 'ONE_TO_MANY', 'MANY_TO_MANY', 'vich_file', 'money'
         export: true #Exports the field
     a.image:
-        label: 'Image' #Label
-        name: 'Image' #Field name
+        ...
         type: 'vich_file' #Type for preview image
         file: 'imageFile' #Field @Vich\UploadableField of the entity
         export: false #Setear false
+    a.money:
+        ...
+        type: 'money'
+        currency_style: 'currency'
+        currency_type: 'double'
+        ...
 fieldsshow: #Fields displayed in the show Entity
     a.id:
         label: 'Codigo' #Label
         name: 'Id' #Field name
-        type: 'integer' #Types: 'datetime', 'datetimetz', 'date', 'time', 'boolean', 'ONE_TO_MANY', 'MANY_TO_MANY', 'string'
+        type: 'integer' #Types: 'string', 'datetime', 'datetimetz', 'date', 'time', 'boolean', 'ONE_TO_MANY', 'MANY_TO_MANY', 'vich_file', 'money'
         class: 'col-lg-8 col-md-6 col-sm-12' #or other class. Default is col-12
         #closerow: true #this close row for the separators of col (http://getbootstrap.com/)
         separator: '<br>' #optional tag html by ONE_TO_MANY || MANY_TO_MANY
@@ -41,8 +46,16 @@ fieldsshow: #Fields displayed in the show Entity
         type: 'vich_file' #Type for preview image
         file: 'imageFile' #Field @Vich\UploadableField of the entity
         ...
+    a.money:
+        ...
+        type: 'money'
+        currency_style: 'currency'
+        currency_type: 'double'
+        ...
 ```
 #### Default not escape ```twig {{ value|raw }} ```
+
+#### Documentation for the money field is used localizedcurrency: [TwigExtensions](http://twig.sensiolabs.org/doc/extensions/intl.html) .
 
 * [Views](vistas_en.md)
 * [README](README_EN.md)

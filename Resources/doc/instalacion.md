@@ -23,7 +23,7 @@ new Liip\ImagineBundle\LiipImagineBundle(),
 #### Para instanciar VichUploaderBundle descomentar y Ver: [Subiendo archivos](subirarchivos.md)
 #### Para instanciar IvoryCKEditorBundle descomentar y Ver: [Formularios Editor de texto](forms.md)
 
-### Importar configuración y permitir traducciones (incluye en, es, ca, pt, fr, pl)
+### Importar configuración y permitir traducciones (incluye en_US, es_AR, ca_ES, pt_BR, fr, pl)
 
 En el archivo `app/config/config.yml`
 

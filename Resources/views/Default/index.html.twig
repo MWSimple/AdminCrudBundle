@@ -82,6 +82,8 @@
                                     |
                                 {% endif %}
                             {% endfor %}
+                        {% elseif field.type == 'money' %}
+                            {{ attribute(entity, field.name)|localizednumber(field.currency_style|default('currency'), field.currency_type|default('double')) }}
                         {% elseif field.type == 'vich_file' %}
                             {% if attribute(entity, field.name) is not empty %}
                                 <a href="{{ vich_uploader_asset(entity, field.file) }}"><img class="img-responsive" src="{{ vich_uploader_asset(entity, field.file)|imagine_filter('my_thumb_list') }}"></a>

@@ -42,6 +42,12 @@
                             </div>
                         {% elseif field.type == 'text' %}
                             <div class="well">{{ attribute(entity, field.name)|raw }}</div>
+                        {% elseif field.type == 'money' %}
+                            <div class="form-control">
+                                <span class="input-xlarge uneditable-input">
+                                    {{ attribute(entity, field.name)|localizednumber(field.currency_style|default('currency'), field.currency_type|default('double')) }}
+                                </span>
+                            </div>
                         {% elseif field.type == 'vich_file' %}
                             {% if attribute(entity, field.name) is not empty %}
                                 <a href="{{ vich_uploader_asset(entity, field.file) }}"><img class="img-responsive" src="{{ vich_uploader_asset(entity, field.file) }}"></a>

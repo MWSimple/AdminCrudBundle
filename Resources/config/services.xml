@@ -18,6 +18,9 @@
         <service id="mws.twig_extension" class="%mws.twig_extension.class%">
             <tag name="twig.extension" />
         </service>
+        <service id="twig.extension.intl" class="Twig_Extensions_Extension_Intl">
+            <tag name="twig.extension" />
+        </service>
         <service id="mws.select2entity_type" class="%mws.select2entity_type.class%">
             <tag name="form.type" alias="mws_select2entity" />
             <argument type="service" id="doctrine.orm.entity_manager" />

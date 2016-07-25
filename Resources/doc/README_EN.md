@@ -47,6 +47,7 @@ Form datetime type  [DatetimepickerBundle](https://github.com/lexik/LexikFormFil
 Uploads files       [VichUploaderBundle](https://github.com/dustin10/VichUploaderBundle) .
 Text editor         [IvoryCKEditorBundle](https://github.com/egeloen/IvoryCKEditorBundle) .
 Image manipulation  [LiipImagineBundle](https://github.com/liip/LiipImagineBundle) .
+Twig Extensions     [TwigExtensions](http://twig.sensiolabs.org/doc/extensions/intl.html) .
 
 ## Author
 Gonzalo Alonso - gonkpo@gmail.com

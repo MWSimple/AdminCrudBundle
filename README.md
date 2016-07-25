@@ -48,6 +48,7 @@ Formulario datetime type [DatetimepickerBundle](https://github.com/lexik/LexikFo
 Subir archivos           [VichUploaderBundle](https://github.com/dustin10/VichUploaderBundle) .
 Editor de texto          [IvoryCKEditorBundle](https://github.com/egeloen/IvoryCKEditorBundle) .
 Manipulador de imagenes  [LiipImagineBundle](https://github.com/liip/LiipImagineBundle) .
+Twig Extensiones         [TwigExtensions](http://twig.sensiolabs.org/doc/extensions/intl.html) .
 
 ## Author
 Gonzalo Alonso - gonkpo@gmail.com
