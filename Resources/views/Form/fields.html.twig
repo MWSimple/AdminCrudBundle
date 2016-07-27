@@ -126,13 +126,7 @@
 {% block checkbox_widget -%}
     {% set attr = attr|merge({'class': (attr.class|default('') ~ ' mws_checkbox')|trim}) %}
     {%- set parent_label_class = parent_label_class|default(label_attr.class|default('')) -%}
-    {% if 'checkbox-inline' in parent_label_class %}
-        {{- form_label(form, null, { widget: parent() }) -}}
-    {% else -%}
-        <div class="checkbox {% if attr.col is defined %}{{ attr.col }}{% endif %}">
-            {{- form_label(form, null, { widget: parent() }) -}}
-        </div>
-    {%- endif %}
+    {{- form_label(form, null, { widget: parent() }) -}}
 {%- endblock checkbox_widget %}
 
 {% block radio_widget -%}
@@ -186,16 +180,26 @@
                 {% set label = name|humanize %}
             {%- endif -%}
         {% endif %}
-        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-            {{- widget|raw }} {{ label is not same as(false) ? (translation_domain is same as(false) ? label : label|trans({}, translation_domain)) -}}
-        </label>
+        {# Agrego para controlar si ubico el widget dentro o fuera del label segun class checkbox-inline #}
+        {%- if label_attr.class is defined and ('checkbox-inline' in label_attr.class or 'radio-inline' in label_attr.class) -%}
+            <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+                {{- widget|raw }} {{ label is not same as(false) ? (translation_domain is same as(false) ? label : label|trans({}, translation_domain)) -}}
+            </label>
+        {%- else -%}
+            <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+                {{- label is not same as(false) ? (translation_domain is same as(false) ? label : label|trans({}, translation_domain)) -}}
+            </label>
+            <div class="form-control" style="border: medium none; box-shadow: none; padding: 0 12px;">
+                {{- widget|raw -}}
+            </div>
+        {%- endif -%}
     {% endif %}
 {% endblock checkbox_radio_label %}
 
 {# Rows #}
 
 {% block form_row -%}
-    <div class="form-group {% if attr.col is defined %}{{ attr.col }}{% endif %}{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+    <div class="form-group{% if attr.col is defined %} {{ attr.col }}{% endif %}{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
         {{- form_label(form) -}}
         {{- form_widget(form) -}}
         {{- form_errors(form) -}}
@@ -229,7 +233,7 @@
 {%- endblock datetime_row %}
 
 {% block checkbox_row -%}
-    <div class="form-group{% if not valid %} has-error{% endif %}">
+    <div class="form-group{% if attr.col is defined %} {{ attr.col }}{% endif %}{% if not valid %} has-error{% endif %}">
         {{- form_widget(form) -}}
         {{- form_errors(form) -}}
     </div>
@@ -260,7 +264,7 @@
 
 {% block submit_row -%}
 {% spaceless %}
-    <div class="form-group {% if attr.col is defined %}{{ attr.col }}{% endif %}">
+    <div class="form-group{% if attr.col is defined %} {{ attr.col }}{% endif %}">
         {{ form_widget(form) }}
     </div>
 {% endspaceless %}
