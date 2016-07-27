@@ -1,7 +1,7 @@
 // Get the ul that holds the collection
 var $collection;
 // setup an "add a tag" link
-var $addLink = $('<hr><a href="#" class="add_link btn btn-primary"><i class="glyphicon glyphicon-plus"></i><i class="glyphicon glyphicon-folder-open "></i></a>');
+var $addLink = $('<hr><a href="#" class="add_link btn btn-primary"><i class="glyphicon glyphicon-plus"></i></a>');
 var $newLinkLi = $('<div></div>').append($addLink);
 
 jQuery(document).ready(function() {
@@ -15,15 +15,7 @@ jQuery(document).ready(function() {
     // index when inserting a new item (e.g. 2)
     $collection.data('index', $collection.find(':input').length);
     
-    $addLink.on('click', function(e) {
-        // prevent the link from creating a "#" on the URL
-        e.preventDefault();
-
-        // add a new tag form (see next code block)
-        addForm($collection, $newLinkLi);
-    });
-
-    $("#add_link").on('click', function(e) {
+    $(".add_link").on('click', function(e) {
         // prevent the link from creating a "#" on the URL
         e.preventDefault();
 
@@ -33,7 +25,7 @@ jQuery(document).ready(function() {
         $('html, body').stop().animate({
             scrollTop: $($newLinkLi).offset().top
         }, 1000);
-     });
+    });
 
     $collection.delegate('.delete_link', 'click', function(e) {
         // prevent the link from creating a "#" on  the URL
