@@ -31,7 +31,7 @@
                             <div class="well">
                                 <span class="input-xlarge uneditable-input">
                                     {% for key, field_many in many_entity %}
-                                        {{ field_many }}
+                                        {{ field_many|raw }}
                                         {% if field.separator is defined %}
                                             {{ field.separator|raw }}
                                         {% else %}
