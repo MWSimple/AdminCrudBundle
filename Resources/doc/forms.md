@@ -11,6 +11,16 @@
 ```
 #### Si es tipo Select2entityType ver mas abajo como configurar correctamente.
 
+### Clase de boostrap inline
+#### Si necesitamos que los checkbox o radio se ubiquen en linea
+```php
+->add('checkbox', ChoiceType::class, array(
+    'label_attr' => array(
+        'class' => '-inline',
+    ),
+))
+```
+
 ### Campo tipo: mwspeso - Agrega el signo $ para un tipo numerico
 #### Ejemplo de uso
 ```php

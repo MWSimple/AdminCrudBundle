@@ -11,6 +11,16 @@
 ```
 #### If Select2entityType see below how to configure properly.
 
+### New attr boostrap inline
+#### If you need the checkbox or radio are located inline
+```php
+->add('checkbox', ChoiceType::class, array(
+    'label_attr' => array(
+        'class' => '-inline',
+    ),
+))
+```
+
 ### Form type: mwspeso - Use Type Number add $
 #### Example field form
 ```php
@@ -18,6 +28,7 @@
 ```
 
 ### Use Text editor.
+
 #### Remember to install assets
 ```cli
 php bin/console assets:install
