@@ -50,6 +50,7 @@ fieldsshow: #Fields displayed in the show Entity
         ...
         type: 'vich_file_many' #Type for the preview image collection
         file: 'imageFile' #Field @Vich\UploadableField of the related entity
+        file_name: 'imageName' #The field where the name or path is saved image
         # file_class: 'col-md-1' #The default is 'col-md-1'
         # imagine_filter: 'my_thumb_list' #Optionally filter can be used for example 'my_thumb_list' listing
         ...

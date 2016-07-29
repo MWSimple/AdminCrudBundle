@@ -69,11 +69,13 @@
                                 {% set many_entity = attribute(entity, field.name) %}
                                 <div class="well row">
                                     {% for key, field_many in many_entity %}
-                                        <div class="{% if field.file_class is defined %}{{ field.file_class }}{% else %}col-md-1{% endif %}">
-                                            <a href="{{ vich_uploader_asset(field_many, field.file) }}">
-                                                <img class="img-responsive" src="{% if field.imagine_filter is defined %}{{ vich_uploader_asset(field_many, field.file)|imagine_filter(field.imagine_filter) }}{% else %}{{ vich_uploader_asset(field_many, field.file) }}{% endif %}">
-                                            </a>
-                                        </div>
+                                        {% if attribute(field_many, field.file_name) is not empty %}
+                                            <div class="{% if field.file_class is defined %}{{ field.file_class }}{% else %}col-md-1{% endif %}">
+                                                <a href="{{ vich_uploader_asset(field_many, field.file) }}">
+                                                    <img class="img-responsive" src="{% if field.imagine_filter is defined %}{{ vich_uploader_asset(field_many, field.file)|imagine_filter(field.imagine_filter) }}{% else %}{{ vich_uploader_asset(field_many, field.file) }}{% endif %}">
+                                                </a>
+                                            </div>
+                                        {% endif %}
                                     {% endfor %}
                                 </div>
                             {% endblock %}

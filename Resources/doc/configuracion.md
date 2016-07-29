@@ -50,6 +50,7 @@ fieldsshow: #Los campos que aparecen en el ver Entity
         ...
         type: 'vich_file_many' #Tipo para la vista previa de la colección de imagenes
         file: 'imageFile' #El campo @Vich\UploadableField de la entidad relacionada
+        file_name: 'imageName' #El campo donde se guarda el nombre o path de la imagen
         # file_class: 'col-md-1' #Por defecto es 'col-md-1'
         # imagine_filter: 'my_thumb_list' #Opcionalmente se puede utilizar filtro por ejemplo 'my_thumb_list' del listado
         ...
