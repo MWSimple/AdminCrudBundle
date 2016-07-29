@@ -15,17 +15,21 @@
                     <div class="{% if field.class is defined %}{{ field.class }}{% else %}col-lg-12 col-md-12 col-sm-12{% endif %}">
                         <label class="control-label">{{ field.label }}</label>
                         {% if field.type in ['datetime', 'datetimetz', 'date', 'time'] %}
-                            <div class="form-control">
-                                <span class="input-xlarge uneditable-input">
-                                    {{ attribute(entity, field.name)|date(field.date) }}
-                                </span>
-                            </div>
+                            {% block datetime %}
+                                <div class="form-control">
+                                    <span class="input-xlarge uneditable-input">
+                                        {{ attribute(entity, field.name)|date(field.date) }}
+                                    </span>
+                                </div>
+                            {% endblock %}
                         {% elseif field.type == 'boolean' %}
-                            <div class="form-control">
-                                <span class="input-xlarge uneditable-input">
-                                    {{ isActive(attribute(entity, field.name)) }}
-                                </span>
-                            </div>
+                            {% block boolean %}
+                                <div class="form-control">
+                                    <span class="input-xlarge uneditable-input">
+                                        {{ isActive(attribute(entity, field.name)) }}
+                                    </span>
+                                </div>
+                            {% endblock %}
                         {% elseif field.type in ['ONE_TO_MANY', 'MANY_TO_MANY'] %}
                             {% block ONE_TO_MANY_MANY_TO_MANY %}
                                 {% set many_entity = attribute(entity, field.name) %}
@@ -43,23 +47,44 @@
                                 </div>
                             {% endblock %}
                         {% elseif field.type == 'text' %}
-                            <div class="well">{{ attribute(entity, field.name)|raw }}</div>
+                            {% block text %}
+                                <div class="well">{{ attribute(entity, field.name)|raw }}</div>
+                            {% endblock %}
                         {% elseif field.type == 'money' %}
-                            <div class="form-control">
-                                <span class="input-xlarge uneditable-input">
-                                    {{ attribute(entity, field.name)|localizednumber(field.currency_style|default('currency'), field.currency_type|default('double')) }}
-                                </span>
-                            </div>
+                            {% block money %}
+                                <div class="form-control">
+                                    <span class="input-xlarge uneditable-input">
+                                        {{ attribute(entity, field.name)|localizednumber(field.currency_style|default('currency'), field.currency_type|default('double')) }}
+                                    </span>
+                                </div>
+                            {% endblock %}
                         {% elseif field.type == 'vich_file' %}
-                            {% if attribute(entity, field.name) is not empty %}
-                                <a href="{{ vich_uploader_asset(entity, field.file) }}"><img class="img-responsive" src="{{ vich_uploader_asset(entity, field.file) }}"></a>
-                            {% endif %}
+                            {% block vich_file %}
+                                {% if attribute(entity, field.name) is not empty %}
+                                    <a href="{{ vich_uploader_asset(entity, field.file) }}"><img class="img-responsive" src="{{ vich_uploader_asset(entity, field.file) }}"></a>
+                                {% endif %}
+                            {% endblock %}
+                        {% elseif field.type == 'vich_file_many' %}
+                            {% block vich_file_many %}
+                                {% set many_entity = attribute(entity, field.name) %}
+                                <div class="well row">
+                                    {% for key, field_many in many_entity %}
+                                        <div class="{% if field.file_class is defined %}{{ field.file_class }}{% else %}col-md-1{% endif %}">
+                                            <a href="{{ vich_uploader_asset(field_many, field.file) }}">
+                                                <img class="img-responsive" src="{% if field.imagine_filter is defined %}{{ vich_uploader_asset(field_many, field.file)|imagine_filter(field.imagine_filter) }}{% else %}{{ vich_uploader_asset(field_many, field.file) }}{% endif %}">
+                                            </a>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endblock %}
                         {% else %}
-                            <div class="form-control">
-                                <span class="input-xlarge uneditable-input">
-                                    {{ attribute(entity, field.name)|raw }}
-                                </span>
-                            </div>
+                            {% block default %}
+                                <div class="form-control">
+                                    <span class="input-xlarge uneditable-input">
+                                        {{ attribute(entity, field.name)|raw }}
+                                    </span>
+                                </div>
+                            {% endblock %}
                         {% endif %}
                     </div>
                     {% if field.closerow is defined %}

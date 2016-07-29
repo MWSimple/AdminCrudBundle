@@ -13,37 +13,44 @@
 
 ## Lista
 ### Bloques en lista index.html.twig
-#### título: Definir el titulo de la ventana
 ```twig
+    {# título: Definir el titulo de la ventana #}
     {% block title %}{% endblock %}
-```
-#### página: Permite reescribir todo el contenido del index.html.twig
-```twig
+
+    {# página: Permite reescribir todo el contenido del index.html.twig #}
     {% block page %}{% endblock %}
-```
-#### botones arriba: Permite reescribir el bloque de botones de la barra superior (crear, exportar, filtro)
-```twig
+
+    {# botones arriba: Permite reescribir el bloque de botones de la barra superior (crear, exportar, filtro) #}
     {% block buttons %}{% endblock %}
-```
-#### tabla head: Permite reescribir el bloque head de tabla
-```twig
+
+    {# tabla head: Permite reescribir el bloque head de tabla #}
     {% block table_head %}{% endblock %}
-```
-#### tabla body: Permite reescribir el bloque body de tabla
-```twig
+
+    {# tabla body: Permite reescribir el bloque body de tabla #}
     {% block table_body %}{% endblock %}
-```
-#### acciones: Permite reescribir el bloque que contiene las acciones del listado (ver, editar)
-```twig
+
+    {# acciones: Permite reescribir el bloque que contiene las acciones del listado (ver, editar) #}
     {% block actions %}{% endblock %}
-```
-#### botones abajo: Permite reescribir el bloque de botones de abajo (crear)
-```twig
+
+    {# botones abajo: Permite reescribir el bloque de botones de abajo (crear) #}
     {% block buttonsbelow %}{% endblock %}
 ```
 ### Vista previa de imagenes en lista index.html.twig uso imagine_filter
 ```twig
     <img src="{{ vich_uploader_asset(entity, field.file)|imagine_filter('my_thumb_list') }}">
+```
+
+## Ver
+### Bloques en lista show.html.twig según tipos de campos
+```twig
+    {% block datetime %}{% endblock %}
+    {% block boolean %}{% endblock %}
+    {% block ONE_TO_MANY_MANY_TO_MANY %}{% endblock %}
+    {% block text %}{% endblock %}
+    {% block money %}{% endblock %}
+    {% block vich_file %}{% endblock %}
+    {% block vich_file_many %}{% endblock %}
+    {% block default %}{% endblock %}
 ```
 
 * [Formularios](forms.md)

@@ -37,7 +37,7 @@ fieldsshow: #Los campos que aparecen en el ver Entity
     a.id:
         label: 'Código' #Nombre que muestra
         name: 'Id' #Nombre del campo
-        type: 'integer' #Tipos: 'string', 'datetime', 'datetimetz', 'date', 'time', 'boolean', 'ONE_TO_MANY', 'MANY_TO_MANY', 'vich_file', 'money'
+        type: 'integer' #Tipos: 'string', 'datetime', 'datetimetz', 'date', 'time', 'boolean', 'ONE_TO_MANY', 'MANY_TO_MANY', 'vich_file', 'vich_file_many', 'money'
         class: 'col-lg-8 col-md-6 col-sm-12' #Permite agregar class. Por defecto es col-12
         #closerow: true #Permite cerrar un row para dar inicio a otro row (http://getbootstrap.com/)
         separator: '<br>' #Opcionalmente se puede agregar separador html para ONE_TO_MANY || MANY_TO_MANY
@@ -45,6 +45,13 @@ fieldsshow: #Los campos que aparecen en el ver Entity
         ...
         type: 'vich_file' #Tipo para la vista previa de la imagen
         file: 'imageFile' #El campo @Vich\UploadableField de la entidad
+        ...
+    a.imagenes:
+        ...
+        type: 'vich_file_many' #Tipo para la vista previa de la colección de imagenes
+        file: 'imageFile' #El campo @Vich\UploadableField de la entidad relacionada
+        # file_class: 'col-md-1' #Por defecto es 'col-md-1'
+        # imagine_filter: 'my_thumb_list' #Opcionalmente se puede utilizar filtro por ejemplo 'my_thumb_list' del listado
         ...
     a.moneda:
         ...

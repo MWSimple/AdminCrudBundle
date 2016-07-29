@@ -13,37 +13,37 @@
 
 ## List
 ### Block override Index list
-#### title
 ```twig
     {% block title %}{% endblock %}
-```
-#### page
-```twig
+
     {% block page %}{% endblock %}
-```
-#### buttons
-```twig
+
     {% block buttons %}{% endblock %}
-```
-#### table head
-```twig
+
     {% block table_head %}{% endblock %}
-```
-#### table body
-```twig
+
     {% block table_body %}{% endblock %}
-```
-#### actions
-```twig
+
     {% block actions %}{% endblock %}
-```
-#### buttons below
-```twig
+
     {% block buttonsbelow %}{% endblock %}
 ```
 ### Preview images in list index.html.twig use imagine_filter
 ```twig
     <img src="{{ vich_uploader_asset(entity, field.file)|imagine_filter('my_thumb_list') }}">
+```
+
+## Show
+### Blocks according show.html.twig list field types
+```twig
+    {% block datetime %}{% endblock %}
+    {% block boolean %}{% endblock %}
+    {% block ONE_TO_MANY_MANY_TO_MANY %}{% endblock %}
+    {% block text %}{% endblock %}
+    {% block money %}{% endblock %}
+    {% block vich_file %}{% endblock %}
+    {% block vich_file_many %}{% endblock %}
+    {% block default %}{% endblock %}
 ```
 
 * [Forms](forms_en.md)
