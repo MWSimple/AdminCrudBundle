@@ -1,18 +1,12 @@
 {% block mws_select2entity_widget %}
     <div class="form-group {% if attr.col is defined %}{{ attr.col }}{% endif %}">
         {{ form_label(form) }}
-        {% for error in form.parent.vars.errors %}
-            {% if form.vars.name == error.origin.config.name %}
-                {{ form_errors(form.parent) }}
-            {% endif %}
-        {% endfor %}
         <input id="select2_{{ id }}" type="text" value="" {{ block('widget_attributes') }}>
         <input type="hidden" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}>
     </div>
     <script type="text/javascript">
         (function($) {
             $field = jQuery('#select2_{{ id }}');
-            $store = jQuery('#{{ id }}');
             $configs = {{ configs|json_encode|raw }};
             $configs.ajax = {
                 url: '{{ path(url) }}',
