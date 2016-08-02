@@ -61,6 +61,9 @@ class Select2entityType extends AbstractType
         if ($options['placeholder'] != '') {
             $options['configs']['placeholder'] = $options['placeholder'];
         }
+        if (!$options['required']) {
+            $options['configs']['allowClear'] = true;
+        }
         $view->vars['url'] = $options['url'];
         $view->vars['configs'] = $options['configs'];
     }
@@ -68,7 +71,7 @@ class Select2entityType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $defaults = array(
-            'placeholder'        => 'Ingrese valor...',
+            'placeholder'        => 'Seleccione...',
             'allowClear'         => false,
             'minimumInputLength' => 0,
             'width'              => 'off',
@@ -80,7 +83,7 @@ class Select2entityType extends AbstractType
             ->setDefaults(array(
                 'configs'     => $defaults,
                 'url'         => '',
-                'placeholder' => '',
+                'placeholder' => 'Seleccione...',
                 )
             )
         ;
