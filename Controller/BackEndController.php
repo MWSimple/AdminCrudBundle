@@ -27,7 +27,7 @@ class BackendController extends Controller
      * @Route("/mws_ajax_enabled_disabled", name="mws_ajax_enabled_disabled")
      * @Method("POST")
      */
-    public function ajaxEnabledDisabled(Request $request)
+    public function ajaxEnabledDisabledAction(Request $request)
     {
         $repository = $request->request->get('repository');
         $id = $request->request->get('dataid');
