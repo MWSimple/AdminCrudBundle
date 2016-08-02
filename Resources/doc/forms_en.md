@@ -132,5 +132,5 @@ public function getAutocompleteEntity(Request $request)
 <script src="{{ asset('bundles/mwsimpleadmincrud/js/collection.js') }}"></script>
 ```
 
-* [SECURITY](seguridad_en.md)
-* [README](https://github.com/MWSimple/AdminCrudBundle/blob/version30/README.md)
+* [Security](seguridad_en.md)
+* [README](README_EN.md)

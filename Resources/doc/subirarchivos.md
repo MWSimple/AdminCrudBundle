@@ -65,5 +65,4 @@ fieldsshow: #Los campos que aparecen en el ver Entity
         ...
 ```
 
-[AdminCrud Documentación](Resources/doc/documentacion.md)
 [README](https://github.com/MWSimple/AdminCrudBundle/blob/version30/README.md)

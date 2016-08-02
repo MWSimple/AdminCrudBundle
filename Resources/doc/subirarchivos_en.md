@@ -65,5 +65,4 @@ fieldsshow: #Fields displayed in the show Entity
         ...
 ```
 
-[AdminCrud Documentación](Resources/doc/documentacion.md)
 [README](README_EN.md)

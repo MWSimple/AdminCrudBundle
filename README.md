@@ -30,6 +30,10 @@ Documentación
 
 * [Generar CRUD](Resources/doc/generacion.md)
 
+* [Configuración](Resources/doc/configuracion.md)
+
+* [Controlador](Resources/doc/controlador.md)
+
 * [Vistas](Resources/doc/vistas.md)
 
 * [Formularios](Resources/doc/forms.md)

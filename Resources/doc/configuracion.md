@@ -65,5 +65,5 @@ fieldsshow: #Los campos que aparecen en el ver Entity
 
 #### Documentacion para el campo money se utiliza localizedcurrency: [TwigExtensions](http://twig.sensiolabs.org/doc/extensions/intl.html) .
 
-* [Vistas](vistas.md)
+* [Controlador](controlador.md)
 * [README](https://github.com/MWSimple/AdminCrudBundle/blob/version30/README.md)

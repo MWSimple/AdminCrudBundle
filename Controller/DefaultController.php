@@ -304,15 +304,28 @@ class DefaultController extends Controller
     }
 
     /**
+     * Query Entity
+     * @param $id
+     */
+    protected function queryEntity($id)
+    {
+        $config = $this->getConfig();
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository($config['repository'])->find($id);
+
+        return $entity;
+    }
+
+    /**
      * Show
      * @param $id
      */
     public function showAction($id)
     {
         $config = $this->getConfig();
-        $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository($config['repository'])->find($id);
+        $entity = $this->queryEntity($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find '.$config['entityName'].' entity.');
@@ -334,9 +347,8 @@ class DefaultController extends Controller
     public function editAction($id)
     {
         $config = $this->getConfig();
-        $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository($config['repository'])->find($id);
+        $entity = $this->queryEntity($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find '.$config['entityName'].' entity.');
@@ -405,7 +417,7 @@ class DefaultController extends Controller
         $config = $this->getConfig();
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository($config['repository'])->find($id);
+        $entity = $this->queryEntity($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find '.$config['entityName'].' entity.');

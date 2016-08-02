@@ -29,6 +29,10 @@ Documentation
 
 * [Generate CRUD](generacion_en.md)
 
+* [Configuration](configuracion_en.md)
+
+* [Controller](controlador_en.md)
+
 * [Views](vistas_en.md)
 
 * [Forms](forms_en.md)

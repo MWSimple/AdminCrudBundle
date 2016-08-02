@@ -32,4 +32,5 @@ mw_simple_admin_crud:
             - Acme\DemoBundle\Entity\Post2
 ```
 
-[README](README_EN.md)
+* [Uploads files](subirarchivos_en.md)
+* [README](README_EN.md)

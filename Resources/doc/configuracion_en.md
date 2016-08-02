@@ -65,5 +65,5 @@ fieldsshow: #Fields displayed in the show Entity
 
 #### Documentation for the money field is used localizedcurrency: [TwigExtensions](http://twig.sensiolabs.org/doc/extensions/intl.html) .
 
-* [Views](vistas_en.md)
+* [Controller](controlador_en.md)
 * [README](README_EN.md)
