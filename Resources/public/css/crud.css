@@ -108,3 +108,8 @@ ul.sub-menu {
 ul.sub-menu li {
     padding-left: 5px;
 }
+/*PARA LOS SELECT2*/
+.select2-offscreen, .select2-offscreen:focus {
+    position: relative !important;
+    width: 100% !important;
+}
