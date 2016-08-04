@@ -8,8 +8,13 @@
         (function($) {
             $field = jQuery('#select2_{{ id }}');
             $configs = {{ configs|json_encode|raw }};
+            {%- set url = url|split(',') -%}
             $configs.ajax = {
-                url: '{{ path(url) }}',
+                {% if url|length > 1 %}
+                    url: '{{ path(url[0]) ~ "?" ~ url[1] }}',
+                {% else %}
+                    url: '{{ path(url[0]) }}',
+                {% endif %}
                 dataType: 'json',
                 data: function (term, page) {
                     return {

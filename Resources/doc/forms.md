@@ -108,12 +108,28 @@ public function getAutocompleteEntity(Request $request)
 ```php
     $builder
         ->add('field', \MWSimple\Bundle\AdminCrudBundle\Form\Type\Select2entityType::class, array(
+            //...
             'attr' => array(
                 'class' => "col-lg-12 col-md-12",
                 'col'   => "col-lg-8 col-md-8",
             )
         )
     ;
+```
+#### Si es necesario pasar valores se puede configurar la url
+```php
+    $builder
+        ->add('field', \MWSimple\Bundle\AdminCrudBundle\Form\Type\Select2entityType::class, array(
+            //...
+            //$url = 'Entity_autocomplete_field';
+            $url = 'Entity_autocomplete_field,id='.$entity->getId();
+            //...
+        )
+    ;
+```
+##### Obtener el valor en el controlador
+```php
+$id = $request->query->get('id', null);
 ```
 
 ##Si incluis en los formularios: El plugin de jQuery valida los campos del  formulario en Bootstrap 3+
