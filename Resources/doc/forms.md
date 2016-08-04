@@ -99,7 +99,7 @@ public function getAutocompleteEntity(Request $request)
         ->orderBy("a.".$options['field'], "ASC")
     ;
     //set querybuilder $qb
-    $response = parent::getAutocompleteFormsMwsAction($options, $qb);
+    $response = parent::getAutocompleteFormsMwsAction($request, $options, $qb);
 
     return $response;
 }
