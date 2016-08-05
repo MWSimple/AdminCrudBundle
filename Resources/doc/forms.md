@@ -107,7 +107,7 @@ public function getAutocompleteEntity(Request $request)
 #### Type Form. Configuración correcta para el type select2 utilizando boostrap, usar 'class' y 'col'.
 ```php
     $builder
-        ->add('field', \MWSimple\Bundle\AdminCrudBundle\Form\Type\Select2entityType::class, array(
+        ->add('field', \Tetranz\Select2EntityBundle\Form\Type\Select2EntityType::class, array(
             //...
             'attr' => array(
                 'class' => "col-lg-12 col-md-12",
@@ -115,21 +115,6 @@ public function getAutocompleteEntity(Request $request)
             )
         )
     ;
-```
-#### Si es necesario pasar valores se puede configurar la url
-```php
-    $builder
-        ->add('field', \MWSimple\Bundle\AdminCrudBundle\Form\Type\Select2entityType::class, array(
-            //...
-            //$url = 'Entity_autocomplete_field';
-            $url = 'Entity_autocomplete_field,id='.$entity->getId();
-            //...
-        )
-    ;
-```
-##### Obtener el valor en el controlador
-```php
-$id = $request->query->get('id', null);
 ```
 
 ##Si incluis en los formularios: El plugin de jQuery valida los campos del  formulario en Bootstrap 3+

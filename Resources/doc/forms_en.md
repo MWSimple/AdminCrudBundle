@@ -107,7 +107,7 @@ public function getAutocompleteEntity(Request $request)
 #### Type Form. Correct settings for the type Select2 using bootstrap, use 'class' and 'col'.
 ```php
     $builder
-        ->add('field', \MWSimple\Bundle\AdminCrudBundle\Form\Type\Select2entityType::class, array(
+        ->add('field', \Tetranz\Select2EntityBundle\Form\Type\Select2EntityType::class, array(
             //...
             'attr' => array(
                 'class' => "col-lg-12 col-md-12",
@@ -115,21 +115,6 @@ public function getAutocompleteEntity(Request $request)
             )
         )
     ;
-```
-#### If it is necessary to pass values you can set the url
-```php
-    $builder
-        ->add('field', \MWSimple\Bundle\AdminCrudBundle\Form\Type\Select2entityType::class, array(
-            //...
-            //$url = 'Entity_autocomplete_field';
-            $url = 'Entity_autocomplete_field,id='.$entity->getId();
-            //...
-        )
-    ;
-```
-##### Get the value in the controller
-```php
-$id = $request->query->get('id', null);
 ```
 
 ##Is included in the forms: jQuery plugin to validate form fields with Bootstrap 3+
