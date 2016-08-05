@@ -16,6 +16,7 @@ new Knp\Bundle\MenuBundle\KnpMenuBundle(),
 new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
 new SC\DatetimepickerBundle\SCDatetimepickerBundle(),
 new Liip\ImagineBundle\LiipImagineBundle(),
+new Tetranz\Select2EntityBundle\TetranzSelect2EntityBundle(),
 // new Vich\UploaderBundle\VichUploaderBundle(),
 // new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
 ```

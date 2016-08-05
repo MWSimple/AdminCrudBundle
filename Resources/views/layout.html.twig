@@ -14,7 +14,7 @@
         {% block stylesheets %}
             <link href="{{ asset('bundles/mwsimpleadmincrud/css/bootstrap.min.css') }}" rel="stylesheet">
             <link href="{{ asset('bundles/mwsimpleadmincrud/css/bootstrap-checkbox.css') }}" rel="stylesheet">
-            <link rel="stylesheet" href="{{ asset('bundles/mwsimpleadmincrud/select2/select2.css') }}">
+            <link rel="stylesheet" href="{{ asset('bundles/mwsimpleadmincrud/select2/css/select2.min.css') }}">
             <link rel="stylesheet" href="{{ asset('bundles/mwsimpleadmincrud/css/bootstrapValidator.min.css') }}">
             <link href="{{ asset('bundles/mwsimpleadmincrud/css/crud.css') }}" rel="stylesheet">
         {% endblock %}
@@ -26,7 +26,8 @@
             <!--[if lt IE 9]>
             <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
             <![endif]-->
-            <script src="{{ asset('bundles/mwsimpleadmincrud/select2/select2.min.js') }}"></script>
+            <script src="{{ asset('bundles/mwsimpleadmincrud/select2/js/select2.min.js') }}"></script>
+            <script src="{{ asset('bundles/tetranzselect2entity/js/select2entity.js') }}"></script>
         {% endblock %}
         
         {% block favicon %}

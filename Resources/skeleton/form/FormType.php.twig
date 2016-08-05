@@ -63,22 +63,20 @@ class {{ form_class }} extends AbstractType
         {%- endfor %}
         {%- for fieldName, field in associations %}
 
-            ->add('{{ fieldName }}', \MWSimple\Bundle\AdminCrudBundle\Form\Type\Select2entityType::class, array(
+            ->add('{{ fieldName }}', \Tetranz\Select2EntityBundle\Form\Type\Select2EntityType::class, array(
+                {%- if field.type in [1, 2, 3] %}
+
+                'multiple' => false,
+                {%- else %}
+
+                'multiple' => true,
+                {%- endif %}
+                'remote_route' => '{{ entity_class }}_autocomplete_{{ fieldName }}',
                 'class' => '{{ field.targetEntity }}',
-                'url'   => '{{ entity_class }}_autocomplete_{{ fieldName }}',
-                'configs' => array(
-                    {%- if field.type in [1, 2, 3] %}
-
-                    'multiple' => false,//required true or false
-                    {%- else %}
-
-                    'multiple' => true,//required true or false
-                    {%- endif %}
-
-                    'width'    => 'off',
-                ),
+                'minimum_input_length' => 0,
                 'attr' => array(
-                    'class' => "col-lg-12 col-md-12 col-sm-12 col-xs-12",
+                    'class' => "col-lg-12 col-md-12 col-sm-12",
+                    'col'   => "col-lg-12 col-md-12",
                 )
             ))
         {%- endfor %}

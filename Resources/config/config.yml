@@ -3,8 +3,8 @@ twig:
         - 'LexikFormFilterBundle:Form:form_div_layout.html.twig'
         - 'MWSimpleAdminCrudBundle:Form:mws_vich_fields.html.twig'
         - 'MWSimpleAdminCrudBundle:Form:fields.html.twig'
-        - 'MWSimpleAdminCrudBundle:Form:select2entity_type.html.twig'
         - 'MWSimpleAdminCrudBundle:Form:duallist_type.html.twig'
+        - 'TetranzSelect2EntityBundle:Form:fields.html.twig'
 
 sc_datetimepicker:
     picker: ~

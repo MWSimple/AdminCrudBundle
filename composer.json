@@ -23,7 +23,8 @@
         "mwsimple/datetimepicker-bundle": "2.0.0",
         "liip/imagine-bundle": "^1.5",
         "vich/uploader-bundle": "^1.1",
-        "egeloen/ckeditor-bundle": "^4.0"
+        "egeloen/ckeditor-bundle": "^4.0",
+        "tetranz/select2entity-bundle": "2.*"
     },
     "autoload": {
         "psr-0": {"MWSimple\\Bundle\\AdminCrudBundle": ""}

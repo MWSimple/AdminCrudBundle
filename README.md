@@ -53,6 +53,7 @@ Subir archivos           [VichUploaderBundle](https://github.com/dustin10/VichUp
 Editor de texto          [IvoryCKEditorBundle](https://github.com/egeloen/IvoryCKEditorBundle) .
 Manipulador de imagenes  [LiipImagineBundle](https://github.com/liip/LiipImagineBundle) .
 Twig Extensiones         [TwigExtensions](http://twig.sensiolabs.org/doc/extensions/intl.html) .
+Select 2 Entity          [select2entity-bundle](https://github.com/tetranz/select2entity-bundle) .
 
 ## Author
 Gonzalo Alonso - gonkpo@gmail.com
