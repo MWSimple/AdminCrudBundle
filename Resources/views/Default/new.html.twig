@@ -31,6 +31,7 @@
 {% endblock %}
 
 {% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('bundles/mwsimpleadmincrud/css/bootstrapValidator.min.css') }}">
     {{ parent() }}
     {# DatetimepickerBundle #}
     {{ form_stylesheet(form) }}

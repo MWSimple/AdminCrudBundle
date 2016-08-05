@@ -7,6 +7,8 @@ $(document).ready(function() {
             uncheckedClass: 'glyphicon glyphicon-unchecked'
         });
     }
+    //Select2 class default
+    $(".mws_select2").select2();
     //FORM VALIDATOR
     $('form').bootstrapValidator();
 });

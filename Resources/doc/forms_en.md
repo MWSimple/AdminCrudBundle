@@ -64,6 +64,18 @@ $builder
 ```
 
 ### Use Select2.
+#### Implement a normal select Select2 adding class mws_select2:
+```php
+    $builder
+        ->add('field', null, [
+            'attr' => array(
+                'class' => "mws_select2 col-lg-12 col-md-12",
+                'col'   => "col-lg-8 col-md-8",
+            )
+        ])
+    ;
+```
+### Use Select2 Entity.
 #### In the Entities are required to have the method toString()
 ```php
 public function __toString()
