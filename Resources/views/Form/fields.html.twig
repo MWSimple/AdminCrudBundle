@@ -99,6 +99,14 @@
 {% block choice_widget_collapsed -%}
     {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) %}
     {{- parent() -}}
+    {% if "mws_select2" in attr.class %}
+        <script type="text/javascript">
+            var $select2_{{ form.vars.id }} = $('#{{ form.vars.id }}').select2({
+                placeholder: '{{ attr.placeholder is defined ? attr.placeholder : null }}',
+                allowClear: {{ attr.allowClear is defined and attr.allowClear ? 1 : 0 }},
+            });
+        </script>
+    {% endif %}
 {%- endblock %}
 
 {% block choice_widget_expanded -%}

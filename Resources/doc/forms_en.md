@@ -63,7 +63,7 @@ $builder
 ;
 ```
 
-### Use Select2.
+### Use Select2. [Documentation](http://select2.github.io/)
 #### Implement a normal select Select2 adding class mws_select2:
 ```php
     $builder
@@ -75,7 +75,7 @@ $builder
         ])
     ;
 ```
-### Use Select2 Entity.
+### Use Select2 Entity. [Documentation](https://github.com/tetranz/select2entity-bundle)
 #### In the Entities are required to have the method toString()
 ```php
 public function __toString()
@@ -128,8 +128,6 @@ public function getAutocompleteEntity(Request $request)
         )
     ;
 ```
-
-##Is included in the forms: jQuery plugin to validate form fields with Bootstrap 3+
 
 [GitHub](https://github.com/nghuuphuoc/bootstrapvalidator)
 
