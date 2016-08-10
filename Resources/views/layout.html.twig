@@ -15,16 +15,21 @@
             <link href="{{ asset('bundles/mwsimpleadmincrud/css/bootstrap.min.css') }}" rel="stylesheet">
             <link href="{{ asset('bundles/mwsimpleadmincrud/css/bootstrap-checkbox.css') }}" rel="stylesheet">
             <link rel="stylesheet" href="{{ asset('bundles/mwsimpleadmincrud/select2/css/select2.min.css') }}">
-            <link href="{{ asset('bundles/mwsimpleadmincrud/css/crud.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/mwsimpleadmincrud/admin2/metisMenu/metisMenu.min.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/mwsimpleadmincrud/admin2/css/timeline.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/mwsimpleadmincrud/admin2/css/sb-admin-2.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/mwsimpleadmincrud/admin2/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+            <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+            <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+            <!--[if lt IE 9]>
+                <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+                <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+            <![endif]-->
         {% endblock %}
 
         {% block head_javascript %}
             <script src="{{ asset('bundles/mwsimpleadmincrud/js/jquery.min.js') }}"></script>
             <script src="{{ asset('bundles/mwsimpleadmincrud/js/bootstrap.min.js') }}"></script>
-            <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-            <!--[if lt IE 9]>
-            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-            <![endif]-->
             <script src="{{ asset('bundles/mwsimpleadmincrud/select2/js/select2.min.js') }}"></script>
             <script src="{{ asset('bundles/tetranzselect2entity/js/select2entity.js') }}"></script>
         {% endblock %}
@@ -36,25 +41,48 @@
 
     <body>
         <div id="wrapper">
-            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse" aria-expanded="false" aria-controls="navbar">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="#">MENU</a>
-                    </div>
-                    <div class="sidebar" role="navigation">
-                        <div class="sidebar-nav navbar-collapse collapse">
-                            {% block menu %}
-                                {{ knp_menu_render('MWSimpleAdminCrudBundle:Builder:adminMenu') }}
-                            {% endblock %}
-                        </div>
+            <!-- Navigation -->
+            <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <!-- <div class="container-fluid"> -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">{{ admincrud_config('site_name')|raw }}</a>
+                </div>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li class="dropdown">
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-user fa-fw"></i> {{ app.user ? app.user.username : '' }} <i class="fa fa-caret-down"></i>
+                            </a>
+                            {% if admincrud_config('fos_user') %}
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li>
+                                        <a href="{{ path('fos_user_security_logout') }}">{{ '<i class="fa fa-sign-out fa-fw"></i>'|raw }} {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>
+                                    </li>
+                                </ul>
+                            {% endif %}
+                            <!-- /.dropdown-user -->
+                        {% elseif admincrud_config('fos_user') %}
+                            <a href="{{ path('fos_user_security_login') }}">
+                                <i class="fa fa-user fa-fw"></i> {{ 'layout.login'|trans({}, 'FOSUserBundle') }}
+                            </a>
+                        {% endif %}
+                    </li>
+                    <!-- /.dropdown -->
+                </ul>
+                <div class="navbar-default sidebar" role="navigation">
+                    <div class="sidebar-nav navbar-collapse">
+                        {% block menu %}
+                            {{ knp_menu_render('MWSimpleAdminCrudBundle:Builder:adminMenu') }}
+                        {% endblock %}
                     </div>
                 </div>
+                <!-- </div> -->
             </nav>
             <div id="page-wrapper">
                 <div class="row">
@@ -75,6 +103,8 @@
 
         {% block javascript %}
             <script src="{{ asset('bundles/mwsimpleadmincrud/js/bootstrap-checkbox.js') }}"></script>
+            <script src="{{ asset('bundles/mwsimpleadmincrud/admin2/metisMenu/metisMenu.min.js') }}"></script>
+            <script src="{{ asset('bundles/mwsimpleadmincrud/admin2/js/sb-admin-2.js') }}"></script>
         {% endblock %}
     </body>
 </html>

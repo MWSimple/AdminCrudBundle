@@ -21,6 +21,7 @@ class MWSimpleAdminCrudExtension extends Extension {
         $configuration = new Configuration();
 
         $config = $this->processConfiguration($configuration, $configs);
+        $container->setParameter('mw_simple_admin_crud.setting', $config['setting']);
         $container->setParameter('mw_simple_admin_crud.menu_setting', $config['menu_setting']);
         $container->setParameter('mw_simple_admin_crud.menu', $config['menu']);
         $container->setParameter('mw_simple_admin_crud.acl', $config['acl']);

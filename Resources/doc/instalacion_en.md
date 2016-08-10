@@ -64,10 +64,12 @@ knp_menu:
     templating: false # if true, enables the helper for PHP templates
     default_renderer: twig # The renderer to use, list is also available by default
 
-#The Child are indices should not be the same, here are added and set the menu item.
-#Permite Set the name, url, id, icon, roles who displayed, if you have submenu can be added.
+#setting: - site_name: can set the name. - fos_user: Putting true when using FosUserBundle.
+#menu: The Child are indices should not be the same, here are added and set the menu item.
+#menu: Set the name, url, id, icon, roles who displayed, if you have submenu can be added.
 mw_simple_admin_crud:
-    menu_setting: { class: nav } # use nav
+    setting: { site_name: Administration, fos_user: false } # Default: site_name: AdminCrud, fos_user: false
+    menu_setting: { id: side-menu, class: nav } # use id side-menu and class nav
     menu:
         child: { name: inicio, url: mws_admin_crud_menu, id: inicio, icon: glyphicon glyphicon-home }
         #child2:  

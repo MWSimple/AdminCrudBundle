@@ -1,5 +1,8 @@
 <?php
+
 namespace MWSimple\Bundle\AdminCrudBundle\Services;
+
+use MWSimple\Bundle\AdminCrudBundle\Configuration\ConfigManager;
 
 /**
  * Twig Extension.
@@ -9,10 +12,18 @@ namespace MWSimple\Bundle\AdminCrudBundle\Services;
 
 class Twig extends \Twig_Extension
 {
+    private $configManager;
+
+    public function __construct(ConfigManager $configManager)
+    {
+        $this->configManager = $configManager;
+    }
+
     //Functions
     public function getFunctions()
     {
         return array(
+            new \Twig_SimpleFunction('admincrud_config', array($this, 'getBackendConfiguration')),
             'isActive' => new \Twig_Function_Method($this, 'isActive', array(
                 'is_safe' => array('html')
             )),
@@ -21,6 +32,19 @@ class Twig extends \Twig_Extension
             )),
         );
     }
+
+    /**
+     * getBackendConfiguration 'setting.site_name' => $config['setting']['site_name'].
+     *
+     * @param string|null $key
+     *
+     * @return mixed
+     */
+    public function getBackendConfiguration($key = null)
+    {
+        return $this->configManager->getBackendConfig($key);
+    }
+
     //Return icon by Enabled or Disabled
     public function isActive($active, $title_true = null, $title_false = null)
     {
@@ -40,6 +64,7 @@ class Twig extends \Twig_Extension
 
         return $res;
     }
+
     //Enabled or Disabled by Ajax
     public function ajaxActive($active, $repository = null, $field_name = null, $id = null, $title_true = null, $title_false = null)
     {

@@ -21,6 +21,7 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('mw_simple_admin_crud');
 
+        $this->addSettingSection($rootNode);
         $this->addMenuSettingSection($rootNode);
         $this->addMenuSection($rootNode);
         $this->addAclSection($rootNode);
@@ -28,6 +29,21 @@ class Configuration implements ConfigurationInterface
         // configure your bundle. See the documentation linked above for
         // more information on that topic.
         return $treeBuilder;
+    }
+
+    private function addSettingSection(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode
+            ->children()
+                ->arrayNode('setting')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('site_name')->defaultValue("AdminCrud")->end()
+                        ->booleanNode('fos_user')->defaultFalse()->end()
+                    ->end()
+                ->end() //setting
+            ->end()
+        ;
     }
 
     private function addMenuSettingSection(ArrayNodeDefinition $rootNode)
@@ -40,7 +56,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('id')->defaultValue(false)->end()
                         ->scalarNode('class')->defaultValue(false)->end()
                     ->end()
-                ->end() //setting
+                ->end() //menu_setting
             ->end()
         ;
     }

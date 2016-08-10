@@ -44,7 +44,7 @@ class Builder implements ContainerAwareInterface
                             if (!empty($m["id"])) {
                                 $menu[$m['name']]->setChildrenAttribute('id', $m["id"]."List");
                             }
-                            $menu[$m['name']]->setChildrenAttribute('class', 'nav collapse sub-menu');
+                            $menu[$m['name']]->setChildrenAttribute('class', 'nav nav-second-level collapse');
                             $menu[$m['name']]->addChild($subMenu['name'], array('route' => $subMenu['url']));
                             if (!empty($subMenu["icon"])) {
                                 $menu[$m['name']][$subMenu['name']]->setAttribute('icon', $subMenu["icon"]);
