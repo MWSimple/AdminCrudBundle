@@ -64,7 +64,7 @@ class {{ form_class }} extends AbstractType
 
             $event->getForm()->addError(new FormError('Filter empty'));
         };
-        $builder->addEventListener(FormEvents::POST_BIND, $listener);
+        $builder->addEventListener(FormEvents::POST_SUBMIT, $listener);
     }
     {% endif %}
 
