@@ -609,12 +609,12 @@ class DefaultController extends Controller
     protected function prePersistEntity()
     {
     }
-    /* Execute before flush the entity updateAction */
-    protected function preUpdateEntity()
-    {
-    }
     /* Execute before handleRequest the entity updateAction */
     protected function preHandleRequestEntity()
+    {
+    }
+    /* Execute before flush the entity updateAction */
+    protected function preUpdateEntity()
     {
     }
     /* Execute before remove the entity deleteAction */

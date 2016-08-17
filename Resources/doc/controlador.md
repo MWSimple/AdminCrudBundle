@@ -64,18 +64,18 @@
         //$this->entity->setEnabled(true);
     }
 ```
-#### Ejecutar antes de flush de la entidad en updateAction:
-```php
-    protected function preUpdateEntity()
-    {
-        //$this->entity->setEnabled(true);
-    }
-```
 #### Ejecutar antes de handleRequest de la entidad en updateAction:
 ```php
     protected function preHandleRequestEntity()
     {
         //$passwordOld = $this->entity->getPassword();
+    }
+```
+#### Ejecutar antes de flush de la entidad en updateAction:
+```php
+    protected function preUpdateEntity()
+    {
+        //$this->entity->setEnabled(true);
     }
 ```
 #### Ejecutar antes de remover la entidad en deleteAction:
