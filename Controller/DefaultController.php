@@ -17,18 +17,21 @@ use Exporter\Handler;
  */
 class DefaultController extends Controller
 {
-    /**
-     * Configuration file.
-     */
+    /* Configuration file. */
     protected $config = array();
+    protected $configArray = array();
+    /* Entity. */
+    protected $entity;
+    /* Entity Manager. */
+    protected $em;
 
     /**
      * Index
      */
     public function indexAction(Request $request)
     {
-        $config = $this->getConfig();
-        list($filterForm, $queryBuilder) = $this->filter($config, $request);
+        $this->getConfig();
+        list($filterForm, $queryBuilder) = $this->filter($request);
 
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -37,10 +40,10 @@ class DefaultController extends Controller
             ($this->container->hasParameter('knp_paginator.page_range')) ? $this->container->getParameter('knp_paginator.page_range'):10
         );
         //remove the form to return to the view
-        unset($config['filterType']);
+        unset($this->configArray['filterType']);
 
-        return $this->render($config['view_index'], array(
-            'config'     => $config,
+        return $this->render($this->configArray['view_index'], array(
+            'config'     => $this->configArray,
             'entities'   => $pagination,
             'filterForm' => $filterForm->createView(),
         ));
@@ -53,8 +56,8 @@ class DefaultController extends Controller
      */
     protected function createQuery($repository)
     {
-        $em = $this->getDoctrine()->getManager();
-        $queryBuilder = $em->getRepository($repository)
+        $this->em = $this->getDoctrine()->getManager();
+        $queryBuilder = $this->em->getRepository($repository)
             ->createQueryBuilder('a')
             ->orderBy('a.id', 'DESC')
         ;
@@ -67,9 +70,9 @@ class DefaultController extends Controller
      */
     public function exportCsvAction($format)
     {
-        $config = $this->getConfig();
-        $query  = $this->createQuery($config['repository'])->getQuery();
-        $campos = $this->getCampos($config);
+        $this->getConfig();
+        $query  = $this->createQuery($this->configArray['repository'])->getQuery();
+        $campos = $this->getCampos();
         $content_type = $this->getContentType($format);
         // Location to Export this to
         $export_to = 'php://output';
@@ -93,10 +96,10 @@ class DefaultController extends Controller
         return $response;
     }
 
-    protected function getCampos($config)
+    protected function getCampos()
     {
         $campos = array();
-        foreach ($config['fieldsindex'] as $key => $value) {
+        foreach ($this->configArray['fieldsindex'] as $key => $value) {
             //if is defined and true
             if (!empty($value['export']) && $value['export']) {
                 $campos[] = $value['name'];
@@ -130,20 +133,19 @@ class DefaultController extends Controller
 
     /**
      * Process filter request.
-     * @param array $config
      * @return array
      */
-    protected function filter($config, Request $request)
+    protected function filter(Request $request)
     {
         $session = $request->getSession();
-        $filterForm = $this->createFilterForm($config);
-        $queryBuilder = $this->createQuery($config['repository']);
+        $filterForm = $this->createFilterForm();
+        $queryBuilder = $this->createQuery($this->configArray['repository']);
         // Bind values from the request
         $filterForm->handleRequest($request);
         // Reset filter
         if ($filterForm->get('reset')->isClicked()) {
-            $session->remove($config['sessionFilter']);
-            $filterForm = $this->createFilterForm($config);
+            $session->remove($this->configArray['sessionFilter']);
+            $filterForm = $this->createFilterForm();
         }
 
         // Filter action
@@ -153,12 +155,12 @@ class DefaultController extends Controller
                 $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $queryBuilder);
                 // Save filter to session
                 $filterData = $request->get($filterForm->getName());
-                $session->set($config['sessionFilter'], $filterData);
+                $session->set($this->configArray['sessionFilter'], $filterData);
             }
         } else {
             // Get filter from session
-            if ($session->has($config['sessionFilter'])) {
-                $filterData = $session->get($config['sessionFilter']);
+            if ($session->has($this->configArray['sessionFilter'])) {
+                $filterData = $session->get($this->configArray['sessionFilter']);
                 $filterForm->submit($filterData);
                 $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $queryBuilder);
             }
@@ -169,14 +171,13 @@ class DefaultController extends Controller
 
     /**
      * Create filter form.
-     * @param array $config
      * @param $filterData
      * @return \Symfony\Component\Form\Form The form
      */
-    protected function createFilterForm($config, $filterData = null)
+    protected function createFilterForm($filterData = null)
     {
-        $form = $this->createForm($config['filterType'], $filterData, array(
-            'action' => $this->generateUrl($config['index']),
+        $form = $this->createForm($this->configArray['filterType'], $filterData, array(
+            'action' => $this->generateUrl($this->configArray['index']),
             'method' => 'GET',
         ));
 
@@ -207,26 +208,26 @@ class DefaultController extends Controller
      */
     public function createAction(Request $request)
     {
-        $config = $this->getConfig();
-        $entity = new $config['entity']();
-        $form   = $this->createCreateForm($config, $entity);
+        $this->getConfig();
+        $this->createNewEntity();
+        $form = $this->createCreateForm();
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+            $this->em = $this->getDoctrine()->getManager();
+            $this->persistEntity();
+            $this->em->flush();
             //Crear ACL
-            $this->useACL($entity, 'create');
+            $this->useACL('create');
             //Set session mensaje
             $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
 
-            if ($config['saveAndAdd']) {
+            if ($this->configArray['saveAndAdd']) {
                 $nextAction = $form->get('saveAndAdd')->isClicked()
-                ? $this->generateUrl($config['new'])
-                : $this->generateUrl($config['show'], array('id' => $entity->getId()));
+                ? $this->generateUrl($this->configArray['new'])
+                : $this->generateUrl($this->configArray['show'], array('id' => $this->entity->getId()));
             } else {
-                $nextAction = $this->generateUrl($config['show'], array('id' => $entity->getId()));
+                $nextAction = $this->generateUrl($this->configArray['show'], array('id' => $this->entity->getId()));
             }
 
             return $this->redirect($nextAction);
@@ -235,25 +236,23 @@ class DefaultController extends Controller
         $this->get('session')->getFlashBag()->add('danger', 'flash.create.error');
 
         // remove the form to return to the view
-        unset($config['newType']);
+        unset($this->configArray['newType']);
 
-        return $this->render($config['view_new'], array(
-            'config' => $config,
-            'entity' => $entity,
+        return $this->render($this->configArray['view_new'], array(
+            'config' => $this->configArray,
+            'entity' => $this->entity,
             'form'   => $form->createView(),
         ));
     }
 
     /**
     * Creates a form to create a entity.
-    * @param array $config
-    * @param $entity The entity
     * @return \Symfony\Component\Form\Form The form
     */
-    protected function createCreateForm($config, $entity)
+    protected function createCreateForm()
     {
-        $form = $this->createForm($config['newType'], $entity, array(
-            'action' => $this->generateUrl($config['create']),
+        $form = $this->createForm($this->configArray['newType'], $this->entity, array(
+            'action' => $this->generateUrl($this->configArray['create']),
             'method' => 'POST',
         ));
 
@@ -268,7 +267,7 @@ class DefaultController extends Controller
             ))
         ;
 
-        if ($config['saveAndAdd']) {
+        if ($this->configArray['saveAndAdd']) {
             $form
                 ->add('saveAndAdd', SubmitType::class, array(
                     'translation_domain' => 'MWSimpleAdminCrudBundle',
@@ -289,16 +288,16 @@ class DefaultController extends Controller
      */
     public function newAction()
     {
-        $config = $this->getConfig();
-        $entity = new $config['entity']();
-        $form   = $this->createCreateForm($config, $entity);
+        $this->getConfig();
+        $this->createNewEntity();
+        $form = $this->createCreateForm();
 
         // remove the form to return to the view
-        unset($config['newType']);
+        unset($this->configArray['newType']);
 
-        return $this->render($config['view_new'], array(
-            'config' => $config,
-            'entity' => $entity,
+        return $this->render($this->configArray['view_new'], array(
+            'config' => $this->configArray,
+            'entity' => $this->entity,
             'form'   => $form->createView(),
         ));
     }
@@ -309,12 +308,9 @@ class DefaultController extends Controller
      */
     protected function queryEntity($id)
     {
-        $config = $this->getConfig();
-        $em = $this->getDoctrine()->getManager();
+        $this->em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository($config['repository'])->find($id);
-
-        return $entity;
+        $this->entity = $this->em->getRepository($this->configArray['repository'])->find($id);
     }
 
     /**
@@ -323,19 +319,19 @@ class DefaultController extends Controller
      */
     public function showAction($id)
     {
-        $config = $this->getConfig();
+        $this->getConfig();
 
-        $entity = $this->queryEntity($id);
+        $this->queryEntity($id);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find '.$config['entityName'].' entity.');
+        if (!$this->entity) {
+            throw $this->createNotFoundException('Unable to find '.$this->configArray['entityName'].' entity.');
         }
-        $this->useACL($entity, 'show');
-        $deleteForm = $this->createDeleteForm($config, $id);
+        $this->useACL('show');
+        $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render($config['view_show'], array(
-            'config'      => $config,
-            'entity'      => $entity,
+        return $this->render($this->configArray['view_show'], array(
+            'config'      => $this->configArray,
+            'entity'      => $this->entity,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -346,23 +342,23 @@ class DefaultController extends Controller
      */
     public function editAction($id)
     {
-        $config = $this->getConfig();
+        $this->getConfig();
 
-        $entity = $this->queryEntity($id);
+        $this->queryEntity($id);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find '.$config['entityName'].' entity.');
+        if (!$this->entity) {
+            throw $this->createNotFoundException('Unable to find '.$this->configArray['entityName'].' entity.');
         }
-        $this->useACL($entity, 'edit');
-        $form = $this->createEditForm($config, $entity);
-        $deleteForm = $this->createDeleteForm($config, $id);
+        $this->useACL('edit');
+        $form = $this->createEditForm();
+        $deleteForm = $this->createDeleteForm($id);
 
         // remove the form to return to the view
-        unset($config['editType']);
+        unset($this->configArray['editType']);
 
-        return $this->render($config['view_edit'], array(
-            'config'      => $config,
-            'entity'      => $entity,
+        return $this->render($this->configArray['view_edit'], array(
+            'config'      => $this->configArray,
+            'entity'      => $this->entity,
             'form'        => $form->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
@@ -370,14 +366,12 @@ class DefaultController extends Controller
 
     /**
     * Creates a form to edit a entity.
-    * @param array $config
-    * @param $entity The entity
     * @return \Symfony\Component\Form\Form The form
     */
-    protected function createEditForm($config, $entity)
+    protected function createEditForm()
     {
-        $form = $this->createForm($config['editType'], $entity, array(
-            'action' => $this->generateUrl($config['update'], array('id' => $entity->getId())),
+        $form = $this->createForm($this->configArray['editType'], $this->entity, array(
+            'action' => $this->generateUrl($this->configArray['update'], array('id' => $this->entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -392,7 +386,7 @@ class DefaultController extends Controller
             ))
         ;
 
-        if ($config['saveAndAdd']) {
+        if ($this->configArray['saveAndAdd']) {
             $form
                 ->add('saveAndAdd', SubmitType::class, array(
                     'translation_domain' => 'MWSimpleAdminCrudBundle',
@@ -414,29 +408,28 @@ class DefaultController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
-        $config = $this->getConfig();
-        $em = $this->getDoctrine()->getManager();
+        $this->getConfig();
 
-        $entity = $this->queryEntity($id);
+        $this->queryEntity($id);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find '.$config['entityName'].' entity.');
+        if (!$this->entity) {
+            throw $this->createNotFoundException('Unable to find '.$this->configArray['entityName'].' entity.');
         }
-        $this->useACL($entity, 'update');
-        $deleteForm = $this->createDeleteForm($config, $id);
-        $form = $this->createEditForm($config, $entity);
+        $this->useACL('update');
+        $deleteForm = $this->createDeleteForm($id);
+        $form = $this->createEditForm();
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em->flush();
+            $this->em->flush();
             $this->get('session')->getFlashBag()->add('success', 'flash.update.success');
 
-            if ($config['saveAndAdd']) {
+            if ($this->configArray['saveAndAdd']) {
                 $nextAction = $form->get('saveAndAdd')->isClicked()
-                    ? $this->generateUrl($config['new'])
-                    : $this->generateUrl($config['show'], array('id' => $id));
+                    ? $this->generateUrl($this->configArray['new'])
+                    : $this->generateUrl($this->configArray['show'], array('id' => $id));
             } else {
-                $nextAction = $this->generateUrl($config['show'], array('id' => $id));
+                $nextAction = $this->generateUrl($this->configArray['show'], array('id' => $id));
             }
             return $this->redirect($nextAction);
         }
@@ -444,11 +437,11 @@ class DefaultController extends Controller
         $this->get('session')->getFlashBag()->add('danger', 'flash.update.error');
 
         // remove the form to return to the view
-        unset($config['editType']);
+        unset($this->configArray['editType']);
 
-        return $this->render($config['view_edit'], array(
-            'config'      => $config,
-            'entity'      => $entity,
+        return $this->render($this->configArray['view_edit'], array(
+            'config'      => $this->configArray,
+            'entity'      => $this->entity,
             'form'        => $form->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
@@ -460,16 +453,16 @@ class DefaultController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
-        $config = $this->getConfig();
-        $form = $this->createDeleteForm($config, $id);
+        $this->getConfig();
+        $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository($config['repository'])->find($id);
+            $entity = $em->getRepository($this->configArray['repository'])->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find '.$config['entityName'].' entity.');
+                throw $this->createNotFoundException('Unable to find '.$this->configArray['entityName'].' entity.');
             }
 
             $em->remove($entity);
@@ -477,7 +470,7 @@ class DefaultController extends Controller
             $this->get('session')->getFlashBag()->add('success', 'flash.delete.success');
         }
 
-        return $this->redirectToRoute($config['index']);
+        return $this->redirectToRoute($this->configArray['index']);
     }
 
     /**
@@ -487,12 +480,12 @@ class DefaultController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    protected function createDeleteForm($config, $id)
+    protected function createDeleteForm($id)
     {
         $mensaje = $this->get('translator')->trans('views.recordactions.confirm', array(), 'MWSimpleAdminCrudBundle');
         $onclick = 'return confirm("'.$mensaje.'");';
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl($config['delete'], array('id' => $id)))
+            ->setAction($this->generateUrl($this->configArray['delete'], array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', SubmitType::class, array(
                 'translation_domain' => 'MWSimpleAdminCrudBundle',
@@ -510,17 +503,15 @@ class DefaultController extends Controller
     {
         $configs = Yaml::parse(file_get_contents($this->get('kernel')->getRootDir().'/../src/'.$this->config['yml']));
         foreach ($configs as $key => $value) {
-            $config[$key] = $value;
+            $this->configArray[$key] = $value;
         }
         foreach ($this->config as $key => $value) {
             if ($key != 'yml') {
-                $config[$key] = $value;
+                $this->configArray[$key] = $value;
             }
         }
         //Set opcion saveAndAdd en la configuracion
-        $this->setSaveAndAdd($config);
-
-        return $config;
+        $this->setSaveAndAdd();
     }
 
     public function getAutocompleteFormsMwsAction(Request $request, $options, $qb = null)
@@ -554,26 +545,26 @@ class DefaultController extends Controller
         return $response;
     }
 
-    protected function useACL($entity, $action)
+    protected function useACL($action)
     {
         $aclConf = $this->container->hasParameter('mw_simple_admin_crud.acl') ?
             $this->container->getParameter('mw_simple_admin_crud.acl') : null;
 
         if ($aclConf['use']) {
-            if ($this->isInstanceOf($entity, $aclConf['entities'])) {
+            if ($this->isInstanceOf($this->entity, $aclConf['entities'])) {
                 $aclManager = $this->container->get('mws_acl_manager');
                 switch ($action) {
                     case 'create':
-                        $aclManager->createACL($entity);
+                        $aclManager->createACL($this->entity);
                         break;
                     case 'show':
-                        $aclManager->controlACL($entity, 'VIEW', $aclConf['exclude_role']);
+                        $aclManager->controlACL($this->entity, 'VIEW', $aclConf['exclude_role']);
                         break;
                     case 'edit':
-                        $aclManager->controlACL($entity, 'EDIT', $aclConf['exclude_role']);
+                        $aclManager->controlACL($this->entity, 'EDIT', $aclConf['exclude_role']);
                         break;
                     case 'update':
-                        $aclManager->controlACL($entity, 'EDIT', $aclConf['exclude_role']);
+                        $aclManager->controlACL($this->entity, 'EDIT', $aclConf['exclude_role']);
                         break;
                     default:
                         # code...
@@ -594,12 +585,28 @@ class DefaultController extends Controller
     }
 
     //FUNCIONES VARIAS
-    protected function setSaveAndAdd($config)
+    protected function setSaveAndAdd()
     {
-        if (!array_key_exists('saveAndAdd', $config)) {
-            $config['saveAndAdd'] = true;
-        } elseif ($config['saveAndAdd'] !== false) {
-            $config['saveAndAdd'] = true;
+        if (!array_key_exists('saveAndAdd', $this->configArray)) {
+            $this->configArray['saveAndAdd'] = true;
+        } elseif ($this->configArray['saveAndAdd'] !== false) {
+            $this->configArray['saveAndAdd'] = true;
         }
+    }
+
+    /**
+     * @return object
+     */
+    protected function createNewEntity()
+    {
+        $this->entity = new $this->configArray['entity']();
+    }
+
+    /**
+     * @return object
+     */
+    protected function persistEntity()
+    {
+        $this->em->persist($this->entity);
     }
 }

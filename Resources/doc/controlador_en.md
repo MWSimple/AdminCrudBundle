@@ -1,5 +1,15 @@
 ## Controller
 
+### Variables. Example $this->em
+```php
+    /* Configuration file. */
+    protected $config = array();
+    protected $configArray = array();
+    /* Entity. */
+    protected $entity;
+    /* Entity Manager. */
+    protected $em;
+```
 ### Functions
 ```php
     indexAction(Request $request)
@@ -14,6 +24,9 @@
     updateAction(Request $request, $id)
     deleteAction(Request $request, $id)
     getAutocompleteFormsMwsAction(Request $request, $options, $qb = null)
+
+    createNewEntity() //The method is used to instantiate entity in newAction() and createAction(Request $request).
+    persistEntity() //The method is then used to validate form before flush entity in createAction(Request $request).
 ```
 #### To override the query the list use:
 ```php
@@ -24,13 +37,26 @@
      */
     protected function createQuery($repository)
     {
-        $em = $this->getDoctrine()->getManager();
-        $queryBuilder = $em->getRepository($repository)
+        $this->em = $this->getDoctrine()->getManager();
+        $queryBuilder = $this->em->getRepository($repository)
             ->createQueryBuilder('a')
             ->orderBy('a.id', 'DESC')
         ;
 
         return $queryBuilder;
+    }
+```
+#### To override the instance of the entity:
+```php
+    /**
+     * @return object
+     */
+    protected function createNewEntity()
+    {
+        $entity = new $this->configArray['entity']();
+        $entity->setEnabled(true);
+
+        return $entity;
     }
 ```
 
