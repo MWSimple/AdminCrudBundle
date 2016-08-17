@@ -26,7 +26,10 @@
     getAutocompleteFormsMwsAction(Request $request, $options, $qb = null)
 
     createNewEntity() //The method is used to instantiate entity in newAction() and createAction(Request $request).
-    persistEntity() //The method is then used to validate form before flush entity in createAction(Request $request).
+    prePersistEntity() //The method is then used to validate form before flush entity in createAction(Request $request).
+    preHandleRequestEntity()
+    preUpdateEntity()
+    preRemoveEntity()
 ```
 #### Override the query the list use:
 ```php
@@ -46,7 +49,7 @@
         return $queryBuilder;
     }
 ```
-#### Override the instance of the entity:
+#### Override the instance of the entity in newAction and createAction:
 ```php
     /**
      * @return object
@@ -57,28 +60,28 @@
         $this->entity->setEnabled(true);
     }
 ```
-#### Execute before persist the entity createAction:
+#### Execute before persist the entity in createAction:
 ```php
     protected function prePersistEntity()
     {
         //$this->entity->setEnabled(true);
     }
 ```
-#### Execute before handleRequest the entity updateAction:
+#### Execute before handleRequest the entity in updateAction:
 ```php
     protected function preHandleRequestEntity()
     {
         //$passwordOld = $this->entity->getPassword();
     }
 ```
-#### Execute before flush the entity updateAction:
+#### Execute before flush the entity in updateAction:
 ```php
     protected function preUpdateEntity()
     {
         //$this->entity->setEnabled(true);
     }
 ```
-#### Execute before remove the entity deleteAction:
+#### Execute before remove the entity in deleteAction:
 ```php
     protected function preRemoveEntity()
     {

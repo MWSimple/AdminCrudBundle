@@ -26,7 +26,10 @@
     getAutocompleteFormsMwsAction(Request $request, $options, $qb = null)
 
     createNewEntity() //Se utiliza al instanciar la entidad en los metodos newAction() y createAction(Request $request).
-    persistEntity() //Se utiliza luego de validar formulario y antes del flush entidad en el metodo createAction(Request $request).
+    prePersistEntity() //Se utiliza luego de validar formulario y antes del flush entidad en el metodo createAction(Request $request).
+    preHandleRequestEntity()
+    preUpdateEntity()
+    preRemoveEntity()
 ```
 #### Sobreescribir la query del listado utilizar:
 ```php
@@ -46,7 +49,7 @@
         return $queryBuilder;
     }
 ```
-#### Sobreescribir la instancia de la entidad:
+#### Sobreescribir la instancia de la entidad en newAction y createAction:
 ```php
     /**
      * @return object
