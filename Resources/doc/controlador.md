@@ -28,7 +28,7 @@
     createNewEntity() //Se utiliza al instanciar la entidad en los metodos newAction() y createAction(Request $request).
     persistEntity() //Se utiliza luego de validar formulario y antes del flush entidad en el metodo createAction(Request $request).
 ```
-#### Para sobreescribir la query del listado utilizar:
+#### Sobreescribir la query del listado utilizar:
 ```php
     /**
      * Create query.
@@ -46,17 +46,43 @@
         return $queryBuilder;
     }
 ```
-#### Para sobreescribir la instancia de la entidad:
+#### Sobreescribir la instancia de la entidad:
 ```php
     /**
      * @return object
      */
     protected function createNewEntity()
     {
-        $entity = new $this->configArray['entity']();
-        $entity->setEnabled(true);
-
-        return $entity;
+        $this->entity = new $this->configArray['entity']();
+        $this->entity->setEnabled(true);
+    }
+```
+#### Ejecutar antes de persistir la entidad en createAction:
+```php
+    protected function prePersistEntity()
+    {
+        //$this->entity->setEnabled(true);
+    }
+```
+#### Ejecutar antes de flush de la entidad en updateAction:
+```php
+    protected function preUpdateEntity()
+    {
+        //$this->entity->setEnabled(true);
+    }
+```
+#### Ejecutar antes de handleRequest de la entidad en updateAction:
+```php
+    protected function preHandleRequestEntity()
+    {
+        //$passwordOld = $this->entity->getPassword();
+    }
+```
+#### Ejecutar antes de remover la entidad en deleteAction:
+```php
+    protected function preRemoveEntity()
+    {
+        //$this->entity->getChild()->setParent(null);
     }
 ```
 

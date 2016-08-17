@@ -28,7 +28,7 @@
     createNewEntity() //The method is used to instantiate entity in newAction() and createAction(Request $request).
     persistEntity() //The method is then used to validate form before flush entity in createAction(Request $request).
 ```
-#### To override the query the list use:
+#### Override the query the list use:
 ```php
     /**
      * Create query.
@@ -46,17 +46,43 @@
         return $queryBuilder;
     }
 ```
-#### To override the instance of the entity:
+#### Override the instance of the entity:
 ```php
     /**
      * @return object
      */
     protected function createNewEntity()
     {
-        $entity = new $this->configArray['entity']();
-        $entity->setEnabled(true);
-
-        return $entity;
+        $this->entity = new $this->configArray['entity']();
+        $this->entity->setEnabled(true);
+    }
+```
+#### Execute before persist the entity createAction:
+```php
+    protected function prePersistEntity()
+    {
+        //$this->entity->setEnabled(true);
+    }
+```
+#### Execute before flush the entity updateAction:
+```php
+    protected function preUpdateEntity()
+    {
+        //$this->entity->setEnabled(true);
+    }
+```
+#### Execute before handleRequest the entity updateAction:
+```php
+    protected function preHandleRequestEntity()
+    {
+        //$passwordOld = $this->entity->getPassword();
+    }
+```
+#### Execute before remove the entity deleteAction:
+```php
+    protected function preRemoveEntity()
+    {
+        //$this->entity->getChild()->setParent(null);
     }
 ```
 

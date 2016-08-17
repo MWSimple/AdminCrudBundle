@@ -215,7 +215,8 @@ class DefaultController extends Controller
 
         if ($form->isValid()) {
             $this->em = $this->getDoctrine()->getManager();
-            $this->persistEntity();
+            $this->prePersistEntity();
+            $this->em->persist($this->entity);
             $this->em->flush();
             //Crear ACL
             $this->useACL('create');
@@ -418,9 +419,11 @@ class DefaultController extends Controller
         $this->useACL('update');
         $deleteForm = $this->createDeleteForm($id);
         $form = $this->createEditForm();
+        $this->preHandleRequestEntity();
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $this->preUpdateEntity();
             $this->em->flush();
             $this->get('session')->getFlashBag()->add('success', 'flash.update.success');
 
@@ -458,15 +461,16 @@ class DefaultController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository($this->configArray['repository'])->find($id);
+            $this->em = $this->getDoctrine()->getManager();
+            $this->entity = $this->em->getRepository($this->configArray['repository'])->find($id);
 
-            if (!$entity) {
+            if (!$this->entity) {
                 throw $this->createNotFoundException('Unable to find '.$this->configArray['entityName'].' entity.');
             }
 
-            $em->remove($entity);
-            $em->flush();
+            $this->preRemoveEntity();
+            $this->em->remove($this->entity);
+            $this->em->flush();
             $this->get('session')->getFlashBag()->add('success', 'flash.delete.success');
         }
 
@@ -601,12 +605,20 @@ class DefaultController extends Controller
     {
         $this->entity = new $this->configArray['entity']();
     }
-
-    /**
-     * @return object
-     */
-    protected function persistEntity()
+    /* Execute before persist the entity createAction */
+    protected function prePersistEntity()
     {
-        $this->em->persist($this->entity);
+    }
+    /* Execute before flush the entity updateAction */
+    protected function preUpdateEntity()
+    {
+    }
+    /* Execute before handleRequest the entity updateAction */
+    protected function preHandleRequestEntity()
+    {
+    }
+    /* Execute before remove the entity deleteAction */
+    protected function preRemoveEntity()
+    {
     }
 }

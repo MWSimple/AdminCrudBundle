@@ -37,20 +37,30 @@ class BackendController extends Controller
         $entity = $em->getRepository($repository)->find($id);
 
         if ($entity) {
-            $fieldname_get = "get".$fieldname;
-            $fieldname_set = "set".$fieldname;
+            $fieldname_value = null;
+            if (method_exists($entity, "is".$fieldname)) {
+                $fieldname_value = "is".$fieldname;
+            } elseif (method_exists($entity, "get".$fieldname)) {
+                $fieldname_value = "get".$fieldname;
+            }
 
-            try {
-                if ($entity->$fieldname_get()) {
-                    $entity->$fieldname_set(false);
-                } else {
-                    $entity->$fieldname_set(true);
+            if (!is_null($fieldname_value) && method_exists($entity, "set".$fieldname)) {
+                $fieldname_set = "set".$fieldname;
+
+                try {
+                    if ($entity->$fieldname_value()) {
+                        $entity->$fieldname_set(false);
+                    } else {
+                        $entity->$fieldname_set(true);
+                    }
+
+                    $em->flush();
+
+                    $res = true;
+                } catch (Exception $e) {
+                    $res = false;
                 }
-
-                $em->flush();
-
-                $res = true;
-            } catch (Exception $e) {
+            } else {
                 $res = false;
             }
         } else {
