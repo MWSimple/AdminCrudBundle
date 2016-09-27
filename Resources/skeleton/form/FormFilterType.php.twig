@@ -47,24 +47,6 @@ class {{ form_class }} extends AbstractType
         {%- endfor %}
 
         ;
-
-        $listener = function(FormEvent $event)
-        {
-            // Is data empty?
-            foreach ($event->getData() as $data) {
-                if(is_array($data)) {
-                    foreach ($data as $subData) {
-                        if(null !== $subData) return;
-                    }
-                }
-                else {
-                    if(null !== $data) return;
-                }
-            }
-
-            $event->getForm()->addError(new FormError('Filter empty'));
-        };
-        $builder->addEventListener(FormEvents::POST_SUBMIT, $listener);
     }
     {% endif %}
 
@@ -74,7 +56,9 @@ class {{ form_class }} extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => '{{ namespace }}\Entity{{ entity_namespace ? '\\' ~ entity_namespace : '' }}\{{ entity_class }}'
+            'data_class' => '{{ namespace }}\Entity{{ entity_namespace ? '\\' ~ entity_namespace : '' }}\{{ entity_class }}',
+            'csrf_protection'   => false,
+            'validation_groups' => array('filtering') // avoid NotBlank() constraint-related message
         ));
     }
 
