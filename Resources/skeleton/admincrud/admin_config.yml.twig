@@ -1,18 +1,28 @@
 entityName: '{{ entity }}'
 entity: '{{ namespace }}\Entity\{{ entity }}'
 repository: '{{ bundle }}:{{ entity }}'
+{% if 'index' in actions %}
 index: '{{ route_name_prefix }}'
-new: '{{ route_name_prefix }}_new'
-edit: '{{ route_name_prefix }}_edit'
-show: '{{ route_name_prefix }}_show'
-create: '{{ route_name_prefix }}_create'
-update: '{{ route_name_prefix }}_update'
-delete: '{{ route_name_prefix }}_delete'
-export: '{{ route_name_prefix }}_export'
 view_index: '{{ bundle }}:{{ entity_dir_view }}:index.html.twig'
+{% endif %}
+{%- if 'new' in actions %}
+new: '{{ route_name_prefix }}_new'
+create: '{{ route_name_prefix }}_create'
 view_new: '{{ bundle }}:{{ entity_dir_view }}:new.html.twig'
+{% endif %}
+{%- if 'edit' in actions %}
+edit: '{{ route_name_prefix }}_edit'
+update: '{{ route_name_prefix }}_update'
 view_edit: '{{ bundle }}:{{ entity_dir_view }}:edit.html.twig'
+{% endif %}
+{%- if 'show' in actions %}
+show: '{{ route_name_prefix }}_show'
 view_show: '{{ bundle }}:{{ entity_dir_view }}:show.html.twig'
+{% endif %}
+{%- if 'delete' in actions %}
+delete: '{{ route_name_prefix }}_delete'
+{% endif %}
+export: '{{ route_name_prefix }}_export'
 sessionFilter: '{{ entity_class }}ControllerFilter'
 saveAndAdd: true
 validator: false

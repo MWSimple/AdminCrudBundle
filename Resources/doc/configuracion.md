@@ -1,6 +1,7 @@
 ## Configuración
 
 ### Archivo de configuración generado en: Bundle/Resources/config/Post.yml (Por ejemplo si la Entity fuera Post)
+#### Para no incluir una acción en el CRUD comentar el índice.
 ```yaml
 entityName: 'Post' #Nombre de la Entity
 entity: 'Sistema\CPCEBundle\Entity\Post' #Ubicacion

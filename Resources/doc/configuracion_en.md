@@ -1,6 +1,7 @@
 ## Config
 
 ### File is generate: Bundle/Resources/config/Post.yml (Example Entity is Post)
+#### Not to include an action on the crud comment index.
 ```yaml
 entityName: 'Post' #Entity name
 entity: 'Sistema\CPCEBundle\Entity\Post' #Path

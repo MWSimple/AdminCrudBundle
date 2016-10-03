@@ -333,7 +333,7 @@ class DefaultController extends Controller
         return $this->render($this->configArray['view_show'], array(
             'config'      => $this->configArray,
             'entity'      => $this->entity,
-            'delete_form' => $deleteForm->createView(),
+            'delete_form' => $deleteForm,
         ));
     }
 
@@ -361,7 +361,7 @@ class DefaultController extends Controller
             'config'      => $this->configArray,
             'entity'      => $this->entity,
             'form'        => $form->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'delete_form' => $deleteForm,
         ));
     }
 
@@ -486,21 +486,28 @@ class DefaultController extends Controller
      */
     protected function createDeleteForm($id)
     {
-        $mensaje = $this->get('translator')->trans('views.recordactions.confirm', array(), 'MWSimpleAdminCrudBundle');
-        $onclick = 'return confirm("'.$mensaje.'");';
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl($this->configArray['delete'], array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', SubmitType::class, array(
-                'translation_domain' => 'MWSimpleAdminCrudBundle',
-                'label'              => 'views.recordactions.delete',
-                'attr'               => array(
-                    'class'   => 'form-control btn-danger',
-                    'onclick' => $onclick,
-                )
-            ))
-            ->getForm()
-        ;
+        if (array_key_exists('delete', $this->configArray)) {
+            $mensaje = $this->get('translator')->trans('views.recordactions.confirm', array(), 'MWSimpleAdminCrudBundle');
+            $onclick = 'return confirm("'.$mensaje.'");';
+            return $this->createFormBuilder()
+                ->setAction($this->generateUrl($this->configArray['delete'], array('id' => $id)))
+                ->setMethod('DELETE')
+                ->add('submit', SubmitType::class, array(
+                    'translation_domain' => 'MWSimpleAdminCrudBundle',
+                    'label'              => 'views.recordactions.delete',
+                    'attr'               => array(
+                        'class'   => 'form-control btn-danger',
+                        'onclick' => $onclick,
+                    )
+                ))
+                ->getForm()
+                ->createView()
+            ;
+        } else {
+            $ret = null;
+        }
+
+        return $ret;
     }
 
     protected function getConfig()

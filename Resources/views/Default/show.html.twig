@@ -105,12 +105,16 @@
                     {{ 'views.recordactions.backtothelist'|trans({}, 'MWSimpleAdminCrudBundle') }}
                 </a>
             </div>
-            <div class="float-left col-lg-3 col-md-3 col-sm-3">
-                <a class="btn btn-primary col-lg-11" href="{{ path(config.edit, { 'id': entity.id }) }}">
-                    {{ 'views.recordactions.edit'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
-                </a>
-            </div>
-            <div class="float-left col-lg-3 col-md-3 col-sm-3">{{ form(delete_form) }}</div>
+            {% if config.edit is defined %}
+                <div class="float-left col-lg-3 col-md-3 col-sm-3">
+                    <a class="btn btn-primary col-lg-11" href="{{ path(config.edit, { 'id': entity.id }) }}">
+                        {{ 'views.recordactions.edit'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
+                    </a>
+                </div>
+            {% endif %}
+            {% if delete_form is not null %}
+                <div class="float-left col-lg-3 col-md-3 col-sm-3">{{ form(delete_form) }}</div>
+            {% endif %}
         </div>
     {% endblock %}
 {% endblock %}

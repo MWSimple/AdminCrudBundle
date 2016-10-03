@@ -199,6 +199,7 @@ class MWSimpleCrudGenerator extends DoctrineCrudGenerator
         $entityClass = array_pop($parts);
 
         $this->renderFile('admincrud/admin_config.yml.twig', $dirFileConf.$entityClass.'.yml', array(
+            'actions'           => $this->actions,
             'bundle'            => $this->bundle->getName(),
             'namespace'         => $this->bundle->getNamespace(),
             'entity'            => $this->entity,

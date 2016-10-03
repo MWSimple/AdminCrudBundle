@@ -17,9 +17,11 @@
     <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="filters-right">
             {% block buttons %}
-                <a class="btn btn-success" href="{{ path(config.new) }}">
-                    {{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
-                </a>
+                {% if config.new is defined %}
+                    <a class="btn btn-success" href="{{ path(config.new) }}">
+                        {{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
+                    </a>
+                {% endif %}
                 <div class="btn-group">
                     <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                         {{ 'views.index.export'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }} <span class="caret"></span>
@@ -96,7 +98,9 @@
                     <td>
                         {% block actions %}
                             <a class="glyphicon glyphicon-search tooltips"  href="{{ path(config.show, { 'id': entity.id }) }}" title="" rel="tooltip" data-original-title="{{ 'views.actions.show'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}"></a>
-                            <a class="glyphicon glyphicon-edit tooltips"  href="{{ path(config.edit, { 'id': entity.id }) }}" title="" rel="tooltip" data-original-title="{{ 'views.actions.edit'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}"></a>
+                            {% if config.edit is defined %}
+                                <a class="glyphicon glyphicon-edit tooltips"  href="{{ path(config.edit, { 'id': entity.id }) }}" title="" rel="tooltip" data-original-title="{{ 'views.actions.edit'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}"></a>
+                            {% endif %}
                         {% endblock %}
                     </td>
                 </tr>
@@ -110,9 +114,11 @@
     </div>
     {% block buttonsbelow %}
         <div class="col-lg-8 col-md-8 col-sm-8">
-            <a class="btn btn-success likepaginator" href="{{ path(config.new) }}">
-                {{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
-            </a>
+            {% if config.new is defined %}
+                <a class="btn btn-success likepaginator" href="{{ path(config.new) }}">
+                    {{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
+                </a>
+            {% endif %}
         </div>
     {% endblock %}
 </div>
