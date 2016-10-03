@@ -16,7 +16,7 @@
 ```php
 ->add('checkbox', ChoiceType::class, array(
     'label_attr' => array(
-        'class' => '-inline',
+        'class' => 'inline',
     ),
 ))
 ```
