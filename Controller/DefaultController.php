@@ -328,7 +328,7 @@ class DefaultController extends Controller
             throw $this->createNotFoundException('Unable to find '.$this->configArray['entityName'].' entity.');
         }
         $this->useACL('show');
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($id, true);
 
         return $this->render($this->configArray['view_show'], array(
             'config'      => $this->configArray,
@@ -352,7 +352,7 @@ class DefaultController extends Controller
         }
         $this->useACL('edit');
         $form = $this->createEditForm();
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($id, true);
 
         // remove the form to return to the view
         unset($this->configArray['editType']);
@@ -417,7 +417,7 @@ class DefaultController extends Controller
             throw $this->createNotFoundException('Unable to find '.$this->configArray['entityName'].' entity.');
         }
         $this->useACL('update');
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($id, true);
         $form = $this->createEditForm();
         $this->preHandleRequestEntity();
         $form->handleRequest($request);
@@ -446,7 +446,7 @@ class DefaultController extends Controller
             'config'      => $this->configArray,
             'entity'      => $this->entity,
             'form'        => $form->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'delete_form' => $deleteForm,
         ));
     }
 
@@ -484,12 +484,12 @@ class DefaultController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    protected function createDeleteForm($id)
+    protected function createDeleteForm($id, $view = false)
     {
         if (array_key_exists('delete', $this->configArray)) {
             $mensaje = $this->get('translator')->trans('views.recordactions.confirm', array(), 'MWSimpleAdminCrudBundle');
             $onclick = 'return confirm("'.$mensaje.'");';
-            return $this->createFormBuilder()
+            $ret = $this->createFormBuilder()
                 ->setAction($this->generateUrl($this->configArray['delete'], array('id' => $id)))
                 ->setMethod('DELETE')
                 ->add('submit', SubmitType::class, array(
@@ -500,9 +500,10 @@ class DefaultController extends Controller
                         'onclick' => $onclick,
                     )
                 ))
-                ->getForm()
-                ->createView()
-            ;
+                ->getForm();
+            if ($view) {
+                $ret = $ret->createView();
+            }
         } else {
             $ret = null;
         }
