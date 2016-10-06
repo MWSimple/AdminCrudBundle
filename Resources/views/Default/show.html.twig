@@ -7,7 +7,9 @@
 {% block page %}
     <div class="panel panel-primary center-block">
         <div class="panel-heading">
-            <i class="glyphicon glyphicon-ok"></i> {{ 'views.show.show'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
+            {% block panelheading %}
+                <i class="glyphicon glyphicon-ok"></i> {{ 'views.show.show'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
+            {% endblock panelheading %}
         </div>
         <div class="panel-body">
             <div class="row">

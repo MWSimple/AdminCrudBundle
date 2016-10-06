@@ -52,6 +52,11 @@
     {% block vich_file_many %}{% endblock %}
     {% block default %}{% endblock %}
 ```
+###
+```twig
+    {% block page %}{% endblock %}
+    {% block panelheading %}{% endblock %}
+```
 
 * [Formularios](forms.md)
 * [README](https://github.com/MWSimple/AdminCrudBundle/blob/version30/README.md)

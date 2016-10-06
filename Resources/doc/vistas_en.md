@@ -45,6 +45,11 @@
     {% block vich_file_many %}{% endblock %}
     {% block default %}{% endblock %}
 ```
+###
+```twig
+    {% block page %}{% endblock %}
+    {% block panelheading %}{% endblock %}
+```
 
 * [Forms](forms_en.md)
 * [README](README_EN.md)
