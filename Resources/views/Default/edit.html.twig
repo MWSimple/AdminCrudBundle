@@ -26,7 +26,9 @@
                     {{ 'views.recordactions.backtothelist'|trans({}, 'MWSimpleAdminCrudBundle') }}
                 </a>
             </div>
-            <div class="col-lg-3 col-md-3 col-sm-3">{{ form(delete_form) }}</div>
+            {% if delete_form is not null %}
+                <div class="col-lg-3 col-md-3 col-sm-3">{{ form(delete_form) }}</div>
+            {% endif %}
         {% endblock %}
     </div>
 {% endblock %}

@@ -4,15 +4,19 @@
 #### Para no incluir una acción en el CRUD comentar el índice.
 ```yaml
 entityName: 'Post' #Nombre de la Entity
-entity: 'Sistema\CPCEBundle\Entity\Post' #Ubicacion
-repository: 'SistemaCPCEBundle:Post' #Repositorio
+entity: 'Acme\DemoBundle\Entity\Post' #Ubicacion
+repository: 'AcmeDemoBundle:Post' #Repositorio
 index: 'admin_post' #Rutas para enrutamiento
-new: 'admin_post_new'
-edit: 'admin_post_edit'
-show: 'admin_post_show'
+view_index: 'AcmeDemoBundle:post:index.html.twig'
+new: 'admin_post_new' #Si comento esta linea no se muestra en el index
 create: 'admin_post_create'
+view_new: 'AcmeDemoBundle:post:new.html.twig'
+edit: 'admin_post_edit' #Si comento esta linea no se muestra en el index y show
 update: 'admin_post_update'
-delete: 'admin_post_delete'
+view_edit: 'AcmeDemoBundle:post:edit.html.twig'
+show: 'admin_post_show'
+view_show: 'AcmeDemoBundle:post:show.html.twig'
+delete: 'admin_post_delete' #Si comento esta linea no se muestra en el edit y show
 export: 'admin_post_export' #Utiliza sonata export
 sessionFilter: 'TrabajoControllerFilter' #session para el filtro segun la entity
 saveAndAdd: true #Si es true entonces agrega el boton para guardar y agregar otro

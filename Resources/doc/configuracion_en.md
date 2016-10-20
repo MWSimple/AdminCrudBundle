@@ -4,15 +4,19 @@
 #### Not to include an action on the crud comment index.
 ```yaml
 entityName: 'Post' #Entity name
-entity: 'Sistema\CPCEBundle\Entity\Post' #Path
-repository: 'SistemaCPCEBundle:Post' #Repository
-index: 'admin_post' #Routes for routing
-new: 'admin_post_new'
-edit: 'admin_post_edit'
-show: 'admin_post_show'
+entity: 'Acme\DemoBundle\Entity\Post' #Ubicacion
+repository: 'AcmeDemoBundle:Post' #Repositorio
+index: 'admin_post' #Rutas para enrutamiento
+view_index: 'AcmeDemoBundle:post:index.html.twig'
+new: 'admin_post_new' #If I comment this line not shown in the index
 create: 'admin_post_create'
+view_new: 'AcmeDemoBundle:post:new.html.twig'
+edit: 'admin_post_edit' #If I comment this line not shown in the index and show
 update: 'admin_post_update'
-delete: 'admin_post_delete'
+view_edit: 'AcmeDemoBundle:post:edit.html.twig'
+show: 'admin_post_show'
+view_show: 'AcmeDemoBundle:post:show.html.twig'
+delete: 'admin_post_delete' #If I comment this line not shown in the edit and show
 export: 'admin_post_export' #Use sonata export
 sessionFilter: 'TrabajoControllerFilter' #Session for the filter according to entity
 saveAndAdd: true #If true then add the button to save and add another
