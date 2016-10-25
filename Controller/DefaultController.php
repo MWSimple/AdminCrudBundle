@@ -187,7 +187,7 @@ class DefaultController extends Controller
                 'label'              => 'views.index.filter',
                 'attr'               => array(
                     'class' => 'form-control btn-success',
-                    'col'   => 'col-lg-2',
+                    'col'   => 'col-lg-2 col-md-4',
                 ),
             ))
             ->add('reset', SubmitType::class, array(
@@ -195,7 +195,7 @@ class DefaultController extends Controller
                 'label'              => 'views.index.reset',
                 'attr'               => array(
                     'class' => 'form-control reset_submit_filters btn-danger',
-                    'col'   => 'col-lg-2',
+                    'col'   => 'col-lg-2 col-md-4',
                 ),
             ))
         ;
@@ -263,7 +263,7 @@ class DefaultController extends Controller
                 'label'              => 'views.new.save',
                 'attr'               => array(
                     'class' => 'form-control btn-success',
-                    'col'   => 'col-lg-2',
+                    'col'   => 'col-lg-2 col-md-4',
                 )
             ))
         ;
@@ -275,7 +275,7 @@ class DefaultController extends Controller
                     'label'              => 'views.new.saveAndAdd',
                     'attr'               => array(
                         'class' => 'form-control btn-primary',
-                        'col'   => 'col-lg-3',
+                        'col'   => 'col-lg-3 col-md-4',
                     )
                 ))
             ;
@@ -382,7 +382,7 @@ class DefaultController extends Controller
                 'label'              => 'views.new.save',
                 'attr'               => array(
                     'class' => 'form-control btn-success',
-                    'col'   => 'col-lg-2',
+                    'col'   => 'col-lg-2 col-md-4',
                 )
             ))
         ;
@@ -394,7 +394,7 @@ class DefaultController extends Controller
                     'label'              => 'views.new.saveAndAdd',
                     'attr'               => array(
                         'class' => 'form-control btn-primary',
-                        'col'   => 'col-lg-3',
+                        'col'   => 'col-lg-3 col-md-4',
                     )
                 ))
             ;
