@@ -143,7 +143,7 @@ class DefaultController extends Controller
         // Bind values from the request
         $filterForm->handleRequest($request);
         // Reset filter
-        if ($filterForm->get('reset')->isClicked()) {
+        if ($this->configArray['sessionFilter'] && $filterForm->get('reset')->isClicked()) {
             $session->remove($this->configArray['sessionFilter']);
             $filterForm = $this->createFilterForm();
         }
@@ -159,7 +159,7 @@ class DefaultController extends Controller
             }
         } else {
             // Get filter from session
-            if ($session->has($this->configArray['sessionFilter'])) {
+            if ($this->configArray['sessionFilter'] && $session->has($this->configArray['sessionFilter'])) {
                 $filterData = $session->get($this->configArray['sessionFilter']);
                 $filterForm->submit($filterData);
                 $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $queryBuilder);
@@ -189,16 +189,18 @@ class DefaultController extends Controller
                     'class' => 'form-control btn-success',
                     'col'   => 'col-lg-2',
                 ),
-            ))
-            ->add('reset', SubmitType::class, array(
-                'translation_domain' => 'MWSimpleAdminCrudBundle',
-                'label'              => 'views.index.reset',
-                'attr'               => array(
-                    'class' => 'form-control reset_submit_filters btn-danger',
-                    'col'   => 'col-lg-2',
-                ),
-            ))
-        ;
+            ));
+        if ($this->configArray['sessionFilter']) {
+            $form
+                ->add('reset', SubmitType::class, array(
+                    'translation_domain' => 'MWSimpleAdminCrudBundle',
+                    'label'              => 'views.index.reset',
+                    'attr'               => array(
+                        'class' => 'form-control reset_submit_filters btn-danger',
+                        'col'   => 'col-lg-2',
+                    ),
+                ));
+        }
 
         return $form;
     }
@@ -603,6 +605,10 @@ class DefaultController extends Controller
             $this->configArray['saveAndAdd'] = true;
         } elseif ($this->configArray['saveAndAdd'] !== false) {
             $this->configArray['saveAndAdd'] = true;
+        }
+        //Si no existe sessionFilter o fue comentado entra y setea en false
+        if (!array_key_exists('sessionFilter', $this->configArray)) {
+            $this->configArray['sessionFilter'] = false;
         }
     }
 

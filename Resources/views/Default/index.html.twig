@@ -32,9 +32,11 @@
                     <li><a href="{{ path(config.export, { 'format': "json" }) }}">JSON</a></li>
                   </ul>
                 </div>
-                <a id="reset_index_filters" class="btn btn-danger">
-                    {{ 'views.index.reset'|trans({}, 'MWSimpleAdminCrudBundle') }}
-                </a>
+                {% if config.sessionFilter %}
+                    <a id="reset_index_filters" class="btn btn-danger">
+                        {{ 'views.index.reset'|trans({}, 'MWSimpleAdminCrudBundle') }}
+                    </a>
+                {% endif %}
                 <a class="btn btn-primary dropdown-toggle" data-toggle="collapse" data-target="#filters">
                     {{ 'views.index.filters'|trans({}, 'MWSimpleAdminCrudBundle') }}
                     <span class="caret"></span>
