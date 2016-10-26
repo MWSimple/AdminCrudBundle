@@ -71,7 +71,8 @@ class DefaultController extends Controller
     public function exportCsvAction($format)
     {
         $this->getConfig();
-        $query  = $this->createQuery($this->configArray['repository'])->getQuery();
+        $this->createQuery($this->configArray['repository']);
+        $query  = $this->queryBuilder->getQuery();
         $campos = $this->getCampos();
         $content_type = $this->getContentType($format);
         // Location to Export this to
