@@ -62,9 +62,15 @@
             <thead>
             {% block table_head %}
                 <tr>
-                    {% for key, field in config.fieldsindex %}
-                        <th{% if entities.isSorted(key) %} class="sorted"{% endif %}>{{ knp_pagination_sortable(entities, field.label, key) }}</th>
-                    {% endfor %}
+                    {% if config.paginate %}
+                        {% for key, field in config.fieldsindex %}
+                            <th{% if entities.isSorted(key) %} class="sorted"{% endif %}>{{ knp_pagination_sortable(entities, field.label, key) }}</th>
+                        {% endfor %}
+                    {% else %}
+                        {% for key, field in config.fieldsindex %}
+                            <th>{{ field.label }}</th>
+                        {% endfor %}
+                    {% endif %}
                     <th>{{ 'views.index.actions'|trans({}, 'MWSimpleAdminCrudBundle') }}</th>
                 </tr>
             {% endblock %}
@@ -115,9 +121,11 @@
             </tbody>
         </table>
     </div>
-    <div class="col-lg-12 col-md-12 col-sm-12 navigation">
-        {{ knp_pagination_render(entities) }}
-    </div>
+    {% if config.paginate %}
+        <div class="col-lg-12 col-md-12 col-sm-12 navigation">
+            {{ knp_pagination_render(entities) }}
+        </div>
+    {% endif %}
     {% block buttonsbelow %}
         <div class="col-lg-8 col-md-8 col-sm-8">
             {% if config.new is defined %}

@@ -6,6 +6,7 @@
 entityName: 'Post' #Entity name
 entity: 'Acme\DemoBundle\Entity\Post' #Ubicacion
 repository: 'AcmeDemoBundle:Post' #Repositorio
+paginate: true #The default is always true. To disable pagination add this line with false.
 index: 'admin_post' #Rutas para enrutamiento
 view_index: 'AcmeDemoBundle:post:index.html.twig'
 new: 'admin_post_new' #If I comment this line not shown in the index

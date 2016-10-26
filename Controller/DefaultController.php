@@ -36,12 +36,17 @@ class DefaultController extends Controller
         $this->createQuery($this->configArray['repository']);
 
         $filterForm = $this->filter($request);
-        $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $this->queryBuilder,
-            $request->query->get('page', 1),
-            ($this->container->hasParameter('knp_paginator.page_range')) ? $this->container->getParameter('knp_paginator.page_range'):10
-        );
+        
+        if ($this->configArray['paginate']) {
+            $paginator  = $this->get('knp_paginator');
+            $pagination = $paginator->paginate(
+                $this->queryBuilder,
+                $request->query->get('page', 1),
+                ($this->container->hasParameter('knp_paginator.page_range')) ? $this->container->getParameter('knp_paginator.page_range'):10
+            );
+        } else {
+            $pagination = $this->resultQuery();
+        }
         //remove the form to return to the view
         unset($this->configArray['filterType']);
 
@@ -63,6 +68,12 @@ class DefaultController extends Controller
             ->createQueryBuilder('a')
             ->orderBy('a.id', 'DESC')
         ;
+    }
+
+    /* get result query */
+    protected function resultQuery()
+    {
+        return $this->queryBuilder->getQuery()->getResult();
     }
 
     /**
@@ -613,6 +624,10 @@ class DefaultController extends Controller
         //Si no existe sessionFilter o fue comentado entra y setea en false
         if (!array_key_exists('sessionFilter', $this->configArray)) {
             $this->configArray['sessionFilter'] = false;
+        }
+        //Si no existe paginate o fue comentado entra y setea en true
+        if (!array_key_exists('paginate', $this->configArray)) {
+            $this->configArray['paginate'] = true;
         }
     }
 

@@ -1,6 +1,7 @@
 entityName: '{{ entity }}'
 entity: '{{ namespace }}\Entity\{{ entity }}'
 repository: '{{ bundle }}:{{ entity }}'
+paginate: true
 {% if 'index' in actions %}
 index: '{{ route_name_prefix }}'
 view_index: '{{ bundle }}:{{ entity_dir_view }}:index.html.twig'
