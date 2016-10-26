@@ -27,14 +27,11 @@ class BackendController extends Controller
      * @Route("/mws_ajax_enabled_disabled", name="mws_ajax_enabled_disabled")
      * @Method("POST")
      */
-    public function ajaxEnabledDisabledAction(Request $request)
-    {
-        $repository = $request->request->get('repository');
-        $id = $request->request->get('dataid');
+    public function ajaxEnabledDisabledAction(Request $request) {
+        $res = false;
         $fieldname = $request->request->get('datafieldname');
-
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository($repository)->find($id);
+        $entity = $em->getRepository($request->request->get('repository'))->find($request->request->get('dataid'));
 
         if ($entity) {
             $fieldname_value = null;
@@ -55,16 +52,9 @@ class BackendController extends Controller
                     }
 
                     $em->flush();
-
                     $res = true;
-                } catch (Exception $e) {
-                    $res = false;
-                }
-            } else {
-                $res = false;
+                } catch (Exception $e) {}
             }
-        } else {
-            $res = false;
         }
 
         $response = new JsonResponse();

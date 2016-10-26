@@ -18,7 +18,7 @@ show: 'admin_post_show'
 view_show: 'AcmeDemoBundle:post:show.html.twig'
 delete: 'admin_post_delete' #Si comento esta linea no se muestra en el edit y show
 export: 'admin_post_export' #Utiliza sonata export
-sessionFilter: 'PostControllerFilter' #Si comento esta linea no utiliza session
+sessionFilter: 'PostControllerFilter' #Si comento esta linea no utiliza session. Para quitar el filtro comentar linea de filterType en el Controller generado
 saveAndAdd: true #Si es true entonces agrega el boton para guardar y agregar otro
 validator: false #Si es true agrega validacion por JS en los formularios (*Sin mantenimiento)
 fieldsindex: #Los campos que aparecen en la lista de índices

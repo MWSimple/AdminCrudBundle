@@ -24,6 +24,8 @@ class DefaultController extends Controller
     protected $entity;
     /* Entity Manager. */
     protected $em;
+    /* Query Builder. */
+    protected $queryBuilder;
 
     /**
      * Index
@@ -31,11 +33,12 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         $this->getConfig();
-        list($filterForm, $queryBuilder) = $this->filter($request);
+        $this->createQuery($this->configArray['repository']);
 
+        $filterForm = $this->filter($request);
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-            $queryBuilder,
+            $this->queryBuilder,
             $request->query->get('page', 1),
             ($this->container->hasParameter('knp_paginator.page_range')) ? $this->container->getParameter('knp_paginator.page_range'):10
         );
@@ -45,24 +48,21 @@ class DefaultController extends Controller
         return $this->render($this->configArray['view_index'], array(
             'config'     => $this->configArray,
             'entities'   => $pagination,
-            'filterForm' => $filterForm->createView(),
+            'filterForm' => $filterForm,
         ));
     }
 
     /**
      * Create query.
      * @param string $repository
-     * @return Doctrine\ORM\QueryBuilder $queryBuilder
      */
     protected function createQuery($repository)
     {
         $this->em = $this->getDoctrine()->getManager();
-        $queryBuilder = $this->em->getRepository($repository)
+        $this->queryBuilder = $this->em->getRepository($repository)
             ->createQueryBuilder('a')
             ->orderBy('a.id', 'DESC')
         ;
-
-        return $queryBuilder;
     }
 
     /**
@@ -137,36 +137,41 @@ class DefaultController extends Controller
      */
     protected function filter(Request $request)
     {
-        $session = $request->getSession();
-        $filterForm = $this->createFilterForm();
-        $queryBuilder = $this->createQuery($this->configArray['repository']);
-        // Bind values from the request
-        $filterForm->handleRequest($request);
-        // Reset filter
-        if ($this->configArray['sessionFilter'] && $filterForm->get('reset')->isClicked()) {
-            $session->remove($this->configArray['sessionFilter']);
+        if (array_key_exists('filterType', $this->configArray)) {
+            $session = $request->getSession();
             $filterForm = $this->createFilterForm();
-        }
-
-        // Filter action
-        if ($filterForm->get('filter')->isClicked()) {
-            if ($filterForm->isValid()) {
-                // Build the query from the given form object
-                $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $queryBuilder);
-                // Save filter to session
-                $filterData = $request->get($filterForm->getName());
-                $session->set($this->configArray['sessionFilter'], $filterData);
+            // Bind values from the request
+            $filterForm->handleRequest($request);
+            // Reset filter
+            if ($this->configArray['sessionFilter'] && $filterForm->get('reset')->isClicked()) {
+                $session->remove($this->configArray['sessionFilter']);
+                $filterForm = $this->createFilterForm();
             }
+
+            // Filter action
+            if ($filterForm->get('filter')->isClicked()) {
+                if ($filterForm->isValid()) {
+                    // Build the query from the given form object
+                    $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $this->queryBuilder);
+                    // Save filter to session
+                    $filterData = $request->get($filterForm->getName());
+                    $session->set($this->configArray['sessionFilter'], $filterData);
+                }
+            } else {
+                // Get filter from session
+                if ($this->configArray['sessionFilter'] && $session->has($this->configArray['sessionFilter'])) {
+                    $filterData = $session->get($this->configArray['sessionFilter']);
+                    $filterForm->submit($filterData);
+                    $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $this->queryBuilder);
+                }
+            }
+
+            $ret = $filterForm->createView();
         } else {
-            // Get filter from session
-            if ($this->configArray['sessionFilter'] && $session->has($this->configArray['sessionFilter'])) {
-                $filterData = $session->get($this->configArray['sessionFilter']);
-                $filterForm->submit($filterData);
-                $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $queryBuilder);
-            }
+            $ret = null;
         }
 
-        return array($filterForm, $queryBuilder);
+        return $ret;
     }
 
     /**
