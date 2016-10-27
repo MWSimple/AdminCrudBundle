@@ -49,28 +49,9 @@
                     </button>
                     <a class="navbar-brand" href="#">{{ admincrud_config('site_name')|raw }}</a>
                 </div>
-                <ul class="nav navbar-top-links navbar-right">
-                    <li class="dropdown">
-                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-user fa-fw"></i> {{ app.user ? app.user.username : '' }} <i class="fa fa-caret-down"></i>
-                            </a>
-                            {% if admincrud_config('fos_user') %}
-                                <ul class="dropdown-menu dropdown-user">
-                                    <li>
-                                        <a href="{{ path('fos_user_security_logout') }}">{{ '<i class="fa fa-sign-out fa-fw"></i>'|raw }} {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>
-                                    </li>
-                                </ul>
-                            {% endif %}
-                            <!-- /.dropdown-user -->
-                        {% elseif admincrud_config('fos_user') %}
-                            <a href="{{ path('fos_user_security_login') }}">
-                                <i class="fa fa-user fa-fw"></i> {{ 'layout.login'|trans({}, 'FOSUserBundle') }}
-                            </a>
-                        {% endif %}
-                    </li>
-                    <!-- /.dropdown -->
-                </ul>
+
+                {% include 'MWSimpleAdminCrudBundle:Default:navbarright.html.twig' %}
+
                 <div class="navbar-default sidebar" role="navigation">
                     <div class="sidebar-nav navbar-collapse">
                         {% block menu %}

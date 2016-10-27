@@ -102,11 +102,13 @@
     </div>
     {% block buttonsbelow %}
         <div class="col-lg-9 col-md-9 col-sm-9">
-            <div class="float-left col-lg-3 col-md-3 col-sm-3">
-                <a class="btn btn-info col-lg-11" href="{{ path(config.index) }}">
-                    {{ 'views.recordactions.backtothelist'|trans({}, 'MWSimpleAdminCrudBundle') }}
-                </a>
-            </div>
+            {% if config.index is defined %}
+                <div class="float-left col-lg-3 col-md-3 col-sm-3">
+                    <a class="btn btn-info col-lg-11" href="{{ path(config.index) }}">
+                        {{ 'views.recordactions.backtothelist'|trans({}, 'MWSimpleAdminCrudBundle') }}
+                    </a>
+                </div>
+            {% endif %}
             {% if config.edit is defined %}
                 <div class="float-left col-lg-3 col-md-3 col-sm-3">
                     <a class="btn btn-primary col-lg-11" href="{{ path(config.edit, { 'id': entity.id }) }}">
