@@ -86,6 +86,8 @@
                             {{ attribute(entity, field.name) ? attribute(entity, field.name)|date(field.date) }}
                         {% elseif field.type == 'boolean' %}
                             {{ ajaxActive(attribute(entity, field.name), config.repository, field.name, entity.id) }}
+                        {% elseif field.type == 'boolean_view' %}
+                            {{ isActive(attribute(entity, field.name)) }}
                         {% elseif field.type in ['ONE_TO_MANY', 'MANY_TO_MANY'] %}
                             {% set many_entity = attribute(entity, field.name) %}
                             {% for key, field_many in many_entity %}

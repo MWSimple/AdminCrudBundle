@@ -27,7 +27,7 @@ fieldsindex: #Fields displayed in the index list
     a.id:
         label: 'Code' #Label
         name: 'Id' #Field name
-        type: 'integer' #Types: 'string', 'datetime', 'datetimetz', 'date', 'time', 'boolean', 'ONE_TO_MANY', 'MANY_TO_MANY', 'vich_file', 'money'
+        type: 'integer' #Types: 'string', 'datetime', 'datetimetz', 'date', 'time', 'boolean', 'boolean_view', 'ONE_TO_MANY', 'MANY_TO_MANY', 'vich_file', 'money'
         export: true #Exports the field
     a.image:
         ...

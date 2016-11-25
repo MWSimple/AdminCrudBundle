@@ -27,7 +27,7 @@ fieldsindex: #Los campos que aparecen en la lista de índices
     a.id:
         label: 'Código' #Nombre que muestra
         name: 'Id' #Nombre del campo
-        type: 'integer' #Tipos: 'string', 'datetime', 'datetimetz', 'date', 'time', 'boolean', 'ONE_TO_MANY', 'MANY_TO_MANY', 'vich_file', 'money'
+        type: 'integer' #Tipos: 'string', 'datetime', 'datetimetz', 'date', 'time', 'boolean', 'boolean_view', 'ONE_TO_MANY', 'MANY_TO_MANY', 'vich_file', 'money'
         export: true #Permite exportar el campo
     a.imagen:
         ...
