@@ -17,7 +17,7 @@ new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
 new SC\DatetimepickerBundle\SCDatetimepickerBundle(),
 new Liip\ImagineBundle\LiipImagineBundle(),
 new Tetranz\Select2EntityBundle\TetranzSelect2EntityBundle(),
-// new Vich\UploaderBundle\VichUploaderBundle(),
+new Vich\UploaderBundle\VichUploaderBundle(),
 // new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
 ```
 
@@ -84,6 +84,9 @@ mw_simple_admin_crud:
         #            roles: ['ROLE_ADMIN']
         #    roles: ['ROLE_USER']
         #child3: { name: Usuarios, url: admin_usuario, id: usuario, roles: ['ROLE_SUPERADMIN'], icon: glyphicon glyphicon-user }
+
+vich_uploader:
+    db_driver: orm
 ```
 
 ### Configurar la ruta admin
