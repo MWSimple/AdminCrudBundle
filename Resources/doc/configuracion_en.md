@@ -23,6 +23,7 @@ export: 'admin_post_export' #Use sonata export
 sessionFilter: 'PostControllerFilter' #If I comment this line does not use session. To remove the filter Filtertype comment line in the Controller generated
 saveAndAdd: true #If true then add the button to save and add another
 validator: false #If true added by JS validation on forms (*No maintenance)
+site_view_layout: null #Optional example 'AppBundle::layout.html.twig'
 fieldsindex: #Fields displayed in the index list
     a.id:
         label: 'Code' #Label

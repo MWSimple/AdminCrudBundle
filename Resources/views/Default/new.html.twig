@@ -1,4 +1,4 @@
-{% extends admincrud_config('site_view_layout')|raw %}
+{% extends [config.site_view_layout, admincrud_config('site_view_layout')|raw] %}
 
 {% block title %}
     {{ parent() }} - {{ 'views.new.creation'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}

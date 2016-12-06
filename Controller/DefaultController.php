@@ -539,8 +539,8 @@ class DefaultController extends Controller
                 $this->configArray[$key] = $value;
             }
         }
-        //Set opcion saveAndAdd en la configuracion
-        $this->setSaveAndAdd();
+        //Set options default in config
+        $this->setDefaultConfig();
     }
 
     public function getAutocompleteFormsMwsAction(Request $request, $options, $qb = null)
@@ -613,9 +613,14 @@ class DefaultController extends Controller
         return false;
     }
 
-    //FUNCIONES VARIAS
-    protected function setSaveAndAdd()
+    //DEFAULT CONFIG
+    protected function setDefaultConfig()
     {
+        //Si no existe site_view_layout o fue comentado entra y setea null
+        if (!array_key_exists('site_view_layout', $this->configArray)) {
+            $this->configArray['site_view_layout'] = null;
+        }
+        //Si no existe saveAndAdd, es false o fue comentado entra y setea en true
         if (!array_key_exists('saveAndAdd', $this->configArray)) {
             $this->configArray['saveAndAdd'] = true;
         } elseif ($this->configArray['saveAndAdd'] !== false) {
