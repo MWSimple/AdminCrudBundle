@@ -44,16 +44,16 @@ Documentación
 
 ## Dependencias
 
-El bundle extiende de    [SensioGeneratorBundle](https://github.com/sensio/SensioGeneratorBundle) .
-Para el menu             [KnpMenuBundle](https://github.com/KnpLabs/KnpMenuBundle) .
-Para el paginador        [KnpPaginatorBundle](https://github.com/KnpLabs/KnpPaginatorBundle) .
-Para los filtros         [LexikFormFilterBundle](https://github.com/lexik/LexikFormFilterBundle) .
-Formulario datetime type [DatetimepickerBundle](https://github.com/MWSimple/DatetimepickerBundle) .
-Subir archivos           [VichUploaderBundle](https://github.com/dustin10/VichUploaderBundle) .
-Editor de texto          [IvoryCKEditorBundle](https://github.com/egeloen/IvoryCKEditorBundle) .
-Manipulador de imagenes  [LiipImagineBundle](https://github.com/liip/LiipImagineBundle) .
-Twig Extensiones         [TwigExtensions](http://twig.sensiolabs.org/doc/extensions/intl.html) .
-Select 2 Entity          [select2entity-bundle](https://github.com/tetranz/select2entity-bundle) .
+- El bundle extiende de    [SensioGeneratorBundle](https://github.com/sensio/SensioGeneratorBundle) .
+- Para el menu             [KnpMenuBundle](https://github.com/KnpLabs/KnpMenuBundle) .
+- Para el paginador        [KnpPaginatorBundle](https://github.com/KnpLabs/KnpPaginatorBundle) .
+- Para los filtros         [LexikFormFilterBundle](https://github.com/lexik/LexikFormFilterBundle) .
+- Formulario datetime type [DatetimepickerBundle](https://github.com/lexik/LexikFormFilterBundle) .
+- Subir archivos           [VichUploaderBundle](https://github.com/dustin10/VichUploaderBundle) .
+- Editor de texto          [IvoryCKEditorBundle](https://github.com/egeloen/IvoryCKEditorBundle) .
+- Manipulador de imagenes  [LiipImagineBundle](https://github.com/liip/LiipImagineBundle) .
+- Twig Extensiones         [TwigExtensions](http://twig.sensiolabs.org/doc/extensions/intl.html) .
+- Select 2 Entity          [select2entity-bundle](https://github.com/tetranz/select2entity-bundle) .
 
 ## Author
 Gonzalo Alonso - gonkpo@gmail.com

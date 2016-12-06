@@ -64,7 +64,10 @@ knp_menu:
     templating: false # if true, enables the helper for PHP templates
     default_renderer: twig # The renderer to use, list is also available by default
 
-#setting: - site_name, Perminte configurar el nombre. - fos_user, Poner a true en caso de utilizar FosUserBundle.
+#setting:
+- site_name: Perminte configurar el nombre.
+- site_view_layout: Permite configurar el layout a extender por el CRUD.
+- fos_user: Poner a true en caso de utilizar FosUserBundle.
 #menu: Los child son índices no deben ser iguales, aquí se agregan y configuran los item del menu.
 #menu: Permite configurar el nombre, url, id, icono, roles a quien visualiza, si tiene submenu se puede agregar.
 mw_simple_admin_crud:

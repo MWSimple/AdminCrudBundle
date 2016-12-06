@@ -43,16 +43,16 @@ Documentation
 
 ## Dependencies
 
-This bundle extends [SensioGeneratorBundle](https://github.com/sensio/SensioGeneratorBundle) .
-Menu using          [KnpMenuBundle](https://github.com/KnpLabs/KnpMenuBundle) .
-paginator using     [KnpPaginatorBundle](https://github.com/KnpLabs/KnpPaginatorBundle) .
-Filter using        [LexikFormFilterBundle](https://github.com/lexik/LexikFormFilterBundle) .
-Form datetime type  [DatetimepickerBundle](https://github.com/lexik/LexikFormFilterBundle) .
-Uploads files       [VichUploaderBundle](https://github.com/dustin10/VichUploaderBundle) .
-Text editor         [IvoryCKEditorBundle](https://github.com/egeloen/IvoryCKEditorBundle) .
-Image manipulation  [LiipImagineBundle](https://github.com/liip/LiipImagineBundle) .
-Twig Extensions     [TwigExtensions](http://twig.sensiolabs.org/doc/extensions/intl.html) .
-Select 2 Entity     [select2entity-bundle](https://github.com/tetranz/select2entity-bundle) .
+- This bundle extends [SensioGeneratorBundle](https://github.com/sensio/SensioGeneratorBundle) .
+- Menu using          [KnpMenuBundle](https://github.com/KnpLabs/KnpMenuBundle) .
+- Paginator using     [KnpPaginatorBundle](https://github.com/KnpLabs/KnpPaginatorBundle) .
+- Filter using        [LexikFormFilterBundle](https://github.com/lexik/LexikFormFilterBundle) .
+- Form datetime type  [DatetimepickerBundle](https://github.com/lexik/LexikFormFilterBundle) .
+- Uploads files       [VichUploaderBundle](https://github.com/dustin10/VichUploaderBundle) .
+- Text editor         [IvoryCKEditorBundle](https://github.com/egeloen/IvoryCKEditorBundle) .
+- Image manipulation  [LiipImagineBundle](https://github.com/liip/LiipImagineBundle) .
+- Twig Extensions     [TwigExtensions](http://twig.sensiolabs.org/doc/extensions/intl.html) .
+- Select 2 Entity     [select2entity-bundle](https://github.com/tetranz/select2entity-bundle) .
 
 ## Author
 Gonzalo Alonso - gonkpo@gmail.com

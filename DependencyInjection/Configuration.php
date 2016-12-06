@@ -39,6 +39,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('site_name')->defaultValue("AdminCrud")->end()
+                        ->scalarNode('site_view_layout')->defaultValue("MWSimpleAdminCrudBundle::layout.html.twig")->end()
                         ->booleanNode('fos_user')->defaultFalse()->end()
                     ->end()
                 ->end() //setting
