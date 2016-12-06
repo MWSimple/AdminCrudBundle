@@ -71,7 +71,7 @@ knp_menu:
 #menu: The Child are indices should not be the same, here are added and set the menu item.
 #menu: Set the name, url, id, icon, roles who displayed, if you have submenu can be added.
 mw_simple_admin_crud:
-    setting: { site_name: Administration, fos_user: false } # Default: site_name: AdminCrud, fos_user: false
+    setting: { site_name: Administration, fos_user: false } # Default: site_name: AdminCrud, site_view_layout: MWSimpleAdminCrudBundle::layout.html.twig, fos_user: false
     menu_setting: { id: side-menu, class: nav } # use id side-menu and class nav
     menu:
         child: { name: inicio, url: mws_admin_crud_menu, id: inicio, icon: glyphicon glyphicon-home }
