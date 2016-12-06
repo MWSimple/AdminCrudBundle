@@ -1,4 +1,4 @@
-{% extends 'MWSimpleAdminCrudBundle::layout.html.twig' %}
+{% extends admincrud_config('site_view_layout')|raw %}
 
 {% block page %}
 	<h1 class="page-header">{{ 'views.layout.bannersadmin'|trans({}, 'MWSimpleAdminCrudBundle') }}</h1>
