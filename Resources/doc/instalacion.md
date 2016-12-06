@@ -65,7 +65,7 @@ knp_menu:
     default_renderer: twig # The renderer to use, list is also available by default
 
 #setting:
-- site_name: Perminte configurar el nombre.
+- site_name: Permite configurar el nombre.
 - site_view_layout: Permite configurar el layout a extender por el CRUD.
 - fos_user: Poner a true en caso de utilizar FosUserBundle.
 #menu: Los child son índices no deben ser iguales, aquí se agregan y configuran los item del menu.
