@@ -47,7 +47,7 @@ Documentation
 - Menu using          [KnpMenuBundle](https://github.com/KnpLabs/KnpMenuBundle) .
 - Paginator using     [KnpPaginatorBundle](https://github.com/KnpLabs/KnpPaginatorBundle) .
 - Filter using        [LexikFormFilterBundle](https://github.com/lexik/LexikFormFilterBundle) .
-- Form datetime type  [DatetimepickerBundle](https://github.com/lexik/LexikFormFilterBundle) .
+- Form datetime type  [DatetimepickerBundle](https://github.com/MWSimple/DatetimepickerBundle) .
 - Uploads files       [VichUploaderBundle](https://github.com/dustin10/VichUploaderBundle) .
 - Text editor         [IvoryCKEditorBundle](https://github.com/egeloen/IvoryCKEditorBundle) .
 - Image manipulation  [LiipImagineBundle](https://github.com/liip/LiipImagineBundle) .
