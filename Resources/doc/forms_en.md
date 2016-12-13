@@ -142,6 +142,11 @@ public function getAutocompleteEntity(Request $request)
 <script src="{{ asset('bundles/mwsimpleadmincrud/js/addForm.js') }}"></script>
 <script src="{{ asset('bundles/mwsimpleadmincrud/js/collection.js') }}"></script>
 ```
+####If not using validator js
+```twig
+<script src="{{ asset('bundles/mwsimpleadmincrud/js/addForm_not_validator.js') }}"></script>
+<script src="{{ asset('bundles/mwsimpleadmincrud/js/collection.js') }}"></script>
+```
 
 * [Security](seguridad_en.md)
 * [README](README_EN.md)
