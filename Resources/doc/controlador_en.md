@@ -31,6 +31,22 @@
     preUpdateEntity()
     preRemoveEntity()
 ```
+#### Override generate the path to redirect after saving the entity in createAction and updateAction:
+```php
+    /* Execute after success flush entity in createAction and updateAction */
+    protected function urlSuccess()
+    {
+        if ($this->configArray['saveAndAdd']) {
+            $urlSuccess = $this->form->get('saveAndAdd')->isClicked()
+            ? $this->generateUrl($this->configArray['new'])
+            : $this->generateUrl($this->configArray['show'], array('id' => $this->entity->getId()));
+        } else {
+            $urlSuccess = $this->generateUrl($this->configArray['show'], array('id' => $this->entity->getId()));
+        }
+
+        return $urlSuccess;
+    }
+```
 #### Override the query the list use:
 ```php
     /**

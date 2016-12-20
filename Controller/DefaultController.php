@@ -26,6 +26,8 @@ class DefaultController extends Controller
     protected $em;
     /* Query Builder. */
     protected $queryBuilder;
+    /* Form. */
+    protected $form;
 
     /**
      * Index
@@ -229,10 +231,10 @@ class DefaultController extends Controller
     {
         $this->getConfig();
         $this->createNewEntity();
-        $form = $this->createCreateForm();
-        $form->handleRequest($request);
+        $this->form = $this->createCreateForm();
+        $this->form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($this->form->isValid()) {
             $this->em = $this->getDoctrine()->getManager();
             $this->prePersistEntity();
             $this->em->persist($this->entity);
@@ -242,15 +244,7 @@ class DefaultController extends Controller
             //Set session mensaje
             $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
 
-            if ($this->configArray['saveAndAdd']) {
-                $nextAction = $form->get('saveAndAdd')->isClicked()
-                ? $this->generateUrl($this->configArray['new'])
-                : $this->generateUrl($this->configArray['show'], array('id' => $this->entity->getId()));
-            } else {
-                $nextAction = $this->generateUrl($this->configArray['show'], array('id' => $this->entity->getId()));
-            }
-
-            return $this->redirect($nextAction);
+            return $this->redirect($this->urlSuccess());
         }
 
         $this->get('session')->getFlashBag()->add('danger', 'flash.create.error');
@@ -261,7 +255,7 @@ class DefaultController extends Controller
         return $this->render($this->configArray['view_new'], array(
             'config' => $this->configArray,
             'entity' => $this->entity,
-            'form'   => $form->createView(),
+            'form'   => $this->form->createView(),
         ));
     }
 
@@ -435,23 +429,16 @@ class DefaultController extends Controller
         }
         $this->useACL('update');
         $deleteForm = $this->createDeleteForm($id, true);
-        $form = $this->createEditForm();
+        $this->form = $this->createEditForm();
         $this->preHandleRequestEntity();
-        $form->handleRequest($request);
+        $this->form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($this->form->isValid()) {
             $this->preUpdateEntity();
             $this->em->flush();
             $this->get('session')->getFlashBag()->add('success', 'flash.update.success');
 
-            if ($this->configArray['saveAndAdd']) {
-                $nextAction = $form->get('saveAndAdd')->isClicked()
-                    ? $this->generateUrl($this->configArray['new'])
-                    : $this->generateUrl($this->configArray['show'], array('id' => $id));
-            } else {
-                $nextAction = $this->generateUrl($this->configArray['show'], array('id' => $id));
-            }
-            return $this->redirect($nextAction);
+            return $this->redirect($this->urlSuccess());
         }
 
         $this->get('session')->getFlashBag()->add('danger', 'flash.update.error');
@@ -462,9 +449,23 @@ class DefaultController extends Controller
         return $this->render($this->configArray['view_edit'], array(
             'config'      => $this->configArray,
             'entity'      => $this->entity,
-            'form'        => $form->createView(),
+            'form'        => $this->form->createView(),
             'delete_form' => $deleteForm,
         ));
+    }
+
+    /* Execute after success flush entity in createAction and updateAction */
+    protected function urlSuccess()
+    {
+        if ($this->configArray['saveAndAdd']) {
+            $urlSuccess = $this->form->get('saveAndAdd')->isClicked()
+            ? $this->generateUrl($this->configArray['new'])
+            : $this->generateUrl($this->configArray['show'], array('id' => $this->entity->getId()));
+        } else {
+            $urlSuccess = $this->generateUrl($this->configArray['show'], array('id' => $this->entity->getId()));
+        }
+
+        return $urlSuccess;
     }
 
     /**
