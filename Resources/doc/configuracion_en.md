@@ -52,6 +52,9 @@ fieldsindex: #Fields displayed in the index list
         currency_style: 'currency'
         currency_type: 'double'
         ...
+fieldsshow_title: #Add if you need to concatenate a label and a field of the entity in the title
+    label: 'ID'
+    name: 'Id'
 fieldsshow: #Fields displayed in the show Entity
     a.id:
         label: 'Codigo' #Label

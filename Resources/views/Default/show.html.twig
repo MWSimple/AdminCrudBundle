@@ -8,7 +8,7 @@
     <div class="panel panel-primary center-block">
         <div class="panel-heading">
             {% block panelheading %}
-                <i class="glyphicon glyphicon-ok"></i> {{ 'views.show.show'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
+                <i class="glyphicon glyphicon-ok"></i> {{ 'views.show.show'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }} {{ config.fieldsshow_title is defined ? config.fieldsshow_title.label ~ ' ' ~ attribute(entity, config.fieldsshow_title.name)|raw }}
             {% endblock panelheading %}
         </div>
         <div class="panel-body">

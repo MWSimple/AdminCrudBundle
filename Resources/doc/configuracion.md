@@ -41,6 +41,9 @@ fieldsindex: #Los campos que aparecen en la lista de índices
         currency_style: 'currency'
         currency_type: 'double'
         ...
+fieldsshow_title: #Agregar si se necesita concatenar un label y un campo de la entity en el titulo
+    label: 'ID'
+    name: 'Id'
 fieldsshow: #Los campos que aparecen en el ver Entity
     a.id:
         label: 'Código' #Nombre que muestra
