@@ -111,9 +111,9 @@
                     {% endfor %}
                     <td>
                         {% block actions %}
-                            <a class="glyphicon glyphicon-search tooltips"  href="{{ path(config.show, { 'id': entity.id }) }}" title="" rel="tooltip" data-original-title="{{ 'views.actions.show'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}"></a>
+                            <a class="glyphicon glyphicon-search tooltips" href="{{ path(config.show, { 'id': entity.id }) }}" title="" rel="tooltip" data-original-title="{{ 'views.actions.show'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}"></a>
                             {% if config.edit is defined %}
-                                <a class="glyphicon glyphicon-edit tooltips"  href="{{ path(config.edit, { 'id': entity.id }) }}" title="" rel="tooltip" data-original-title="{{ 'views.actions.edit'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}"></a>
+                                <a class="glyphicon glyphicon-edit tooltips" href="{{ path(config.edit, { 'id': entity.id }) }}" title="" rel="tooltip" data-original-title="{{ 'views.actions.edit'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}"></a>
                             {% endif %}
                         {% endblock %}
                     </td>
