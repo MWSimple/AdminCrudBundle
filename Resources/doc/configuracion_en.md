@@ -30,7 +30,7 @@ fieldsindex: #Fields displayed in the index list
         name: 'Id' #Field name
         type: 'integer' #Types: 'string', 'datetime', 'datetimetz', 'date', 'time', 'boolean', 'boolean_view', 'ONE_TO_MANY', 'MANY_TO_MANY', 'vich_file', 'money'
         export: true #Exports the field
-    a.entities #Option to display ONE_TO_MANY or MANY_TO_MANY in table format by adding the following configuration
+    a.entities: #Option to display ONE_TO_MANY or MANY_TO_MANY in table format by adding the following configuration
         ...
         type: 'ONE_TO_MANY' #or 'MANY_TO_MANY'
         fields:

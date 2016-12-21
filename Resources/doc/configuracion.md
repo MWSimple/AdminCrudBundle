@@ -49,7 +49,7 @@ fieldsshow: #Los campos que aparecen en el ver Entity
         class: 'col-lg-8 col-md-6 col-sm-12' #Permite agregar class. Por defecto es col-12
         #closerow: true #Permite cerrar un row para dar inicio a otro row (http://getbootstrap.com/)
         separator: '<br>' #Opcionalmente se puede agregar separador html para ONE_TO_MANY || MANY_TO_MANY
-    a.entities #Opcion para visualizar ONE_TO_MANY o MANY_TO_MANY en formato tabla agregando la siguiente configuracion
+    a.entities: #Opcion para visualizar ONE_TO_MANY o MANY_TO_MANY en formato tabla agregando la siguiente configuracion
         ...
         type: 'ONE_TO_MANY' #o 'MANY_TO_MANY'
         fields:
