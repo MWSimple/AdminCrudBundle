@@ -49,6 +49,17 @@ fieldsshow: #Los campos que aparecen en el ver Entity
         class: 'col-lg-8 col-md-6 col-sm-12' #Permite agregar class. Por defecto es col-12
         #closerow: true #Permite cerrar un row para dar inicio a otro row (http://getbootstrap.com/)
         separator: '<br>' #Opcionalmente se puede agregar separador html para ONE_TO_MANY || MANY_TO_MANY
+    a.entities #Opcion para visualizar ONE_TO_MANY o MANY_TO_MANY en formato tabla agregando la siguiente configuracion
+        ...
+        type: 'ONE_TO_MANY' #o 'MANY_TO_MANY'
+        fields:
+            Label1: field1 #Ej. TituloColumna: NombreCampo
+            Label2: field2
+            Label3: field3
+        actions: #Si no desea acciones no agregar la linea
+            show: path_show #Agrega accion ver (ruta al ver), si no necesita comentar linea.
+            edit: path_edit #Agrega accion editar (ruta al editar), si no necesita comentar linea.
+        ...
     a.imagen:
         ...
         type: 'vich_file' #Tipo para la vista previa de la imagen

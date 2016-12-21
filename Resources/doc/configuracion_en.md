@@ -30,6 +30,17 @@ fieldsindex: #Fields displayed in the index list
         name: 'Id' #Field name
         type: 'integer' #Types: 'string', 'datetime', 'datetimetz', 'date', 'time', 'boolean', 'boolean_view', 'ONE_TO_MANY', 'MANY_TO_MANY', 'vich_file', 'money'
         export: true #Exports the field
+    a.entities #Option to display ONE_TO_MANY or MANY_TO_MANY in table format by adding the following configuration
+        ...
+        type: 'ONE_TO_MANY' #or 'MANY_TO_MANY'
+        fields:
+            Label1: field1 #Ej. TitleColumn: FieldName
+            Label2: field2
+            Label3: field3
+        actions: #If you do not want actions do not add the line
+            show: path_show #Add action show (route to show), if you do not need comment line.
+            edit: path_edit #Add action edit (route to edit), if you do not need to comment line.
+        ...
     a.image:
         ...
         type: 'vich_file' #Type for preview image

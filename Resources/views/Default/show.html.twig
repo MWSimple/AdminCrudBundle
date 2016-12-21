@@ -37,6 +37,39 @@
                                 {% set many_entity = attribute(entity, field.name) %}
                                 <div class="well">
                                     <span class="input-xlarge uneditable-input">
+                                    {% if field.fields is defined %}
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                {% for key, field_many in field.fields %}
+                                                    <th>{{ key }}</th>
+                                                {% endfor %}
+                                                {% if field.actions is defined %}
+                                                    <th>{{ 'views.index.actions'|trans({}, 'MWSimpleAdminCrudBundle') }}</th>
+                                                {% endif %}
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for field_many in many_entity %}
+                                                <tr>
+                                                {% for field_name in field.fields %}
+                                                    <td>{{ attribute(field_many, field_name)|raw }}</td>
+                                                {% endfor %}
+                                                {% if field.actions is defined %}
+                                                    <td>
+                                                    {% if field.actions.show is defined %}
+                                                        <a class="glyphicon glyphicon-search tooltips" href="{{ path(field.actions.show, { 'id': field_many.id }) }}" title="" rel="tooltip" data-original-title="{{ 'views.actions.show'|trans({'%entity%': field.label}, 'MWSimpleAdminCrudBundle') }}"></a>
+                                                    {% endif %}
+                                                    {% if field.actions.edit is defined %}
+                                                        <a class="glyphicon glyphicon-edit tooltips" href="{{ path(field.actions.edit, { 'id': field_many.id }) }}" title="" rel="tooltip" data-original-title="{{ 'views.actions.edit'|trans({'%entity%': field.label}, 'MWSimpleAdminCrudBundle') }}"></a>
+                                                    {% endif %}
+                                                    </td>
+                                                {% endif %}
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    {% else %}
                                         {% for key, field_many in many_entity %}
                                             {{ field_many|raw }}
                                             {% if field.separator is defined %}
@@ -45,6 +78,7 @@
                                                 |
                                             {% endif %}
                                         {% endfor %}
+                                    {% endif %}
                                     </span>
                                 </div>
                             {% endblock %}
