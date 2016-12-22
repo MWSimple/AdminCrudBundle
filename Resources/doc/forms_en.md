@@ -55,7 +55,7 @@ use MWSimple\Bundle\AdminCrudBundle\Form\Type\DualListType;
 $builder
     ->add('field', DualListType::class, array(
         'class'    => 'AppDemoBundle:Entity',
-        'property' => 'name',
+        'choice_label' => 'name',
         'multiple' => true,
         'required' => false,
         'expanded' => true,
