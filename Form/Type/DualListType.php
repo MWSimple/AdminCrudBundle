@@ -3,7 +3,7 @@
 namespace MWSimple\Bundle\AdminCrudBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\EntityType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class DualListType extends AbstractType
 {
