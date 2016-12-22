@@ -28,6 +28,7 @@
     createNewEntity() //The method is used to instantiate entity in newAction() and createAction(Request $request).
     prePersistEntity() //The method is then used to validate form before flush entity in createAction(Request $request).
     preHandleRequestEntity()
+    preFormIsValid() //It is executed before validating the form in updateAction(Request $request, $id).
     preUpdateEntity()
     preRemoveEntity()
 ```

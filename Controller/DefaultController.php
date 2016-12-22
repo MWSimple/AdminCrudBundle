@@ -433,6 +433,7 @@ class DefaultController extends Controller
         $this->preHandleRequestEntity();
         $this->form->handleRequest($request);
 
+        $this->preFormIsValid();
         if ($this->form->isValid()) {
             $this->preUpdateEntity();
             $this->em->flush();
@@ -650,6 +651,10 @@ class DefaultController extends Controller
     }
     /* Execute before handleRequest the entity updateAction */
     protected function preHandleRequestEntity()
+    {
+    }
+    /* Execute before form->isValid() updateAction */
+    protected function preFormIsValid()
     {
     }
     /* Execute before flush the entity updateAction */

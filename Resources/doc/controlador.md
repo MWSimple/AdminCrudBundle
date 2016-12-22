@@ -28,6 +28,7 @@
     createNewEntity() //Se utiliza al instanciar la entidad en los metodos newAction() y createAction(Request $request).
     prePersistEntity() //Se utiliza luego de validar formulario y antes del flush entidad en el metodo createAction(Request $request).
     preHandleRequestEntity()
+    preFormIsValid() //Se ejecuta antes de validar el formulario en updateAction(Request $request, $id).
     preUpdateEntity()
     preRemoveEntity()
 ```
