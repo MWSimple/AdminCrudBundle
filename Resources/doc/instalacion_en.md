@@ -94,7 +94,8 @@ vich_uploader:
 
 ### Configuration routing admin
 
-You can configure `routing.yml` default query parameter names and templates
+In the file `app/config/routing.yml`
+include http://symfony.com/doc/current/routing/redirect_trailing_slash.html
 
 ```yaml
 mw_simple_admin_crud:
@@ -104,6 +105,14 @@ mw_simple_admin_crud:
 
 _liip_imagine:
     resource: "@LiipImagineBundle/Resources/config/routing.xml"
+
+# MUST GO TO THE END
+remove_trailing_slash:
+    path: /{url}
+    defaults: { _controller: MWSimpleAdminCrudBundle:Redirecting:removeTrailingSlash }
+    requirements:
+        url: .*\/$
+        _method: GET
 ```
 
 ### Install assets

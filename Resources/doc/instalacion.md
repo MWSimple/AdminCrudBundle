@@ -95,6 +95,7 @@ vich_uploader:
 ### Configurar la ruta admin
 
 En el archivo `app/config/routing.yml`
+incluye http://symfony.com/doc/current/routing/redirect_trailing_slash.html
 
 ```yaml
 mw_simple_admin_crud:
@@ -104,6 +105,14 @@ mw_simple_admin_crud:
 
 _liip_imagine:
     resource: "@LiipImagineBundle/Resources/config/routing.xml"
+
+# DEBE IR AL FINAL
+remove_trailing_slash:
+    path: /{url}
+    defaults: { _controller: MWSimpleAdminCrudBundle:Redirecting:removeTrailingSlash }
+    requirements:
+        url: .*\/$
+        _method: GET
 ```
 
 ### Instalar assets
