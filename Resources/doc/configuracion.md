@@ -24,6 +24,7 @@ sessionFilter: 'PostControllerFilter' #Si comento esta linea no utiliza session.
 saveAndAdd: true #Si es true entonces agrega el boton para guardar y agregar otro
 validator: false #Si es true agrega validacion por JS en los formularios (*Sin mantenimiento)
 site_view_layout: null #Opcional por ejemplo 'AppBundle::layout.html.twig'
+#ajax_enabled_disabled: 'path_ajax_enabled_disabled' #Opcional si necesita personalizar
 fieldsindex: #Los campos que aparecen en la lista de índices
     a.id:
         label: 'Código' #Nombre que muestra

@@ -149,9 +149,16 @@
         });
     </script>
     <script src="{{ asset('bundles/mwsimpleadmincrud/js/widget_not_validator.js') }}"></script>
+
+    {% if config.ajax_enabled_disabled is defined %}
+        {% set path_ajax = path(config.ajax_enabled_disabled) %}
+    {% else %}
+        {% set path_ajax = path('mws_ajax_enabled_disabled') %}
+    {% endif %}
+
     <script type="text/javascript">
         var JsOptions = {
-            url: "{{ path('mws_ajax_enabled_disabled') }}",
+            url: "{{ path_ajax }}",
             messageSuccess: "{{ 'flash.update.success'|trans({}, 'MWSimpleAdminCrudBundle') }}",
             messageError: "{{ 'flash.update.error'|trans({}, 'MWSimpleAdminCrudBundle') }}"
         };

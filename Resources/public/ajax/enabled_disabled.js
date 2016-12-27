@@ -13,7 +13,7 @@ $(document).ready(function() {
             url: JsOptions.url,
             data: {repository: $(this).data('repository'), datafieldname: $(this).data('fieldname'), dataid: $(this).data('id')},
             success: function (res) {
-                if (res) {
+                if (res == true) {
                     tpShowMessage('ajax-'+$(this).data('id'), 'success', JsOptions.messageSuccess);
                 } else {
                     tpShowMessage('ajax-'+$(this).data('id'), 'danger', JsOptions.messageError);

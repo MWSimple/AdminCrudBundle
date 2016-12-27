@@ -24,6 +24,7 @@ sessionFilter: 'PostControllerFilter' #If I comment this line does not use sessi
 saveAndAdd: true #If true then add the button to save and add another
 validator: false #If true added by JS validation on forms (*No maintenance)
 site_view_layout: null #Optional example 'AppBundle::layout.html.twig'
+#ajax_enabled_disabled: 'path_ajax_enabled_disabled' #Optional if you need to customize
 fieldsindex: #Fields displayed in the index list
     a.id:
         label: 'Code' #Label
