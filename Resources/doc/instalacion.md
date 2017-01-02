@@ -68,11 +68,12 @@ knp_menu:
 - site_name: Permite configurar el nombre.
 - site_view_layout: Permite configurar el layout a extender por el CRUD.
 - fos_user: Poner a true en caso de utilizar FosUserBundle.
+- menu_horizontal: Para menu horizontal poner en true. Ademas agregar en menu_setting.class: nav navbar-nav
 #menu: Los child son índices no deben ser iguales, aquí se agregan y configuran los item del menu.
 #menu: Permite configurar el nombre, url, id, icono, roles a quien visualiza, si tiene submenu se puede agregar.
 mw_simple_admin_crud:
-    setting: { site_name: Administración, fos_user: false } # Default: site_name: AdminCrud, site_view_layout: MWSimpleAdminCrudBundle::layout.html.twig, fos_user: false
-    menu_setting: { id: side-menu, class: nav } # use id side-menu and class nav
+    setting: { site_name: Administración, fos_user: false } # Default: site_name: AdminCrud, site_view_layout: MWSimpleAdminCrudBundle::layout.html.twig, fos_user: false, menu_horizontal: false
+    menu_setting: { id: side-menu, class: nav } # use id: side-menu and class: nav. If is horizontal use class: nav navbar-nav
     menu:
         child: { name: inicio, url: mws_admin_crud_menu, id: inicio, icon: glyphicon glyphicon-home }
         #child2:  

@@ -29,10 +29,10 @@ class ConfigManager
      *
      * @return array
      */
-    public function getBackendConfig($propertyPath = null)
+    public function getBackendConfig($propertyPath = null, $parameterRoot = null)
     {
         if (null === $this->backendConfig) {
-            $this->backendConfig = $this->processConfig();
+            $this->backendConfig = $this->processConfig($parameterRoot);
         }
 
         if (empty($propertyPath)) {
@@ -45,8 +45,14 @@ class ConfigManager
         return $this->container->get('property_accessor')->getValue($this->backendConfig, $propertyPath);
     }
     /* Proceso la configuracion del bundle mw_simple_admin_crud */
-    private function processConfig()
+    private function processConfig($parameterRoot)
     {
-        return $this->container->getParameter('mw_simple_admin_crud.setting');
+        if (is_null($parameterRoot)) {
+            $getParameter = 'mw_simple_admin_crud.setting';
+        } else {
+            $getParameter = $parameterRoot.'.setting';
+        }
+        dump($parameterRoot);
+        return $this->container->getParameter($getParameter);
     }
 }

@@ -10,6 +10,10 @@
     {% block page %}{% endblock %}
     {% block javascript %}{% endblock %}
 ```
+#### Variables, de ser necesario cargar la configuracion en la vista con la funcion admincrud_config() desde otro bundle se puede setear su: Configuration - treeBuilder - root como se describe a continuacion:
+```twig
+{% set parameterRoot = "demo_bundle" %}
+```
 
 ## Lista
 ### Bloques en lista index.html.twig

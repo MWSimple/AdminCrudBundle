@@ -10,6 +10,10 @@
     {% block page %}{% endblock %}
     {% block javascript %}{% endblock %}
 ```
+#### Variables, if necessary load the configuration in the view with the function admincrud_config() from another bundle you can set your: Configuration - treeBuilder - root as described below:
+```twig
+{% set parameterRoot = "demo_bundle" %}
+```
 
 ## List
 ### Block override Index list

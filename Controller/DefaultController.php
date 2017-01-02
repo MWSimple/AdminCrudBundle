@@ -618,6 +618,10 @@ class DefaultController extends Controller
     //DEFAULT CONFIG
     protected function setDefaultConfig()
     {
+        //Si no existe parameter_root o fue comentado entra y setea null
+        if (!array_key_exists('parameter_root', $this->configArray)) {
+            $this->configArray['parameter_root'] = null;
+        }
         //Si no existe site_view_layout o fue comentado entra y setea null
         if (!array_key_exists('site_view_layout', $this->configArray)) {
             $this->configArray['site_view_layout'] = null;

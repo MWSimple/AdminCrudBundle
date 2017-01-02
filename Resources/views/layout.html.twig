@@ -1,3 +1,6 @@
+{% if parameterRoot is not defined %}
+    {% set parameterRoot = null %}
+{% endif %}
 <!DOCTYPE html>
 <html lang="{{ app.request.locale|split('_')|first|default('en') }}">
     <head>
@@ -25,6 +28,13 @@
                 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
                 <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
             <![endif]-->
+            {% if admincrud_config('menu_horizontal', parameterRoot) %}
+                <style type="text/css">
+                    #page-wrapper {
+                        margin: auto !important;
+                    }
+                </style>
+            {% endif %}
         {% endblock %}
 
         {% block head_javascript %}
@@ -38,29 +48,29 @@
     <body>
         <div id="wrapper">
             <!-- Navigation -->
-            <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-                <!-- <div class="container-fluid"> -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">{{ admincrud_config('site_name')|raw }}</a>
-                </div>
-
-                {% include 'MWSimpleAdminCrudBundle:Default:navbarright.html.twig' %}
-
-                <div class="navbar-default sidebar" role="navigation">
-                    <div class="sidebar-nav navbar-collapse">
-                        {% block menu %}
-                            {{ knp_menu_render('MWSimpleAdminCrudBundle:Builder:adminMenu') }}
-                        {% endblock %}
+            {% block nav %}
+                <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">{{ admincrud_config('site_name', parameterRoot)|raw }}</a>
                     </div>
-                </div>
-                <!-- </div> -->
-            </nav>
+
+                    {% include 'MWSimpleAdminCrudBundle:Default:navbarright.html.twig' %}
+
+                    <div class="navbar-default {{ admincrud_config('menu_horizontal', parameterRoot) ? null : 'sidebar' }}" role="navigation">
+                        <div class="{{ admincrud_config('menu_horizontal', parameterRoot) ? null : 'sidebar-nav' }} navbar-collapse">
+                            {% block menu %}
+                                {{ knp_menu_render('MWSimpleAdminCrudBundle:Builder:adminMenu') }}
+                            {% endblock %}
+                        </div>
+                    </div>
+                </nav>
+            {% endblock %}
             <div id="page-wrapper">
                 <div class="row">
                     <div id="tecspro-errors" class="col-md-12 col-sm-12">

@@ -37,12 +37,13 @@ class Twig extends \Twig_Extension
      * getBackendConfiguration 'setting.site_name' => $config['setting']['site_name'].
      *
      * @param string|null $key
+     * @param string|null $parameterRoot
      *
      * @return mixed
      */
-    public function getBackendConfiguration($key = null)
+    public function getBackendConfiguration($key = null, $parameterRoot = null)
     {
-        return $this->configManager->getBackendConfig($key);
+        return $this->configManager->getBackendConfig($key, $parameterRoot);
     }
 
     //Return icon by Enabled or Disabled
