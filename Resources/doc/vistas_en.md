@@ -16,6 +16,8 @@
 ```twig
     {% block title %}{% endblock %}
 
+    {% block pageInfo %} {% endblock %}
+    
     {% block page %}{% endblock %}
 
     {% block buttons %}{% endblock %}

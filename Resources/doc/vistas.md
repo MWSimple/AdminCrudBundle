@@ -16,6 +16,9 @@
 ```twig
     {# título: Definir el titulo de la ventana #}
     {% block title %}{% endblock %}
+    
+    {# página: Permite escribir alguna información arriba de la tabla #}
+    {% block pageInfo %} {% endblock %}
 
     {# página: Permite reescribir todo el contenido del index.html.twig #}
     {% block page %}{% endblock %}
