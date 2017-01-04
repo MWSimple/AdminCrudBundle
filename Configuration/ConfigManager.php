@@ -52,7 +52,6 @@ class ConfigManager
         } else {
             $getParameter = $parameterRoot.'.setting';
         }
-        dump($parameterRoot);
         return $this->container->getParameter($getParameter);
     }
 }
