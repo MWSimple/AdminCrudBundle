@@ -57,6 +57,7 @@
     {% block money %}{% endblock %}
     {% block vich_file %}{% endblock %}
     {% block vich_file_many %}{% endblock %}
+    {% block button %}{% endblock %}
     {% block default %}{% endblock %}
 ```
 ###

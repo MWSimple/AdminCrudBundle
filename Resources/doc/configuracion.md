@@ -84,6 +84,13 @@ fieldsshow: #Los campos que aparecen en el ver Entity
         currency_style: 'currency'
         currency_type: 'double'
         ...
+    a.boton:
+        label: 'Accion'
+        title: 'Accion a ejecutar'
+        path: 'nombre_de_la_ruta'
+        type: 'button'
+        icon: 'glyphicon glyphicon-wrench'
+        ...
 ```
 #### Por defecto no escapa ```twig {{ value|raw }} ```
 
