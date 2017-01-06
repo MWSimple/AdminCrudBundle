@@ -84,6 +84,13 @@ fieldsshow: #Fields displayed in the show Entity
         currency_style: 'currency'
         currency_type: 'double'
         ...
+    a.button:
+        label: 'Action'
+        title: 'Action to execute'
+        path: 'router_name'
+        type: 'button'
+        icon: 'glyphicon glyphicon-wrench'
+        ...
 ```
 #### Default not escape ```twig {{ value|raw }} ```
 

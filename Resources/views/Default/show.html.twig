@@ -115,6 +115,14 @@
                                     {% endfor %}
                                 </div>
                             {% endblock %}
+                        {% elseif field.type == 'button' %}
+                            {% block button %}
+                                <div class="form-control">
+                                    <span class="input-xlarge uneditable-input">
+                                        <a class="{{ field.icon }} tooltips" href="{{ path(field.path, { 'id': entity.id }) }}" title="{{ field.title }}" rel="tooltip" data-original-title="{{ field.title }}"></a>
+                                    </span>
+                                </div>
+                            {% endblock %}
                         {% else %}
                             {% block default %}
                                 <div class="form-control">

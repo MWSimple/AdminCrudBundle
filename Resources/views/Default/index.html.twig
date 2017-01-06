@@ -144,7 +144,6 @@
 {% block javascript %}
     {{ parent() }}
     <script type="text/javascript">
-        $('.tooltips').tooltip();
         $( "#reset_index_filters" ).click(function() {
             $(".reset_submit_filters").trigger("click");
         });
