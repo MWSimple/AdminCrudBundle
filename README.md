@@ -14,6 +14,8 @@ Descripción
 El comando mwsimple:generate:admincrud genera un controlador muy básico para una Entity dada.
 Este controlador extiende e implementa un controlador por defecto con paginador, filtro y permite realizar las operaciones básicas (Listar, Ver, Crear, Editar, Eliminar), además la reescritura de acciones y vistas.
 
+Este paquete nació inspirado en [jordillonch/CrudGeneratorBundle](https://github.com/jordillonch/CrudGeneratorBundle) Por Jordi Llonch
+
 ##<p align="right">Vista previa Listar y Crear</p>
 
 <img src="https://raw.githubusercontent.com/MWSimple/AdminCrudBundle/version30/Resources/doc/preview_list.png" alt="Listar" width="50%" align="right" />
