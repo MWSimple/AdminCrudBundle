@@ -16,14 +16,14 @@ body {
     padding: 0 15px;
     min-height: 568px;
     background-color: #fff;
-    padding-top: 20px;
+    padding-top: 15px;
 }
 
 @media(min-width:768px) {
     #page-wrapper {
         position: inherit;
         margin: 0 0 0 250px;
-        padding: 20px 30px;
+        padding: 15px 30px;
         border-left: 1px solid #e7e7e7;
     }
 }
