@@ -157,12 +157,6 @@ class MWSimpleCrudGenerator extends DoctrineCrudGenerator
             case 'collection':
                 return 'EntityFilterType';
                 break;
-            case 'array':
-                throw new \Exception('The dbType "'.$dbType.'" is only for list implemented (column "'.$columnName.'")');
-                break;
-            case 'virtual':
-                throw new \Exception('The dbType "'.$dbType.'" is only for list implemented (column "'.$columnName.'")');
-                break;
             default:
                 throw new \Exception('The dbType "'.$dbType.'" is not yet implemented (column "'.$columnName.'")');
                 break;
@@ -179,11 +173,14 @@ class MWSimpleCrudGenerator extends DoctrineCrudGenerator
     private function getFieldsDataFromMetadata(ClassMetadataInfo $metadata)
     {
         $fieldsData = (array) $metadata->fieldMappings;
-
+        // The dbType is not yet implemented
+        $fieldsNotImplemented = ['array', 'virtual', 'guid'];
         // Convert type to filter widget
         foreach ($fieldsData as $fieldName => $data) {
-            $fieldsData[$fieldName]['fieldName']    = $fieldName;
-            $fieldsData[$fieldName]['filterWidget'] = $this->getFilterType($fieldsData[$fieldName]['type'], $fieldName);
+            if (!in_array($fieldsData[$fieldName]['type'], $fieldsNotImplemented)) {
+                $fieldsData[$fieldName]['fieldName']    = $fieldName;
+                $fieldsData[$fieldName]['filterWidget'] = $this->getFilterType($fieldsData[$fieldName]['type'], $fieldName);
+            }
         }
 
         return $fieldsData;
