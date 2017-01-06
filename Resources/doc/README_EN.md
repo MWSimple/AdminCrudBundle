@@ -13,6 +13,8 @@ Description
 
 The mwsimple:generate:admincrud generates a very basic controller for a given entity located in a given bundle. This controller extend the default controller implements [paginator], [filter] and allows to perform the [five basic operations List, Show, New, Edit, Delete] on a model, allows rewriting actions and views.
 
+This package was born inspired by [jordillonch/CrudGeneratorBundle](https://github.com/jordillonch/CrudGeneratorBundle) By Jordi Llonch
+
 ##<p align="right">Previews</p>
 
 <img src="https://raw.githubusercontent.com/MWSimple/AdminCrudBundle/version30/Resources/doc/preview_list.png" alt="Listar" width="50%" align="right" />
