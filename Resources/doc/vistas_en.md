@@ -17,8 +17,10 @@
     {% block title %}{% endblock %}
 
     {% block pageInfo %} {% endblock %}
-    
+
     {% block page %}{% endblock %}
+    
+    {% block formFilterForm %}{% endblock %}
 
     {% block buttons %}{% endblock %}
 
