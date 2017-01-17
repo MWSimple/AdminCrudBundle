@@ -3,7 +3,7 @@
 {% block title %}
 {{ parent() }} - {{ 'views.show.show'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
 {% endblock %}
-
+{%block tituloPagina%} {{ 'views.show.show'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}{%endblock%}
 {% block page %}
     <div class="panel panel-primary center-block">
         <div class="panel-heading">

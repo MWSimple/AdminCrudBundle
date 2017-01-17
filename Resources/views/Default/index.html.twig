@@ -3,7 +3,7 @@
 {% block title %}
 {{ parent() }} - {{ 'views.index.list'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
 {% endblock %}
-
+{%block tituloPagina%}{{ 'views.index.list'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}{%endblock%}
 {% block page %}
 <div class="text-right">
     {% if filterForm and filterForm.vars.errors|length > 0 %}
@@ -58,7 +58,7 @@
 <div class="row">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3>{{ 'views.index.list'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}</h3>
+            <h3></h3>
         </div>
         {% block pageInfo %} {% endblock %}
         <table class="table table-striped table-bordered table-condensed table-responsive">

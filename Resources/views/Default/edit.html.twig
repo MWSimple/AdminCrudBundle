@@ -3,7 +3,7 @@
 {% block title %}
     {{ parent() }} - {{ 'views.edit.edit'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
 {% endblock %}
-
+{%block tituloPagina%} {{ 'views.edit.edit'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}{%endblock%}
 {% block page %}
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12">
