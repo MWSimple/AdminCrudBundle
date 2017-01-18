@@ -21,6 +21,8 @@
     {% block title %}{% endblock %}
 
     {% block pageInfo %} {% endblock %}
+
+    {% block formFilterForm %}{% endblock %}
     
     {% block page %}{% endblock %}
 
