@@ -31,11 +31,11 @@ class ACLManager
 
     public function createACL($entity) {
         // retrieving the security identity of the currently logged-in user
-        $securityContext = $this->container->get('security.context');
-        $user = $securityContext->getToken()->getUser();
+        $securityContext = $this->container->get('security.authorization_checker');
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
         $this->userCreateACL($entity, $user);
     }
-    
+
     public function deleteACL($entity) {
         $aclProvider = $this->container->get('security.acl.provider');
         $objectIdentity = ObjectIdentity::fromDomainObject($entity);
@@ -43,7 +43,7 @@ class ACLManager
     }
 
     public function controlACL($entity, $permiso, $exclude_role) {
-        $securityContext = $this->container->get('security.context');
+        $securityContext = $this->container->get('security.authorization_checker');
         // check $exclude_role false or example ROLE_SUPER_ADMIN
         if (false === $exclude_role || false === $securityContext->isGranted($exclude_role)) {
             // check access
