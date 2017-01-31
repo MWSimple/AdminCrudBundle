@@ -31,7 +31,6 @@ class ACLManager
 
     public function createACL($entity) {
         // retrieving the security identity of the currently logged-in user
-        $securityContext = $this->container->get('security.authorization_checker');
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
         $this->userCreateACL($entity, $user);
     }
