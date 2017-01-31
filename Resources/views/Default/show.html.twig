@@ -6,7 +6,7 @@
 
 {% block page %}
     <div class="panel panel-primary center-block">
-        <div class="panel-heading">
+        <div class="panel-heading clearfix">
             {% block panelheading %}
                 <i class="glyphicon glyphicon-ok"></i> {{ 'views.show.show'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }} {{ config.fieldsshow_title is defined ? config.fieldsshow_title.label ~ ' ' ~ attribute(entity, config.fieldsshow_title.name)|raw }}
             {% endblock panelheading %}

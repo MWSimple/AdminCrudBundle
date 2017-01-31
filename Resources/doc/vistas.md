@@ -20,9 +20,12 @@
 ```twig
     {# título: Definir el titulo de la ventana #}
     {% block title %}{% endblock %}
-    
+
     {# página: Permite escribir alguna información arriba de la tabla #}
     {% block pageInfo %} {% endblock %}
+
+    {# form: Permite reescribir el formulario de filtro si solo si esta habilitado del index.html.twig #}
+    {% block formFilterForm %}{% endblock %}
 
     {# página: Permite reescribir todo el contenido del index.html.twig #}
     {% block page %}{% endblock %}

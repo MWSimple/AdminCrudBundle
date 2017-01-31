@@ -53,10 +53,12 @@
                             {% endblock %}
                     </div><!-- .filters-right -->
                     {% if filterForm %}
-                    <div id="filters" class="well collapse col-lg-12 col-md-12 col-sm-12">
-                    {{ form_start(filterForm) }}
-                    {{ form_end(filterForm) }}
-                    </div>
+                        {% block formFilterForm %}
+                          <div id="filters" class="well collapse col-lg-12 col-md-12 col-sm-12">
+                              {{ form_start(filterForm) }}
+                              {{ form_end(filterForm) }}
+                          </div>
+                        {% endblock %}
                     {% endif %}
                 </div><!-- .col-* -->
             </div><!-- .row -->
