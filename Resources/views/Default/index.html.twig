@@ -6,24 +6,28 @@
 
 {% block page %}
 {% if filterForm and filterForm.vars.errors|length > 0 %}
-    <div class="text-right">
-        <div class="col-lg-12 col-md-12 col-sm-6">
+    <div class="row">
+        <div class="col-md-12">
             <div class="alert alert-block alert-danger fade in form-errors">
                 {{ form_errors(filterForm) }}
             </div>
-            &nbsp;
-        </div>
-    </div>
+        </div><!-- .col-* -->
+    </div><!-- .row -->
 {% endif %}
 <div class="row">
     <div class="panel panel-default">
+        
         <div class="panel-heading">
+
             <div class="row">
+
                 <div class="col-md-4 text-left">
                     <h4>{{ 'views.index.list'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}</h4>
                 </div><!-- .col-* -->
+
                 <div class="col-md-8">
-                    <div class="filters-right">
+                    <div class="text-right">
+
                         {% block buttons %}
                                 {% if config.new is defined %}
                                     <a class="btn btn-success" href="{{ path(config.new) }}">
@@ -53,99 +57,114 @@
                                 {% endif %}
                             {% endblock %}
                     </div><!-- .filters-right -->
+
                     {% if filterForm %}
                         {% block formFilterForm %}
-                          <div id="filters" class="well collapse col-lg-12 col-md-12 col-sm-12">
-                              {{ form_start(filterForm) }}
-                              {{ form_end(filterForm) }}
-                          </div>
+                            <div id="filters" class="well collapse">
+                                {{ form_start(filterForm) }}
+                                {{ form_end(filterForm) }}
+                            </div>
                         {% endblock %}
                     {% endif %}
+
                 </div><!-- .col-* -->
             </div><!-- .row -->
-        </div><!-- .panel-heading -->
-        {% block pageInfo %} {% endblock %}
-        <table class="table table-striped table-bordered table-condensed table-responsive">
-            <thead>
-            {% block table_head %}
-                <tr>
-                    {% if config.paginate %}
-                        {% for key, field in config.fieldsindex %}
-                            <th{% if entities.isSorted(key) %} class="sorted"{% endif %}>{{ knp_pagination_sortable(entities, field.label, key) }}</th>
-                        {% endfor %}
-                    {% else %}
-                        {% for key, field in config.fieldsindex %}
-                            <th>{{ field.label }}</th>
-                        {% endfor %}
-                    {% endif %}
-                    <th>{{ 'views.index.actions'|trans({}, 'MWSimpleAdminCrudBundle') }}</th>
-                </tr>
-            {% endblock %}
-            </thead>
 
-            <tbody>
-            {% block table_body %}
-            {% for entity in entities %}
-                <tr>
-                    {% for key, field in config.fieldsindex %}
-                        <td>
-                        {% if field.type in ['datetime', 'datetimetz', 'date', 'time'] %}
-                            {{ attribute(entity, field.name) ? attribute(entity, field.name)|date(field.date) }}
-                        {% elseif field.type == 'boolean' %}
-                            {{ ajaxActive(attribute(entity, field.name), config.repository, field.name, entity.id) }}
-                        {% elseif field.type == 'boolean_view' %}
-                            {{ isActive(attribute(entity, field.name)) }}
-                        {% elseif field.type in ['ONE_TO_MANY', 'MANY_TO_MANY'] %}
-                            {% set many_entity = attribute(entity, field.name) %}
-                            {% for key, field_many in many_entity %}
-                                {{ field_many|raw }}
-                                {% if field.separator is defined %}
-                                    {{ field.separator|raw }}
-                                {% else %}
-                                    |
-                                {% endif %}
+        </div><!-- .panel-heading -->
+
+        {% block pageInfo %} {% endblock %}
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-condensed">
+                <thead>
+                    {% block table_head %}
+                    <tr>
+                        {% if config.paginate %}
+                            {% for key, field in config.fieldsindex %}
+                                <th{% if entities.isSorted(key) %} class="sorted"{% endif %}>{{ knp_pagination_sortable(entities, field.label, key) }}</th>
                             {% endfor %}
-                        {% elseif field.type == 'money' %}
-                            {{ attribute(entity, field.name)|localizednumber(field.currency_style|default('currency'), field.currency_type|default('double')) }}
-                        {% elseif field.type == 'vich_file' %}
-                            {% if attribute(entity, field.name) is not empty %}
-                                <a href="{{ vich_uploader_asset(entity, field.file) }}"><img class="img-responsive" src="{{ vich_uploader_asset(entity, field.file)|imagine_filter('my_thumb_list') }}"></a>
-                            {% endif %}
                         {% else %}
-                            {{ attribute(entity, field.name)|raw }}
+                            {% for key, field in config.fieldsindex %}
+                                <th>{{ field.label }}</th>
+                            {% endfor %}
                         {% endif %}
-                        </td>
-                    {% endfor %}
-                    <td>
-                        {% block actions %}
-                            <a class="glyphicon glyphicon-search tooltips" href="{{ path(config.show, { 'id': entity.id }) }}" title="" rel="tooltip" data-original-title="{{ 'views.actions.show'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}"></a>
-                            {% if config.edit is defined %}
-                                <a class="glyphicon glyphicon-edit tooltips" href="{{ path(config.edit, { 'id': entity.id }) }}" title="" rel="tooltip" data-original-title="{{ 'views.actions.edit'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}"></a>
+                        <th>{{ 'views.index.actions'|trans({}, 'MWSimpleAdminCrudBundle') }}</th>
+                    </tr>
+                    {% endblock table_head %}
+                </thead>
+
+                <tbody>
+                    {% block table_body %}
+                        {% for entity in entities %}
+                    <tr>
+                        {% for key, field in config.fieldsindex %}
+                            <td>
+                            {% if field.type in ['datetime', 'datetimetz', 'date', 'time'] %}
+                                {{ attribute(entity, field.name) ? attribute(entity, field.name)|date(field.date) }}
+                            {% elseif field.type == 'boolean' %}
+                                {{ ajaxActive(attribute(entity, field.name), config.repository, field.name, entity.id) }}
+                            {% elseif field.type == 'boolean_view' %}
+                                {{ isActive(attribute(entity, field.name)) }}
+                            {% elseif field.type in ['ONE_TO_MANY', 'MANY_TO_MANY'] %}
+                                {% set many_entity = attribute(entity, field.name) %}
+                                {% for key, field_many in many_entity %}
+                                    {{ field_many|raw }}
+                                    {% if field.separator is defined %}
+                                        {{ field.separator|raw }}
+                                    {% else %}
+                                        |
+                                    {% endif %}
+                                {% endfor %}
+                            {% elseif field.type == 'money' %}
+                                {{ attribute(entity, field.name)|localizednumber(field.currency_style|default('currency'), field.currency_type|default('double')) }}
+                            {% elseif field.type == 'vich_file' %}
+                                {% if attribute(entity, field.name) is not empty %}
+                                    <a href="{{ vich_uploader_asset(entity, field.file) }}"><img class="img-responsive" src="{{ vich_uploader_asset(entity, field.file)|imagine_filter('my_thumb_list') }}"></a>
+                                {% endif %}
+                            {% else %}
+                                {{ attribute(entity, field.name)|raw }}
                             {% endif %}
-                        {% endblock %}
-                    </td>
-                </tr>
-            {% endfor %}
-            {% endblock %}
-            </tbody>
-        </table>
-    </div>
-    {% if config.paginate %}
-        <div class="col-lg-12 col-md-12 col-sm-12 navigation">
-            {{ knp_pagination_render(entities) }}
-        </div>
-    {% endif %}
-    {% block buttonsbelow %}
-        <div class="col-lg-8 col-md-8 col-sm-8">
+                            </td>
+                        {% endfor %}
+                        <td class="text-center">
+                            {% block actions %}
+                                <a class="glyphicon glyphicon-search tooltips" href="{{ path(config.show, { 'id': entity.id }) }}" title="" rel="tooltip" data-original-title="{{ 'views.actions.show'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}"></a>
+                                {% if config.edit is defined %}
+                                    <a class="glyphicon glyphicon-edit tooltips" href="{{ path(config.edit, { 'id': entity.id }) }}" title="" rel="tooltip" data-original-title="{{ 'views.actions.edit'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}"></a>
+                                {% endif %}
+                            {% endblock actions %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                {% endblock table_body %}
+                </tbody>
+            </table>
+        </div><!-- .table-responsive -->
+    </div><!-- .panel -->
+
+    <style>
+    .pagination { margin: 0; }
+    </style>
+    <div class="row">
+        {% block buttonsbelow %}
+        <div class="col-md-2">
             {% if config.new is defined %}
                 <a class="btn btn-success likepaginator" href="{{ path(config.new) }}">
                     {{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
                 </a>
             {% endif %}
         </div>
-    {% endblock %}
-</div>
-{% endblock %}
+        {% endblock buttonsbelow %}
+
+        {% if config.paginate %}
+        <div class="col-md-10 text-right">
+            {{ knp_pagination_render(entities) }}
+        </div>
+        {% endif %}
+    </div><!-- .row -->
+
+</div><!-- .row -->
+
+{% endblock page %}
 
 {% block javascript %}
     {{ parent() }}
