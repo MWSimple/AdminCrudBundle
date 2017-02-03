@@ -76,11 +76,20 @@ $builder
     ;
 ```
 ### Use Select2 Entity. [Documentation](https://github.com/tetranz/select2entity-bundle)
-#### In the Entities are required to have the method toString()
+#### In the Entities are required to have the method toString() or you can define a method in the controller
 ```php
 public function __toString()
 {
     return (string)$this->getId();
+}
+```
+#### Customize the method in the controller:
+```php
+public function getAutocompleteEntity(Request $request)
+{
+    ...
+    $response = parent::getAutocompleteFormsMwsAction($request, $options, null, "getId");
+    ...
 }
 ```
 #### If entity relationship generates select autocomplete. Personalize field

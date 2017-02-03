@@ -76,11 +76,20 @@ $builder
     ;
 ```
 ### Usar Select2 Entity. [Documentación](https://github.com/tetranz/select2entity-bundle)
-#### En las Entities se requiere tener el mótodo toString()
+#### En las Entities se requiere tener el mótodo toString() o se puede definir un metodo en el controller
 ```php
 public function __toString()
 {
     return (string)$this->getId();
+}
+```
+#### Personalizar el metodo en el controller:
+```php
+public function getAutocompleteEntity(Request $request)
+{
+    ...
+    $response = parent::getAutocompleteFormsMwsAction($request, $options, null, "getId");
+    ...
 }
 ```
 #### Si la entidad tiene relaciones en el Controlador se genera un método autocomplete. Se puede personalizar

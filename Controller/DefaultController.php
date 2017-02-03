@@ -545,7 +545,7 @@ class DefaultController extends Controller
         $this->setDefaultConfig();
     }
 
-    public function getAutocompleteFormsMwsAction(Request $request, $options, $qb = null)
+    public function getAutocompleteFormsMwsAction(Request $request, $options, $qb = null, $text = "__toString")
     {
         $term = $request->query->get('q', null);
         $pageLimit = $request->query->get('page_limit', null);
@@ -568,7 +568,7 @@ class DefaultController extends Controller
         foreach ($entities as $entity) {
             $array[] = array(
                 'id'   => $entity->getId(),
-                'text' => $entity->__toString(),
+                'text' => $entity->$text(),
             );
         }
 
