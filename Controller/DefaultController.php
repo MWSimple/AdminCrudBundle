@@ -548,6 +548,7 @@ class DefaultController extends Controller
     public function getAutocompleteFormsMwsAction(Request $request, $options, $qb = null)
     {
         $term = $request->query->get('q', null);
+        $pageLimit = $request->query->get('page_limit', null);
 
         if (is_null($qb)) {
             $em = $this->getDoctrine()->getManager();
@@ -555,6 +556,7 @@ class DefaultController extends Controller
             $qb = $em->getRepository($options['repository'])->createQueryBuilder('a');
             $qb
                 ->where("a.".$options['field']." LIKE :term")
+                ->setMaxResults($pageLimit)
                 ->orderBy("a.".$options['field'], "ASC")
             ;
         }
