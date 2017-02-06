@@ -545,7 +545,7 @@ class DefaultController extends Controller
         $this->setDefaultConfig();
     }
 
-    public function getAutocompleteFormsMwsAction(Request $request, $options, $qb = null, $text = "__toString")
+    public function getAutocompleteFormsMwsAction(Request $request, $options, $qb = null, $text = null, $operand = null)
     {
         $term = $request->query->get('q', null);
         $pageLimit = $request->query->get('page_limit', null);
@@ -560,10 +560,28 @@ class DefaultController extends Controller
                 ->orderBy("a.".$options['field'], "ASC")
             ;
         }
-        $qb->setParameter("term", "%" . $term . "%");
+        switch ($operand) {
+            case 'start':
+                $term = $term . "%";
+                break;
+            case 'end':
+                $term = "%" . $term;
+                break;
+            case 'equal':
+                break;
+            default:
+                $term = "%" . $term . "%";
+                break;
+        }
+        $qb->setParameter("term", $term);
+
         $entities = $qb->getQuery()->getResult();
 
         $array = array();
+
+        if (is_null($text)) {
+            $text = "__toString";
+        }
 
         foreach ($entities as $entity) {
             $array[] = array(

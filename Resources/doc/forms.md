@@ -83,12 +83,21 @@ public function __toString()
     return (string)$this->getId();
 }
 ```
-#### Personalizar el metodo en el controller:
+#### Opcional Personalizar el metodo en el controller:
 ```php
 public function getAutocompleteEntity(Request $request)
 {
     ...
     $response = parent::getAutocompleteFormsMwsAction($request, $options, null, "getId");
+    ...
+}
+```
+#### Opcional Personalizar LIKE: start, end, equal, contains:
+```php
+public function getAutocompleteEntity(Request $request)
+{
+    ...
+    $response = parent::getAutocompleteFormsMwsAction($request, $options, null, null, "equal");
     ...
 }
 ```
