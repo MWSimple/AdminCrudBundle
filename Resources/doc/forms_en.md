@@ -148,22 +148,5 @@ public function getAutocompleteEntity(Request $request)
 
 [GitHub](https://github.com/nghuuphuoc/bootstrapvalidator)
 
-##If Embed a Collection of Forms
-
-[Documentation](http://symfony.com/doc/current/cookbook/form/form_collections.html)
-
-###Using methods: addForm() and removeForm(), included in:
-###Create Buttons: addLink() and deleteLink(), for uses with addForm() included in: collection.js
-
-```twig
-<script src="{{ asset('bundles/mwsimpleadmincrud/js/addForm.js') }}"></script>
-<script src="{{ asset('bundles/mwsimpleadmincrud/js/collection.js') }}"></script>
-```
-####If not using validator js
-```twig
-<script src="{{ asset('bundles/mwsimpleadmincrud/js/addForm_not_validator.js') }}"></script>
-<script src="{{ asset('bundles/mwsimpleadmincrud/js/collection.js') }}"></script>
-```
-
-* [Security](seguridad_en.md)
+* [Form Embed](formsembed.md)
 * [README](README_EN.md)

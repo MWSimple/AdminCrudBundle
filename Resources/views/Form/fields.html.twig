@@ -3,7 +3,7 @@
 {# Widgets #}
 
 {% block form_widget_simple -%}
-    {% if type is not defined or 'file' != type %}
+    {% if type is not defined or type not in ['file', 'hidden'] %}
         {%- set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) -%}
     {% endif %}
     {{- parent() -}}
@@ -21,12 +21,12 @@
 
 {% block money_widget -%}
     <div class="input-group">
-        {% set prepend = '{{' == money_pattern[0:2] %}
-        {% if not prepend %}
+        {% set append = money_pattern starts with '{{' %}
+        {% if not append %}
             <span class="input-group-addon">{{ money_pattern|replace({ '{{ widget }}':''}) }}</span>
         {% endif %}
         {{- block('form_widget_simple') -}}
-        {% if prepend %}
+        {% if append %}
             <span class="input-group-addon">{{ money_pattern|replace({ '{{ widget }}':''}) }}</span>
         {% endif %}
     </div>
@@ -47,7 +47,7 @@
         <div {{ block('widget_container_attributes') }}>
             {{- form_errors(form.date) -}}
             {{- form_errors(form.time) -}}
-            {{- form_widget(form.date, { datetime: true } ) -}}&nbsp;
+            {{- form_widget(form.date, { datetime: true } ) -}}
             {{- form_widget(form.time, { datetime: true } ) -}}
         </div>
     {%- endif %}
@@ -87,14 +87,43 @@
     {% endif %}
 {%- endblock time_widget %}
 
-{%- block mws_peso_widget -%}
-    {# type="number" doesn't work with floats #}
-    {%- set type = type|default('text') -%}
-    <div class="input-group">
-        {{ block('form_widget_simple') }}
-        <span class="input-group-addon">$</span>
-    </div>
-{%- endblock mws_peso_widget -%}
+{%- block dateinterval_widget -%}
+    {%- if widget == 'single_text' -%}
+        {{- block('form_widget_simple') -}}
+    {%- else -%}
+        {%- set attr = attr|merge({class: (attr.class|default('') ~ ' form-inline')|trim}) -%}
+        <div {{ block('widget_container_attributes') }}>
+            {{- form_errors(form) -}}
+            <div class="table-responsive">
+                <table class="table {{ table_class|default('table-bordered table-condensed table-striped') }}">
+                    <thead>
+                    <tr>
+                        {%- if with_years %}<th>{{ form_label(form.years) }}</th>{% endif -%}
+                        {%- if with_months %}<th>{{ form_label(form.months) }}</th>{% endif -%}
+                        {%- if with_weeks %}<th>{{ form_label(form.weeks) }}</th>{% endif -%}
+                        {%- if with_days %}<th>{{ form_label(form.days) }}</th>{% endif -%}
+                        {%- if with_hours %}<th>{{ form_label(form.hours) }}</th>{% endif -%}
+                        {%- if with_minutes %}<th>{{ form_label(form.minutes) }}</th>{% endif -%}
+                        {%- if with_seconds %}<th>{{ form_label(form.seconds) }}</th>{% endif -%}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        {%- if with_years %}<td>{{ form_widget(form.years) }}</td>{% endif -%}
+                        {%- if with_months %}<td>{{ form_widget(form.months) }}</td>{% endif -%}
+                        {%- if with_weeks %}<td>{{ form_widget(form.weeks) }}</td>{% endif -%}
+                        {%- if with_days %}<td>{{ form_widget(form.days) }}</td>{% endif -%}
+                        {%- if with_hours %}<td>{{ form_widget(form.hours) }}</td>{% endif -%}
+                        {%- if with_minutes %}<td>{{ form_widget(form.minutes) }}</td>{% endif -%}
+                        {%- if with_seconds %}<td>{{ form_widget(form.seconds) }}</td>{% endif -%}
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            {%- if with_invert %}{{ form_widget(form.invert) }}{% endif -%}
+        </div>
+    {%- endif -%}
+{%- endblock dateinterval_widget -%}
 
 {% block choice_widget_collapsed -%}
     {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) %}
@@ -232,6 +261,12 @@
     </div>
 {%- endblock form_row %}
 
+{% block button_row -%}
+    <div class="form-group">
+        {{- form_widget(form) -}}
+    </div>
+{%- endblock button_row %}
+
 {% block choice_row -%}
     {% set force_error = true %}
     {{- block('form_row') }}
@@ -289,3 +324,53 @@
     </div>
 {% endspaceless %}
 {% endblock submit_row %}
+
+{# AGREGADOS #}
+
+{%- block mws_peso_widget -%}
+    {# type="number" doesn't work with floats #}
+    {%- set type = type|default('text') -%}
+    <div class="input-group">
+        {{ block('form_widget_simple') }}
+        <span class="input-group-addon">$</span>
+    </div>
+{%- endblock mws_peso_widget -%}
+
+{% block mws_embed_row -%}
+    {% macro rowChild(child) %}
+        <div class="row rowremove">
+            <div class="col-md-12" style="border-bottom: thin solid; margin: 10px 0px;">
+                {{ form(child) }}
+            </div>
+        </div>
+    {% endmacro %}
+    <div class="form-group{% if attr.col is defined %} {{ attr.col }}{% endif %}">
+        <legend>
+            {{- form_label(form) -}} <a class='add_link_{{ form.vars.id }} btn btn-primary'><i class='glyphicon glyphicon-plus'></i></a>
+        </legend>
+        <div class="well">
+            <div data-prototype="{{ _self.rowChild(form.vars.prototype)|e }}" class="{{ form.vars.id }}">
+                {% for child in form %}
+                    {{ _self.rowChild(child) }}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{%- endblock mws_embed_row %}
+
+{%- block mws_button_delete_widget -%}
+    <div class="form-group{% if attr.col is defined %} {{ attr.col }}{% endif %}">
+        <a class='delete_link btn btn-mini btn-danger'><i class='glyphicon glyphicon-trash'></i></a>
+    </div>
+{%- endblock mws_button_delete_widget -%}
+
+{%- block mws_button_embed_widget -%}
+    <div class="form-group{% if attr.col is defined %} {{ attr.col }}{% endif %}">
+        <p class="text-center">
+            <a href="#" class="collection-up btn btn-default">&lt;</a>
+            <a href="#" class="collection-remove btn btn-default">-</a>
+            <a href="#" class="collection-add btn btn-default">+</a>
+            <a href="#" class="collection-down btn btn-default">&gt;</a>
+        </p>
+    </div>
+{%- endblock mws_button_embed_widget -%}

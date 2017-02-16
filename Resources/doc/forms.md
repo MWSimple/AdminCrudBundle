@@ -149,22 +149,5 @@ public function getAutocompleteEntity(Request $request)
 
 [GitHub](https://github.com/nghuuphuoc/bootstrapvalidator)
 
-##Embeber Formularios con Collection
-
-[Documentacion](http://symfony.com/doc/current/cookbook/form/form_collections.html)
-
-###Se pueden usar los metodos: addForm() y removeForm(), incluidos en: addForm.js
-###Crea los botones: addLink() y deleteLink(), para usar con addForm.js incluidos en: collection.js
-
-```twig
-<script src="{{ asset('bundles/mwsimpleadmincrud/js/addForm.js') }}"></script>
-<script src="{{ asset('bundles/mwsimpleadmincrud/js/collection.js') }}"></script>
-```
-####Si no utiliza el validador por js utilizar el siguiente addForm
-```twig
-<script src="{{ asset('bundles/mwsimpleadmincrud/js/addForm_not_validator.js') }}"></script>
-<script src="{{ asset('bundles/mwsimpleadmincrud/js/collection.js') }}"></script>
-```
-
-* [Seguridad](seguridad.md)
+* [Formularios Embebidos](formsembed.md)
 * [README](https://github.com/MWSimple/AdminCrudBundle/blob/version30/README.md)

@@ -39,6 +39,8 @@ Documentation
 
 * [Forms](forms_en.md)
 
+* [Forms Embed](formsembed_en.md)
+
 * [Security](seguridad_en.md)
 
 * [Uploads files](subirarchivos_en.md)
@@ -55,6 +57,7 @@ Documentation
 - Image manipulation  [LiipImagineBundle](https://github.com/liip/LiipImagineBundle) .
 - Twig Extensions     [TwigExtensions](http://twig.sensiolabs.org/doc/extensions/intl.html) .
 - Select 2 Entity     [select2entity-bundle](https://github.com/tetranz/select2entity-bundle) .
+- Symfony Collection  [symfony-collection](https://github.com/ninsuo/symfony-collection) .
 
 ## Author
 Gonzalo Alonso - gonkpo@gmail.com

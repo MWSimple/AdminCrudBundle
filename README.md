@@ -40,6 +40,8 @@ Documentación
 
 * [Formularios](Resources/doc/forms.md)
 
+* [Formularios Embebidos](Resources/doc/formsembed.md)
+
 * [Seguridad](Resources/doc/seguridad.md)
 
 * [Subiendo archivos](Resources/doc/subirarchivos.md)
@@ -56,6 +58,7 @@ Documentación
 - Manipulador de imagenes  [LiipImagineBundle](https://github.com/liip/LiipImagineBundle) .
 - Twig Extensiones         [TwigExtensions](http://twig.sensiolabs.org/doc/extensions/intl.html) .
 - Select 2 Entity          [select2entity-bundle](https://github.com/tetranz/select2entity-bundle) .
+- Symfony Colecciones      [symfony-collection](https://github.com/ninsuo/symfony-collection) .
 
 ## Author
 Gonzalo Alonso - gonkpo@gmail.com

@@ -23,7 +23,7 @@ jQuery(document).ready(function() {
         addForm($collection, $newLinkLi);
 
         $('html, body').stop().animate({
-            scrollTop: $($newLinkLi).offset().top
+            scrollTop: $($newLinkLi).prev().offset().top
         }, 1000);
     });
 
