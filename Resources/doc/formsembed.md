@@ -14,18 +14,15 @@ $builder
         'by_reference' => false,
         'attr' => [
             'class' => 'tags_embed',
-            'col' => 'col-lg-12',
+            'col' => 'col-md-12',
+            'embed' => 'row',
+            'embed_row_col' => 'col-md-12',
+            'embed_row_style' => 'border-bottom: thin solid; margin: 10px 0px;',
         ],
     ])
     //->add('tags2', EmbedType::class, [
     //    'entry_type' => Tag2Type::class,
-    //    'allow_add' => true,
-    //    'allow_delete' => true,
-    //    'by_reference' => false,
-    //    'attr' => [
-    //        'class' => 'tags2_embed',
-    //        'col' => 'col-lg-12',
-    //    ],
+    //    ...
     //])
 ;
 ```

@@ -337,9 +337,9 @@
 {%- endblock mws_peso_widget -%}
 
 {% block mws_embed_row -%}
-    {% macro rowChild(child) %}
-        <div class="row rowremove">
-            <div class="col-md-12" style="border-bottom: thin solid; margin: 10px 0px;">
+    {% macro rowChild(child, attr) %}
+        <div class="rowremove{% if attr.embed is defined %} {{ attr.embed }}{% endif %}">
+            <div class="{% if attr.embed_row_col is defined %}{{ attr.embed_row_col }}{% endif %}" style="{% if attr.embed_row_style is defined %}{{ attr.embed_row_style }}{% endif %}">
                 {{ form_errors(child) }}
                 {{ form_widget(child) }}
             </div>
@@ -350,9 +350,9 @@
             {{- form_label(form) -}} <a class='add_link_{{ form.vars.id }} btn btn-primary'><i class='glyphicon glyphicon-plus'></i></a>
         </legend>
         <div class="well">
-            <div data-prototype="{{ _self.rowChild(form.vars.prototype)|e }}" class="{{ form.vars.id }}">
+            <div data-prototype="{{ _self.rowChild(form.vars.prototype, attr)|e }}" class="{{ attr.class }}">
                 {% for child in form %}
-                    {{ _self.rowChild(child) }}
+                    {{ _self.rowChild(child, attr) }}
                 {% endfor %}
             </div>
         </div>

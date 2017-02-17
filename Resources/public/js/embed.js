@@ -5,8 +5,8 @@
         var $collection = $(this);
         var $collectionClass = $collection.attr('class');
         // setup an "add a tag" link
-        var $addLink = $('<hr><a href="#" class="add_link_'+$collectionClass+' btn btn-primary"><i class="glyphicon glyphicon-plus"></i></a>');
-        var $newLinkLi = $('<div></div>').append($addLink);
+        var $addLink = $('<div class="col-md-12"><a href="#" class="add_link_'+$collectionClass+' btn btn-primary"><i class="glyphicon glyphicon-plus"></i></a></div>');
+        var $newLinkLi = $('<div class="row"></div>').append($addLink);
 
         // add the "add a tag" anchor and li to the tags ul
         $collection.append($newLinkLi);
