@@ -97,7 +97,7 @@
                         {% elseif field.type == 'vich_file' %}
                             {% block vich_file %}
                                 {% if attribute(entity, field.name) is not empty %}
-                                    <a href="{{ vich_uploader_asset(entity, field.file) }}"><img class="img-responsive" src="{{ vich_uploader_asset(entity, field.file) }}"></a>
+                                    <a href="{{ vich_uploader_asset(entity, field.file) }}"><img class="img-responsive" src="{{ vich_uploader_asset(entity, field.file) }}" alt="{{ attribute(entity, field.name) }}"></a>
                                 {% endif %}
                             {% endblock %}
                         {% elseif field.type == 'vich_file_many' %}
@@ -108,7 +108,7 @@
                                         {% if attribute(field_many, field.file_name) is not empty %}
                                             <div class="{% if field.file_class is defined %}{{ field.file_class }}{% else %}col-md-1{% endif %}">
                                                 <a href="{{ vich_uploader_asset(field_many, field.file) }}">
-                                                    <img class="img-responsive" src="{% if field.imagine_filter is defined %}{{ vich_uploader_asset(field_many, field.file)|imagine_filter(field.imagine_filter) }}{% else %}{{ vich_uploader_asset(field_many, field.file) }}{% endif %}">
+                                                    <img class="img-responsive" src="{% if field.imagine_filter is defined %}{{ vich_uploader_asset(field_many, field.file)|imagine_filter(field.imagine_filter) }}{% else %}{{ vich_uploader_asset(field_many, field.file) }}{% endif %}" alt="{{ attribute(field_many, field.file_name) }}">
                                                 </a>
                                             </div>
                                         {% endif %}
