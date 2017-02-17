@@ -340,7 +340,8 @@
     {% macro rowChild(child) %}
         <div class="row rowremove">
             <div class="col-md-12" style="border-bottom: thin solid; margin: 10px 0px;">
-                {{ form(child) }}
+                {{ form_errors(child) }}
+                {{ form_widget(child) }}
             </div>
         </div>
     {% endmacro %}
