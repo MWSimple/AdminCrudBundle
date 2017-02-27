@@ -65,10 +65,10 @@ knp_menu:
     default_renderer: twig # The renderer to use, list is also available by default
 
 #setting:
-- site_name: Permite configurar el nombre.
-- site_view_layout: Permite configurar el layout a extender por el CRUD.
-- fos_user: Poner a true en caso de utilizar FosUserBundle.
-- menu_horizontal: Para menu horizontal poner en true. Ademas agregar en menu_setting.class: nav navbar-nav
+#- site_name: Permite configurar el nombre.
+#- site_view_layout: Permite configurar el layout a extender por el CRUD.
+#- fos_user: Poner a true en caso de utilizar FosUserBundle.
+#- menu_horizontal: Para menu horizontal poner en true. Ademas agregar en menu_setting.class: nav navbar-nav
 #menu: Los child son índices no deben ser iguales, aquí se agregan y configuran los item del menu.
 #menu: Permite configurar el nombre, url, id, icono, roles a quien visualiza, si tiene submenu se puede agregar.
 mw_simple_admin_crud:
