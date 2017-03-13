@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block page %}
+
 {% if filterForm and filterForm.vars.errors|length > 0 %}
     <div class="row">
         <div class="col-md-12">
@@ -14,50 +15,46 @@
         </div><!-- .col-* -->
     </div><!-- .row -->
 {% endif %}
+
 <div class="row">
     <div class="panel panel-default">
-        
         <div class="panel-heading">
-
             <div class="row">
-
                 <div class="col-md-4 text-left">
-                    <h4>{{ 'views.index.list'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}</h4>
+                    {% block pageTitle %}<h4>{{ 'views.index.list'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}</h4>{% endblock %}
                 </div><!-- .col-* -->
 
                 <div class="col-md-8">
                     <div class="text-right">
-
                         {% block buttons %}
-                                {% if config.new is defined %}
-                                    <a class="btn btn-success" href="{{ path(config.new) }}">
-                                        {{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
-                                    </a>
-                                {% endif %}
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                        {{ 'views.index.export'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }} <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="{{ path(config.export, { 'format': "xls" }) }}">EXCEL</a></li>
-                                        <li><a href="{{ path(config.export, { 'format': "csv" }) }}">CSV</a></li>
-                                        <li><a href="{{ path(config.export, { 'format': "json" }) }}">JSON</a></li>
-                                    </ul>
-                                </div><!-- .btn-group -->
-                                {% if config.sessionFilter %}
-                                    <a id="reset_index_filters" class="btn btn-danger">
-                                        {{ 'views.index.reset'|trans({}, 'MWSimpleAdminCrudBundle') }}
-                                    </a>
-                                {% endif %}
-                                {% if filterForm %}
-                                    <a class="btn btn-primary dropdown-toggle" data-toggle="collapse" data-target="#filters">
-                                        {{ 'views.index.filters'|trans({}, 'MWSimpleAdminCrudBundle') }}
-                                        <span class="caret"></span>
-                                    </a>
-                                {% endif %}
-                            {% endblock %}
+                            {% if config.new is defined %}
+                                <a class="btn btn-success" href="{{ path(config.new) }}">
+                                    {{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
+                                </a>
+                            {% endif %}
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    {{ 'views.index.export'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }} <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ path(config.export, { 'format': "xls" }) }}">EXCEL</a></li>
+                                    <li><a href="{{ path(config.export, { 'format': "csv" }) }}">CSV</a></li>
+                                    <li><a href="{{ path(config.export, { 'format': "json" }) }}">JSON</a></li>
+                                </ul>
+                            </div><!-- .btn-group -->
+                            {% if config.sessionFilter %}
+                                <a id="reset_index_filters" class="btn btn-danger">
+                                    {{ 'views.index.reset'|trans({}, 'MWSimpleAdminCrudBundle') }}
+                                </a>
+                            {% endif %}
+                            {% if filterForm %}
+                                <a class="btn btn-primary dropdown-toggle" data-toggle="collapse" data-target="#filters">
+                                    {{ 'views.index.filters'|trans({}, 'MWSimpleAdminCrudBundle') }}
+                                    <span class="caret"></span>
+                                </a>
+                            {% endif %}
+                        {% endblock %}
                     </div><!-- .filters-right -->
-
                     {% if filterForm %}
                         {% block formFilterForm %}
                             <div id="filters" class="well clearfix collapse">
@@ -66,13 +63,12 @@
                             </div>
                         {% endblock %}
                     {% endif %}
-
                 </div><!-- .col-* -->
             </div><!-- .row -->
-
         </div><!-- .panel-heading -->
 
-        {% block pageInfo %} {% endblock %}
+        {% block pageInfo %}{% endblock %}
+
         <div class="table-responsive">
             <table class="table table-striped table-bordered table-condensed">
                 <thead>
@@ -94,7 +90,7 @@
 
                 <tbody>
                     {% block table_body %}
-                        {% for entity in entities %}
+                    {% for entity in entities %}
                     <tr>
                         {% for key, field in config.fieldsindex %}
                             <td>
@@ -134,8 +130,8 @@
                             {% endblock actions %}
                         </td>
                     </tr>
-                {% endfor %}
-                {% endblock table_body %}
+                    {% endfor %}
+                    {% endblock table_body %}
                 </tbody>
             </table>
         </div><!-- .table-responsive -->

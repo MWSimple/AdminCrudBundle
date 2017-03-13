@@ -20,7 +20,9 @@
 ```twig
     {% block title %}{% endblock %}
 
-    {% block pageInfo %} {% endblock %}
+    {% block pageTitle %}{% endblock %}
+
+    {% block pageInfo %}{% endblock %}
 
     {% block formFilterForm %}{% endblock %}
     
