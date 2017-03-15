@@ -133,6 +133,8 @@ public function getAutocompleteEntity(Request $request)
     return $response;
 }
 ```
+#### Type Form. Optional configuration from the documentation tetranz/select2entity-bundle:
+* [Optional configuration](https://github.com/tetranz/select2entity-bundle#how-to-use)
 #### Type Form. Correct settings for the type Select2 using bootstrap, use 'class' and 'col'.
 ```php
     $builder
