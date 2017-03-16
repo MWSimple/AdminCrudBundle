@@ -22,6 +22,7 @@
             <link href="{{ asset('bundles/mwsimpleadmincrud/admin2/css/timeline.css') }}" rel="stylesheet">
             <link href="{{ asset('bundles/mwsimpleadmincrud/admin2/css/sb-admin-2.css') }}" rel="stylesheet">
             <link href="{{ asset('bundles/mwsimpleadmincrud/admin2/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('bundles/mwsimpleadmincrud/css/base-mws.css') }}" rel="stylesheet">
             <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
             <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
             <!--[if lt IE 9]>
@@ -86,6 +87,16 @@
                     </div>
                 </div>
             </div>
+            <!-- Footer -->
+            <footer>
+                <div class="container">
+                    {% block footer %}
+                        {% if admincrud_config('site_view_footer') %}
+                            {% include admincrud_config('site_view_footer')|raw %}
+                        {% endif %}
+                    {% endblock %}
+                </div>
+            </footer>
         </div>
 
         {% block javascript %}

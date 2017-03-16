@@ -40,6 +40,7 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->scalarNode('site_name')->defaultValue("AdminCrud")->end()
                         ->scalarNode('site_view_layout')->defaultValue("MWSimpleAdminCrudBundle::layout.html.twig")->end()
+                        ->scalarNode('site_view_footer')->defaultFalse()->end()
                         ->booleanNode('fos_user')->defaultFalse()->end()
                         ->scalarNode('menu_horizontal')->defaultFalse()->end()
                     ->end()
