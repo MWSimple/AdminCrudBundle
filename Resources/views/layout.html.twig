@@ -15,7 +15,7 @@
         {% endblock %}</title>
 
         {% block stylesheets %}
-            <link href="{{ asset('bundles/mwsimpleadmincrud/css/bootstrap.min.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/mwsimpleadmincrud/bootstrap/css/' ~ admincrud_config('site_theme') ~ '.min.css') }}" rel="stylesheet">
             <link href="{{ asset('bundles/mwsimpleadmincrud/css/bootstrap-checkbox.css') }}" rel="stylesheet">
             <link rel="stylesheet" href="{{ asset('bundles/mwsimpleadmincrud/select2/css/select2.min.css') }}">
             <link href="{{ asset('bundles/mwsimpleadmincrud/admin2/metisMenu/metisMenu.min.css') }}" rel="stylesheet">
@@ -40,7 +40,7 @@
 
         {% block head_javascript %}
             <script src="{{ asset('bundles/mwsimpleadmincrud/js/jquery.min.js') }}"></script>
-            <script src="{{ asset('bundles/mwsimpleadmincrud/js/bootstrap.min.js') }}"></script>
+            <script src="{{ asset('bundles/mwsimpleadmincrud/bootstrap/js/bootstrap.min.js') }}"></script>
             <script src="{{ asset('bundles/mwsimpleadmincrud/select2/js/select2.min.js') }}"></script>
             <script src="{{ asset('bundles/tetranzselect2entity/js/select2entity.js') }}"></script>
         {% endblock %}

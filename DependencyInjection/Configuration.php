@@ -38,6 +38,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('setting')
                     ->addDefaultsIfNotSet()
                     ->children()
+                        ->scalarNode('site_theme')->defaultValue("bootstrap")->end()
                         ->scalarNode('site_name')->defaultValue("AdminCrud")->end()
                         ->scalarNode('site_view_layout')->defaultValue("MWSimpleAdminCrudBundle::layout.html.twig")->end()
                         ->scalarNode('site_view_footer')->defaultFalse()->end()
