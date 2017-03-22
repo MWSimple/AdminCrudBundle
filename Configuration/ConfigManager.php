@@ -31,7 +31,7 @@ class ConfigManager
      */
     public function getBackendConfig($propertyPath = null, $parameterRoot = null)
     {
-        if (null === $this->backendConfig) {
+        if (null === $this->backendConfig || $parameterRoot) {
             $this->backendConfig = $this->processConfig($parameterRoot);
         }
 

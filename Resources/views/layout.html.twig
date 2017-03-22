@@ -15,7 +15,7 @@
         {% endblock %}</title>
 
         {% block stylesheets %}
-            <link href="{{ asset('bundles/mwsimpleadmincrud/bootstrap/css/' ~ admincrud_config('site_theme') ~ '.min.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/mwsimpleadmincrud/bootstrap/css/' ~ admincrud_config('site_theme', parameterRoot) ~ '.min.css') }}" rel="stylesheet">
             <link href="{{ asset('bundles/mwsimpleadmincrud/css/bootstrap-checkbox.css') }}" rel="stylesheet">
             <link rel="stylesheet" href="{{ asset('bundles/mwsimpleadmincrud/select2/css/select2.min.css') }}">
             <link href="{{ asset('bundles/mwsimpleadmincrud/admin2/metisMenu/metisMenu.min.css') }}" rel="stylesheet">
@@ -91,8 +91,8 @@
             <footer>
                 <div class="container">
                     {% block footer %}
-                        {% if admincrud_config('site_view_footer') %}
-                            {% include admincrud_config('site_view_footer')|raw %}
+                        {% if admincrud_config('site_view_footer', parameterRoot) %}
+                            {% include admincrud_config('site_view_footer', parameterRoot)|raw %}
                         {% endif %}
                     {% endblock %}
                 </div>
