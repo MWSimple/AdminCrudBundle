@@ -58,6 +58,7 @@ Documentation
 - Twig Extensions     [TwigExtensions](http://twig.sensiolabs.org/doc/extensions/intl.html) .
 - Select 2 Entity     [select2entity-bundle](https://github.com/tetranz/select2entity-bundle) .
 - Symfony Collection  [symfony-collection](https://github.com/ninsuo/symfony-collection) .
+- Alert Toastr        [toastr](https://github.com/CodeSeven/toastr) .
 
 ## Author
 Gonzalo Alonso - gonkpo@gmail.com
