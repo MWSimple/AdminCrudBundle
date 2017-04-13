@@ -5,162 +5,168 @@
 {% endblock %}
 
 {% block page %}
-    <div class="panel panel-primary center-block">
-        <div class="panel-heading clearfix">
-            {% block panelheading %}
-                <i class="glyphicon glyphicon-ok"></i> {{ 'views.show.show'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }} {{ config.fieldsshow_title is defined ? config.fieldsshow_title.label ~ ' ' ~ attribute(entity, config.fieldsshow_title.name)|raw }}
-            {% endblock panelheading %}
-        </div>
-        <div class="panel-body">
-            <div class="row">
-                {% for key, field in config.fieldsshow %}
-                    <div class="{% if field.class is defined %}{{ field.class }}{% else %}col-lg-12 col-md-12 col-sm-12{% endif %}">
-                        <label class="control-label">{{ field.label }}</label>
-                        {% if field.type in ['datetime', 'datetimetz', 'date', 'time'] %}
-                            {% block datetime %}
-                                <div class="form-control">
-                                    <span class="input-xlarge uneditable-input">
-                                        {{ attribute(entity, field.name) ? attribute(entity, field.name)|date(field.date) }}
-                                    </span>
-                                </div>
-                            {% endblock %}
-                        {% elseif field.type == 'boolean' %}
-                            {% block boolean %}
-                                <div class="form-control">
-                                    <span class="input-xlarge uneditable-input">
-                                        {{ isActive(attribute(entity, field.name)) }}
-                                    </span>
-                                </div>
-                            {% endblock %}
-                        {% elseif field.type in ['ONE_TO_MANY', 'MANY_TO_MANY'] %}
-                            {% block ONE_TO_MANY_MANY_TO_MANY %}
-                                {% set many_entity = attribute(entity, field.name) %}
-                                <div class="well">
-                                    <span class="input-xlarge uneditable-input">
-                                    {% if field.fields is defined %}
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                {% for key, field_many in field.fields %}
-                                                    <th>{{ key }}</th>
-                                                {% endfor %}
-                                                {% if field.actions is defined %}
-                                                    <th>{{ 'views.index.actions'|trans({}, 'MWSimpleAdminCrudBundle') }}</th>
-                                                {% endif %}
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            {% for field_many in many_entity %}
-                                                <tr>
-                                                {% for field_name in field.fields %}
-                                                    <td>{{ attribute(field_many, field_name)|raw }}</td>
-                                                {% endfor %}
-                                                {% if field.actions is defined %}
-                                                    <td>
-                                                    {% if field.actions.show is defined %}
-                                                        <a class="glyphicon glyphicon-search tooltips" href="{{ path(field.actions.show, { 'id': field_many.id }) }}" title="" rel="tooltip" data-original-title="{{ 'views.actions.show'|trans({'%entity%': field.label}, 'MWSimpleAdminCrudBundle') }}"></a>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-primary center-block">
+            <div class="panel-heading clearfix">
+                {% block panelheading %}
+                    <i class="glyphicon glyphicon-ok"></i> {{ 'views.show.show'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }} {{ config.fieldsshow_title is defined ? config.fieldsshow_title.label ~ ' ' ~ attribute(entity, config.fieldsshow_title.name)|raw }}
+                {% endblock panelheading %}
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    {% for key, field in config.fieldsshow %}
+                        <div class="{% if field.class is defined %}{{ field.class }}{% else %}col-lg-12 col-md-12 col-sm-12{% endif %}">
+                            <label class="control-label">{{ field.label }}</label>
+                            {% if field.type in ['datetime', 'datetimetz', 'date', 'time'] %}
+                                {% block datetime %}
+                                    <div class="form-control">
+                                        <span class="input-xlarge uneditable-input">
+                                            {{ attribute(entity, field.name) ? attribute(entity, field.name)|date(field.date) }}
+                                        </span>
+                                    </div>
+                                {% endblock %}
+                            {% elseif field.type == 'boolean' %}
+                                {% block boolean %}
+                                    <div class="form-control">
+                                        <span class="input-xlarge uneditable-input">
+                                            {{ isActive(attribute(entity, field.name)) }}
+                                        </span>
+                                    </div>
+                                {% endblock %}
+                            {% elseif field.type in ['ONE_TO_MANY', 'MANY_TO_MANY'] %}
+                                {% block ONE_TO_MANY_MANY_TO_MANY %}
+                                    {% set many_entity = attribute(entity, field.name) %}
+                                    <div class="well">
+                                        <span class="input-xlarge uneditable-input">
+                                        {% if field.fields is defined %}
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                    {% for key, field_many in field.fields %}
+                                                        <th>{{ key }}</th>
+                                                    {% endfor %}
+                                                    {% if field.actions is defined %}
+                                                        <th>{{ 'views.index.actions'|trans({}, 'MWSimpleAdminCrudBundle') }}</th>
                                                     {% endif %}
-                                                    {% if field.actions.edit is defined %}
-                                                        <a class="glyphicon glyphicon-edit tooltips" href="{{ path(field.actions.edit, { 'id': field_many.id }) }}" title="" rel="tooltip" data-original-title="{{ 'views.actions.edit'|trans({'%entity%': field.label}, 'MWSimpleAdminCrudBundle') }}"></a>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for field_many in many_entity %}
+                                                    <tr>
+                                                    {% for field_name in field.fields %}
+                                                        <td>{{ attribute(field_many, field_name)|raw }}</td>
+                                                    {% endfor %}
+                                                    {% if field.actions is defined %}
+                                                        <td>
+                                                        {% if field.actions.show is defined %}
+                                                            <a class="glyphicon glyphicon-search tooltips" href="{{ path(field.actions.show, { 'id': field_many.id }) }}" title="" rel="tooltip" data-original-title="{{ 'views.actions.show'|trans({'%entity%': field.label}, 'MWSimpleAdminCrudBundle') }}"></a>
+                                                        {% endif %}
+                                                        {% if field.actions.edit is defined %}
+                                                            <a class="glyphicon glyphicon-edit tooltips" href="{{ path(field.actions.edit, { 'id': field_many.id }) }}" title="" rel="tooltip" data-original-title="{{ 'views.actions.edit'|trans({'%entity%': field.label}, 'MWSimpleAdminCrudBundle') }}"></a>
+                                                        {% endif %}
+                                                        </td>
                                                     {% endif %}
-                                                    </td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        {% else %}
+                                            {% for key, field_many in many_entity %}
+                                                {{ field_many|raw }}
+                                                {% if field.separator is defined %}
+                                                    {{ field.separator|raw }}
+                                                {% else %}
+                                                    |
                                                 {% endif %}
-                                                </tr>
                                             {% endfor %}
-                                            </tbody>
-                                        </table>
-                                    {% else %}
+                                        {% endif %}
+                                        </span>
+                                    </div>
+                                {% endblock %}
+                            {% elseif field.type == 'text' %}
+                                {% block text %}
+                                    <div class="well">{{ attribute(entity, field.name)|raw }}</div>
+                                {% endblock %}
+                            {% elseif field.type == 'money' %}
+                                {% block money %}
+                                    <div class="form-control">
+                                        <span class="input-xlarge uneditable-input">
+                                            {{ attribute(entity, field.name)|localizednumber(field.currency_style|default('currency'), field.currency_type|default('double')) }}
+                                        </span>
+                                    </div>
+                                {% endblock %}
+                            {% elseif field.type == 'vich_file' %}
+                                {% block vich_file %}
+                                    {% if attribute(entity, field.name) is not empty %}
+                                        <a href="{{ vich_uploader_asset(entity, field.file) }}"><img class="img-responsive" src="{{ vich_uploader_asset(entity, field.file) }}" alt="{{ attribute(entity, field.name) }}"></a>
+                                    {% endif %}
+                                {% endblock %}
+                            {% elseif field.type == 'vich_file_many' %}
+                                {% block vich_file_many %}
+                                    {% set many_entity = attribute(entity, field.name) %}
+                                    <div class="well row">
                                         {% for key, field_many in many_entity %}
-                                            {{ field_many|raw }}
-                                            {% if field.separator is defined %}
-                                                {{ field.separator|raw }}
-                                            {% else %}
-                                                |
+                                            {% if attribute(field_many, field.file_name) is not empty %}
+                                                <div class="{% if field.file_class is defined %}{{ field.file_class }}{% else %}col-md-1{% endif %}">
+                                                    <a href="{{ vich_uploader_asset(field_many, field.file) }}">
+                                                        <img class="img-responsive" src="{% if field.imagine_filter is defined %}{{ vich_uploader_asset(field_many, field.file)|imagine_filter(field.imagine_filter) }}{% else %}{{ vich_uploader_asset(field_many, field.file) }}{% endif %}" alt="{{ attribute(field_many, field.file_name) }}">
+                                                    </a>
+                                                </div>
                                             {% endif %}
                                         {% endfor %}
-                                    {% endif %}
-                                    </span>
-                                </div>
-                            {% endblock %}
-                        {% elseif field.type == 'text' %}
-                            {% block text %}
-                                <div class="well">{{ attribute(entity, field.name)|raw }}</div>
-                            {% endblock %}
-                        {% elseif field.type == 'money' %}
-                            {% block money %}
-                                <div class="form-control">
-                                    <span class="input-xlarge uneditable-input">
-                                        {{ attribute(entity, field.name)|localizednumber(field.currency_style|default('currency'), field.currency_type|default('double')) }}
-                                    </span>
-                                </div>
-                            {% endblock %}
-                        {% elseif field.type == 'vich_file' %}
-                            {% block vich_file %}
-                                {% if attribute(entity, field.name) is not empty %}
-                                    <a href="{{ vich_uploader_asset(entity, field.file) }}"><img class="img-responsive" src="{{ vich_uploader_asset(entity, field.file) }}" alt="{{ attribute(entity, field.name) }}"></a>
-                                {% endif %}
-                            {% endblock %}
-                        {% elseif field.type == 'vich_file_many' %}
-                            {% block vich_file_many %}
-                                {% set many_entity = attribute(entity, field.name) %}
-                                <div class="well row">
-                                    {% for key, field_many in many_entity %}
-                                        {% if attribute(field_many, field.file_name) is not empty %}
-                                            <div class="{% if field.file_class is defined %}{{ field.file_class }}{% else %}col-md-1{% endif %}">
-                                                <a href="{{ vich_uploader_asset(field_many, field.file) }}">
-                                                    <img class="img-responsive" src="{% if field.imagine_filter is defined %}{{ vich_uploader_asset(field_many, field.file)|imagine_filter(field.imagine_filter) }}{% else %}{{ vich_uploader_asset(field_many, field.file) }}{% endif %}" alt="{{ attribute(field_many, field.file_name) }}">
-                                                </a>
-                                            </div>
-                                        {% endif %}
-                                    {% endfor %}
-                                </div>
-                            {% endblock %}
-                        {% elseif field.type == 'button' %}
-                            {% block button %}
-                                <div class="form-control">
-                                    <span class="input-xlarge uneditable-input">
-                                        <a class="{{ field.icon }} tooltips" href="{{ path(field.path, { 'id': entity.id }) }}" title="{{ field.title }}" rel="tooltip" data-original-title="{{ field.title }}"></a>
-                                    </span>
-                                </div>
-                            {% endblock %}
-                        {% else %}
-                            {% block default %}
-                                <div class="form-control">
-                                    <span class="input-xlarge uneditable-input">
-                                        {{ attribute(entity, field.name)|raw }}
-                                    </span>
-                                </div>
-                            {% endblock %}
-                        {% endif %}
-                    </div>
-                    {% if field.closerow is defined %}
+                                    </div>
+                                {% endblock %}
+                            {% elseif field.type == 'button' %}
+                                {% block button %}
+                                    <div class="form-control">
+                                        <span class="input-xlarge uneditable-input">
+                                            <a class="{{ field.icon }} tooltips" href="{{ path(field.path, { 'id': entity.id }) }}" title="{{ field.title }}" rel="tooltip" data-original-title="{{ field.title }}"></a>
+                                        </span>
+                                    </div>
+                                {% endblock %}
+                            {% else %}
+                                {% block default %}
+                                    <div class="form-control">
+                                        <span class="input-xlarge uneditable-input">
+                                            {{ attribute(entity, field.name)|raw }}
+                                        </span>
+                                    </div>
+                                {% endblock %}
+                            {% endif %}
                         </div>
-                        <br>
-                        <div class="row">
-                    {% endif %}
-                {% endfor %}
+                        {% if field.closerow is defined %}
+                            </div>
+                            <br>
+                            <div class="row">
+                        {% endif %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>
     {% block buttonsbelow %}
-        <div class="col-lg-9 col-md-9 col-sm-9">
-            {% if config.index is defined %}
-                <div class="float-left col-lg-3 col-md-3 col-sm-3">
-                    <a class="btn btn-info col-lg-11" href="{{ path(config.index) }}">
-                        {{ 'views.recordactions.backtothelist'|trans({}, 'MWSimpleAdminCrudBundle') }}
-                    </a>
-                </div>
-            {% endif %}
-            {% if config.edit is defined %}
-                <div class="float-left col-lg-3 col-md-3 col-sm-3">
-                    <a class="btn btn-primary col-lg-11" href="{{ path(config.edit, { 'id': entity.id }) }}">
-                        {{ 'views.recordactions.edit'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
-                    </a>
-                </div>
-            {% endif %}
-            {% if delete_form is not null %}
-                <div class="float-left col-lg-3 col-md-3 col-sm-3">{{ form(delete_form) }}</div>
-            {% endif %}
+        <div class="col-md-9">
+            <div class="row">
+                {% if config.index is defined %}
+                    <div class="float-left col-lg-3 col-md-3 col-sm-3">
+                        <a class="btn btn-info col-lg-11" href="{{ path(config.index) }}">
+                            {{ 'views.recordactions.backtothelist'|trans({}, 'MWSimpleAdminCrudBundle') }}
+                        </a>
+                    </div>
+                {% endif %}
+                {% if config.edit is defined %}
+                    <div class="float-left col-lg-3 col-md-3 col-sm-3">
+                        <a class="btn btn-primary col-lg-11" href="{{ path(config.edit, { 'id': entity.id }) }}">
+                            {{ 'views.recordactions.edit'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
+                        </a>
+                    </div>
+                {% endif %}
+                {% if delete_form is not null %}
+                    <div class="float-left col-lg-3 col-md-3 col-sm-3">{{ form(delete_form) }}</div>
+                {% endif %}
+            </div>
         </div>
     {% endblock %}
+</div>
 {% endblock %}
