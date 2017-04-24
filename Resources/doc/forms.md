@@ -1,7 +1,7 @@
 ## Formularios
 
 ### Clase de boostrap col
-#### Ejemplo para configurar la clase col de boostap en el formulario
+#### Ejemplo para configurar la clase col de boostrap en el formulario
 ```php
 ->add('text', 'text', array(
     'attr' => array(
@@ -10,6 +10,17 @@
 ))
 ```
 #### Si es tipo Select2entityType ver mas abajo como configurar correctamente.
+
+### Clase de boostrap row
+#### Ejemplo para configurar la clase row de boostrap en el formulario
+```php
+...
+use MWSimple\Bundle\AdminCrudBundle\Form\Type\FormrowType;
+...
+->add('formrow', FormrowType::class, array(
+    'mapped' => false
+))
+```
 
 ### Clase de boostrap inline
 #### Si necesitamos que los checkbox o radio se ubiquen en linea

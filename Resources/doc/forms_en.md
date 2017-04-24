@@ -11,6 +11,17 @@
 ```
 #### If Select2entityType see below how to configure properly.
 
+### Attr boostrap row
+#### Example field form
+```php
+...
+use MWSimple\Bundle\AdminCrudBundle\Form\Type\FormrowType;
+...
+->add('formrow', FormrowType::class, array(
+    'mapped' => false
+))
+```
+
 ### New attr boostrap inline
 #### If you need the checkbox or radio are located inline
 ```php

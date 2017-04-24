@@ -37,5 +37,8 @@
         <service id="mws.button_embed_type" class="MWSimple\Bundle\AdminCrudBundle\Form\Type\ButtonEmbedType">
             <tag name="form.type" alias="mws_button_embed" />
         </service>
+        <service id="mws.formrow_type" class="MWSimple\Bundle\AdminCrudBundle\Form\Type\FormrowType">
+            <tag name="form.type" alias="mws_formrow" />
+        </service>
     </services>
 </container>
