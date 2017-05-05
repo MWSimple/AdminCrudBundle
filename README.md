@@ -52,7 +52,7 @@ Documentación
 - Para el menu             [KnpMenuBundle](https://github.com/KnpLabs/KnpMenuBundle) .
 - Para el paginador        [KnpPaginatorBundle](https://github.com/KnpLabs/KnpPaginatorBundle) .
 - Para los filtros         [LexikFormFilterBundle](https://github.com/lexik/LexikFormFilterBundle) .
-- Formulario datetime type [DatetimepickerBundle](https://github.com/MWSimple/DatetimepickerBundle) .
+- Formulario datetime type [DatetimepickerBundle](https://github.com/stephanecollot/DatetimepickerBundle) .
 - Subir archivos           [VichUploaderBundle](https://github.com/dustin10/VichUploaderBundle) .
 - Editor de texto          [IvoryCKEditorBundle](https://github.com/egeloen/IvoryCKEditorBundle) .
 - Manipulador de imagenes  [LiipImagineBundle](https://github.com/liip/LiipImagineBundle) .
