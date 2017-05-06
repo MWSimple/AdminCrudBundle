@@ -31,6 +31,7 @@
     preFormIsValid() //It is executed before validating the form in updateAction(Request $request, $id).
     preUpdateEntity()
     preRemoveEntity()
+    protected function validateForm(){return true;} //Return true default. Execute before form->isValid() entity createAction(Request $request) and updateAction(Request $request, $id).
 ```
 #### Override generate the path to redirect after saving the entity in createAction and updateAction:
 ```php

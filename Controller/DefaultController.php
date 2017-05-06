@@ -234,7 +234,7 @@ class DefaultController extends Controller
         $this->form = $this->createCreateForm();
         $this->form->handleRequest($request);
 
-        if ($this->form->isValid()) {
+        if ($this->validateForm() && $this->form->isValid()) {
             $this->em = $this->getDoctrine()->getManager();
             $this->prePersistEntity();
             $this->em->persist($this->entity);
@@ -247,7 +247,7 @@ class DefaultController extends Controller
             return $this->redirect($this->urlSuccess());
         }
 
-        $this->get('session')->getFlashBag()->add('danger', 'flash.create.error');
+        $this->get('session')->getFlashBag()->add('error', 'flash.create.error');
 
         // remove the form to return to the view
         unset($this->configArray['newType']);
@@ -434,7 +434,7 @@ class DefaultController extends Controller
         $this->form->handleRequest($request);
 
         $this->preFormIsValid();
-        if ($this->form->isValid()) {
+        if ($this->validateForm() && $this->form->isValid()) {
             $this->preUpdateEntity();
             $this->em->flush();
             $this->get('session')->getFlashBag()->add('success', 'flash.update.success');
@@ -442,7 +442,7 @@ class DefaultController extends Controller
             return $this->redirect($this->urlSuccess());
         }
 
-        $this->get('session')->getFlashBag()->add('danger', 'flash.update.error');
+        $this->get('session')->getFlashBag()->add('error', 'flash.update.error');
 
         // remove the form to return to the view
         unset($this->configArray['editType']);
@@ -688,5 +688,10 @@ class DefaultController extends Controller
     /* Execute before remove the entity deleteAction */
     protected function preRemoveEntity()
     {
+    }
+    /* Execute before form->isValid() entity createAction and updateAction */
+    protected function validateForm()
+    {
+        return true;
     }
 }
