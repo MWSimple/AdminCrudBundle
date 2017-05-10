@@ -39,9 +39,9 @@ class {{ form_class }} extends AbstractType
                     
             {%- else %}
 
-            ->add('{{ data.fieldName }}', {{ data.filterWidget }}, array(
+            ->add('{{ data.fieldName }}', {{ data.filterWidget }}, [
                 'condition_pattern' => FilterOperands::OPERAND_SELECTOR,
-            ))
+            ])
                     
             {%- endif %}
         {%- endfor %}
@@ -55,11 +55,11 @@ class {{ form_class }} extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => '{{ namespace }}\Entity{{ entity_namespace ? '\\' ~ entity_namespace : '' }}\{{ entity_class }}',
             'csrf_protection'   => false,
-            'validation_groups' => array('filtering') // avoid NotBlank() constraint-related message
-        ));
+            'validation_groups' => ['filtering'] // avoid NotBlank() constraint-related message
+        ]);
     }
 
     /**

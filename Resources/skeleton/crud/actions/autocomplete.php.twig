@@ -15,10 +15,10 @@
 {% endblock method_definition %}
     {
 {% block method_body %}
-        $options = array(
+        $options = [
             'repository' => "{{ field.repository }}",
             'field'      => "id",
-        );
+        ];
         $response = parent::getAutocompleteFormsMwsAction($request, $options);
 {% endblock method_body %}
 

@@ -23,7 +23,7 @@
                 <div class="row">
                     <div class="col-md-4 text-left">
                         {% block pageTitle %}<h4>{{ 'views.index.list'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}</h4>{% endblock %}
-                    </div><!-- .col-* -->
+                    </div><!-- .col title -->
 
                     <div class="col-md-8">
                         <div class="text-right">
@@ -55,7 +55,9 @@
                                     </a>
                                 {% endif %}
                             {% endblock %}
-                        </div><!-- .filters-right -->
+                        </div><!-- .text-right -->
+                    </div><!-- .col buttons -->
+                    <div class="col-md-12">
                         {% if filterForm %}
                             {% block formFilterForm %}
                                 <div id="filters" class="well clearfix collapse">
@@ -64,7 +66,7 @@
                                 </div>
                             {% endblock %}
                         {% endif %}
-                    </div><!-- .col-* -->
+                    </div><!-- .col filter form -->
                 </div><!-- .row -->
             </div><!-- .panel-heading -->
 

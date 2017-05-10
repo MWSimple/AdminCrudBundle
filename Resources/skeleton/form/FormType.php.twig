@@ -28,33 +28,36 @@ class {{ form_class }} extends AbstractType
         {%- for field in fields -%}
             {%- if fields_mapping[field] is defined and fields_mapping[field]['type'] in ['datetime', 'datetimetz'] %}
 
-            ->add('{{ field }}', \SC\DatetimepickerBundle\Form\Type\DatetimeType::class, array('pickerOptions' =>
-                array(
+            ->add('{{ field }}', \SC\DatetimepickerBundle\Form\Type\DatetimeType::class, [
+                'pickerOptions' => [
                     'format'    => 'mm/dd/yyyy hh:ii',
                     'startView' => 'month',
                     'minView'   => 'hour',
                     'maxView'   => 'decade',
                     'todayBtn'  => true,
-                )))
+                ]
+            ])
             {%- elseif fields_mapping[field] is defined and fields_mapping[field]['type'] == 'date' %}
 
-            ->add('{{ field }}', \SC\DatetimepickerBundle\Form\Type\DatetimeType::class, array('pickerOptions' =>
-                array(
+            ->add('{{ field }}', \SC\DatetimepickerBundle\Form\Type\DatetimeType::class, [
+                'pickerOptions' => [
                     'format'    => 'mm/dd/yyyy',
                     'startView' => 'month',
                     'minView'   => 'month',
                     'maxView'   => 'decade',
                     'todayBtn'  => true,
-                )))
+                ]
+            ])
             {%- elseif fields_mapping[field] is defined and fields_mapping[field]['type'] == 'time' %}
 
-            ->add('{{ field }}', \SC\DatetimepickerBundle\Form\Type\DatetimeType::class, array('pickerOptions' =>
-                array(
+            ->add('{{ field }}', \SC\DatetimepickerBundle\Form\Type\DatetimeType::class, [
+                'pickerOptions' => [
                     'format'    => 'hh:ii',
                     'startView' => 'day',
                     'minView'   => 'hour',
                     'maxView'   => 'day',
-                )))
+                ]
+            ])
             {%- else %}
 
             ->add('{{ field }}')
@@ -63,7 +66,7 @@ class {{ form_class }} extends AbstractType
         {%- endfor %}
         {%- for fieldName, field in associations %}
 
-            ->add('{{ fieldName }}', \Tetranz\Select2EntityBundle\Form\Type\Select2EntityType::class, array(
+            ->add('{{ fieldName }}', \Tetranz\Select2EntityBundle\Form\Type\Select2EntityType::class, [
                 {%- if field.type in [1, 2, 3] %}
 
                 'multiple' => false,
@@ -74,10 +77,10 @@ class {{ form_class }} extends AbstractType
                 'remote_route' => '{{ entity_class }}_autocomplete_{{ fieldName }}',
                 'class' => '{{ field.targetEntity }}',
                 'minimum_input_length' => 0,
-                'attr' => array(
+                'attr' => [
                     'class' => "col-lg-12 col-md-12 col-sm-12",
                     'col'   => "col-lg-12 col-md-12",
-                )
+                ]
             ))
         {%- endfor %}
 
@@ -105,9 +108,9 @@ class {{ form_class }} extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => '{{ namespace }}\Entity{{ entity_namespace ? '\\' ~ entity_namespace : '' }}\{{ entity_class }}'
-        ));
+        ]);
     }
 
     {%- if get_name_required %}

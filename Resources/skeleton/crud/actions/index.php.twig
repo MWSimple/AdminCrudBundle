@@ -25,10 +25,10 @@
 {% if 'annotation' == format %}
         return $response;
 {% else %}
-        return $this->render('{{ bundle }}:{{ entity|replace({'\\': '/'}) }}:index.html.twig', array(
+        return $this->render('{{ bundle }}:{{ entity|replace({'\\': '/'}) }}:index.html.twig', [
             'entities'   => $pagination,
             'filterForm' => $filterForm->createView(),
-        ));
+        ]);
 {% endif %}
 {% endblock method_return %}
     }
