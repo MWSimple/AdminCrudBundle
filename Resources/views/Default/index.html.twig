@@ -43,7 +43,7 @@
                                         <li><a href="{{ path(config.export, { 'format': "json" }) }}">JSON</a></li>
                                     </ul>
                                 </div><!-- .btn-group -->
-                                {% if config.sessionFilter %}
+                                {% if config.sessionFilter and app.session.has(config.sessionFilter) %}
                                     <a id="reset_index_filters" class="btn btn-danger">
                                         {{ 'views.index.reset'|trans({}, 'MWSimpleAdminCrudBundle') }}
                                     </a>

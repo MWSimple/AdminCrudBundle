@@ -146,6 +146,33 @@ class DefaultController extends Controller
     }
 
     /**
+     * If multiple array filterData is empty return 0.
+     * @return array
+     */
+    protected function ifArrayIsEmpty($array, $keyCondition = null)
+    {
+        foreach ($array as $key => $item) {
+            if(is_array($item)) {
+                $array[$key] = $this->ifArrayIsEmpty($item);
+            } else {
+                if (empty($item)) {
+                    if (is_null($keyCondition)) {
+                        unset($array[$key]);
+                    } elseif ($key = $keyCondition) {
+                        unset($array[$key]);
+                    }
+                }
+            }
+        }
+        foreach ($array as $key => $item) {
+            if (empty($item)) {
+                unset($array[$key]);
+            }
+        }
+        return $array;
+    }
+
+    /**
      * Process filter request.
      * @return array
      */
@@ -169,7 +196,10 @@ class DefaultController extends Controller
                     $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $this->queryBuilder);
                     // Save filter to session
                     $filterData = $request->get($filterForm->getName());
-                    $session->set($this->configArray['sessionFilter'], $filterData);
+                    $isEmptyFilterData = count($this->ifArrayIsEmpty($filterData, "condition_pattern"));
+                    if ($isEmptyFilterData > 0) {
+                        $session->set($this->configArray['sessionFilter'], $filterData);
+                    }
                 }
             } else {
                 // Get filter from session
