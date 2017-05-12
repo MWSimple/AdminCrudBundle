@@ -18,8 +18,8 @@ use Exporter\Handler;
 class DefaultController extends Controller
 {
     /* Configuration file. */
-    protected $config = array();
-    protected $configArray = array();
+    protected $config = [];
+    protected $configArray = [];
     /* Entity. */
     protected $entity;
     /* Entity Manager. */
@@ -28,6 +28,7 @@ class DefaultController extends Controller
     protected $queryBuilder;
     /* Form. */
     protected $form;
+    protected $optionsForm = null;
 
     /**
      * Index
@@ -295,10 +296,16 @@ class DefaultController extends Controller
     */
     protected function createCreateForm()
     {
-        $form = $this->createForm($this->configArray['newType'], $this->entity, array(
+        $optionsForm = [
             'action' => $this->generateUrl($this->configArray['create']),
             'method' => 'POST',
-        ));
+        ];
+        if (is_array($this->optionsForm)) {
+            foreach ($this->optionsForm as $key => $value) {
+                $optionsForm[$key] = $value;
+            }
+        }
+        $form = $this->createForm($this->configArray['newType'], $this->entity, $optionsForm);
 
         $form
             ->add('save', SubmitType::class, array(
@@ -412,10 +419,16 @@ class DefaultController extends Controller
     */
     protected function createEditForm()
     {
-        $form = $this->createForm($this->configArray['editType'], $this->entity, array(
+        $optionsForm = [
             'action' => $this->generateUrl($this->configArray['update'], array('id' => $this->entity->getId())),
             'method' => 'PUT',
-        ));
+        ];
+        if (is_array($this->optionsForm)) {
+            foreach ($this->optionsForm as $key => $value) {
+                $optionsForm[$key] = $value;
+            }
+        }
+        $form = $this->createForm($this->configArray['editType'], $this->entity, $optionsForm);
 
         $form
             ->add('save', SubmitType::class, array(
