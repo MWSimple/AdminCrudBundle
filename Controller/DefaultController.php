@@ -17,17 +17,18 @@ use Exporter\Handler;
  */
 class DefaultController extends Controller
 {
-    /* Configuration file. */
+    // Configuration file.
     protected $config = [];
     protected $configArray = [];
-    /* Entity. */
+    // Entity.
     protected $entity;
-    /* Entity Manager. */
+    // Entity Manager.
     protected $em;
-    /* Query Builder. */
+    // Query Builder.
     protected $queryBuilder;
-    /* Form. */
+    // Form.
     protected $form;
+    // Allows you to configure options in the form an array must be set
     protected $optionsForm = null;
 
     /**

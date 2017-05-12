@@ -2,13 +2,19 @@
 
 ### Variables. Example $this->em
 ```php
-    /* Configuration file. */
-    protected $config = array();
-    protected $configArray = array();
-    /* Entity. */
+    // Configuration file.
+    protected $config = [];
+    protected $configArray = [];
+    // Entity.
     protected $entity;
-    /* Entity Manager. */
+    // Entity Manager.
     protected $em;
+    // Query Builder.
+    protected $queryBuilder;
+    // Form.
+    protected $form;
+    // Allows you to configure options in the form an array must be set
+    protected $optionsForm = null;
 ```
 ### Functions
 ```php
