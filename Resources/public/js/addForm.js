@@ -1,4 +1,4 @@
-function addForm(collection,target) {
+function addForm(collection,target,$prototypeName) {
     // Get the data-prototype explained earlier
     var prototype = collection.data('prototype');
     // get the new index
@@ -6,7 +6,8 @@ function addForm(collection,target) {
 
     // Replace '__name__' in the prototype's HTML to
     // instead be a number based on how many items we have
-    var newForm = prototype.replace(/__name__/g, index);
+    var newForm = prototype.replace(new RegExp($prototypeName, "g"), index);
+
 
     // increase the index with one for the next item
     collection.data('index', index + 1);
