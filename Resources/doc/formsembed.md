@@ -58,6 +58,9 @@ $builder
 
         $('body').on('click', '.add_link_tags_embed', function(e) {
           var index = $(this).closest('.tags_embed').attr('data-index');
+          if(typeof index === "undefined"){
+            index = $(this).closest('.form-group').find('.tags_embed').attr('data-index');
+          }
           $('.tags_segundo_embed'+index).embed();
         });#}
 

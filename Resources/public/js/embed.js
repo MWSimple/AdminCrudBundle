@@ -21,8 +21,11 @@
             e.preventDefault();
             // add a new tag form (see next code block)
             var index = addForm($collection, $newLinkLi, $collectionPrototypeName);
-            $(this).closest("."+$collectionClass).attr('data-index', index);
-
+            if($(this).closest("."+$collectionClass).length === 0){
+              $(this).closest('.form-group').find('.'+$collectionClass).attr('data-index', index);
+            }else{
+              $(this).closest("."+$collectionClass).attr('data-index', index);
+            }
 
             $('html, body').stop().animate({
                 scrollTop: $($newLinkLi).prev().offset().top
