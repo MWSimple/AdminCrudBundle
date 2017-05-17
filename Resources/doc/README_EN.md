@@ -20,9 +20,9 @@ This package was born inspired by [jordillonch/CrudGeneratorBundle](https://gith
 <img src="https://raw.githubusercontent.com/MWSimple/AdminCrudBundle/version30/Resources/doc/preview_list.png" alt="Listar" width="50%" align="right" />
 <img src="https://raw.githubusercontent.com/MWSimple/AdminCrudBundle/version30/Resources/doc/preview_new.png" alt="Crear" width="50%" align="right" />
 
-Demo
+Demo Github
 ----
-[https://admincrud-tecspro.c9users.io/](https://admincrud-tecspro.c9users.io/)
+[https://github.com/gonzakpo/DemoAdminCrudBundle](https://github.com/gonzakpo/DemoAdminCrudBundle)
 
 Documentation
 -------------
