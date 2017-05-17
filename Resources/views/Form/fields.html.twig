@@ -350,7 +350,7 @@
             {{- form_label(form) -}} <a class='add_link_{{ form.vars.attr.class }} btn btn-primary' style='margin-left:10px;'><i class='glyphicon glyphicon-plus'></i></a>
         </legend>
         <div class="well">
-            <div data-prototype="{{ _self.rowChild(form.vars.prototype, attr)|e }}" class="{{ attr.class }}">
+            <div data-prototype="{{ _self.rowChild(form.vars.prototype, attr)|e }}" class="{{ attr.class }}" data-prototype-name="{{form.vars.prototype.vars.name}}">
                 {% for child in form %}
                     {{ _self.rowChild(child, attr) }}
                 {% endfor %}

@@ -20,6 +20,21 @@ $builder
             'embed_row_style' => 'border-bottom: thin solid; margin: 10px 0px;',
         ],
     ])
+    //para mas de un nivel
+    /*->add('tags_segundo', EmbedType::class, [
+        'entry_type' => TagType::class,
+        'allow_add' => true,
+        'allow_delete' => true,
+        'by_reference' => false,
+        'prototype_name' => '__nameembed__',
+        'attr' => [
+            'class' => 'tags_segundo_embed__name__',
+            'col' => 'col-md-12',
+            'embed' => 'row',
+            'embed_row_col' => 'col-md-12',
+            'embed_row_style' => 'border-bottom: thin solid; margin: 10px 0px;',
+        ],
+    ])*/
     //->add('tags2', EmbedType::class, [
     //    'entry_type' => Tag2Type::class,
     //    ...
@@ -37,6 +52,18 @@ $builder
     <script type="text/javascript">
         $('.tags_embed').embed();
         {#$('.tags2_embed').embed();#}
+
+        {# para mas de un nivel#}
+        {# $('.tags_embed').embed();
+
+        $('body').on('click', '.add_link_tags_embed', function(e) {
+          var index = $(this).closest('.tags_embed').attr('data-index');
+          if(typeof index === "undefined"){
+            index = $(this).closest('.form-group').find('.tags_embed').attr('data-index');
+          }
+          $('.tags_segundo_embed'+index).embed();
+        });#}
+
     </script>
 {% endblock %}
 ```
