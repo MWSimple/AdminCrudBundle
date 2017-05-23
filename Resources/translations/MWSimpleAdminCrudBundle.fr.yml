@@ -29,7 +29,8 @@ views:
         editbutton: Editer
     show:
         show: Voir %entity%
-
+        next: next
+        back: back
 flash:
     create:
         success: L'élément a été créé.

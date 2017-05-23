@@ -31,6 +31,10 @@ class DefaultController extends Controller
     // Allows you to configure options in the form an array must be set
     protected $optionsForm = null;
 
+    protected $nextId = null;
+
+    protected $backId = null;
+
     /**
      * Index
      */
@@ -40,7 +44,7 @@ class DefaultController extends Controller
         $this->createQuery($this->configArray['repository']);
 
         $filterForm = $this->filter($request);
-        
+
         if ($this->configArray['paginate']) {
             $paginator  = $this->get('knp_paginator');
             $pagination = $paginator->paginate(
@@ -356,11 +360,30 @@ class DefaultController extends Controller
      * Query Entity
      * @param $id
      */
-    protected function queryEntity($id)
+    protected function queryEntity($id, $nextBackId = false)
     {
         $this->em = $this->getDoctrine()->getManager();
+        if($nextBackId){
+          $queryBuilder = $this->em->getRepository($this->configArray['repository'])
+          ->createQueryBuilder('a')
+          ->select('a as entity')
+          ->addSelect('(select min(nextId.id) from '.$this->configArray['repository'].' as nextId where nextId.id > a.id) as next')
+          ->addSelect('(select max(backId.id) from '.$this->configArray['repository'].' as backId where backId.id < a.id) as back')
+          ->where('a.id = :id')
+          ->setParameter('id', $id)
+          ->getQuery()
+          ->getResult()
+          ;
+          $entity = current($queryBuilder);
 
-        $this->entity = $this->em->getRepository($this->configArray['repository'])->find($id);
+          if($entity){
+            $this->entity = $entity["entity"];//$this->em->getRepository($this->configArray['repository'])->find($id);
+            $this->nextId = $entity["next"];
+            $this->backId = $entity["back"];
+          }
+        }else{
+          $this->entity = $this->em->getRepository($this->configArray['repository'])->find($id);
+        }
     }
 
     /**
@@ -370,8 +393,8 @@ class DefaultController extends Controller
     public function showAction($id)
     {
         $this->getConfig();
-
-        $this->queryEntity($id);
+        $backNextId = (isset($this->configArray['show_next_back_id']))?$this->configArray['show_next_back_id']:false;
+        $this->queryEntity($id, $backNextId);
 
         if (!$this->entity) {
             throw $this->createNotFoundException('Unable to find '.$this->configArray['entityName'].' entity.');
@@ -383,6 +406,8 @@ class DefaultController extends Controller
             'config'      => $this->configArray,
             'entity'      => $this->entity,
             'delete_form' => $deleteForm,
+            'nextId'      => $this->nextId,
+            'backId'      => $this->backId,
         ));
     }
 
@@ -394,7 +419,8 @@ class DefaultController extends Controller
     {
         $this->getConfig();
 
-        $this->queryEntity($id);
+        $backNextId = (isset($this->configArray['show_next_back_id']))?$this->configArray['show_next_back_id']:false;
+        $this->queryEntity($id, $backNextId);
 
         if (!$this->entity) {
             throw $this->createNotFoundException('Unable to find '.$this->configArray['entityName'].' entity.');
@@ -411,6 +437,8 @@ class DefaultController extends Controller
             'entity'      => $this->entity,
             'form'        => $form->createView(),
             'delete_form' => $deleteForm,
+            'nextId'      => $this->nextId,
+            'backId'      => $this->backId,
         ));
     }
 
@@ -465,8 +493,8 @@ class DefaultController extends Controller
     public function updateAction(Request $request, $id)
     {
         $this->getConfig();
-
-        $this->queryEntity($id);
+        $backNextId = (isset($this->configArray['show_next_back_id']))?$this->configArray['show_next_back_id']:false;
+        $this->queryEntity($id, $backNextId);
 
         if (!$this->entity) {
             throw $this->createNotFoundException('Unable to find '.$this->configArray['entityName'].' entity.');
