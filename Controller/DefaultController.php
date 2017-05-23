@@ -35,6 +35,8 @@ class DefaultController extends Controller
 
     protected $backId = null;
 
+    protected $isNextBackId = false;
+
     /**
      * Index
      */
@@ -360,10 +362,10 @@ class DefaultController extends Controller
      * Query Entity
      * @param $id
      */
-    protected function queryEntity($id, $nextBackId = false)
+    protected function queryEntity($id)
     {
         $this->em = $this->getDoctrine()->getManager();
-        if($nextBackId){
+        if($this->isNextBackId){
           $queryBuilder = $this->em->getRepository($this->configArray['repository'])
           ->createQueryBuilder('a')
           ->select('a as entity')
@@ -393,8 +395,8 @@ class DefaultController extends Controller
     public function showAction($id)
     {
         $this->getConfig();
-        $backNextId = (isset($this->configArray['show_next_back_id']))?$this->configArray['show_next_back_id']:false;
-        $this->queryEntity($id, $backNextId);
+        $this->isNextBackId = $this->configArray['show_next_back_id'];
+        $this->queryEntity($id);
 
         if (!$this->entity) {
             throw $this->createNotFoundException('Unable to find '.$this->configArray['entityName'].' entity.');
@@ -419,8 +421,8 @@ class DefaultController extends Controller
     {
         $this->getConfig();
 
-        $backNextId = (isset($this->configArray['show_next_back_id']))?$this->configArray['show_next_back_id']:false;
-        $this->queryEntity($id, $backNextId);
+        $this->isNextBackId = $this->configArray['edit_next_back_id'];
+        $this->queryEntity($id);
 
         if (!$this->entity) {
             throw $this->createNotFoundException('Unable to find '.$this->configArray['entityName'].' entity.');
@@ -493,8 +495,8 @@ class DefaultController extends Controller
     public function updateAction(Request $request, $id)
     {
         $this->getConfig();
-        $backNextId = (isset($this->configArray['show_next_back_id']))?$this->configArray['show_next_back_id']:false;
-        $this->queryEntity($id, $backNextId);
+        $this->isNextBackId = $this->configArray['edit_next_back_id'];
+        $this->queryEntity($id);
 
         if (!$this->entity) {
             throw $this->createNotFoundException('Unable to find '.$this->configArray['entityName'].' entity.');
@@ -731,6 +733,14 @@ class DefaultController extends Controller
         //Si no existe paginate o fue comentado entra y setea en true
         if (!array_key_exists('paginate', $this->configArray)) {
             $this->configArray['paginate'] = true;
+        }
+        //Si no existe show next back id entra y seteo en false
+        if (!array_key_exists('show_next_back_id', $this->configArray)) {
+            $this->configArray['show_next_back_id'] = false;
+        }
+        //Si no existe edit next back id entra y seteo en false
+        if (!array_key_exists('edit_next_back_id', $this->configArray)) {
+            $this->configArray['edit_next_back_id'] = false;
         }
     }
 
