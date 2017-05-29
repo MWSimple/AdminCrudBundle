@@ -29,6 +29,8 @@ views:
         editbutton: Editar
     show:
         show: Veure %entity%
+        next: siguiente
+        back: anterior
 
 flash:
     create:

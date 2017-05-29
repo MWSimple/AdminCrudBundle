@@ -31,6 +31,12 @@ class DefaultController extends Controller
     // Allows you to configure options in the form an array must be set
     protected $optionsForm = null;
 
+    protected $nextId = null;
+
+    protected $backId = null;
+
+    protected $isNextBackId = false;
+
     /**
      * Index
      */
@@ -40,7 +46,7 @@ class DefaultController extends Controller
         $this->createQuery($this->configArray['repository']);
 
         $filterForm = $this->filter($request);
-        
+
         if ($this->configArray['paginate']) {
             $paginator  = $this->get('knp_paginator');
             $pagination = $paginator->paginate(
@@ -359,8 +365,27 @@ class DefaultController extends Controller
     protected function queryEntity($id)
     {
         $this->em = $this->getDoctrine()->getManager();
+        if($this->isNextBackId){
+          $queryBuilder = $this->em->getRepository($this->configArray['repository'])
+          ->createQueryBuilder('a')
+          ->select('a as entity')
+          ->addSelect('(select min(nextId.id) from '.$this->configArray['repository'].' as nextId where nextId.id > a.id) as next')
+          ->addSelect('(select max(backId.id) from '.$this->configArray['repository'].' as backId where backId.id < a.id) as back')
+          ->where('a.id = :id')
+          ->setParameter('id', $id)
+          ->getQuery()
+          ->getResult()
+          ;
+          $entity = current($queryBuilder);
 
-        $this->entity = $this->em->getRepository($this->configArray['repository'])->find($id);
+          if($entity){
+            $this->entity = $entity["entity"];//$this->em->getRepository($this->configArray['repository'])->find($id);
+            $this->nextId = $entity["next"];
+            $this->backId = $entity["back"];
+          }
+        }else{
+          $this->entity = $this->em->getRepository($this->configArray['repository'])->find($id);
+        }
     }
 
     /**
@@ -370,7 +395,7 @@ class DefaultController extends Controller
     public function showAction($id)
     {
         $this->getConfig();
-
+        $this->isNextBackId = $this->configArray['show_next_back_id'];
         $this->queryEntity($id);
 
         if (!$this->entity) {
@@ -383,6 +408,8 @@ class DefaultController extends Controller
             'config'      => $this->configArray,
             'entity'      => $this->entity,
             'delete_form' => $deleteForm,
+            'nextId'      => $this->nextId,
+            'backId'      => $this->backId,
         ));
     }
 
@@ -394,6 +421,7 @@ class DefaultController extends Controller
     {
         $this->getConfig();
 
+        $this->isNextBackId = $this->configArray['edit_next_back_id'];
         $this->queryEntity($id);
 
         if (!$this->entity) {
@@ -411,6 +439,8 @@ class DefaultController extends Controller
             'entity'      => $this->entity,
             'form'        => $form->createView(),
             'delete_form' => $deleteForm,
+            'nextId'      => $this->nextId,
+            'backId'      => $this->backId,
         ));
     }
 
@@ -465,7 +495,7 @@ class DefaultController extends Controller
     public function updateAction(Request $request, $id)
     {
         $this->getConfig();
-
+        $this->isNextBackId = $this->configArray['edit_next_back_id'];
         $this->queryEntity($id);
 
         if (!$this->entity) {
@@ -703,6 +733,14 @@ class DefaultController extends Controller
         //Si no existe paginate o fue comentado entra y setea en true
         if (!array_key_exists('paginate', $this->configArray)) {
             $this->configArray['paginate'] = true;
+        }
+        //Si no existe show next back id entra y seteo en false
+        if (!array_key_exists('show_next_back_id', $this->configArray)) {
+            $this->configArray['show_next_back_id'] = false;
+        }
+        //Si no existe edit next back id entra y seteo en false
+        if (!array_key_exists('edit_next_back_id', $this->configArray)) {
+            $this->configArray['edit_next_back_id'] = false;
         }
     }
 
