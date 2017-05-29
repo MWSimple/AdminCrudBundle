@@ -29,8 +29,7 @@ views:
         editbutton: Editar
     show:
         show: Ver %entity%
-        next: seguinte
-        back: anterior
+
 flash:
     create:
         success: item criado com sucesso.
