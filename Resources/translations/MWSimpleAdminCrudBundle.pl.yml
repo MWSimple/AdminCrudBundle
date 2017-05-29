@@ -29,8 +29,7 @@ views:
         editbutton: Edytuj
     show:
         show: Podgląd %entity%
-        next: next
-        back: back
+
 flash:
     create:
         success: Element utworzony prawidłowo.

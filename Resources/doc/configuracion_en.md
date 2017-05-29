@@ -21,8 +21,6 @@ view_show: 'AcmeDemoBundle:post:show.html.twig'
 delete: 'admin_post_delete' #If I comment this line not shown in the edit and show
 export: 'admin_post_export' #Use sonata export
 sessionFilter: 'PostControllerFilter' #If I comment this line does not use session. To remove the filter Filtertype comment line in the Controller generated
-show_next_back_id: false #If you comment the line or it is false in the show will not show the option to go to the next and previous
-edit_next_back_id: false #If you comment the line or it is false in the edit will not show the option to go to the next and previous
 saveAndAdd: true #If true then add the button to save and add another
 validator: false #If true added by JS validation on forms (*No maintenance)
 site_view_layout: null #Optional example 'AppBundle::layout.html.twig'
