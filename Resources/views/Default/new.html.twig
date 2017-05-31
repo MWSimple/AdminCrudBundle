@@ -29,19 +29,19 @@
                     {{ form(form) }}
                 {% endblock %}
             </div>
+            <div class="panel-footer">
+                {% block buttonsbelow %}
+                    <div class="btn-group">
+                        {% if config.index is defined %}
+                            <a class="btn btn-info" href="{{ path(config.index) }}">
+                                {{ 'views.recordactions.backtothelist'|trans({}, 'MWSimpleAdminCrudBundle') }}
+                            </a>
+                        {% endif %}
+                    </div>
+                {% endblock %}
+            </div><!-- .panel-footer -->
         </div>
     </div>
-    {% block buttonsbelow %}
-        <div class="col-md-12">
-            <div class="btn-group">
-                {% if config.index is defined %}
-                    <a class="btn btn-info" href="{{ path(config.index) }}">
-                        {{ 'views.recordactions.backtothelist'|trans({}, 'MWSimpleAdminCrudBundle') }}
-                    </a>
-                {% endif %}
-            </div>
-        </div>
-    {% endblock %}
 {% endblock %}
 
 {% block stylesheets %}

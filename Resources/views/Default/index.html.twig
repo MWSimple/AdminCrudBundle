@@ -137,28 +137,27 @@
                     </tbody>
                 </table>
             </div><!-- .table-responsive -->
+
+            <div class="panel-footer">
+                <div class="row">
+                    {% block buttonsbelow %}
+                    <div class="col-md-2">
+                        {% if config.new is defined %}
+                            <a class="btn btn-success likepaginator" href="{{ path(config.new) }}">
+                                {{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
+                            </a>
+                        {% endif %}
+                    </div>
+                    {% endblock buttonsbelow %}
+
+                    {% if config.paginate %}
+                    <div class="col-md-10 text-right">
+                        {{ knp_pagination_render(entities) }}
+                    </div>
+                    {% endif %}
+                </div><!-- .row -->
+            </div><!-- .panel-footer -->
         </div><!-- .panel -->
-
-        <style>
-        .pagination { margin: 0; }
-        </style>
-        <div class="row">
-            {% block buttonsbelow %}
-            <div class="col-md-2">
-                {% if config.new is defined %}
-                    <a class="btn btn-success likepaginator" href="{{ path(config.new) }}">
-                        {{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
-                    </a>
-                {% endif %}
-            </div>
-            {% endblock buttonsbelow %}
-
-            {% if config.paginate %}
-            <div class="col-md-10 text-right">
-                {{ knp_pagination_render(entities) }}
-            </div>
-            {% endif %}
-        </div><!-- .row -->
     </div>
 
 {% endblock page %}
