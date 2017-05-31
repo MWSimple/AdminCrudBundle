@@ -5,10 +5,24 @@
 {% endblock %}
 
 {% block page %}
-    <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="col-md-12">
         <div class="panel panel-primary center-block">
-            <div class="panel-heading">
-                <i class="glyphicon glyphicon-pencil"></i> {{ 'views.edit.edit'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }} {{ config.fieldsshow_title is defined ? config.fieldsshow_title.label ~ ' ' ~ attribute(entity, config.fieldsshow_title.name)|raw }}
+            <div class="panel-heading clearfix">
+                {% block panelheading %}
+                    <div class="float-left">
+                        <i class="glyphicon glyphicon-pencil"></i>
+                        {{ 'views.edit.edit'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }} {{ config.fieldsshow_title is defined ? config.fieldsshow_title.label ~ ' ' ~ attribute(entity, config.fieldsshow_title.name)|raw }}
+                    </div>
+                {% endblock %}
+                {% block buttons %}
+                    <div class="float-right">
+                        <div class="btn-group">
+                            {% if config.index is defined %}
+                                <a class="btn-sm btn-default glyphicon glyphicon-th-list tooltips" href="{{ path(config.index) }}" title="" rel="tooltip" data-original-title="{{ 'views.recordactions.backtothelist'|trans({}, 'MWSimpleAdminCrudBundle') }}"></a>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endblock %}
             </div>
             <div class="panel-body">
                 {% block form %}
