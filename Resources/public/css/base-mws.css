@@ -5,6 +5,7 @@
 }
 @media (min-width: 768px) {
   #page-wrapper { padding: 15px !important; }
+  .sidebar { margin-top: 67px !important; }
 }
 footer { text-align: center; }
 .float-left { float: left; }
