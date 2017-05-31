@@ -27,12 +27,12 @@
                     <div class="col-md-8">
                         <div class="text-right">
                             {% block buttons %}
-                                {% if config.new is defined %}
-                                    <a class="btn btn-success" href="{{ path(config.new) }}">
-                                        {{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
-                                    </a>
-                                {% endif %}
                                 <div class="btn-group">
+                                    {% if config.new is defined %}
+                                        <a class="btn btn-success" href="{{ path(config.new) }}">
+                                            {{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
+                                        </a>
+                                    {% endif %}
                                     <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                         {{ 'views.index.export'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }} <span class="caret"></span>
                                     </button>
@@ -41,18 +41,18 @@
                                         <li><a href="{{ path(config.export, { 'format': "csv" }) }}">CSV</a></li>
                                         <li><a href="{{ path(config.export, { 'format': "json" }) }}">JSON</a></li>
                                     </ul>
+                                    {% if config.sessionFilter and app.session.has(config.sessionFilter) %}
+                                        <a id="reset_index_filters" class="btn btn-danger">
+                                            {{ 'views.index.reset'|trans({}, 'MWSimpleAdminCrudBundle') }}
+                                        </a>
+                                    {% endif %}
+                                    {% if filterForm %}
+                                        <a class="btn btn-primary dropdown-toggle" data-toggle="collapse" data-target="#filters">
+                                            {{ 'views.index.filters'|trans({}, 'MWSimpleAdminCrudBundle') }}
+                                            <span class="caret"></span>
+                                        </a>
+                                    {% endif %}
                                 </div><!-- .btn-group -->
-                                {% if config.sessionFilter and app.session.has(config.sessionFilter) %}
-                                    <a id="reset_index_filters" class="btn btn-danger">
-                                        {{ 'views.index.reset'|trans({}, 'MWSimpleAdminCrudBundle') }}
-                                    </a>
-                                {% endif %}
-                                {% if filterForm %}
-                                    <a class="btn btn-primary dropdown-toggle" data-toggle="collapse" data-target="#filters">
-                                        {{ 'views.index.filters'|trans({}, 'MWSimpleAdminCrudBundle') }}
-                                        <span class="caret"></span>
-                                    </a>
-                                {% endif %}
                             {% endblock %}
                         </div><!-- .text-right -->
                     </div><!-- .col buttons -->

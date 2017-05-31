@@ -559,7 +559,7 @@ class DefaultController extends Controller
                     'translation_domain' => 'MWSimpleAdminCrudBundle',
                     'label'              => 'views.recordactions.delete',
                     'attr'               => array(
-                        'class'   => 'form-control btn-danger',
+                        'class'   => 'btn-danger',
                         'onclick' => $onclick,
                     )
                 ))

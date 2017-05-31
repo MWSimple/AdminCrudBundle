@@ -4,8 +4,7 @@
   background-color: white;
 }
 @media (min-width: 768px) {
-  #page-wrapper {
-    padding: 15px !important;
-  }
+  #page-wrapper { padding: 15px !important; }
 }
 footer { text-align: center; }
+.float-left { float: left; }

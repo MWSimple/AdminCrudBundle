@@ -19,16 +19,18 @@
     </div>
 
     {% block buttonsbelow %}
-        {% if config.index is defined %}
-            <div class="col-lg-3 col-md-3 col-sm-3">
-                <a class="form-control btn btn-info" href="{{ path(config.index) }}">
+        <div class="col-md-12">
+            <div class="btn-group">
+            {% if config.index is defined %}
+                <a class="btn btn-info float-left" href="{{ path(config.index) }}">
                     {{ 'views.recordactions.backtothelist'|trans({}, 'MWSimpleAdminCrudBundle') }}
                 </a>
+            {% endif %}
+            {% if delete_form is not null %}
+                <div class="float-left">{{ form(delete_form) }}</div>
+            {% endif %}
             </div>
-        {% endif %}
-        {% if delete_form is not null %}
-            <div class="col-lg-3 col-md-3 col-sm-3">{{ form(delete_form) }}</div>
-        {% endif %}
+        </div>
     {% endblock %}
 {% endblock %}
 
