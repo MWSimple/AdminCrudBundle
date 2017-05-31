@@ -5,34 +5,31 @@
 {% endblock %}
 
 {% block page %}
-    <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12">
-            <div class="panel panel-primary center-block">
-                <div class="panel-heading">
-                    <i class="glyphicon glyphicon-pencil"></i> {{ 'views.edit.edit'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }} {{ config.fieldsshow_title is defined ? config.fieldsshow_title.label ~ ' ' ~ attribute(entity, config.fieldsshow_title.name)|raw }}
-                </div>
-                <div class="panel-body">
-                    {% block form %}
-                        {{ form(form) }}
-                    {% endblock %}
-                </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="panel panel-primary center-block">
+            <div class="panel-heading">
+                <i class="glyphicon glyphicon-pencil"></i> {{ 'views.edit.edit'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }} {{ config.fieldsshow_title is defined ? config.fieldsshow_title.label ~ ' ' ~ attribute(entity, config.fieldsshow_title.name)|raw }}
+            </div>
+            <div class="panel-body">
+                {% block form %}
+                    {{ form(form) }}
+                {% endblock %}
             </div>
         </div>
     </div>
-    <div class="row">
-        {% block buttonsbelow %}
-            {% if config.index is defined %}
-                <div class="col-lg-3 col-md-3 col-sm-3">
-                    <a class="form-control btn btn-info" href="{{ path(config.index) }}">
-                        {{ 'views.recordactions.backtothelist'|trans({}, 'MWSimpleAdminCrudBundle') }}
-                    </a>
-                </div>
-            {% endif %}
-            {% if delete_form is not null %}
-                <div class="col-lg-3 col-md-3 col-sm-3">{{ form(delete_form) }}</div>
-            {% endif %}
-        {% endblock %}
-    </div>
+
+    {% block buttonsbelow %}
+        {% if config.index is defined %}
+            <div class="col-lg-3 col-md-3 col-sm-3">
+                <a class="form-control btn btn-info" href="{{ path(config.index) }}">
+                    {{ 'views.recordactions.backtothelist'|trans({}, 'MWSimpleAdminCrudBundle') }}
+                </a>
+            </div>
+        {% endif %}
+        {% if delete_form is not null %}
+            <div class="col-lg-3 col-md-3 col-sm-3">{{ form(delete_form) }}</div>
+        {% endif %}
+    {% endblock %}
 {% endblock %}
 
 {% block stylesheets %}

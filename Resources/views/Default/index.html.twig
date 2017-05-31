@@ -6,17 +6,16 @@
 
 {% block page %}
 
-{% if filterForm and filterForm.vars.errors|length > 0 %}
-    <div class="row">
-        <div class="col-md-12">
-            <div class="alert alert-block alert-danger fade in form-errors">
-                {{ form_errors(filterForm) }}
-            </div>
-        </div><!-- .col-* -->
-    </div><!-- .row -->
-{% endif %}
+    {% if filterForm and filterForm.vars.errors|length > 0 %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-block alert-danger fade in form-errors">
+                    {{ form_errors(filterForm) }}
+                </div>
+            </div><!-- .col-* -->
+        </div><!-- .row -->
+    {% endif %}
 
-<div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -161,7 +160,6 @@
             {% endif %}
         </div><!-- .row -->
     </div>
-</div><!-- .row -->
 
 {% endblock page %}
 
