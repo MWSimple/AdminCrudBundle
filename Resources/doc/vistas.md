@@ -6,8 +6,12 @@
     {% block stylesheets %}{% endblock %}
     {% block head_javascript %}{% endblock %}
     {% block favicon %}{% endblock %}
-    {% block menu %}{% endblock %}
+    {% block nav %}
+        {% block navbar_brand %}{% endblock %}
+        {% block menu %}{% endblock %}
+    {% endblock %}
     {% block page %}{% endblock %}
+    {% block footer %}{% endblock %}
     {% block javascript %}{% endblock %}
 ```
 #### Variables, de ser necesario cargar la configuracion en la vista con la funcion admincrud_config() desde otro bundle se puede setear su: Configuration - treeBuilder - root como se describe a continuacion:
