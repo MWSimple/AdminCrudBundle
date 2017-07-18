@@ -706,9 +706,7 @@ class DefaultController extends Controller
         }
     }
 
-    /**
-     * @return object
-     */
+    /* Execute new entity newAction and createAction */
     protected function createNewEntity()
     {
         $this->entity = new $this->configArray['entity']();
