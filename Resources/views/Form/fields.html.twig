@@ -344,11 +344,6 @@
                 {{ form_widget(child) }}
             </div>
             {{ form_javascript(child) }}
-            {# {% for fieldChild in child %}
-                {% if fieldChild.vars.pickerOptions is defined %}
-                    {{ dump(fieldChild.vars.pickerOptions) }}
-                {% endif %} 
-            {% endfor %} #}
         </div>
     {% endmacro %}
     <div class="form-group{% if attr.col is defined %} {{ attr.col }}{% endif %}">
