@@ -20,11 +20,11 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <div class="row">
-                    <div class="col-xs-6 col-md-4 text-left">
+                    <div class="col-md-4 text-left">
                         {% block pageTitle %}<h4>{{ 'views.index.list'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}</h4>{% endblock %}
                     </div><!-- .col title -->
 
-                    <div class="col-xs-6 col-md-8">
+                    <div class="col-md-8">
                         <div class="text-right">
                             {% block buttons %}
                                 <div class="btn-group">
@@ -47,7 +47,12 @@
                                     </ul>
                                     {% if config.sessionFilter and app.session.has(config.sessionFilter) %}
                                         <a id="reset_index_filters" class="btn btn-danger">
-                                            {{ 'views.index.reset'|trans({}, 'MWSimpleAdminCrudBundle') }}
+                                            <span class="hidden-xs">
+                                                {{ 'views.index.reset'|trans({}, 'MWSimpleAdminCrudBundle') }}
+                                            </span>
+                                            <span class="visible-xs">
+                                                <span class="glyphicon glyphicon-refresh tooltips" rel="tooltip" data-original-title="{{ 'views.index.reset'|trans({}, 'MWSimpleAdminCrudBundle') }}"></span>
+                                            </span>
                                         </a>
                                     {% endif %}
                                     {% if filterForm %}
@@ -157,8 +162,7 @@
                     <div class="col-md-2">
                         {% if config.new is defined %}
                             <a class="btn btn-success likepaginator" href="{{ path(config.new) }}">
-                                <span class="hidden-xs">{{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}</span>
-                                <span class="visible-xs"><span class="glyphicon glyphicon-plus tooltips" rel="tooltip" data-original-title="{{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}"></span></span>
+                                {{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
                             </a>
                         {% endif %}
                     </div>
