@@ -1,12 +1,4 @@
 $(document).ready(function() {
-    function tpShowMessage(ajaxid, type, message) {
-        $("#tecspro-errors").prepend("<div id='" + ajaxid + "' class='alert alert-" + type + "'>" + message + "</div>");
-        setTimeout(function(){
-          if ($("#" + ajaxid).length > 0) {
-            $("#" + ajaxid).remove();
-          }
-        }, 5000);
-    }
     $('input[type="checkbox"].mws_checkbox').click(function() {
         var inputAjax = $(this);
         var inputButtonAjax = inputAjax.next().children('button');
@@ -16,7 +8,7 @@ $(document).ready(function() {
             data: {repository: $(this).data('repository'), datafieldname: $(this).data('fieldname'), dataid: $(this).data('id')},
             success: function (res) {
                 if (res == true) {
-                    tpShowMessage('ajax-'+$(this).data('id'), 'success', JsOptions.messageSuccess);
+                    toastr.success(JsOptions.messageSuccess);
                 } else {
                     if (inputButtonAjax.hasClass('btn-success')) {
                         inputAjax.prop("checked", false);
@@ -31,11 +23,11 @@ $(document).ready(function() {
                         inputButtonAjax.children('span.glyphicon-check').css("display", "");
                         inputButtonAjax.children('span.glyphicon-unchecked').css("display", "none");
                     }
-                    tpShowMessage('ajax-'+$(this).data('id'), 'danger', JsOptions.messageError);
+                    toastr.danger(JsOptions.messageError);
                 }
             },
             error: function (data) {
-                tpShowMessage('ajax-'+$(this).data('id'), 'danger', JsOptions.messageError);
+                toastr.danger(JsOptions.messageError);
             }
         });
     });
