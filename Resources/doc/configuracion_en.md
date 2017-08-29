@@ -31,6 +31,7 @@ fieldsindex: #Fields displayed in the index list
         label: 'Code' #Label
         name: 'Id' #Field name
         type: 'integer' #Types: 'string', 'datetime', 'datetimetz', 'date', 'time', 'boolean', 'boolean_view', 'ONE_TO_MANY', 'MANY_TO_MANY', 'vich_file', 'money'
+        class: 'hidden-xs' #Disabled column in mobile
         export: true #Exports the field
     a.entities: #Option to display ONE_TO_MANY or MANY_TO_MANY in table format by adding the following configuration
         ...

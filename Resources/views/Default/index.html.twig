@@ -20,21 +20,25 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <div class="row">
-                    <div class="col-md-4 text-left">
+                    <div class="col-xs-6 col-md-4 text-left">
                         {% block pageTitle %}<h4>{{ 'views.index.list'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}</h4>{% endblock %}
                     </div><!-- .col title -->
 
-                    <div class="col-md-8">
+                    <div class="col-xs-6 col-md-8">
                         <div class="text-right">
                             {% block buttons %}
                                 <div class="btn-group">
                                     {% if config.new is defined %}
                                         <a class="btn btn-success" href="{{ path(config.new) }}">
-                                            {{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
+                                            <span class="hidden-xs">{{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}</span>
+                                            <span class="visible-xs"><span class="glyphicon glyphicon-plus tooltips" rel="tooltip" data-original-title="{{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}"></span></span>
                                         </a>
                                     {% endif %}
-                                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <button type="button" class="hidden-xs btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                         {{ 'views.index.export'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }} <span class="caret"></span>
+                                    </button>
+                                    <button type="button" class="visible-xs btn btn-info dropdown-toggle tooltips" rel="tooltip" data-original-title="{{ 'views.index.export'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}" data-toggle="dropdown" aria-expanded="false">
+                                        <span class="glyphicon glyphicon-save"></span>
                                     </button>
                                     <ul class="dropdown-menu" role="menu">
                                         <li><a href="{{ path(config.export, { 'format': "xls" }) }}">EXCEL</a></li>
@@ -48,8 +52,13 @@
                                     {% endif %}
                                     {% if filterForm %}
                                         <a class="btn btn-primary dropdown-toggle" data-toggle="collapse" data-target="#filters">
-                                            {{ 'views.index.filters'|trans({}, 'MWSimpleAdminCrudBundle') }}
-                                            <span class="caret"></span>
+                                            <span class="hidden-xs">
+                                                {{ 'views.index.filters'|trans({}, 'MWSimpleAdminCrudBundle') }}
+                                                <span class="caret"></span>
+                                            </span>
+                                            <span class="visible-xs">
+                                                <span class="glyphicon glyphicon-filter tooltips" rel="tooltip" data-original-title="{{ 'views.index.filters'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}"></span>
+                                            </span>
                                         </a>
                                     {% endif %}
                                 </div><!-- .btn-group -->
@@ -78,11 +87,15 @@
                         <tr>
                             {% if config.paginate %}
                                 {% for key, field in config.fieldsindex %}
-                                    <th{% if entities.isSorted(key) %} class="sorted"{% endif %}>{{ knp_pagination_sortable(entities, field.label, key) }}</th>
+                                    <th class="{{ field.class is defined ? field.class }} {{ entities.isSorted(key) ? 'sorted' }}">
+                                        {{ knp_pagination_sortable(entities, field.label, key) }}
+                                    </th>
                                 {% endfor %}
                             {% else %}
                                 {% for key, field in config.fieldsindex %}
-                                    <th>{{ field.label }}</th>
+                                    <th class="{{ field.class is defined ? field.class }}">
+                                        {{ field.label }}
+                                    </th>
                                 {% endfor %}
                             {% endif %}
                             <th>{{ 'views.index.actions'|trans({}, 'MWSimpleAdminCrudBundle') }}</th>
@@ -95,7 +108,7 @@
                         {% for entity in entities %}
                         <tr>
                             {% for key, field in config.fieldsindex %}
-                                <td>
+                                <td class="{{ field.class is defined ? field.class }}">
                                 {% if field.type in ['datetime', 'datetimetz', 'date', 'time'] %}
                                     {{ attribute(entity, field.name) ? attribute(entity, field.name)|date(field.date) }}
                                 {% elseif field.type == 'boolean' %}
@@ -144,7 +157,8 @@
                     <div class="col-md-2">
                         {% if config.new is defined %}
                             <a class="btn btn-success likepaginator" href="{{ path(config.new) }}">
-                                {{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
+                                <span class="hidden-xs">{{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}</span>
+                                <span class="visible-xs"><span class="glyphicon glyphicon-plus tooltips" rel="tooltip" data-original-title="{{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}"></span></span>
                             </a>
                         {% endif %}
                     </div>

@@ -31,6 +31,7 @@ fieldsindex: #Los campos que aparecen en la lista de índices
         label: 'Código' #Nombre que muestra
         name: 'Id' #Nombre del campo
         type: 'integer' #Tipos: 'string', 'datetime', 'datetimetz', 'date', 'time', 'boolean', 'boolean_view', 'ONE_TO_MANY', 'MANY_TO_MANY', 'vich_file', 'money'
+        class: 'hidden-xs' #Columna deshabilitada en el móvil
         export: true #Permite exportar el campo
     a.imagen:
         ...
