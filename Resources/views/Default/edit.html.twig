@@ -50,11 +50,6 @@
 {% block stylesheets %}
     {{ parent() }}
 
-    {% if config.validator is defined %}
-        {% if config.validator == true %}
-            <link rel="stylesheet" href="{{ asset('bundles/mwsimpleadmincrud/css/bootstrapValidator.min.css') }}">
-        {% endif %}
-    {% endif %}
     {# DatetimepickerBundle #}
     {{ form_stylesheet(form) }}
 {% endblock %}
@@ -64,8 +59,7 @@
 
     {% if config.validator is defined %}
         {% if config.validator == true %}
-            <script src="{{ asset('bundles/mwsimpleadmincrud/js/validator/bootstrapValidator.min.js') }}"></script>
-            <script src="{{ asset('bundles/mwsimpleadmincrud/js/validator/language/es_ES.js') }}"></script>
+            <script src="{{ asset('bundles/mwsimpleadmincrud/js/validator/validator.min.js') }}"></script>
             <script src="{{ asset('bundles/mwsimpleadmincrud/js/widget.js') }}"></script>
         {% else %}
             <script src="{{ asset('bundles/mwsimpleadmincrud/js/widget_not_validator.js') }}"></script>

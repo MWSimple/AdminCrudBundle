@@ -47,23 +47,33 @@ $builder
 ```twig
 {% block javascript %}
     {{ parent() }}
+
+    {# ATTENTION #}
+
+    {# If NOT use JS validation add: #}
     <script src="{{ asset('bundles/mwsimpleadmincrud/js/addForm_not_validator.js') }}"></script>
+    <script src="{{ asset('bundles/mwsimpleadmincrud/js/embed_not_validator.js') }}"></script>
+
+    {# If you use JS validation add: #}
+    <script src="{{ asset('bundles/mwsimpleadmincrud/js/addForm.js') }}"></script>
     <script src="{{ asset('bundles/mwsimpleadmincrud/js/embed.js') }}"></script>
+
     <script type="text/javascript">
-      $('.tags_embed').embed();
-      {#$('.tags2_embed').embed();#}
+        $('.tags_embed').embed();
+        {# $('.tags2_embed').embed(); #}
 
-      {# para mas de un nivel#}
-      {# $('.tags_embed').embed();
+        {# For more than one level #}
+        {#
+        $('.tags_embed').embed();
 
-      $('body').on('click', '.add_link_tags_embed', function(e) {
-        var index = $(this).closest('.tags_embed').attr('data-index');
-        if(typeof index === "undefined"){
-          index = $(this).closest('.form-group').find('.tags_embed').attr('data-index');
-        }
-        $('.tags_second_embed'+index).embed();
-      });#}
-
+        $('body').on('click', '.add_link_tags_embed', function(e) {
+          var index = $(this).closest('.tags_embed').attr('data-index');
+          if(typeof index === "undefined"){
+            index = $(this).closest('.form-group').find('.tags_embed').attr('data-index');
+          }
+          $('.tags_second_embed'+index).embed();
+        });
+        #}
     </script>
 {% endblock %}
 ```
@@ -84,7 +94,7 @@ $builder
 ;
 ```
 
-##Embed a Collection of Forms (Option 2) (deprecated)
+##Embed a Collection of Forms (Option 2) (DEPRECATED)
 
 [Documentation](http://symfony.com/doc/current/cookbook/form/form_collections.html)
 

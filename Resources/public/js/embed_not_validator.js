@@ -30,8 +30,6 @@
             $('html, body').stop().animate({
                 scrollTop: $($newLinkLi).prev().offset().top
             }, 1000);
-            // update validation
-            $('form').validator('update');
         });
 
         $collection.delegate('.delete_link', 'click', function(e) {
@@ -39,8 +37,6 @@
             e.preventDefault();
             // remove the li for the tag form
             removeForm(jQuery(this).closest('.rowremove'));
-            // update validation
-            $('form').validator('update');
         });
     }
 })(jQuery);

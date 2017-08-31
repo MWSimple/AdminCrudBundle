@@ -60,11 +60,10 @@ Documentación
 - Select 2 Entity          [select2entity-bundle](https://github.com/tetranz/select2entity-bundle) .
 - Symfony Colecciones      [symfony-collection](https://github.com/ninsuo/symfony-collection) .
 - Alertas Toastr           [toastr](https://github.com/CodeSeven/toastr) .
+- Validador Js             [bootstrap-validator](http://1000hz.github.io/bootstrap-validator/) .
 
 ## Author
 Gonzalo Alonso - gonkpo@gmail.com
-
-![Argentina](http://www.messentools.com/images/emoticones/banderas/MessenTools.com-Flag-of-Argentina.png "Argentina")
 
 ## Soporte
 [Tecspro](http://www.tecspro.com.ar)

@@ -22,7 +22,7 @@ delete: 'admin_post_delete' #If I comment this line not shown in the edit and sh
 export: 'admin_post_export' #Use sonata export
 sessionFilter: 'PostControllerFilter' #If I comment this line does not use session. To remove the filter Filtertype comment line in the Controller generated
 saveAndAdd: true #If true then add the button to save and add another
-validator: false #If true added by JS validation on forms (*No maintenance)
+validator: false #If true added by JS validation on forms
 site_view_layout: null #Optional example 'AppBundle::layout.html.twig'
 parameter_root: null #Opcional if necessary load the configuration in the view with the function admincrud_config() from another bundle you can set your value root: Configuration - treeBuilder - root
 #ajax_enabled_disabled: 'path_ajax_enabled_disabled' #Optional if you need to customize

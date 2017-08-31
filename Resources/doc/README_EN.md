@@ -59,11 +59,10 @@ Documentation
 - Select 2 Entity     [select2entity-bundle](https://github.com/tetranz/select2entity-bundle) .
 - Symfony Collection  [symfony-collection](https://github.com/ninsuo/symfony-collection) .
 - Alert Toastr        [toastr](https://github.com/CodeSeven/toastr) .
+- Validator Js        [bootstrap-validator](http://1000hz.github.io/bootstrap-validator/) .
 
 ## Author
 Gonzalo Alonso - gonkpo@gmail.com
-
-![Argentina](http://www.messentools.com/images/emoticones/banderas/MessenTools.com-Flag-of-Argentina.png "Argentina")
 
 ## Supports
 [Tecspro](http://www.tecspro.com.ar)

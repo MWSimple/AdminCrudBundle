@@ -8,5 +8,5 @@ $(document).ready(function() {
         });
     }
     //FORM VALIDATOR
-    $('form').bootstrapValidator();
+    $('form').validator();
 });
