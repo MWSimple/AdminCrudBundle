@@ -81,81 +81,81 @@
                         {% endif %}
                     </div><!-- .col filter form -->
                 </div><!-- .row -->
-            </div><!-- .panel-heading -->
+            </div>
+            <div class="panel-body">
+                {% block pageInfo %}{% endblock %}
 
-            {% block pageInfo %}{% endblock %}
-
-            <div class="table-responsive">
-                <table class="table table-striped table-bordered table-condensed">
-                    <thead>
-                        {% block table_head %}
-                        <tr>
-                            {% if config.paginate %}
-                                {% for key, field in config.fieldsindex %}
-                                    <th class="{{ field.class is defined ? field.class }} {{ entities.isSorted(key) ? 'sorted' }}">
-                                        {{ knp_pagination_sortable(entities, field.label, key) }}
-                                    </th>
-                                {% endfor %}
-                            {% else %}
-                                {% for key, field in config.fieldsindex %}
-                                    <th class="{{ field.class is defined ? field.class }}">
-                                        {{ field.label }}
-                                    </th>
-                                {% endfor %}
-                            {% endif %}
-                            <th>{{ 'views.index.actions'|trans({}, 'MWSimpleAdminCrudBundle') }}</th>
-                        </tr>
-                        {% endblock table_head %}
-                    </thead>
-
-                    <tbody>
-                        {% block table_body %}
-                        {% for entity in entities %}
-                        <tr>
-                            {% for key, field in config.fieldsindex %}
-                                <td class="{{ field.class is defined ? field.class }}">
-                                {% if field.type in ['datetime', 'datetimetz', 'date', 'time'] %}
-                                    {{ attribute(entity, field.name) ? attribute(entity, field.name)|date(field.date) }}
-                                {% elseif field.type == 'boolean' %}
-                                    {{ ajaxActive(attribute(entity, field.name), config.repository, field.name, entity.id) }}
-                                {% elseif field.type == 'boolean_view' %}
-                                    {{ isActive(attribute(entity, field.name)) }}
-                                {% elseif field.type in ['ONE_TO_MANY', 'MANY_TO_MANY'] %}
-                                    {% set many_entity = attribute(entity, field.name) %}
-                                    {% for key, field_many in many_entity %}
-                                        {{ field_many|raw }}
-                                        {% if field.separator is defined %}
-                                            {{ field.separator|raw }}
-                                        {% else %}
-                                            |
-                                        {% endif %}
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-condensed">
+                        <thead>
+                            {% block table_head %}
+                            <tr>
+                                {% if config.paginate %}
+                                    {% for key, field in config.fieldsindex %}
+                                        <th class="{{ field.class is defined ? field.class }} {{ entities.isSorted(key) ? 'sorted' }}">
+                                            {{ knp_pagination_sortable(entities, field.label, key) }}
+                                        </th>
                                     {% endfor %}
-                                {% elseif field.type == 'money' %}
-                                    {{ attribute(entity, field.name)|localizednumber(field.currency_style|default('currency'), field.currency_type|default('double')) }}
-                                {% elseif field.type == 'vich_file' %}
-                                    {% if attribute(entity, field.name) is not empty %}
-                                        <a href="{{ vich_uploader_asset(entity, field.file) }}"><img class="img-responsive" src="{{ vich_uploader_asset(entity, field.file)|imagine_filter('my_thumb_list') }}"></a>
-                                    {% endif %}
                                 {% else %}
-                                    {{ attribute(entity, field.name)|raw }}
+                                    {% for key, field in config.fieldsindex %}
+                                        <th class="{{ field.class is defined ? field.class }}">
+                                            {{ field.label }}
+                                        </th>
+                                    {% endfor %}
                                 {% endif %}
-                                </td>
-                            {% endfor %}
-                            <td class="text-center">
-                                {% block actions %}
-                                    <a class="glyphicon glyphicon-search tooltips" href="{{ path(config.show, { 'id': entity.id }) }}" title="" rel="tooltip" data-original-title="{{ 'views.actions.show'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}"></a>
-                                    {% if config.edit is defined %}
-                                        <a class="glyphicon glyphicon-edit tooltips" href="{{ path(config.edit, { 'id': entity.id }) }}" title="" rel="tooltip" data-original-title="{{ 'views.actions.edit'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}"></a>
-                                    {% endif %}
-                                {% endblock actions %}
-                            </td>
-                        </tr>
-                        {% endfor %}
-                        {% endblock table_body %}
-                    </tbody>
-                </table>
-            </div><!-- .table-responsive -->
+                                <th>{{ 'views.index.actions'|trans({}, 'MWSimpleAdminCrudBundle') }}</th>
+                            </tr>
+                            {% endblock table_head %}
+                        </thead>
 
+                        <tbody>
+                            {% block table_body %}
+                            {% for entity in entities %}
+                            <tr>
+                                {% for key, field in config.fieldsindex %}
+                                    <td class="{{ field.class is defined ? field.class }}">
+                                    {% if field.type in ['datetime', 'datetimetz', 'date', 'time'] %}
+                                        {{ attribute(entity, field.name) ? attribute(entity, field.name)|date(field.date) }}
+                                    {% elseif field.type == 'boolean' %}
+                                        {{ ajaxActive(attribute(entity, field.name), config.repository, field.name, entity.id) }}
+                                    {% elseif field.type == 'boolean_view' %}
+                                        {{ isActive(attribute(entity, field.name)) }}
+                                    {% elseif field.type in ['ONE_TO_MANY', 'MANY_TO_MANY'] %}
+                                        {% set many_entity = attribute(entity, field.name) %}
+                                        {% for key, field_many in many_entity %}
+                                            {{ field_many|raw }}
+                                            {% if field.separator is defined %}
+                                                {{ field.separator|raw }}
+                                            {% else %}
+                                                |
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% elseif field.type == 'money' %}
+                                        {{ attribute(entity, field.name)|localizednumber(field.currency_style|default('currency'), field.currency_type|default('double')) }}
+                                    {% elseif field.type == 'vich_file' %}
+                                        {% if attribute(entity, field.name) is not empty %}
+                                            <a href="{{ vich_uploader_asset(entity, field.file) }}"><img class="img-responsive" src="{{ vich_uploader_asset(entity, field.file)|imagine_filter('my_thumb_list') }}"></a>
+                                        {% endif %}
+                                    {% else %}
+                                        {{ attribute(entity, field.name)|raw }}
+                                    {% endif %}
+                                    </td>
+                                {% endfor %}
+                                <td class="text-center">
+                                    {% block actions %}
+                                        <a class="glyphicon glyphicon-search tooltips" href="{{ path(config.show, { 'id': entity.id }) }}" title="" rel="tooltip" data-original-title="{{ 'views.actions.show'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}"></a>
+                                        {% if config.edit is defined %}
+                                            <a class="glyphicon glyphicon-edit tooltips" href="{{ path(config.edit, { 'id': entity.id }) }}" title="" rel="tooltip" data-original-title="{{ 'views.actions.edit'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}"></a>
+                                        {% endif %}
+                                    {% endblock actions %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% endblock table_body %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             <div class="panel-footer">
                 <div class="row">
                     {% block buttonsbelow %}
@@ -174,8 +174,8 @@
                     </div>
                     {% endif %}
                 </div><!-- .row -->
-            </div><!-- .panel-footer -->
-        </div><!-- .panel -->
+            </div>
+        </div>
     </div>
 
 {% endblock page %}
