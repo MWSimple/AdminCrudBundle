@@ -4,16 +4,18 @@ namespace {{ namespace }}\Controller{{ entity_namespace ? '\\' ~ entity_namespac
 
 {% block use_statements %}
 use {{ namespace }}\Entity\{{ entity }};
-{% if ('new' in actions or 'edit' in actions) and use_form_type_instance %}
+{% if ('new' in actions or 'edit' in actions) %}
 use {{ namespace }}\Form\{{ entity }}Type;
 {% endif %}
 use MWSimple\Bundle\AdminCrudBundle\Controller\DefaultController as Controller;
 {% if 'annotation' == format -%}
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
 {%- endif %}
 {% if 'new' in actions or 'edit' in actions or 'delete' in actions %}
 use Symfony\Component\HttpFoundation\Request;
+
 {%- endif %}
 use {{ namespace }}\Form\{{ entity }}FilterType;
 
