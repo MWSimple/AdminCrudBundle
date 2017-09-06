@@ -26,7 +26,7 @@ delete: '{{ route_name_prefix }}_delete'
 export: '{{ route_name_prefix }}_export'
 sessionFilter: '{{ entity_class }}ControllerFilter'
 saveAndAdd: true
-validator: false
+validator: true
 fieldsindex:
 {%- for field in fields %}
 

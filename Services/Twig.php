@@ -24,12 +24,8 @@ class Twig extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFunction('admincrud_config', array($this, 'getBackendConfiguration')),
-            'isActive' => new \Twig_Function_Method($this, 'isActive', array(
-                'is_safe' => array('html')
-            )),
-            'ajaxActive' => new \Twig_Function_Method($this, 'ajaxActive', array(
-                'is_safe' => array('html')
-            )),
+            new \Twig_SimpleFunction('isActive', array($this, 'isActive'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('ajaxActive', array($this, 'ajaxActive'), array('is_safe' => array('html'))),
         );
     }
 
