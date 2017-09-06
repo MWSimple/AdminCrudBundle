@@ -11,12 +11,10 @@ use MWSimple\Bundle\AdminCrudBundle\Controller\DefaultController as Controller;
 {% if 'annotation' == format -%}
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-
-{%- endif %}
+{% endif %}
 {% if 'new' in actions or 'edit' in actions or 'delete' in actions %}
 use Symfony\Component\HttpFoundation\Request;
-
-{%- endif %}
+{% endif %}
 use {{ namespace }}\Form\{{ entity }}FilterType;
 
 {% endblock use_statements %}
