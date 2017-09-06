@@ -28,7 +28,8 @@ class MWSimpleCrudGenerator extends DoctrineCrudGenerator
      * @param ClassMetadataInfo $metadata         The entity class metadata
      * @param string            $format           The configuration format (xml, yaml, annotation)
      * @param string            $routePrefix      The route name prefix
-     * @param array             $needWriteActions Whether or not to generate write actions
+     * @param bool              $needWriteActions Whether or not to generate write actions
+     * @param bool              $forceOverwrite   Whether or not to overwrite the controller
      *
      * @throws \RuntimeException
      */
@@ -72,18 +73,22 @@ class MWSimpleCrudGenerator extends DoctrineCrudGenerator
         }
 
         $this->renderFile('crud/controller.php.twig', $target, array(
-            'actions'           => $this->actions,
-            'route_prefix'      => $this->routePrefix,
+            'actions' => $this->actions,
+            'route_prefix' => $this->routePrefix,
             'route_name_prefix' => $this->routeNamePrefix,
-            'bundle'            => $this->bundle->getName(),
-            'entity'            => $this->entity,
+            'bundle' => $this->bundle->getName(),
+            'entity' => $this->entity,
             'entity_singularized' => $this->entitySingularized,
             'entity_pluralized' => $this->entityPluralized,
-            'entity_class'      => $entityClass,
-            'namespace'         => $this->bundle->getNamespace(),
-            'entity_namespace'  => $entityNamespace,
-            'format'            => $this->format,
-            'associations'      => $this->mws_tecspro_comun->getFieldsAssociationFromMetadata($this->metadata),
+            'identifier' => $this->metadata->identifier[0],
+            'entity_class' => $entityClass,
+            'namespace' => $this->bundle->getNamespace(),
+            'entity_namespace' => $entityNamespace,
+            'format' => $this->format,
+            // BC with Symfony 2.7
+            'use_form_type_instance' => !method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix'),
+            // AdminCrud
+            'associations' => $this->mws_tecspro_comun->getFieldsAssociationFromMetadata($this->metadata),
         ));
     }
 
@@ -117,13 +122,16 @@ class MWSimpleCrudGenerator extends DoctrineCrudGenerator
         array_pop($parts);
 
         $this->renderFile('form/FormFilterType.php.twig', $this->classPath, array(
-            'fields_data'      => $this->getFieldsDataFromMetadata($metadata),
-            'namespace'        => $bundle->getNamespace(),
+            'namespace' => $bundle->getNamespace(),
             'entity_namespace' => implode('\\', $parts),
-            'entity_class'     => $entityClass,
-            'bundle'           => $bundle->getName(),
-            'form_class'       => $this->className,
-            'form_filter_type_name'   => strtolower(str_replace('\\', '_', $bundle->getNamespace()).($parts ? '_' : '').implode('_', $parts).'_'.$this->className),
+            'entity_class' => $entityClass,
+            'bundle' => $bundle->getName(),
+            'form_class' => $this->className,
+            // BC with Symfony 2.7
+            'get_name_required' => !method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix'),
+            // AdminCrud
+            'fields_data' => $this->getFieldsDataFromMetadata($metadata),
+            'form_filter_type_name' => strtolower(str_replace('\\', '_', $bundle->getNamespace()).($parts ? '_' : '').implode('_', $parts).'_'.$this->className),
         ));
     }
 

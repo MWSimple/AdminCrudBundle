@@ -25,9 +25,8 @@ class {{ form_class }} extends AbstractType
 {
 {% block class_body %}
     {% if fields_data|length > 0 %}
-/**
-     * @param FormBuilderInterface $builder
-     * @param array $options
+    /**
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -51,7 +50,7 @@ class {{ form_class }} extends AbstractType
     {% endif %}
 
     /**
-     * @param OptionsResolver $resolver
+     * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -63,11 +62,23 @@ class {{ form_class }} extends AbstractType
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getBlockPrefix()
     {
-        return '{{ form_filter_type_name }}';
+        return '{{ form_type_name }}';
     }
+
+{# BC with Symfony 2.7 #}
+{%- if get_name_required %}
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
+{% endif %}
+
 {% endblock class_body %}
 }

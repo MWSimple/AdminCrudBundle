@@ -28,6 +28,14 @@ class MWSimpleCrudCommand extends GenerateDoctrineCrudCommand
         $this->setDescription('Generates a ADMINCRUD and paginator based on a Doctrine entity');
     }
 
+    protected function interact(InputInterface $input, OutputInterface $output)
+    {
+        $questionHelper = $this->getQuestionHelper();
+        $questionHelper->writeSection($output, 'Admin CRUD Generator');
+
+        parent::interact($input, $output);
+    }
+
     protected function createGenerator($bundle = null)
     {
         $crudGenerator = new MWSimpleCrudGenerator(
@@ -68,13 +76,5 @@ class MWSimpleCrudCommand extends GenerateDoctrineCrudCommand
         $skeletonDirs[] = $this->getContainer()->get('kernel')->locateResource('@MWSimpleAdminCrudBundle/Resources');
 
         return $skeletonDirs;
-    }
-
-    protected function interact(InputInterface $input, OutputInterface $output)
-    {
-        $questionHelper = $this->getQuestionHelper();
-        $questionHelper->writeSection($output, 'Admin CRUD Generator');
-
-        parent::interact($input, $output);
     }
 }
