@@ -20,9 +20,6 @@ env:
 matrix:
   fast_finish: true
   include:
-    # bleeding edge (unreleased dev versions where failures are allowed)
-    - php: nightly
-      env: SYMFONY_VERSION="dev-master"
     # Symfony 3.3
     - php: 7.1
       env:
