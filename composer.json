@@ -1,9 +1,9 @@
 {
     "name": "mwsimple/admin-crud",
-    "description": "This bundle admin crud",
-    "keywords": ["admin", "crud", "bootstrap"],
-    "homepage": "https://github.com/MWSimple/AdminCrudBundle",
     "type": "symfony-bundle",
+    "description": "Admin Crud generator for Symfony applications",
+    "keywords": ["admin", "crud", "backend", "generator"],
+    "homepage": "https://github.com/MWSimple/AdminCrudBundle",
     "license": "MIT",
     "authors": [
         {
@@ -26,8 +26,12 @@
         "egeloen/ckeditor-bundle": "^4.0",
         "tetranz/select2entity-bundle": "2.*"
     },
+    "config": {
+        "sort-packages": true
+    },
     "autoload": {
-        "psr-0": {"MWSimple\\Bundle\\AdminCrudBundle": ""}
+        "psr-4": { "MWSimple\\Bundle\\AdminCrudBundle\\": "" },
+        "exclude-from-classmap": ["/Tests/"]
     },
     "target-dir": "MWSimple/Bundle/AdminCrudBundle",
     "minimum-stability": "dev",
