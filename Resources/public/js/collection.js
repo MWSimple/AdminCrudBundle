@@ -20,7 +20,7 @@ jQuery(document).ready(function() {
         e.preventDefault();
 
         // add a new tag form (see next code block)
-        addForm($collection, $newLinkLi);
+        addForm($collection, $newLinkLi, '__name__');
 
         $('html, body').stop().animate({
             scrollTop: $($newLinkLi).prev().offset().top
