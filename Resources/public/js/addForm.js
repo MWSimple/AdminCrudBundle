@@ -11,8 +11,6 @@ function addForm(collection,target,$prototypeName) {
     // increase the index with one for the next item
     collection.data('index', index + 1);
     target.before(newForm);
-    // update validation
-    $('form').validator('update');
     //render checkbox
     if ($(".mws_checkbox").size()){
         $('input[type="checkbox"].mws_checkbox').checkbox({
@@ -22,11 +20,13 @@ function addForm(collection,target,$prototypeName) {
             uncheckedClass: 'glyphicon glyphicon-unchecked'
         });
     }
+    // update validation
+    $('form').validator('update');
     return index;
 }
 
 function removeForm(form) {
+    form.remove();
     // update validation
     $('form').validator('update');
-    form.remove();
 }
