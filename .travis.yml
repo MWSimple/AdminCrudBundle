@@ -60,8 +60,5 @@ install:
   - composer update --prefer-dist --no-interaction --no-suggest --no-progress --ansi $COMPOSER_FLAGS
   - if [[ "$ENABLE_CODE_COVERAGE" == "true" && "$TRAVIS_EVENT_TYPE" == "cron" ]]; then composer require --dev satooshi/php-coveralls; fi
 
-script:
-  - if [[ "$CHECK_PHP_SYNTAX" == "yes" ]]; then mv ./.php_cs.cache $HOME/.app/cache/.php_cs.cache 2> /dev/null; fi;
-
 after_success: |
     if [[ "$ENABLE_CODE_COVERAGE" == "true" && "$TRAVIS_EVENT_TYPE" == "cron" ]]; then php vendor/bin/coveralls -v --config .coveralls.yml; fi;
