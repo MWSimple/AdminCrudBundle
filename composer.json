@@ -33,7 +33,6 @@
         "psr-4": { "MWSimple\\Bundle\\AdminCrudBundle\\": "" },
         "exclude-from-classmap": ["/Tests/"]
     },
-    "target-dir": "MWSimple/Bundle/AdminCrudBundle",
     "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
