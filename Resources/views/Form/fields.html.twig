@@ -346,14 +346,15 @@
             {{ form_javascript(child) }}
         </div>
     {% endmacro %}
+    {% import _self as mws_embed_row_function %}
     <div class="form-group{% if attr.col is defined %} {{ attr.col }}{% endif %}">
         <legend>
             {{- form_label(form) -}} <a class='add_link_{{ form.vars.attr.class }} btn btn-primary' style='margin-left:10px;'><i class='glyphicon glyphicon-plus'></i></a>
         </legend>
         <div class="well">
-            <div data-prototype="{{ _self.rowChild(form.vars.prototype, attr)|e }}" class="{{ attr.class }}" data-prototype-name="{{form.vars.prototype.vars.name}}">
+            <div data-prototype="{{ mws_embed_row_function.rowChild(form.vars.prototype, attr)|e }}" class="{{ attr.class }}" data-prototype-name="{{form.vars.prototype.vars.name}}">
                 {% for child in form %}
-                    {{ _self.rowChild(child, attr) }}
+                    {{ mws_embed_row_function.rowChild(child, attr) }}
                 {% endfor %}
             </div>
         </div>
