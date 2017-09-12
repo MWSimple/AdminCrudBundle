@@ -71,7 +71,7 @@ class {{ form_class }} extends AbstractType
                 'multiple' => true,
                 {%- endif %}
 
-                'remote_route' => '{{ entity_class }}_autocomplete_{{ fieldName }}',
+                'remote_route' => '{{ entity_class|lower }}_autocomplete_{{ fieldName|lower }}',
                 'class' => '{{ field.targetEntity }}',
                 'minimum_input_length' => 0,
                 'attr' => [

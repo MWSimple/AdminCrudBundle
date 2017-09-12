@@ -30,6 +30,8 @@ class DefaultController extends Controller
     protected $form;
     // Allows you to configure options in the form an array must be set
     protected $optionsForm = null;
+    // Not export relations
+    protected $fieldsNotExport = ['ONE_TO_ONE','MANY_TO_ONE','ONE_TO_MANY','MANY_TO_MANY'];
 
     /**
      * Index
@@ -86,43 +88,151 @@ class DefaultController extends Controller
     public function exportCsvAction($format)
     {
         $this->getConfig();
-        $this->createQuery($this->configArray['repository']);
-        $query  = $this->queryBuilder->getQuery();
-        $campos = $this->getCampos();
-        $content_type = $this->getContentType($format);
-        // Location to Export this to
-        $export_to = 'php://output';
-        // Data to export
-        $exporter_source = new DoctrineORMQuerySourceIterator($query, $campos, "Y-m-d H:i:s");
-        // Get an Instance of the Writer
-        $exporter_writer = '\Exporter\Writer\\' . ucfirst($format) . 'Writer';
-        $exporter_writer = new $exporter_writer($export_to);
-        // Generate response
-        $response = new Response();
-        // Set headers
-        $response->headers->set('Cache-Control', 'must-revalidate, post-check=0, pre-check=0');
-        $response->headers->set('Content-type', $content_type);
-        $response->headers->set('Expires', 0);
-        $response->headers->set('Pragma', 'public');
-        // Send headers before outputting anything
-        $response->sendHeaders();
-        // Export to the format
-        Handler::create($exporter_source, $exporter_writer)->export();
+
+        if ($format == "pdf") {
+            $response = $this->forward('MWSimpleAdminCrudBundle:Default:exportPdf', [
+                'config' => $this->configArray
+            ]);
+        } else {
+            $this->createQuery($this->configArray['repository']);
+            $query  = $this->queryBuilder->getQuery();
+            $fields = $this->getFields();
+            $content_type = $this->getContentType($format);
+            // Location to Export this to
+            $export_to = 'php://output';
+            // Data to export
+            $exporter_source = new DoctrineORMQuerySourceIterator($query, $fields, "Y-m-d H:i:s");
+            // Get an Instance of the Writer
+            $exporter_writer = '\Exporter\Writer\\' . ucfirst($format) . 'Writer';
+            $exporter_writer = new $exporter_writer($export_to);
+            // Generate response
+            $response = new Response();
+            // Set headers
+            $response->headers->set('Cache-Control', 'must-revalidate, post-check=0, pre-check=0');
+            $response->headers->set('Content-type', $content_type);
+            $response->headers->set('Expires', 0);
+            $response->headers->set('Pragma', 'public');
+            // Send headers before outputting anything
+            $response->sendHeaders();
+            // Export to the format
+            Handler::create($exporter_source, $exporter_writer)->export();
+        }
 
         return $response;
     }
 
-    protected function getCampos()
+    /**
+     * Export Pdf.
+     */
+    public function exportPdfAction($config)
     {
-        $campos = array();
+        $this->configArray = $config;
+
+        $this->createQuery($this->configArray['repository']);
+
+        $fields = $this->getFieldsForJson();
+        $fieldsTypes = $this->getFieldsTypes();
+        $select = $this->getFieldsSelect();
+        $this->queryBuilder->select($select);
+        $entities = $this->queryBuilder->getQuery()->getArrayResult();
+
+        $results = [
+            'content' => [
+                ['text' =>  $this->configArray['entityName'], 'fontSize' => 14, 'bold' => true, 'margin' => [0, 20, 0, 8]],
+                ['style' => 'tableExample', 'table' => ['headerRows' => 1, 'body' => []], 'layout' => 'lightHorizontalLines']
+            ]
+        ];
+
+        $body = [];
+        array_push($body, $fields);
+
+        foreach ($entities as $key => $value) {
+            $res = [];
+            foreach ($value as $k => $v) {
+                if (array_key_exists($k, $fieldsTypes)) {
+                    if ($fieldsTypes[$k]['type'] == "date") {
+                        $v = $v->format($fieldsTypes[$k]['date']);
+                    }
+                }
+                array_push($res, $v);
+            }
+            array_push($body, $res);
+        }
+
+        $results['content'][1]['table']['body'] = $body;
+
+        $response = new JsonResponse();
+        $data = ['filename' => $this->configArray['entityName'].'.pdf', 'data' => $results];
+        $response->setData($data);
+
+        return $response;
+    }
+
+    protected function getFields()
+    {
+        $fields = [];
         foreach ($this->configArray['fieldsindex'] as $key => $value) {
             //if is defined and true
             if (!empty($value['export']) && $value['export']) {
-                $campos[] = $value['name'];
+                $fields[] = $value['name'];
             }
         }
+        return $fields;
+    }
 
-        return $campos;
+    protected function getFieldsTypes()
+    {
+        $fields = [];
+        foreach ($this->configArray['fieldsindex'] as $key => $value) {
+            //if is defined and true
+            if (!empty($value['export']) && $value['export']) {
+                if (!in_array($value['type'], $this->fieldsNotExport)) {
+                    if ($value['type'] == "datetime" or $value['type'] == "date" or $value['type'] == "time") {
+                        $fields[$value['name']] = [
+                            'type' => 'date',
+                            'date' => $value['date']
+                        ];
+                    }
+                }
+            }
+        }
+        return $fields;
+    }
+
+    protected function getFieldsForJson()
+    {
+        $fields = [];
+        foreach ($this->configArray['fieldsindex'] as $key => $value) {
+            //if is defined and true
+            if (!empty($value['export']) && $value['export']) {
+                if (!in_array($value['type'], $this->fieldsNotExport)) {
+                    $field['text'] = $value['label'];
+                    $field['style'] = 'tableHeader';
+                    array_push($fields, $field);
+                }
+            }
+        }
+        return $fields;
+    }
+
+    protected function getFieldsSelect()
+    {
+        $select = "";
+        $notfirst = false;
+        foreach ($this->configArray['fieldsindex'] as $key => $value) {
+            //if is defined and true
+            if (!empty($value['export']) && $value['export']) {
+                if (!in_array($value['type'], $this->fieldsNotExport)) {
+                    if ($notfirst) {
+                        $select .= ",a." . $value['name'];
+                    } else {
+                        $notfirst = true;
+                        $select .= "a." . $value['name'];
+                    }
+                }
+            }
+        }
+        return $select;
     }
 
     protected function getContentType($format)

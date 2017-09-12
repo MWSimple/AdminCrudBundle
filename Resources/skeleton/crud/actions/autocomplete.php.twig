@@ -6,12 +6,12 @@
      *
 {% block phpdoc_method_annotations %}
 {% if 'annotation' == format %}
-     * @Route("/autocomplete-forms/get-{{ fieldName }}", name="{{ entity_class }}_autocomplete_{{ fieldName }}")
+     * @Route("/autocomplete-forms/get-{{ fieldName|lower }}", name="{{ entity_class|lower }}_autocomplete_{{ fieldName|lower }}")
 {% endif %}
 {% endblock phpdoc_method_annotations %}
      */
 {% block method_definition %}
-    public function getAutocomplete{{ field.actionName }}(Request $request)
+    public function getAutocomplete{{ fieldName|capitalize }}(Request $request)
 {% endblock method_definition %}
     {
 {% block method_body %}

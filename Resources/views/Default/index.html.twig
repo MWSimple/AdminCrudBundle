@@ -41,6 +41,7 @@
                                         <span class="glyphicon glyphicon-save"></span>
                                     </button>
                                     <ul class="dropdown-menu" role="menu">
+                                        <li><a href="{{ path(config.export, { 'format': "pdf" }) }}" id="generatepdf">PDF</a></li>
                                         <li><a href="{{ path(config.export, { 'format': "xls" }) }}">EXCEL</a></li>
                                         <li><a href="{{ path(config.export, { 'format': "csv" }) }}">CSV</a></li>
                                         <li><a href="{{ path(config.export, { 'format': "json" }) }}">JSON</a></li>
@@ -182,12 +183,17 @@
 
 {% block javascript %}
     {{ parent() }}
+
+    <script src="{{ asset('bundles/mwsimpleadmincrud/js/pdf/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('bundles/mwsimpleadmincrud/js/pdf/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('bundles/mwsimpleadmincrud/js/pdf/generate_pdf.js') }}"></script>
+    <script src="{{ asset('bundles/mwsimpleadmincrud/js/widget_not_validator.js') }}"></script>
+
     <script type="text/javascript">
         $( "#reset_index_filters" ).click(function() {
             $(".reset_submit_filters").trigger("click");
         });
     </script>
-    <script src="{{ asset('bundles/mwsimpleadmincrud/js/widget_not_validator.js') }}"></script>
 
     {% if config.ajax_enabled_disabled is defined %}
         {% set path_ajax = path(config.ajax_enabled_disabled) %}

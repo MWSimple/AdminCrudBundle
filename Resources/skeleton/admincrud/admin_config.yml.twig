@@ -32,7 +32,7 @@ fieldsindex:
 
     a.{{ field.fieldName }}:
         label: '{{ field.fieldName|capitalize }}'
-        name: '{{ field.fieldName|capitalize }}'
+        name: '{{ field.fieldName }}'
         type: '{{ field.type }}'
     {%- if field.type in ['datetime', 'datetimetz'] %}
 
@@ -51,7 +51,7 @@ fieldsindex:
 
     a.{{ field.fieldName }}:
         label: '{{ field.fieldName|capitalize }}'
-        name: '{{ field.fieldName|capitalize }}'
+        name: '{{ field.fieldName }}'
     {%- if field.type == 1 %}
 
         type: 'ONE_TO_ONE'
@@ -75,7 +75,7 @@ fieldsshow:
 
     a.{{ field.fieldName }}:
         label: '{{ field.fieldName|capitalize }}'
-        name: '{{ field.fieldName|capitalize }}'
+        name: '{{ field.fieldName }}'
         type: '{{ field.type }}'
     {%- if field.type in ['datetime', 'datetimetz'] %}
 
@@ -95,7 +95,7 @@ fieldsshow:
 
     a.{{ field.fieldName }}:
         label: '{{ field.fieldName|capitalize }}'
-        name: '{{ field.fieldName|capitalize }}'
+        name: '{{ field.fieldName }}'
     {%- if field.type == 1 %}
 
         type: 'ONE_TO_ONE'
