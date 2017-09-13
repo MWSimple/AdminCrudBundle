@@ -150,7 +150,7 @@ class DefaultController extends Controller
             $res = [];
             foreach ($value as $k => $v) {
                 if (array_key_exists($k, $fieldsTypes)) {
-                    if ($fieldsTypes[$k]['type'] == "date") {
+                    if ($fieldsTypes[$k]['type'] == "date" && !is_null($v)) {
                         $v = $v->format($fieldsTypes[$k]['date']);
                     }
                 }
