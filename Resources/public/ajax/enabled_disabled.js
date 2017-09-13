@@ -23,11 +23,11 @@ $(document).ready(function() {
                         inputButtonAjax.children('span.glyphicon-check').css("display", "");
                         inputButtonAjax.children('span.glyphicon-unchecked').css("display", "none");
                     }
-                    toastr.danger(JsOptions.messageError);
+                    toastr.error(JsOptions.messageError);
                 }
             },
             error: function (data) {
-                toastr.danger(JsOptions.messageError);
+                toastr.error(JsOptions.messageError);
             }
         });
     });

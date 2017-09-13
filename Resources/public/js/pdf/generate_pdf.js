@@ -11,7 +11,7 @@ function findData(href, callback) {
       callback(res);
     },
     error: function (data) {
-        toastr.danger("Error");
+        toastr.error("Error");
     }
   });
 }
