@@ -31,7 +31,7 @@ class DefaultController extends Controller
     // Allows you to configure options in the form an array must be set
     protected $optionsForm = null;
     // Not export relations
-    protected $fieldsNotExport = ['ONE_TO_ONE','MANY_TO_ONE','ONE_TO_MANY','MANY_TO_MANY'];
+    protected $fieldsNotExport = ['ONE_TO_MANY','MANY_TO_MANY'];
 
     /**
      * Index
@@ -131,30 +131,35 @@ class DefaultController extends Controller
         $this->createQuery($this->configArray['repository']);
 
         $fields = $this->getFieldsForJson();
+        $fieldsSelect = $this->getFieldsSelect();
         $fieldsTypes = $this->getFieldsTypes();
-        $select = $this->getFieldsSelect();
-        $this->queryBuilder->select($select);
-        $entities = $this->queryBuilder->getQuery()->getArrayResult();
+
+        $entities = $this->queryBuilder->getQuery()->getResult();
+        
+        $title_fontSize = $this->configArray['export_pdf']['title_fontSize'];
+        $table_fontSize = $this->configArray['export_pdf']['table_fontSize'];
 
         $results = [
             'content' => [
-                ['text' =>  $this->configArray['entityName'], 'fontSize' => 14, 'bold' => true, 'margin' => [0, 20, 0, 8]],
-                ['style' => 'tableExample', 'table' => ['headerRows' => 1, 'body' => []], 'layout' => 'lightHorizontalLines']
+                ['text' =>  $this->configArray['entityName'], 'fontSize' => $title_fontSize, 'bold' => true, 'margin' => [0, 20, 0, 8]],
+                ['style' => 'tableExample', 'fontSize' => $table_fontSize, 'table' => ['headerRows' => 1, 'body' => []], 'layout' => 'lightHorizontalLines']
             ]
         ];
 
         $body = [];
         array_push($body, $fields);
-
         foreach ($entities as $key => $value) {
             $res = [];
-            foreach ($value as $k => $v) {
-                if (array_key_exists($k, $fieldsTypes)) {
-                    if ($fieldsTypes[$k]['type'] == "date" && !is_null($v)) {
-                        $v = $v->format($fieldsTypes[$k]['date']);
+            foreach ($fieldsSelect as $v) {
+                $val = $value->$v();
+                if (array_key_exists($v, $fieldsTypes)) {
+                    if ($fieldsTypes[$v]['type'] == "date" && !is_null($val)) {
+                        $val = $val->format($fieldsTypes[$v]['date']);
+                    } elseif ($fieldsTypes[$v]['type'] == "TO_ONE" && !is_null($val)) {
+                        $val = $val->$fieldsTypes[$v]['get']();
                     }
                 }
-                array_push($res, $v);
+                array_push($res, $val);
             }
             array_push($body, $res);
         }
@@ -188,9 +193,14 @@ class DefaultController extends Controller
             if (!empty($value['export']) && $value['export']) {
                 if (!in_array($value['type'], $this->fieldsNotExport)) {
                     if ($value['type'] == "datetime" or $value['type'] == "date" or $value['type'] == "time") {
-                        $fields[$value['name']] = [
+                        $fields["get".$value['name']] = [
                             'type' => 'date',
                             'date' => $value['date']
+                        ];
+                    } elseif ($value['type'] == "MANY_TO_ONE" or $value['type'] == "ONE_TO_ONE") {
+                        $fields["get".$value['name']] = [
+                            'type' => 'TO_ONE',
+                            'get' => '__toString'
                         ];
                     }
                 }
@@ -217,22 +227,14 @@ class DefaultController extends Controller
 
     protected function getFieldsSelect()
     {
-        $select = "";
-        $notfirst = false;
+        $fields = [];
         foreach ($this->configArray['fieldsindex'] as $key => $value) {
             //if is defined and true
             if (!empty($value['export']) && $value['export']) {
-                if (!in_array($value['type'], $this->fieldsNotExport)) {
-                    if ($notfirst) {
-                        $select .= ",a." . $value['name'];
-                    } else {
-                        $notfirst = true;
-                        $select .= "a." . $value['name'];
-                    }
-                }
+                $fields[] = "get".$value['name'];
             }
         }
-        return $select;
+        return $fields;
     }
 
     protected function getContentType($format)
@@ -813,6 +815,18 @@ class DefaultController extends Controller
         //Si no existe paginate o fue comentado entra y setea en true
         if (!array_key_exists('paginate', $this->configArray)) {
             $this->configArray['paginate'] = true;
+        }
+        //Si no existe export_pdf o fue comentado entra y setea default
+        if (!array_key_exists('export_pdf', $this->configArray)) {
+            $this->configArray['export_pdf'] = [];
+        }
+        //Si no existe title_fontSize en export_pdf
+        if (!array_key_exists('title_fontSize', $this->configArray['export_pdf'])) {
+            $this->configArray['export_pdf']['title_fontSize'] = 14;
+        }
+        //Si no existe table_fontSize en export_pdf
+        if (!array_key_exists('table_fontSize', $this->configArray['export_pdf'])) {
+            $this->configArray['export_pdf']['table_fontSize'] = 12;
         }
     }
 
