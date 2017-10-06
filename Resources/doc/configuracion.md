@@ -51,7 +51,7 @@ fieldsshow: #Los campos que aparecen en el ver Entity
     a.id:
         label: 'Código' #Nombre que muestra
         name: 'Id' #Nombre del campo
-        type: 'integer' #Tipos: 'string', 'datetime', 'datetimetz', 'date', 'time', 'boolean', 'ONE_TO_MANY', 'MANY_TO_MANY', 'vich_file', 'vich_file_many', 'money'
+        type: 'integer' #Tipos: 'string', 'text', 'datetime', 'datetimetz', 'date', 'time', 'boolean', 'ONE_TO_MANY', 'MANY_TO_MANY', 'vich_file', 'vich_file_many', 'money'
         class: 'col-lg-8 col-md-6 col-sm-12' #Permite agregar class. Por defecto es col-12
         #closerow: true #Permite cerrar un row para dar inicio a otro row (http://getbootstrap.com/)
         separator: '<br>' #Opcionalmente se puede agregar separador html para ONE_TO_MANY || MANY_TO_MANY
