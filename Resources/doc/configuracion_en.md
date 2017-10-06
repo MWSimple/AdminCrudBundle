@@ -62,7 +62,7 @@ fieldsshow: #Fields displayed in the show Entity
     a.id:
         label: 'Codigo' #Label
         name: 'Id' #Field name
-        type: 'integer' #Types: 'string', 'datetime', 'datetimetz', 'date', 'time', 'boolean', 'ONE_TO_MANY', 'MANY_TO_MANY', 'vich_file', 'vich_file_many, 'money'
+        type: 'integer' #Types: 'string', 'text', 'datetime', 'datetimetz', 'date', 'time', 'boolean', 'ONE_TO_MANY', 'MANY_TO_MANY', 'vich_file', 'vich_file_many, 'money'
         class: 'col-lg-8 col-md-6 col-sm-12' #or other class. Default is col-12
         #closerow: true #this close row for the separators of col (http://getbootstrap.com/)
         separator: '<br>' #optional tag html by ONE_TO_MANY || MANY_TO_MANY
