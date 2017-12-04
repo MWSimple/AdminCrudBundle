@@ -98,24 +98,17 @@ class DefaultController extends Controller
             $query  = $this->queryBuilder->getQuery();
             $fields = $this->getFields();
             $content_type = $this->getContentType($format);
-            // Location to Export this to
-            $export_to = 'php://output';
-            // Data to export
-            $exporter_source = new DoctrineORMQuerySourceIterator($query, $fields, "Y-m-d H:i:s");
-            // Get an Instance of the Writer
-            $exporter_writer = '\Exporter\Writer\\' . ucfirst($format) . 'Writer';
+            $export_to = 'php://output';// Location to Export this to
+            $exporter_source = new DoctrineORMQuerySourceIterator($query, $fields, "Y-m-d H:i:s");// Data to export
+            $exporter_writer = '\Exporter\Writer\\' . ucfirst($format) . 'Writer';// Get an Instance of the Writer
             $exporter_writer = new $exporter_writer($export_to);
-            // Generate response
-            $response = new Response();
-            // Set headers
-            $response->headers->set('Cache-Control', 'must-revalidate, post-check=0, pre-check=0');
+            $response = new Response();// Generate response
+            $response->headers->set('Cache-Control', 'must-revalidate, post-check=0, pre-check=0');// Set headers
             $response->headers->set('Content-type', $content_type);
             $response->headers->set('Expires', 0);
             $response->headers->set('Pragma', 'public');
-            // Send headers before outputting anything
-            $response->sendHeaders();
-            // Export to the format
-            Handler::create($exporter_source, $exporter_writer)->export();
+            $response->sendHeaders();// Send headers before outputting anything
+            Handler::create($exporter_source, $exporter_writer)->export();// Export to the format
         }
 
         return $response;
@@ -129,12 +122,6 @@ class DefaultController extends Controller
         $this->configArray = $config;
 
         $this->createQuery($this->configArray['repository']);
-
-        $fields = $this->getFieldsForJson();
-        $fieldsSelect = $this->getFieldsSelect();
-        $fieldsTypes = $this->getFieldsTypes();
-
-        $entities = $this->queryBuilder->getQuery()->getResult();
         
         $title_fontSize = $this->configArray['export_pdf']['title_fontSize'];
         $table_fontSize = $this->configArray['export_pdf']['table_fontSize'];
@@ -145,6 +132,22 @@ class DefaultController extends Controller
                 ['style' => 'tableExample', 'fontSize' => $table_fontSize, 'table' => ['headerRows' => 1, 'body' => []], 'layout' => 'lightHorizontalLines']
             ]
         ];
+
+        $results['content'][1]['table']['body'] = $this->getBodyPdf();
+
+        $response = new JsonResponse();
+        $data = ['filename' => $this->configArray['entityName'].'.pdf', 'data' => $results];
+        $response->setData($data);
+
+        return $response;
+    }
+
+    protected function getBodyPdf()
+    {
+        $fields = $this->getFieldsForJson();
+        $fieldsSelect = $this->getFieldsSelect();
+        $fieldsTypes = $this->getFieldsTypes();
+        $entities = $this->queryBuilder->getQuery()->getResult();
 
         $body = [];
         array_push($body, $fields);
@@ -166,13 +169,7 @@ class DefaultController extends Controller
             array_push($body, $res);
         }
 
-        $results['content'][1]['table']['body'] = $body;
-
-        $response = new JsonResponse();
-        $data = ['filename' => $this->configArray['entityName'].'.pdf', 'data' => $results];
-        $response->setData($data);
-
-        return $response;
+        return $body;
     }
 
     protected function getFields()
@@ -194,12 +191,12 @@ class DefaultController extends Controller
             //if is defined and true
             if (!empty($value['export']) && $value['export']) {
                 if (!in_array($value['type'], $this->fieldsNotExport)) {
-                    if ($value['type'] == "datetime" or $value['type'] == "date" or $value['type'] == "time") {
+                    if ($value['type'] == "datetime" || $value['type'] == "date" || $value['type'] == "time") {
                         $fields["get".$value['name']] = [
                             'type' => 'date',
                             'date' => $value['date']
                         ];
-                    } elseif ($value['type'] == "MANY_TO_ONE" or $value['type'] == "ONE_TO_ONE") {
+                    } elseif ($value['type'] == "MANY_TO_ONE" || $value['type'] == "ONE_TO_ONE") {
                         $fields["get".$value['name']] = [
                             'type' => 'TO_ONE',
                             'get' => '__toString'
