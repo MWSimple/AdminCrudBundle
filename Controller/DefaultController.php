@@ -156,7 +156,9 @@ class DefaultController extends Controller
                     if ($fieldsTypes[$v]['type'] == "date" && !is_null($val)) {
                         $val = $val->format($fieldsTypes[$v]['date']);
                     } elseif ($fieldsTypes[$v]['type'] == "TO_ONE" && !is_null($val)) {
-                        $val = $val->$fieldsTypes[$v]['get']();
+                        if ($fieldsTypes[$v]['get'] == '__toString') {
+                            $val = $val->__toString();
+                        }
                     }
                 }
                 array_push($res, $val);
