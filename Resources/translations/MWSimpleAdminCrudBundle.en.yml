@@ -40,6 +40,7 @@ flash:
     delete:
         success: Item has been deleted successfully.
         error: An Error has occurred during item deletion.
+        foreignkey: The element is in use or related to another element.
 
 Previous: 'Previous'
 Next: 'Next'

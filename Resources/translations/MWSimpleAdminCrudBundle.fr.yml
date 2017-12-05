@@ -40,6 +40,7 @@ flash:
     delete:
         success: L'élément a été supprimé.
         error: Une erreur est survenue lors de la suppression de l'élément.
+        foreignkey: L'élément est utilisé ou associé à un autre élément.
 
 Previous: 'Précédent'
 Next: 'Suivant'

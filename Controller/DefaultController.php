@@ -2,6 +2,7 @@
 
 namespace MWSimple\Bundle\AdminCrudBundle\Controller;
 
+use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -631,6 +632,7 @@ class DefaultController extends Controller
     public function deleteAction(Request $request, $id)
     {
         $this->getConfig();
+        $urlSuccess = $this->generateUrl($this->configArray['index']);
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
@@ -643,12 +645,17 @@ class DefaultController extends Controller
             }
 
             $this->preRemoveEntity();
-            $this->em->remove($this->entity);
-            $this->em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'flash.delete.success');
+            try {
+                $this->em->remove($this->entity);
+                $this->em->flush();
+                $this->get('session')->getFlashBag()->add('success', 'flash.delete.success');
+            } catch (ForeignKeyConstraintViolationException $e) {
+                $this->get('session')->getFlashBag()->add('error', 'flash.delete.foreignkey');
+                $urlSuccess = $this->generateUrl($this->configArray['show'], array('id' => $this->entity->getId()));
+            }
         }
 
-        return $this->redirectToRoute($this->configArray['index']);
+        return $this->redirect($urlSuccess);
     }
 
     /**
