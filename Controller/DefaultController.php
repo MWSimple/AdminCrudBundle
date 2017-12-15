@@ -339,10 +339,17 @@ class DefaultController extends Controller
      */
     protected function createFilterForm($filterData = null)
     {
-        $form = $this->createForm($this->configArray['filterType'], $filterData, array(
+        $optionsForm = [
             'action' => $this->generateUrl($this->configArray['index']),
             'method' => 'GET',
-        ));
+        ];
+        if (is_array($this->optionsForm)) {
+            foreach ($this->optionsForm as $key => $value) {
+                $optionsForm[$key] = $value;
+            }
+        }
+
+        $form = $this->createForm($this->configArray['filterType'], $filterData, $optionsForm);
 
         $form
             ->add('filter', SubmitType::class, array(
