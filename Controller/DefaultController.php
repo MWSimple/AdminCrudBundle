@@ -179,7 +179,7 @@ class DefaultController extends Controller
         foreach ($this->configArray['fieldsindex'] as $key => $value) {
             //if is defined and true
             if (!empty($value['export']) && $value['export']) {
-                $fields[] = $value['name'];
+                $fields[$value['label']] = $value['name'];
             }
         }
         return $fields;
