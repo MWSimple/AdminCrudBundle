@@ -712,6 +712,8 @@ class DefaultController extends Controller
         }
         //Set options default in config
         $this->setDefaultConfig();
+        //Add new config
+        $this->addNewConfig();
     }
 
     public function getAutocompleteFormsMwsAction(Request $request, $options, $qb = null, $text = null, $operand = null)
@@ -843,6 +845,10 @@ class DefaultController extends Controller
         }
     }
 
+    /* Execute after set config */
+    protected function addNewConfig()
+    {
+    }
     /* Execute new entity newAction and createAction */
     protected function createNewEntity()
     {

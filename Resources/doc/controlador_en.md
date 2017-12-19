@@ -31,12 +31,13 @@
     deleteAction(Request $request, $id)
     getAutocompleteFormsMwsAction(Request $request, $options, $qb = null)
 
-    createNewEntity() //The method is used to instantiate entity in newAction() and createAction(Request $request).
-    prePersistEntity() //The method is then used to validate form before flush entity in createAction(Request $request).
-    preHandleRequestEntity()
-    preFormIsValid() //It is executed before validating the form in updateAction(Request $request, $id).
-    preUpdateEntity()
-    preRemoveEntity()
+    protected function addNewConfig(){} //The method is used to add new config
+    protected function createNewEntity(){$this->entity = new $this->configArray['entity']();} //The method is used to instantiate entity in newAction() and createAction(Request $request).
+    protected function prePersistEntity(){} //The method is then used to validate form before flush entity in createAction(Request $request).
+    protected function preHandleRequestEntity(){}
+    protected function preFormIsValid(){} //It is executed before validating the form in updateAction(Request $request, $id).
+    protected function preUpdateEntity(){}
+    protected function preRemoveEntity(){}
     protected function validateForm(){return true;} //Return true default. Execute before form->isValid() entity createAction(Request $request) and updateAction(Request $request, $id).
 ```
 #### Override generate the path to redirect after saving the entity in createAction and updateAction:

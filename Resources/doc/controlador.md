@@ -31,12 +31,13 @@
     deleteAction(Request $request, $id)
     getAutocompleteFormsMwsAction(Request $request, $options, $qb = null)
 
-    createNewEntity() //Se utiliza al instanciar la entidad en los metodos newAction() y createAction(Request $request).
-    prePersistEntity() //Se utiliza luego de validar formulario y antes del flush entidad en el metodo createAction(Request $request).
-    preHandleRequestEntity()
-    preFormIsValid() //Se ejecuta antes de validar el formulario en updateAction(Request $request, $id).
-    preUpdateEntity()
-    preRemoveEntity()
+    protected function addNewConfig(){} //Se utiliza para agregar nueva config
+    protected function createNewEntity(){$this->entity = new $this->configArray['entity']();} //Se utiliza al instanciar la entidad en los metodos newAction() y createAction(Request $request).
+    protected function prePersistEntity(){} //Se utiliza luego de validar formulario y antes del flush entidad en el metodo createAction(Request $request).
+    protected function preHandleRequestEntity(){}
+    protected function preFormIsValid(){} //Se ejecuta antes de validar el formulario en updateAction(Request $request, $id).
+    protected function preUpdateEntity(){}
+    protected function preRemoveEntity(){}
     protected function validateForm(){return true;} //Retorna el valor predeterminado verdadero. Se ejecuta antes de form->isValid() en createAction(Request $request) y updateAction(Request $request, $id).
 ```
 #### Sobreescribir para generar la ruta a redireccionar luego de guardar la entity en createAction y updateAction:
