@@ -43,6 +43,8 @@ Documentation
 
 * [Security](seguridad_en.md)
 
+* [Logical Erasing](bajalogica_en.md)
+
 * [Uploads files](subirarchivos_en.md)
 
 ## Dependencies

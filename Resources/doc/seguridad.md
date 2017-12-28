@@ -1,4 +1,4 @@
-##ACL
+## ACL
 
 [Documentacion](http://symfony.com/doc/2.3/cookbook/security/acl.html)
 [Se recomienda implementar FOSUserBundle](https://github.com/FriendsOfSymfony/FOSUserBundle)
@@ -32,5 +32,5 @@ mw_simple_admin_crud:
             - Acme\DemoBundle\Entity\Post2
 ```
 
-* [Subir archivos](subirarchivos.md)
+* [Baja lógica](bajalogica.md)
 * [README](README.md)

@@ -653,7 +653,12 @@ class DefaultController extends Controller
 
             $this->preRemoveEntity();
             try {
-                $this->em->remove($this->entity);
+                if ($this->configArray['logical_erasing']) {
+                    $this->entity->setLogicalErasing(true);
+                } else {
+                    $this->em->remove($this->entity);
+                }
+
                 $this->em->flush();
                 $this->get('session')->getFlashBag()->add('success', 'flash.delete.success');
             } catch (ForeignKeyConstraintViolationException $e) {
@@ -830,6 +835,10 @@ class DefaultController extends Controller
         //Si no existe paginate o fue comentado entra y setea en true
         if (!array_key_exists('paginate', $this->configArray)) {
             $this->configArray['paginate'] = true;
+        }
+        //Si no existe logical_erasing o fue comentado entra y setea en false
+        if (!array_key_exists('logical_erasing', $this->configArray)) {
+            $this->configArray['logical_erasing'] = false;
         }
         //Si no existe export_pdf o fue comentado entra y setea default
         if (!array_key_exists('export_pdf', $this->configArray)) {

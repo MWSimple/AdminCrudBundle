@@ -1,4 +1,5 @@
 <?php
+
 namespace MWSimple\Bundle\AdminCrudBundle\EventListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;

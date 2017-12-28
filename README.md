@@ -44,6 +44,8 @@ Documentación
 
 * [Seguridad](Resources/doc/seguridad.md)
 
+* [Baja lógica](Resources/doc/bajalogica.md)
+
 * [Subiendo archivos](Resources/doc/subirarchivos.md)
 
 ## Dependencias
