@@ -4,21 +4,21 @@ repository: '{{ bundle }}:{{ entity }}'
 paginate: true
 {% if 'index' in actions %}
 index: '{{ route_name_prefix }}'
-view_index: '{{ bundle }}:{{ entity_dir_view }}:index.html.twig'
+view_index: '{{ entity_dir_view }}index.html.twig'
 {% endif %}
 {%- if 'new' in actions %}
 new: '{{ route_name_prefix }}_new'
 create: '{{ route_name_prefix }}_create'
-view_new: '{{ bundle }}:{{ entity_dir_view }}:new.html.twig'
+view_new: '{{ entity_dir_view }}new.html.twig'
 {% endif %}
 {%- if 'edit' in actions %}
 edit: '{{ route_name_prefix }}_edit'
 update: '{{ route_name_prefix }}_update'
-view_edit: '{{ bundle }}:{{ entity_dir_view }}:edit.html.twig'
+view_edit: '{{ entity_dir_view }}edit.html.twig'
 {% endif %}
 {%- if 'show' in actions %}
 show: '{{ route_name_prefix }}_show'
-view_show: '{{ bundle }}:{{ entity_dir_view }}:show.html.twig'
+view_show: '{{ entity_dir_view }}show.html.twig'
 {% endif %}
 {%- if 'delete' in actions %}
 delete: '{{ route_name_prefix }}_delete'

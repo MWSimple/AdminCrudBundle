@@ -35,8 +35,11 @@ class MWSimpleCrudGenerator extends DoctrineCrudGenerator
      */
     public function generate(BundleInterface $bundle, $entity, ClassMetadataInfo $metadata, $format, $routePrefix, $needWriteActions, $forceOverwrite)
     {
-        //Reescribo el root dir para que sea el del bundle y cree ahi las views
-        $this->rootDir = $bundle->getPath();
+        //Si es No es AppBundle entra
+        if ($bundle->getName() <> "AppBundle") {
+            //Reescribo el root dir para que sea el del bundle y cree ahi las views
+            $this->rootDir = $bundle->getPath();
+        }
         parent::generate($bundle, $entity, $metadata, $format, $routePrefix, $needWriteActions, $forceOverwrite);
 
         try {
@@ -203,13 +206,21 @@ class MWSimpleCrudGenerator extends DoctrineCrudGenerator
         $parts = explode('\\', $this->entity);
         $entityClass = array_pop($parts);
 
+        //Si es No es AppBundle entra
+        if ($this->bundle->getName() <> "AppBundle") {
+            //Reescribo el root dir para que sea el del bundle y cree ahi las views
+            $entity_dir_view = $this->bundle->getName().":".str_replace('\\', '/', strtolower($this->entity)).":";
+        } else {
+            $entity_dir_view = str_replace('\\', '/', strtolower($this->entity))."/";
+        }
+
         $this->renderFile('admincrud/admin_config.yml.twig', $dirFileConf.$entityClass.'.yml', array(
             'actions'           => $this->actions,
             'bundle'            => $this->bundle->getName(),
             'namespace'         => $this->bundle->getNamespace(),
             'entity'            => $this->entity,
             'entity_class'      => $entityClass,
-            'entity_dir_view'   => str_replace('\\', '/', strtolower($this->entity)),
+            'entity_dir_view'   => $entity_dir_view,
             'fields'            => $this->metadata->fieldMappings,
             'associations'      => $this->metadata->associationMappings,
             'route_name_prefix' => $this->routeNamePrefix,
