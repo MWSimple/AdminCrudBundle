@@ -84,7 +84,70 @@ class DefaultController extends Controller
     }
 
     /**
-     * Export Csv.
+     * Export Csv and filtering.
+     */
+    public function exportCsvFilterAction($format, Request $request)
+    {
+        $this->getConfig();
+
+        if ($format == "pdf") {
+            $response = $this->forward('MWSimpleAdminCrudBundle:Default:exportPdfFilter', [
+                'config' => $this->configArray,
+                'request' => $request
+            ]);
+        } else {
+            $this->createQuery($this->configArray['repository']);
+            $filterForm = $this->filter($request);
+            $query  = $this->queryBuilder->getQuery();
+            $fields = $this->getFields();
+            $content_type = $this->getContentType($format);
+            $export_to = 'php://output';// Location to Export this to
+            $exporter_source = new DoctrineORMQuerySourceIterator($query, $fields, "Y-m-d H:i:s");// Data to export
+            $exporter_writer = '\Exporter\Writer\\' . ucfirst($format) . 'Writer';// Get an Instance of the Writer
+            $exporter_writer = new $exporter_writer($export_to);
+            $response = new Response();// Generate response
+            $response->headers->set('Cache-Control', 'must-revalidate, post-check=0, pre-check=0');// Set headers
+            $response->headers->set('Content-type', $content_type);
+            $response->headers->set('Expires', 0);
+            $response->headers->set('Pragma', 'public');
+            $response->sendHeaders();// Send headers before outputting anything
+            Handler::create($exporter_source, $exporter_writer)->export();// Export to the format
+        }
+
+        return $response;
+    }
+
+    /**
+     * Export Pdf and filtering.
+     */
+    public function exportPdfFilterAction($config, Request $request)
+    {
+        $this->configArray = $config;
+
+        $this->createQuery($this->configArray['repository']);
+        $filterForm = $this->filter($request);
+        
+        $title_fontSize = $this->configArray['export_pdf']['title_fontSize'];
+        $table_fontSize = $this->configArray['export_pdf']['table_fontSize'];
+
+        $results = [
+            'content' => [
+                ['text' =>  $this->configArray['entityName'], 'fontSize' => $title_fontSize, 'bold' => true, 'margin' => [0, 20, 0, 8]],
+                ['style' => 'tableExample', 'fontSize' => $table_fontSize, 'table' => ['headerRows' => 1, 'body' => []], 'layout' => 'lightHorizontalLines']
+            ]
+        ];
+
+        $results['content'][1]['table']['body'] = $this->getBodyPdf();
+
+        $response = new JsonResponse();
+        $data = ['filename' => $this->configArray['entityName'].'.pdf', 'data' => $results];
+        $response->setData($data);
+
+        return $response;
+    }
+
+    /**
+     * Export Csv. --------------- (Deprecated).
      */
     public function exportCsvAction($format)
     {
@@ -116,7 +179,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * Export Pdf.
+     * Export Pdf. --------------- (Deprecated).
      */
     public function exportPdfAction($config)
     {

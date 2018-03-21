@@ -11,11 +11,12 @@
 {% endblock phpdoc_method_annotations %}
      */
 {% block method_definition %}
-    public function getExporter($format)
+    public function getExporter($format, Request $request)
 {% endblock method_definition %}
     {
 {% block method_body %}
-        $response = parent::exportCsvAction($format);
+        $this->config['filterType'] = {{ entity_class }}FilterType::class;
+        $response = parent::exportCsvFilterAction($format, $request);
 {% endblock method_body %}
 
 {% block method_return %}

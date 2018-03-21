@@ -20,7 +20,7 @@
 ```php
     indexAction(Request $request)
     createQuery($repository)
-    exportCsvAction($format)
+    exportCsvFilterAction($format, Request $request)
     filter($config, Request $request)
     createAction(Request $request)
     newAction()
