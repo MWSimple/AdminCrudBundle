@@ -27,7 +27,7 @@ matrix:
         - TWIG_VERSION="2.x-dev"
         - CHECK_PHP_SYNTAX="yes"
     # stable (most recent stable versions)
-    - php: 7.0
+    - php: 7.2
       env:
         - SYMFONY_VERSION="3.4.*"
         - TWIG_VERSION="2.x-dev"
