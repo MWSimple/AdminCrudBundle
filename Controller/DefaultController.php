@@ -108,6 +108,10 @@ class DefaultController extends Controller
             $response = new Response();// Generate response
             $response->headers->set('Cache-Control', 'must-revalidate, post-check=0, pre-check=0');// Set headers
             $response->headers->set('Content-type', $content_type);
+            if ($format != "json") {
+                $filename = $this->configArray['entityName'].".".$format;
+                $response->headers->set('Content-Disposition', 'attachment; filename="'.$filename.'"');
+            }
             $response->headers->set('Expires', 0);
             $response->headers->set('Pragma', 'public');
             $response->sendHeaders();// Send headers before outputting anything
@@ -169,6 +173,10 @@ class DefaultController extends Controller
             $response = new Response();// Generate response
             $response->headers->set('Cache-Control', 'must-revalidate, post-check=0, pre-check=0');// Set headers
             $response->headers->set('Content-type', $content_type);
+            if ($format != "json") {
+                $filename = $this->configArray['entityName'].".".$format;
+                $response->headers->set('Content-Disposition', 'attachment; filename="'.$filename.'"');
+            }
             $response->headers->set('Expires', 0);
             $response->headers->set('Pragma', 'public');
             $response->sendHeaders();// Send headers before outputting anything
