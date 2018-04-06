@@ -16,7 +16,7 @@
     {
 {% block method_body %}
         $this->config['filterType'] = {{ entity_class }}FilterType::class;
-        $response = parent::exportCsvFilterAction($format, $request);
+        $response = parent::exportCsvAction($format, $request, false);
 {% endblock method_body %}
 
 {% block method_return %}

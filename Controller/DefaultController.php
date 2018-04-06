@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Exporter\Source\DoctrineORMQuerySourceIterator;
+use Exporter\Source\ArraySourceIterator;
 use Exporter\Handler;
 
 /**
@@ -31,8 +32,6 @@ class DefaultController extends Controller
     protected $form;
     // Allows you to configure options in the form an array must be set
     protected $optionsForm = null;
-    // Not export relations
-    protected $fieldsNotExport = ['ONE_TO_MANY','MANY_TO_MANY'];
 
     /**
      * Index
@@ -86,23 +85,68 @@ class DefaultController extends Controller
     /**
      * Export Csv and filtering.
      */
-    public function exportCsvFilterAction($format, Request $request)
+    public function exportCsvAction($format, Request $request = null, $arraySourceIterator = false)
     {
         $this->getConfig();
 
         if ($format == "pdf") {
-            $response = $this->forward('MWSimpleAdminCrudBundle:Default:exportPdfFilter', [
+            $response = $this->forward('MWSimpleAdminCrudBundle:Default:exportPdf', [
                 'config' => $this->configArray,
                 'request' => $request
             ]);
         } else {
             $this->createQuery($this->configArray['repository']);
-            $filterForm = $this->filter($request);
-            $query  = $this->queryBuilder->getQuery();
-            $fields = $this->getFields();
-            $content_type = $this->getContentType($format);
+            if ($request) {
+                $filterForm = $this->filter($request);
+            }
+
+            if ($arraySourceIterator) {
+                $entities = $this->queryBuilder->getQuery()->getResult();
+
+                $fieldsSelect = $this->getFieldsSelect();
+                $fieldsTypes = $this->getFieldsTypes();
+
+                $body = [];
+
+                foreach ($entities as $key => $value) {
+                    $res = [];
+                    foreach ($fieldsSelect as $k => $v) {
+                        $val = $value->$v();
+
+                        if ($fieldsTypes[$v]['type'] == "date" && !is_null($val)) {
+                            $res[$k] = $val->format($fieldsTypes[$v]['date']);
+                        } elseif ($fieldsTypes[$v]['type'] == "TO_ONE" && !is_null($val)) {
+                            if ($fieldsTypes[$v]['get'] == '__toString') {
+                                $res[$k] = $val->__toString();
+                            }
+                        } elseif ($fieldsTypes[$v]['type'] == "TO_MANY" && !is_null($val)) {
+                            if ($fieldsTypes[$v]['get'] == '__toString') {
+                                $concatVal = '';
+                                foreach ($val as $keyVal => $valueVal) {
+                                    if ($keyVal > 0) {
+                                        $concatVal .= ' - '.$valueVal->__toString();
+                                    } else {
+                                        $concatVal .= $valueVal->__toString();
+                                    }
+                                }
+                                $res[$k] = $concatVal;
+                            }
+                        } else {
+                            $res[$k] = $val;
+                        }
+                    }
+                    array_push($body, $res);
+                }
+
+                $exporter_source = new ArraySourceIterator($body);// Data to export
+            } else {
+                $query = $this->queryBuilder->getQuery();
+                $fields = $this->getFields();
+                $exporter_source = new DoctrineORMQuerySourceIterator($query, $fields, "Y-m-d H:i:s");// Data to export
+            }
+
             $export_to = 'php://output';// Location to Export this to
-            $exporter_source = new DoctrineORMQuerySourceIterator($query, $fields, "Y-m-d H:i:s");// Data to export
+            $content_type = $this->getContentType($format);
             $exporter_writer = '\Exporter\Writer\\' . ucfirst($format) . 'Writer';// Get an Instance of the Writer
             $exporter_writer = new $exporter_writer($export_to);
             $response = new Response();// Generate response
@@ -124,76 +168,14 @@ class DefaultController extends Controller
     /**
      * Export Pdf and filtering.
      */
-    public function exportPdfFilterAction($config, Request $request)
+    public function exportPdfAction($config, Request $request = null)
     {
         $this->configArray = $config;
 
         $this->createQuery($this->configArray['repository']);
-        $filterForm = $this->filter($request);
-        
-        $title_fontSize = $this->configArray['export_pdf']['title_fontSize'];
-        $table_fontSize = $this->configArray['export_pdf']['table_fontSize'];
-
-        $results = [
-            'content' => [
-                ['text' =>  $this->configArray['entityName'], 'fontSize' => $title_fontSize, 'bold' => true, 'margin' => [0, 20, 0, 8]],
-                ['style' => 'tableExample', 'fontSize' => $table_fontSize, 'table' => ['headerRows' => 1, 'body' => []], 'layout' => 'lightHorizontalLines']
-            ]
-        ];
-
-        $results['content'][1]['table']['body'] = $this->getBodyPdf();
-
-        $response = new JsonResponse();
-        $data = ['filename' => $this->configArray['entityName'].'.pdf', 'data' => $results];
-        $response->setData($data);
-
-        return $response;
-    }
-
-    /**
-     * Export Csv. --------------- (Deprecated).
-     */
-    public function exportCsvAction($format)
-    {
-        $this->getConfig();
-
-        if ($format == "pdf") {
-            $response = $this->forward('MWSimpleAdminCrudBundle:Default:exportPdf', [
-                'config' => $this->configArray
-            ]);
-        } else {
-            $this->createQuery($this->configArray['repository']);
-            $query  = $this->queryBuilder->getQuery();
-            $fields = $this->getFields();
-            $content_type = $this->getContentType($format);
-            $export_to = 'php://output';// Location to Export this to
-            $exporter_source = new DoctrineORMQuerySourceIterator($query, $fields, "Y-m-d H:i:s");// Data to export
-            $exporter_writer = '\Exporter\Writer\\' . ucfirst($format) . 'Writer';// Get an Instance of the Writer
-            $exporter_writer = new $exporter_writer($export_to);
-            $response = new Response();// Generate response
-            $response->headers->set('Cache-Control', 'must-revalidate, post-check=0, pre-check=0');// Set headers
-            $response->headers->set('Content-type', $content_type);
-            if ($format != "json") {
-                $filename = $this->configArray['entityName'].".".$format;
-                $response->headers->set('Content-Disposition', 'attachment; filename="'.$filename.'"');
-            }
-            $response->headers->set('Expires', 0);
-            $response->headers->set('Pragma', 'public');
-            $response->sendHeaders();// Send headers before outputting anything
-            Handler::create($exporter_source, $exporter_writer)->export();// Export to the format
+        if ($request) {
+            $filterForm = $this->filter($request);
         }
-
-        return $response;
-    }
-
-    /**
-     * Export Pdf. --------------- (Deprecated).
-     */
-    public function exportPdfAction($config)
-    {
-        $this->configArray = $config;
-
-        $this->createQuery($this->configArray['repository']);
         
         $title_fontSize = $this->configArray['export_pdf']['title_fontSize'];
         $table_fontSize = $this->configArray['export_pdf']['table_fontSize'];
@@ -225,15 +207,26 @@ class DefaultController extends Controller
         array_push($body, $fields);
         foreach ($entities as $key => $value) {
             $res = [];
-            foreach ($fieldsSelect as $v) {
+
+            foreach ($fieldsSelect as $k => $v) {
                 $val = $value->$v();
-                if (array_key_exists($v, $fieldsTypes)) {
-                    if ($fieldsTypes[$v]['type'] == "date" && !is_null($val)) {
-                        $val = $val->format($fieldsTypes[$v]['date']);
-                    } elseif ($fieldsTypes[$v]['type'] == "TO_ONE" && !is_null($val)) {
-                        if ($fieldsTypes[$v]['get'] == '__toString') {
-                            $val = $val->__toString();
+                if ($fieldsTypes[$v]['type'] == "date" && !is_null($val)) {
+                    $val = $val->format($fieldsTypes[$v]['date']);
+                } elseif ($fieldsTypes[$v]['type'] == "TO_ONE" && !is_null($val)) {
+                    if ($fieldsTypes[$v]['get'] == '__toString') {
+                        $val = $val->__toString();
+                    }
+                } elseif ($fieldsTypes[$v]['type'] == "TO_MANY" && !is_null($val)) {
+                    if ($fieldsTypes[$v]['get'] == '__toString') {
+                        $concatVal = '';
+                        foreach ($val as $keyVal => $valueVal) {
+                            if ($keyVal > 0) {
+                                $concatVal .= ' - '.$valueVal->__toString();
+                            } else {
+                                $concatVal .= $valueVal->__toString();
+                            }
                         }
+                        $val = $concatVal;
                     }
                 }
                 array_push($res, $val);
@@ -262,18 +255,25 @@ class DefaultController extends Controller
         foreach ($this->configArray['fieldsindex'] as $key => $value) {
             //if is defined and true
             if (!empty($value['export']) && $value['export']) {
-                if (!in_array($value['type'], $this->fieldsNotExport)) {
-                    if ($value['type'] == "datetime" || $value['type'] == "date" || $value['type'] == "time") {
-                        $fields["get".$value['name']] = [
-                            'type' => 'date',
-                            'date' => $value['date']
-                        ];
-                    } elseif ($value['type'] == "MANY_TO_ONE" || $value['type'] == "ONE_TO_ONE") {
-                        $fields["get".$value['name']] = [
-                            'type' => 'TO_ONE',
-                            'get' => '__toString'
-                        ];
-                    }
+                if ($value['type'] == "datetime" || $value['type'] == "date" || $value['type'] == "time") {
+                    $fields["get".$value['name']] = [
+                        'type' => 'date',
+                        'date' => $value['date']
+                    ];
+                } elseif ($value['type'] == "MANY_TO_ONE" || $value['type'] == "ONE_TO_ONE") {
+                    $fields["get".$value['name']] = [
+                        'type' => 'TO_ONE',
+                        'get' => '__toString'
+                    ];
+                } elseif ($value['type'] == "ONE_TO_MANY" || $value['type'] == "MANY_TO_MANY") {
+                    $fields["get".$value['name']] = [
+                        'type' => 'TO_MANY',
+                        'get' => '__toString'
+                    ];
+                } else {
+                    $fields["get".$value['name']] = [
+                        'type' => $value['type']
+                    ];
                 }
             }
         }
@@ -286,11 +286,9 @@ class DefaultController extends Controller
         foreach ($this->configArray['fieldsindex'] as $key => $value) {
             //if is defined and true
             if (!empty($value['export']) && $value['export']) {
-                if (!in_array($value['type'], $this->fieldsNotExport)) {
-                    $field['text'] = $value['label'];
-                    $field['style'] = 'tableHeader';
-                    array_push($fields, $field);
-                }
+                $field['text'] = $value['label'];
+                $field['style'] = 'tableHeader';
+                array_push($fields, $field);
             }
         }
         return $fields;
@@ -302,7 +300,7 @@ class DefaultController extends Controller
         foreach ($this->configArray['fieldsindex'] as $key => $value) {
             //if is defined and true
             if (!empty($value['export']) && $value['export']) {
-                $fields[] = "get".$value['name'];
+                $fields[$value['label']] = "get".$value['name'];
             }
         }
         return $fields;

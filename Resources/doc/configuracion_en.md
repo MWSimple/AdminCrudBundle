@@ -20,6 +20,9 @@ show: 'admin_post_show'
 view_show: 'AcmeDemoBundle:post:show.html.twig'
 delete: 'admin_post_delete' #If I comment this line not shown in the edit and show
 export: 'admin_post_export' #Use sonata export
+export_pdf: #If the content exceeds the width of the page you can set the font size
+     title_fontSize: 14 # Default is 14
+     table_fontSize: 12 # Default is 12
 sessionFilter: 'PostControllerFilter' #If I comment this line does not use session. To remove the filter Filtertype comment line in the Controller generated
 saveAndAdd: true #If true then add the button to save and add another
 validator: false #If true added by JS validation on forms
