@@ -89,13 +89,18 @@ class DefaultController extends Controller
     {
         $this->getConfig();
 
+        if (!$this->configArray['export']) {
+            throw $this->createNotFoundException('Unable to export.');
+        }
+        $this->createQuery($this->configArray['repository']);
+
         if ($format == "pdf") {
             $response = $this->forward('MWSimpleAdminCrudBundle:Default:exportPdf', [
                 'config' => $this->configArray,
-                'request' => $request
+                'request' => $request,
+                'queryBuilder' => $this->queryBuilder,
             ]);
         } else {
-            $this->createQuery($this->configArray['repository']);
             if ($request) {
                 $filterForm = $this->filter($request);
             }
@@ -168,11 +173,11 @@ class DefaultController extends Controller
     /**
      * Export Pdf and filtering.
      */
-    public function exportPdfAction($config, Request $request = null)
+    public function exportPdfAction($config, Request $request = null, $queryBuilder)
     {
         $this->configArray = $config;
+        $this->queryBuilder = $queryBuilder;
 
-        $this->createQuery($this->configArray['repository']);
         if ($request) {
             $filterForm = $this->filter($request);
         }
@@ -202,12 +207,11 @@ class DefaultController extends Controller
         $fieldsSelect = $this->getFieldsSelect();
         $fieldsTypes = $this->getFieldsTypes();
         $entities = $this->queryBuilder->getQuery()->getResult();
-
         $body = [];
         array_push($body, $fields);
+
         foreach ($entities as $key => $value) {
             $res = [];
-
             foreach ($fieldsSelect as $k => $v) {
                 $val = $value->$v();
                 if ($fieldsTypes[$v]['type'] == "date" && !is_null($val)) {
@@ -908,6 +912,10 @@ class DefaultController extends Controller
         //Si no existe logical_erasing o fue comentado entra y setea en false
         if (!array_key_exists('logical_erasing', $this->configArray)) {
             $this->configArray['logical_erasing'] = false;
+        }
+        //Si no existe export_pdf o fue comentado entra y setea default
+        if (!array_key_exists('export', $this->configArray)) {
+            $this->configArray['export'] = false;
         }
         //Si no existe export_pdf o fue comentado entra y setea default
         if (!array_key_exists('export_pdf', $this->configArray)) {

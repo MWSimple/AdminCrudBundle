@@ -34,18 +34,20 @@
                                             <span class="visible-xs"><span class="glyphicon glyphicon-plus tooltips" rel="tooltip" data-original-title="{{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}"></span></span>
                                         </a>
                                     {% endif %}
-                                    <button type="button" class="hidden-xs btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                        {{ 'views.index.export'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }} <span class="caret"></span>
-                                    </button>
-                                    <button type="button" class="visible-xs btn btn-info dropdown-toggle tooltips" rel="tooltip" data-original-title="{{ 'views.index.export'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}" data-toggle="dropdown" aria-expanded="false">
-                                        <span class="glyphicon glyphicon-save"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="{{ path(config.export, { 'format': "pdf" }) }}" id="generatepdf">PDF</a></li>
-                                        <li><a href="{{ path(config.export, { 'format': "xls" }) }}">EXCEL</a></li>
-                                        <li><a href="{{ path(config.export, { 'format': "csv" }) }}">CSV</a></li>
-                                        <li><a href="{{ path(config.export, { 'format': "json" }) }}">JSON</a></li>
-                                    </ul>
+                                    {% if config.export %}
+                                        <button type="button" class="hidden-xs btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                            {{ 'views.index.export'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }} <span class="caret"></span>
+                                        </button>
+                                        <button type="button" class="visible-xs btn btn-info dropdown-toggle tooltips" rel="tooltip" data-original-title="{{ 'views.index.export'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}" data-toggle="dropdown" aria-expanded="false">
+                                            <span class="glyphicon glyphicon-save"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="{{ path(config.export, { 'format': "pdf" }) }}" id="generatepdf">PDF</a></li>
+                                            <li><a href="{{ path(config.export, { 'format': "xls" }) }}">EXCEL</a></li>
+                                            <li><a href="{{ path(config.export, { 'format': "csv" }) }}">CSV</a></li>
+                                            <li><a href="{{ path(config.export, { 'format': "json" }) }}">JSON</a></li>
+                                        </ul>
+                                    {% endif %}
                                     {% if config.sessionFilter and app.session.has(config.sessionFilter) %}
                                         <a id="reset_index_filters" class="btn btn-danger">
                                             <span class="hidden-xs">
