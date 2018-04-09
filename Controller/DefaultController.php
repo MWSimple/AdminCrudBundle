@@ -32,6 +32,9 @@ class DefaultController extends Controller
     protected $form;
     // Allows you to configure options in the form an array must be set
     protected $optionsForm = null;
+    // Filter Form.
+    protected $filterForm;
+    protected $filterData;
 
     /**
      * Index
@@ -41,7 +44,7 @@ class DefaultController extends Controller
         $this->getConfig();
         $this->createQuery($this->configArray['repository']);
 
-        $filterForm = $this->filter($request);
+        $this->filter($request);
         
         if ($this->configArray['paginate']) {
             $paginator  = $this->get('knp_paginator');
@@ -59,7 +62,7 @@ class DefaultController extends Controller
         return $this->render($this->configArray['view_index'], array(
             'config'     => $this->configArray,
             'entities'   => $pagination,
-            'filterForm' => $filterForm,
+            'filterForm' => $this->filterForm,
         ));
     }
 
@@ -93,18 +96,27 @@ class DefaultController extends Controller
             throw $this->createNotFoundException('Unable to export.');
         }
         $this->createQuery($this->configArray['repository']);
+        if ($request) {
+            $this->filter($request);
+        }
 
         if ($format == "pdf") {
-            $response = $this->forward('MWSimpleAdminCrudBundle:Default:exportPdf', [
-                'config' => $this->configArray,
-                'request' => $request,
-                'queryBuilder' => $this->queryBuilder,
-            ]);
+            $title_fontSize = $this->configArray['export_pdf']['title_fontSize'];
+            $table_fontSize = $this->configArray['export_pdf']['table_fontSize'];
+    
+            $results = [
+                'content' => [
+                    ['text' =>  $this->configArray['entityName'], 'fontSize' => $title_fontSize, 'bold' => true, 'margin' => [0, 20, 0, 8]],
+                    ['style' => 'tableExample', 'fontSize' => $table_fontSize, 'table' => ['headerRows' => 1, 'body' => []], 'layout' => 'lightHorizontalLines']
+                ]
+            ];
+    
+            $results['content'][1]['table']['body'] = $this->getBodyPdf();
+    
+            $response = new JsonResponse();
+            $data = ['filename' => $this->configArray['entityName'].'.pdf', 'data' => $results];
+            $response->setData($data);
         } else {
-            if ($request) {
-                $filterForm = $this->filter($request);
-            }
-
             if ($arraySourceIterator) {
                 $entities = $this->queryBuilder->getQuery()->getResult();
 
@@ -166,37 +178,6 @@ class DefaultController extends Controller
             $response->sendHeaders();// Send headers before outputting anything
             Handler::create($exporter_source, $exporter_writer)->export();// Export to the format
         }
-
-        return $response;
-    }
-
-    /**
-     * Export Pdf and filtering.
-     */
-    public function exportPdfAction($config, Request $request = null, $queryBuilder)
-    {
-        $this->configArray = $config;
-        $this->queryBuilder = $queryBuilder;
-
-        if ($request) {
-            $filterForm = $this->filter($request);
-        }
-        
-        $title_fontSize = $this->configArray['export_pdf']['title_fontSize'];
-        $table_fontSize = $this->configArray['export_pdf']['table_fontSize'];
-
-        $results = [
-            'content' => [
-                ['text' =>  $this->configArray['entityName'], 'fontSize' => $title_fontSize, 'bold' => true, 'margin' => [0, 20, 0, 8]],
-                ['style' => 'tableExample', 'fontSize' => $table_fontSize, 'table' => ['headerRows' => 1, 'body' => []], 'layout' => 'lightHorizontalLines']
-            ]
-        ];
-
-        $results['content'][1]['table']['body'] = $this->getBodyPdf();
-
-        $response = new JsonResponse();
-        $data = ['filename' => $this->configArray['entityName'].'.pdf', 'data' => $results];
-        $response->setData($data);
 
         return $response;
     }
@@ -365,44 +346,44 @@ class DefaultController extends Controller
      */
     protected function filter(Request $request)
     {
+        $this->filterForm = null;
+
         if (array_key_exists('filterType', $this->configArray)) {
             $session = $request->getSession();
-            $filterForm = $this->createFilterForm();
+            $this->filterForm = $this->createFilterForm();
             // Bind values from the request
-            $filterForm->handleRequest($request);
+            $this->filterForm->handleRequest($request);
+            $this->filterData = $request->get($this->filterForm->getName());
             // Reset filter
-            if ($this->configArray['sessionFilter'] && $filterForm->get('reset')->isClicked()) {
+            if ($this->configArray['sessionFilter'] && $this->filterForm->get('reset')->isClicked()) {
                 $session->remove($this->configArray['sessionFilter']);
-                $filterForm = $this->createFilterForm();
+                $this->filterForm = $this->createFilterForm();
             }
 
             // Filter action
-            if ($filterForm->get('filter')->isClicked()) {
-                if ($filterForm->isValid()) {
+            if ($this->filterForm->get('filter')->isClicked()) {
+                if ($this->filterForm->isValid()) {
+                    $this->preAddFilterConditions();
                     // Build the query from the given form object
-                    $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $this->queryBuilder);
+                    $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($this->filterForm, $this->queryBuilder);
                     // Save filter to session
-                    $filterData = $request->get($filterForm->getName());
-                    $isEmptyFilterData = count($this->ifArrayIsEmpty($filterData, "condition_pattern"));
+                    $isEmptyFilterData = count($this->ifArrayIsEmpty($this->filterData, "condition_pattern"));
                     if ($isEmptyFilterData > 0) {
-                        $session->set($this->configArray['sessionFilter'], $filterData);
+                        $session->set($this->configArray['sessionFilter'], $this->filterData);
                     }
                 }
             } else {
                 // Get filter from session
                 if ($this->configArray['sessionFilter'] && $session->has($this->configArray['sessionFilter'])) {
-                    $filterData = $session->get($this->configArray['sessionFilter']);
-                    $filterForm->submit($filterData);
-                    $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $this->queryBuilder);
+                    $this->filterData = $session->get($this->configArray['sessionFilter']);
+                    $this->filterForm->submit($this->filterData);
+                    $this->preAddFilterConditions();
+                    $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($this->filterForm, $this->queryBuilder);
                 }
             }
 
-            $ret = $filterForm->createView();
-        } else {
-            $ret = null;
+            $this->filterForm = $this->filterForm->createView();
         }
-
-        return $ret;
     }
 
     /**
@@ -964,5 +945,9 @@ class DefaultController extends Controller
     protected function validateForm()
     {
         return true;
+    }
+    /* Execute before $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($this->filterForm, $this->queryBuilder); */
+    protected function preAddFilterConditions()
+    {
     }
 }

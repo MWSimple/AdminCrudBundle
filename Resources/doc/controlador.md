@@ -39,6 +39,7 @@
     protected function preUpdateEntity(){}
     protected function preRemoveEntity(){}
     protected function validateForm(){return true;} //Retorna el valor predeterminado verdadero. Se ejecuta antes de form->isValid() en createAction(Request $request) y updateAction(Request $request, $id).
+    protected function preAddFilterConditions(){} //Se ejecuta antes de agregar el filtro $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($this->filterForm, $this->queryBuilder); en filter(Request $request)
 ```
 #### Sobreescribir para generar la ruta a redireccionar luego de guardar la entity en createAction y updateAction:
 ```php

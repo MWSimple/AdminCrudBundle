@@ -39,6 +39,7 @@
     protected function preUpdateEntity(){}
     protected function preRemoveEntity(){}
     protected function validateForm(){return true;} //Return true default. Execute before form->isValid() entity createAction(Request $request) and updateAction(Request $request, $id).
+    protected function preAddFilterConditions(){} // Execute before $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($this->filterForm, $this->queryBuilder); in filter(Request $request)
 ```
 #### Override generate the path to redirect after saving the entity in createAction and updateAction:
 ```php
