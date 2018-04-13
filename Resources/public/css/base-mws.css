@@ -6,6 +6,8 @@
 @media (min-width: 768px) {
     #page-wrapper { padding: 15px !important; }
     .sidebar { margin-top: 67px !important; }
+    #mwsModal .modal-dialog { width: 90%; }
+    #mwsModal .modal-content { padding: 0; }
 }
 @media (max-width: 760px) {
     .navbar-top-links .dropdown-user { left: 0 !important; }

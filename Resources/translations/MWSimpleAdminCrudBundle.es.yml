@@ -19,6 +19,7 @@ views:
         confirm: Eliminar el elemento?
         disableConfirm: Deshabilitar el elemento?
         disable: Deshabilitar
+        close: Cerrar
     new:
         creation: Crear %entity%
         create: Crear

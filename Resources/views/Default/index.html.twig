@@ -29,10 +29,17 @@
                             {% block buttons %}
                                 <div class="btn-group">
                                     {% if config.new is defined %}
-                                        <a class="btn btn-success" href="{{ path(config.new) }}">
-                                            <span class="hidden-xs">{{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}</span>
-                                            <span class="visible-xs"><span class="glyphicon glyphicon-plus tooltips" rel="tooltip" data-original-title="{{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}"></span></span>
-                                        </a>
+                                        {% if config.modal %}
+                                            <button class="btn-modal btn btn-success" data-url="{{ path(config.new) }}">
+                                                <span class="hidden-xs">{{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}</span>
+                                                <span class="visible-xs"><span class="glyphicon glyphicon-plus tooltips" rel="tooltip" data-original-title="{{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}"></span></span>
+                                            </button>
+                                        {% else %}
+                                            <a class="btn btn-success" href="{{ path(config.new) }}">
+                                                <span class="hidden-xs">{{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}</span>
+                                                <span class="visible-xs"><span class="glyphicon glyphicon-plus tooltips" rel="tooltip" data-original-title="{{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}"></span></span>
+                                            </a>
+                                        {% endif %}
                                     {% endif %}
                                     {% if config.export %}
                                         <button type="button" class="hidden-xs btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -164,9 +171,15 @@
                     {% block buttonsbelow %}
                     <div class="col-md-2">
                         {% if config.new is defined %}
-                            <a class="btn btn-success likepaginator" href="{{ path(config.new) }}">
-                                {{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
-                            </a>
+                            {% if config.modal %}
+                                <button class="btn-modal btn btn-success likepaginator" data-url="{{ path(config.new) }}">
+                                    {{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
+                                </button>
+                            {% else %}
+                                <a class="btn btn-success likepaginator" href="{{ path(config.new) }}">
+                                    {{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
+                                </a>
+                            {% endif %}
                         {% endif %}
                     </div>
                     {% endblock buttonsbelow %}
@@ -181,6 +194,12 @@
         </div>
     </div>
 
+    {% if config.modal %}
+        <div class="modal fade" id="mwsModal" tabindex="-1" role="dialog" aria-labelledby="mwsModalLabel">
+            <div class="modal-dialog modal-lg" role="document" id="mws-modal-dialog">
+            </div>
+        </div>
+    {% endif %}
 {% endblock page %}
 
 {% block javascript %}
@@ -211,4 +230,41 @@
         };
     </script>
     <script src="{{ asset('bundles/mwsimpleadmincrud/ajax/enabled_disabled.js') }}"></script>
+
+    {% if config.modal %}
+        <script>
+            $('.btn-modal').click(function() {
+                var label = null;
+                var data = null;
+                var url = null;
+
+                $('#mwsModalLabel').html(label);
+                $('#mwsModalBody').html(data);
+
+                if ($(this).attr('data-label')) {
+                    label = $(this).attr('data-label');
+                }
+                if ($(this).attr('data-id')) {
+                    data = {"id": $(this).attr('data-id')};
+                }
+                if ($(this).attr('data-url')) {
+                    url = $(this).attr('data-url');
+
+                    $.ajax({
+                        url : url,
+                        type: 'GET',
+                        data: data,
+                        success: function(form) {
+                            $('#mws-modal-dialog').html(form);
+                            if (label) {
+                                $('#mws-modal-label').html(label);
+                            }
+                        },
+                        async: false
+                    });
+                    $('#mwsModal').modal('show');
+                }
+            });
+        </script>
+    {% endif %}
 {% endblock %}

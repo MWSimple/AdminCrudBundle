@@ -42,6 +42,7 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         $this->getConfig();
+        $this->configArray['modal_show_layout'] = false;
         $this->createQuery($this->configArray['repository']);
 
         $this->filter($request);
@@ -524,6 +525,24 @@ class DefaultController extends Controller
             'form'   => $form->createView(),
         ));
     }
+    /**
+     * New Modal
+     */
+    public function newModal()
+    {
+        $this->getConfig();
+        $this->createNewEntity();
+        $form = $this->createCreateForm();
+
+        // remove the form to return to the view
+        unset($this->configArray['newType']);
+
+        return $this->render($this->configArray['view_new'], array(
+            'config' => $this->configArray,
+            'entity' => $this->entity,
+            'form'   => $form->createView(),
+        ));
+    }
 
     /**
      * Query Entity
@@ -543,7 +562,7 @@ class DefaultController extends Controller
     public function showAction($id)
     {
         $this->getConfig();
-
+        $this->configArray['modal_show_layout'] = false;
         $this->queryEntity($id);
 
         if (!$this->entity) {
@@ -566,7 +585,7 @@ class DefaultController extends Controller
     public function editAction($id)
     {
         $this->getConfig();
-
+        $this->configArray['modal_show_layout'] = false;
         $this->queryEntity($id);
 
         if (!$this->entity) {
@@ -638,7 +657,7 @@ class DefaultController extends Controller
     public function updateAction(Request $request, $id)
     {
         $this->getConfig();
-
+        $this->configArray['modal_show_layout'] = false;
         $this->queryEntity($id);
 
         if (!$this->entity) {
@@ -693,6 +712,7 @@ class DefaultController extends Controller
     public function deleteAction(Request $request, $id)
     {
         $this->getConfig();
+        $this->configArray['modal_show_layout'] = false;
         $urlSuccess = $this->generateUrl($this->configArray['index']);
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
@@ -909,6 +929,13 @@ class DefaultController extends Controller
         //Si no existe table_fontSize en export_pdf
         if (!array_key_exists('table_fontSize', $this->configArray['export_pdf'])) {
             $this->configArray['export_pdf']['table_fontSize'] = 12;
+        }
+        //Si no existe modal
+        if (!array_key_exists('modal', $this->configArray)) {
+            $this->configArray['modal'] = false;
+            $this->configArray['modal_show_layout'] = false;
+        } else {
+            $this->configArray['modal_show_layout'] = $this->configArray['modal'];
         }
     }
 

@@ -1,0 +1,9 @@
+{% block buttonsbelow %}
+    <div class="btn-group">
+        {% if config.index is defined %}
+            <a class="btn btn-info" href="{{ path(config.index) }}">
+                {{ 'views.recordactions.backtothelist'|trans({}, 'MWSimpleAdminCrudBundle') }}
+            </a>
+        {% endif %}
+    </div>
+{% endblock %}

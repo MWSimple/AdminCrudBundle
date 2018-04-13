@@ -5,43 +5,48 @@
 {% endblock %}
 
 {% block page %}
-    <div class="col-md-12">
+    {% if config.modal_show_layout == false %}
+        <div class="col-md-12">
+            <div class="panel panel-primary center-block">
+                <div class="panel-heading clearfix">
+                    {% include 'MWSimpleAdminCrudBundle:Default:new_heading.html.twig' %}
+                </div>
+                <div class="panel-body">
+                    {% include 'MWSimpleAdminCrudBundle:Default:new_body.html.twig' %}
+                </div>
+                <div class="panel-footer">
+                    {% include 'MWSimpleAdminCrudBundle:Default:new_footer.html.twig' %}
+                </div>
+            </div>
+        </div>
+    {% else %}
+    <div class="modal-content" id="mws-modal-content">
         <div class="panel panel-primary center-block">
             <div class="panel-heading clearfix">
-                {% block panelheading %}
-                    <div class="float-left">
-                        <i class="glyphicon glyphicon-plus"></i>
-                        {{ 'views.new.creation'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
-                    </div>
-                {% endblock %}
-                {% block buttons %}
+                <div class="modal-header" id="mws-modal-header">
                     <div class="float-right">
                         <div class="btn-group">
-                            {% if config.index is defined %}
-                                <a class="btn-sm btn-default glyphicon glyphicon-th-list tooltips" href="{{ path(config.index) }}" title="" rel="tooltip" data-original-title="{{ 'views.recordactions.backtothelist'|trans({}, 'MWSimpleAdminCrudBundle') }}"></a>
-                            {% endif %}
+                            <a type="button" class="btn-sm btn-default glyphicon glyphicon-remove tooltips" data-dismiss="modal" title="" rel="tooltip" data-original-title="{{ 'views.recordactions.close'|trans({}, 'MWSimpleAdminCrudBundle') }}"></a>
                         </div>
                     </div>
-                {% endblock %}
+                    <div class="modal-title" id="mws-modal-label">
+                        {% include 'MWSimpleAdminCrudBundle:Default:new_heading.html.twig' %}
+                    </div>
+                </div>
             </div>
             <div class="panel-body">
-                {% block form %}
-                    {{ form(form) }}
-                {% endblock %}
+                <div class="modal-body" id="mws-modal-body">
+                    {% include 'MWSimpleAdminCrudBundle:Default:new_body.html.twig' %}
+                </div>
             </div>
             <div class="panel-footer">
-                {% block buttonsbelow %}
-                    <div class="btn-group">
-                        {% if config.index is defined %}
-                            <a class="btn btn-info" href="{{ path(config.index) }}">
-                                {{ 'views.recordactions.backtothelist'|trans({}, 'MWSimpleAdminCrudBundle') }}
-                            </a>
-                        {% endif %}
-                    </div>
-                {% endblock %}
-            </div><!-- .panel-footer -->
+                <div class="modal-footer" id="mws-modal-footer">
+                    {% include 'MWSimpleAdminCrudBundle:Default:new_footer.html.twig' %}
+                </div>
+            </div>
         </div>
     </div>
+    {% endif %}
 {% endblock %}
 
 {% block stylesheets %}

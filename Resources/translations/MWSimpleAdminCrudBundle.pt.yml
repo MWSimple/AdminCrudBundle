@@ -19,6 +19,7 @@ views:
         confirm: Excluir o Item?
         disableConfirm: Desativar o Item?
         disable: Desativar
+        close: Fechar
     new:
         creation: Criar %entity%
         create: Criar
