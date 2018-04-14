@@ -232,39 +232,7 @@
     <script src="{{ asset('bundles/mwsimpleadmincrud/ajax/enabled_disabled.js') }}"></script>
 
     {% if config.modal %}
-        <script>
-            $('.btn-modal').click(function() {
-                var label = null;
-                var data = null;
-                var url = null;
-
-                $('#mwsModalLabel').html(label);
-                $('#mwsModalBody').html(data);
-
-                if ($(this).attr('data-label')) {
-                    label = $(this).attr('data-label');
-                }
-                if ($(this).attr('data-id')) {
-                    data = {"id": $(this).attr('data-id')};
-                }
-                if ($(this).attr('data-url')) {
-                    url = $(this).attr('data-url');
-
-                    $.ajax({
-                        url : url,
-                        type: 'GET',
-                        data: data,
-                        success: function(form) {
-                            $('#mws-modal-dialog').html(form);
-                            if (label) {
-                                $('#mws-modal-label').html(label);
-                            }
-                        },
-                        async: false
-                    });
-                    $('#mwsModal').modal('show');
-                }
-            });
-        </script>
+        {% include 'MWSimpleAdminCrudBundle:Default:ajax/mws_modal.html.twig' %}
+        {# <script src="{{ asset('bundles/mwsimpleadmincrud/ajax/mws_modal.js') }}"></script> #}
     {% endif %}
 {% endblock %}

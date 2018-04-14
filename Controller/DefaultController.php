@@ -35,6 +35,8 @@ class DefaultController extends Controller
     // Filter Form.
     protected $filterForm;
     protected $filterData;
+    // is Ajax
+    protected $isXmlHttpRequest = false;
 
     /**
      * Index
@@ -435,6 +437,10 @@ class DefaultController extends Controller
      */
     public function createAction(Request $request)
     {
+        if ($request->isXmlHttpRequest()) {
+            // return new JsonResponse(array('message' => 'You can access this only using Ajax!'), 200);
+            $this->isXmlHttpRequest = true;
+        }
         $this->getConfig();
         $this->createNewEntity();
         $this->form = $this->createCreateForm();
@@ -447,10 +453,18 @@ class DefaultController extends Controller
             $this->em->flush();
             //Crear ACL
             $this->useACL('create');
-            //Set session mensaje
-            $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
-
-            return $this->redirect($this->urlSuccess());
+            if ($this->isXmlHttpRequest) {
+                $message = $this->get('translator')->trans('flash.create.success', array(), 'MWSimpleAdminCrudBundle');
+                $response = new JsonResponse([
+                    'message' => $message,
+                    'postRedirect' => $this->urlSuccess(),
+                ]);
+            } else {
+                //Set session mensaje
+                $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
+                $response = $this->redirect($this->urlSuccess());
+            }
+            return $response;
         }
 
         $this->get('session')->getFlashBag()->add('error', 'flash.create.error');
@@ -458,11 +472,21 @@ class DefaultController extends Controller
         // remove the form to return to the view
         unset($this->configArray['newType']);
 
-        return $this->render($this->configArray['view_new'], array(
+        $arrayValues = [
             'config' => $this->configArray,
             'entity' => $this->entity,
             'form'   => $this->form->createView(),
-        ));
+        ];
+
+        if ($this->isXmlHttpRequest) {
+            $response = new JsonResponse([
+                'form' => $this->renderView($this->configArray['view_new'], $arrayValues)
+            ]);
+        } else {
+            $response = $this->render($this->configArray['view_new'], $arrayValues);
+        }
+
+        return $response;
     }
 
     /**
@@ -695,9 +719,18 @@ class DefaultController extends Controller
     protected function urlSuccess()
     {
         if ($this->configArray['saveAndAdd']) {
-            $urlSuccess = $this->form->get('saveAndAdd')->isClicked()
-            ? $this->generateUrl($this->configArray['new'])
-            : $this->generateUrl($this->configArray['show'], array('id' => $this->entity->getId()));
+            if ($this->form->get('saveAndAdd')->isClicked()) {
+                $urlSuccess = $this->generateUrl($this->configArray['new']);
+            } elseif ($this->isXmlHttpRequest) {
+                $urlSuccess = 'reload';
+            } else {
+                $urlSuccess = $this->generateUrl($this->configArray['show'], array('id' => $this->entity->getId()));
+            }
+            // $urlSuccess = $this->form->get('saveAndAdd')->isClicked()
+            // ? $this->generateUrl($this->configArray['new'])
+            // : $this->generateUrl($this->configArray['show'], array('id' => $this->entity->getId()));
+        } elseif ($this->isXmlHttpRequest) {
+            $urlSuccess = 'reload';
         } else {
             $urlSuccess = $this->generateUrl($this->configArray['show'], array('id' => $this->entity->getId()));
         }

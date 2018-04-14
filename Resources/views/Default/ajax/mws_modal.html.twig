@@ -1,0 +1,83 @@
+<script>
+var labelAjax = '';
+$('.btn-modal').click(function() {
+    label = null;
+    var data = null;
+    var url = null;
+
+    $('#mwsModalLabel').html(labelAjax);
+    $('#mwsModalBody').html(data);
+
+    if ($(this).attr('data-label')) {
+        labelAjax = $(this).attr('data-label');
+    }
+    if ($(this).attr('data-id')) {
+        data = {"id": $(this).attr('data-id')};
+    }
+    if ($(this).attr('data-url')) {
+        url = $(this).attr('data-url');
+
+        $.ajax({
+            url : url,
+            type: 'GET',
+            data: data,
+            success: function(form) {
+                successAjaxForm(form);
+            },
+            async: false
+        });
+        $('#mwsModal').modal('show');
+    }
+});
+
+function successAjaxForm(form)
+{
+    $('#mws-modal-dialog').html(form);
+    if (labelAjax) {
+        $('#mws-modal-label').html(labelAjax);
+    }
+    //Si tiene select2 lo pongo al 100% para que use todo el class col boostrap
+    $('span.select2').css('width', '100%');
+    initAjaxForm();
+}
+
+function initAjaxForm()
+{
+    $( "#mws-modal-body > form" ).submit(function( event ) {
+        event.preventDefault();
+
+        $.ajax({
+            url: $(this).attr('action'),
+            type: $(this).attr('method'),
+            data: $(this).serialize(),
+            success: function(data) {
+                if (data.hasOwnProperty('form')) {
+                    successAjaxForm(data.form);
+                }
+                if (data.hasOwnProperty('message')) {
+                    toastr.success(data.message);
+                }
+                if (data.hasOwnProperty('postRedirect')) {
+                    if (data.postRedirect === 'reload') {
+                        location.reload();
+                    } else {
+                        $.ajax({
+                            url : data.postRedirect,
+                            type: 'GET',
+                            data: null,
+                            success: function(form) {
+                                successAjaxForm(form);
+                            },
+                            async: false
+                        });
+                    }
+                }
+            },
+            error: function(error){
+                toastr.error(error);
+            },
+            async: false
+        });
+    });
+}
+</script>
