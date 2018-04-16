@@ -5,9 +5,16 @@
 {% endblock %}
 
 {% block page %}
-    <div class="col-md-12">
+    <div class="{{ config.modal_show_layout ? 'modal-content' : 'col-md-12' }}" id="mws-modal-content">
         <div class="panel panel-primary center-block">
-            <div class="panel-heading clearfix">
+            <div class="panel-heading clearfix" id="mws-modal-header">
+                {% if config.modal_show_layout %}
+                    <div class="float-right">
+                        <div class="btn-group">
+                            <a type="button" class="btn-sm btn-default glyphicon glyphicon-remove tooltips" data-dismiss="modal" title="" rel="tooltip" data-placement="bottom" data-original-title="{{ 'views.recordactions.close'|trans({}, 'MWSimpleAdminCrudBundle') }}"></a>
+                        </div>
+                    </div>
+                {% endif %}
                 {% block panelheading %}
                     <div class="float-left">
                         <i class="glyphicon glyphicon-pencil"></i>
@@ -18,31 +25,31 @@
                     <div class="float-right">
                         <div class="btn-group">
                             {% if config.index is defined %}
-                                <a class="btn-sm btn-default glyphicon glyphicon-th-list tooltips" href="{{ path(config.index) }}" title="" rel="tooltip" data-original-title="{{ 'views.recordactions.backtothelist'|trans({}, 'MWSimpleAdminCrudBundle') }}"></a>
+                                <a class="btn-sm btn-default glyphicon glyphicon-th-list tooltips" href="{{ path(config.index) }}" title="" rel="tooltip" data-placement="bottom" data-original-title="{{ 'views.recordactions.backtothelist'|trans({}, 'MWSimpleAdminCrudBundle') }}"></a>
                             {% endif %}
                         </div>
                     </div>
                 {% endblock %}
             </div>
-            <div class="panel-body">
+            <div class="panel-body" id="mws-modal-body">
                 {% block form %}
                     {{ form(form) }}
                 {% endblock %}
             </div>
-            <div class="panel-footer">
-            {% block buttonsbelow %}
-                <div class="btn-group">
-                {% if config.index is defined %}
-                    <a class="btn btn-info float-left" href="{{ path(config.index) }}">
-                        {{ 'views.recordactions.backtothelist'|trans({}, 'MWSimpleAdminCrudBundle') }}
-                    </a>
-                {% endif %}
-                {% if delete_form is not null %}
-                    <div class="float-left">{{ form(delete_form) }}</div>
-                {% endif %}
-                </div>
-            {% endblock %}
-            </div><!-- .panel-footer -->
+            <div class="panel-footer" id="mws-modal-footer">
+                {% block buttonsbelow %}
+                    <div class="btn-group">
+                    {% if config.index is defined %}
+                        <a class="btn btn-info float-left" href="{{ path(config.index) }}">
+                            {{ 'views.recordactions.backtothelist'|trans({}, 'MWSimpleAdminCrudBundle') }}
+                        </a>
+                    {% endif %}
+                    {% if delete_form is not null %}
+                        <div class="float-left">{{ form(delete_form) }}</div>
+                    {% endif %}
+                    </div>
+                {% endblock %}
+            </div>
         </div>
     </div>
 {% endblock %}

@@ -1,17 +1,18 @@
 #page-wrapper {
-    padding: 15px !important;
-    min-height: 568px;
-    background-color: white;
+  padding: 15px !important;
+  min-height: 568px;
+  background-color: white;
 }
 @media (min-width: 768px) {
-    #page-wrapper { padding: 15px !important; }
-    .sidebar { margin-top: 67px !important; }
-    #mwsModal .modal-dialog { width: 90%; }
-    #mwsModal .modal-content { padding: 0; }
+  #page-wrapper { padding: 15px !important; }
+  .sidebar { margin-top: 67px !important; }
+  #mwsModal .modal-dialog { width: 90%; }
+  #mwsModal .modal-content { padding: 0; }
 }
 @media (max-width: 760px) {
-    .navbar-top-links .dropdown-user { left: 0 !important; }
+  .navbar-top-links .dropdown-user { left: 0 !important; }
 }
 footer { text-align: center; }
 .float-left { float: left; }
 .float-right { float: right; }
+.pace .pace-progress { height: 20px !important; }

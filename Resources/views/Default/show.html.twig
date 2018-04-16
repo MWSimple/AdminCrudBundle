@@ -5,9 +5,16 @@
 {% endblock %}
 
 {% block page %}
-    <div class="col-md-12">
+    <div class="{{ config.modal_show_layout ? 'modal-content' : 'col-md-12' }}" id="mws-modal-content">
         <div class="panel panel-primary center-block">
-            <div class="panel-heading clearfix">
+            <div class="panel-heading clearfix" id="mws-modal-header">
+                {% if config.modal_show_layout %}
+                    <div class="float-right">
+                        <div class="btn-group">
+                            <a type="button" class="btn-sm btn-default glyphicon glyphicon-remove tooltips" data-dismiss="modal" title="" rel="tooltip" data-placement="bottom" data-original-title="{{ 'views.recordactions.close'|trans({}, 'MWSimpleAdminCrudBundle') }}"></a>
+                        </div>
+                    </div>
+                {% endif %}
                 {% block panelheading %}
                     <div class="float-left">
                         <i class="glyphicon glyphicon-ok"></i>
@@ -18,16 +25,16 @@
                     <div class="float-right">
                         <div class="btn-group">
                             {% if config.index is defined %}
-                                <a class="btn-sm btn-default glyphicon glyphicon-th-list tooltips" href="{{ path(config.index) }}" title="" rel="tooltip" data-original-title="{{ 'views.recordactions.backtothelist'|trans({}, 'MWSimpleAdminCrudBundle') }}"></a>
+                                <a class="btn-sm btn-default glyphicon glyphicon-th-list tooltips" href="{{ path(config.index) }}" title="" rel="tooltip" data-placement="bottom" data-original-title="{{ 'views.recordactions.backtothelist'|trans({}, 'MWSimpleAdminCrudBundle') }}"></a>
                             {% endif %}
                             {% if config.edit is defined %}
-                                <a class="btn-sm btn-default glyphicon glyphicon-edit tooltips" href="{{ path(config.edit, { 'id': entity.id }) }}" title="" rel="tooltip" data-original-title="{{ 'views.actions.edit'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}"></a>
+                                <a class="btn-sm btn-default glyphicon glyphicon-edit tooltips" href="{{ path(config.edit, { 'id': entity.id }) }}" title="" rel="tooltip" data-placement="bottom" data-original-title="{{ 'views.actions.edit'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}"></a>
                             {% endif %}
                         </div>
                     </div>
                 {% endblock %}
             </div>
-            <div class="panel-body">
+            <div class="panel-body" id="mws-modal-body">
                 <div class="row">
                     {% for key, field in config.fieldsshow %}
                         <div class="{% if field.class is defined %}{{ field.class }}{% else %}col-lg-12 col-md-12 col-sm-12{% endif %}">
@@ -74,10 +81,10 @@
                                                     {% if field.actions is defined %}
                                                         <td>
                                                         {% if field.actions.show is defined %}
-                                                            <a class="glyphicon glyphicon-search tooltips" href="{{ path(field.actions.show, { 'id': field_many.id }) }}" title="" rel="tooltip" data-original-title="{{ 'views.actions.show'|trans({'%entity%': field.label}, 'MWSimpleAdminCrudBundle') }}"></a>
+                                                            <a class="glyphicon glyphicon-search tooltips" href="{{ path(field.actions.show, { 'id': field_many.id }) }}" title="" rel="tooltip" data-placement="bottom" data-original-title="{{ 'views.actions.show'|trans({'%entity%': field.label}, 'MWSimpleAdminCrudBundle') }}"></a>
                                                         {% endif %}
                                                         {% if field.actions.edit is defined %}
-                                                            <a class="glyphicon glyphicon-edit tooltips" href="{{ path(field.actions.edit, { 'id': field_many.id }) }}" title="" rel="tooltip" data-original-title="{{ 'views.actions.edit'|trans({'%entity%': field.label}, 'MWSimpleAdminCrudBundle') }}"></a>
+                                                            <a class="glyphicon glyphicon-edit tooltips" href="{{ path(field.actions.edit, { 'id': field_many.id }) }}" title="" rel="tooltip" data-placement="bottom" data-original-title="{{ 'views.actions.edit'|trans({'%entity%': field.label}, 'MWSimpleAdminCrudBundle') }}"></a>
                                                         {% endif %}
                                                         </td>
                                                     {% endif %}
@@ -135,7 +142,7 @@
                                 {% block button %}
                                     <div class="form-control">
                                         <span class="input-xlarge uneditable-input">
-                                            <a class="{{ field.icon }} tooltips" href="{{ path(field.path, { 'id': entity.id }) }}" title="{{ field.title }}" rel="tooltip" data-original-title="{{ field.title }}"></a>
+                                            <a class="{{ field.icon }} tooltips" href="{{ path(field.path, { 'id': entity.id }) }}" title="{{ field.title }}" rel="tooltip" data-placement="bottom" data-original-title="{{ field.title }}"></a>
                                         </span>
                                     </div>
                                 {% endblock %}
@@ -157,7 +164,7 @@
                     {% endfor %}
                 </div>
             </div>
-            <div class="panel-footer">
+            <div class="panel-footer" id="mws-modal-footer">
                 {% block buttonsbelow %}
                     <div class="btn-group">
                         {% if config.index is defined %}
@@ -175,7 +182,7 @@
                         {% endif %}
                     </div>
                 {% endblock %}
-            </div><!-- .panel-footer -->
+            </div>
         </div>
     </div>
 {% endblock %}

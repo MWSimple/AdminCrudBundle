@@ -438,7 +438,6 @@ class DefaultController extends Controller
     public function createAction(Request $request)
     {
         if ($request->isXmlHttpRequest()) {
-            // return new JsonResponse(array('message' => 'You can access this only using Ajax!'), 200);
             $this->isXmlHttpRequest = true;
         }
         $this->getConfig();
@@ -586,7 +585,6 @@ class DefaultController extends Controller
     public function showAction($id)
     {
         $this->getConfig();
-        $this->configArray['modal_show_layout'] = false;
         $this->queryEntity($id);
 
         if (!$this->entity) {
@@ -609,7 +607,6 @@ class DefaultController extends Controller
     public function editAction($id)
     {
         $this->getConfig();
-        $this->configArray['modal_show_layout'] = false;
         $this->queryEntity($id);
 
         if (!$this->entity) {
@@ -680,8 +677,10 @@ class DefaultController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
+        if ($request->isXmlHttpRequest()) {
+            $this->isXmlHttpRequest = true;
+        }
         $this->getConfig();
-        $this->configArray['modal_show_layout'] = false;
         $this->queryEntity($id);
 
         if (!$this->entity) {
@@ -697,9 +696,19 @@ class DefaultController extends Controller
         if ($this->validateForm() && $this->form->isValid()) {
             $this->preUpdateEntity();
             $this->em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'flash.update.success');
 
-            return $this->redirect($this->urlSuccess());
+            if ($this->isXmlHttpRequest) {
+                $message = $this->get('translator')->trans('flash.update.success', array(), 'MWSimpleAdminCrudBundle');
+                $response = new JsonResponse([
+                    'message' => $message,
+                    'postRedirect' => $this->urlSuccess(),
+                ]);
+            } else {
+                //Set session mensaje
+                $this->get('session')->getFlashBag()->add('success', 'flash.update.success');
+                $response = $this->redirect($this->urlSuccess());
+            }
+            return $response;
         }
 
         $this->get('session')->getFlashBag()->add('error', 'flash.update.error');
@@ -707,12 +716,22 @@ class DefaultController extends Controller
         // remove the form to return to the view
         unset($this->configArray['editType']);
 
-        return $this->render($this->configArray['view_edit'], array(
+        $arrayValues = [
             'config'      => $this->configArray,
             'entity'      => $this->entity,
             'form'        => $this->form->createView(),
             'delete_form' => $deleteForm,
-        ));
+        ];
+
+        if ($this->isXmlHttpRequest) {
+            $response = new JsonResponse([
+                'form' => $this->renderView($this->configArray['view_edit'], $arrayValues)
+            ]);
+        } else {
+            $response = $this->render($this->configArray['view_edit'], $arrayValues);
+        }
+
+        return $response;
     }
 
     /* Execute after success flush entity in createAction and updateAction */
