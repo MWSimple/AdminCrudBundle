@@ -1,62 +1,64 @@
+{% if config.one_page_show_layout == false %}
 {% if parameterRoot is not defined %}
     {% set parameterRoot = null %}
 {% endif %}
 <!DOCTYPE html>
 <html lang="{{ app.request.locale|split('_')|first|default('en') }}">
     <head>
-        {% if config.one_page_show_layout == false %}
-            <meta charset="utf-8">
-            <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-            <meta name="description" content="">
-            <meta name="author" content="">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <meta name="description" content="">
+        <meta name="author" content="">
 
-            <title>{% block title %}
-                {{ 'views.layout.bannersadmin'|trans({}, 'MWSimpleAdminCrudBundle') }}
-            {% endblock %}</title>
-        {% endif %}
+        <title>{% block title %}
+            {{ 'views.layout.bannersadmin'|trans({}, 'MWSimpleAdminCrudBundle') }}
+        {% endblock %}</title>
+{% endif %}
 
         {% block stylesheets %}
-            {% if config.one_page_show_layout == false %}
-                <link href="{{ asset('bundles/mwsimpleadmincrud/bootstrap/css/' ~ admincrud_config('site_theme', parameterRoot) ~ '.min.css') }}" rel="stylesheet">
-                <link href="{{ asset('bundles/mwsimpleadmincrud/css/bootstrap-checkbox.css') }}" rel="stylesheet">
-                <link href="{{ asset('bundles/mwsimpleadmincrud/select2/css/select2.min.css') }}" rel="stylesheet">
-                <link href="{{ asset('bundles/mwsimpleadmincrud/admin2/metisMenu/metisMenu.min.css') }}" rel="stylesheet">
-                <link href="{{ asset('bundles/mwsimpleadmincrud/admin2/css/timeline.css') }}" rel="stylesheet">
-                <link href="{{ asset('bundles/mwsimpleadmincrud/admin2/css/sb-admin-2.css') }}" rel="stylesheet">
-                <link href="{{ asset('bundles/mwsimpleadmincrud/admin2/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
-                <link href="{{ asset('bundles/mwsimpleadmincrud/toastr/toastr.min.css') }}" rel="stylesheet">
-                <link href="{{ asset('bundles/mwsimpleadmincrud/css/base-mws.css') }}" rel="stylesheet">
-                <link href="{{ asset('bundles/mwsimpleadmincrud/pace/pace.css') }}" rel="stylesheet">
-                {% if admincrud_config('menu_horizontal', parameterRoot) %}
-                    <style type="text/css">
-                        #page-wrapper {
-                            margin: auto !important;
-                        }
-                    </style>
-                {% endif %}
+{% if config.one_page_show_layout == false %}
+            <link href="{{ asset('bundles/mwsimpleadmincrud/bootstrap/css/' ~ admincrud_config('site_theme', parameterRoot) ~ '.min.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/mwsimpleadmincrud/css/bootstrap-checkbox.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/mwsimpleadmincrud/select2/css/select2.min.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/mwsimpleadmincrud/admin2/metisMenu/metisMenu.min.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/mwsimpleadmincrud/admin2/css/timeline.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/mwsimpleadmincrud/admin2/css/sb-admin-2.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/mwsimpleadmincrud/admin2/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('bundles/mwsimpleadmincrud/toastr/toastr.min.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/mwsimpleadmincrud/css/base-mws.css') }}" rel="stylesheet">
+            <link href="{{ asset('bundles/mwsimpleadmincrud/pace/pace.css') }}" rel="stylesheet">
+            {% if admincrud_config('menu_horizontal', parameterRoot) %}
+                <style type="text/css">
+                    #page-wrapper {
+                        margin: auto !important;
+                    }
+                </style>
             {% endif %}
+{% endif %}
         {% endblock %}
 
         {% block head_javascript %}
-            {% if config.one_page_show_layout == false %}
-                <script src="{{ asset('bundles/mwsimpleadmincrud/js/jquery.min.js') }}"></script>
-                <script src="{{ asset('bundles/mwsimpleadmincrud/bootstrap/js/bootstrap.min.js') }}"></script>
-                <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-                <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-                <!--[if lt IE 9]>
-                    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-                    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-                <![endif]-->
-            {% endif %}
+{% if config.one_page_show_layout == false %}
+            <script src="{{ asset('bundles/mwsimpleadmincrud/js/jquery.min.js') }}"></script>
+            <script src="{{ asset('bundles/mwsimpleadmincrud/bootstrap/js/bootstrap.min.js') }}"></script>
+            <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+            <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+            <!--[if lt IE 9]>
+                <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+                <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+            <![endif]-->
 
             <script src="{{ asset('bundles/mwsimpleadmincrud/select2/js/select2.min.js') }}"></script>
-            <script src="{{ asset('bundles/tetranzselect2entity/js/select2entity.js') }}"></script>
             <script src="{{ asset('bundles/mwsimpleadmincrud/toastr/toastr.min.js') }}"></script>
+{% endif %}
+            <script src="{{ asset('bundles/tetranzselect2entity/js/select2entity.js') }}"></script>
         {% endblock %}
     </head>
 
+{% if config.one_page_show_layout == false %}
     <body>
+{% endif %}
         {% for type, flashMessages in app.session.flashbag.all() %}
             {% for flashMessage in flashMessages %}
                 <script type="text/javascript">
@@ -64,77 +66,76 @@
                 </script>
             {% endfor %}
         {% endfor %}
-
-        {% if config.one_page_show_layout == false %}
-            <div id="wrapper">
-                <!-- Navigation -->
-                {% block nav %}
-                    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                            {% block navbar_brand %}
-                                <a class="navbar-brand" href="#">{{ admincrud_config('site_name', parameterRoot)|raw }}</a>
-                            {% endblock %}
-                        </div>
-
-                        {% include 'MWSimpleAdminCrudBundle:Default:navbarright.html.twig' %}
-
-                        <div class="navbar-default {{ admincrud_config('menu_horizontal', parameterRoot) ? null : 'sidebar' }}" role="navigation">
-                            <div class="{{ admincrud_config('menu_horizontal', parameterRoot) ? null : 'sidebar-nav' }} navbar-collapse">
-                                {% block menu %}
-                                    {{ knp_menu_render('MWSimpleAdminCrudBundle:Builder:adminMenu') }}
-                                {% endblock %}
-                            </div>
-                        </div>
-                    </nav>
-                {% endblock %}
-                <!-- Page -->
-                <div id="page-wrapper">
-                    <div class="row" id="mws-page">
-        {% endif %}
-
-                        {% block page %}{% endblock %}
-
-        {% if config.one_page_show_layout == false %}
-                    </div>
-                </div>
-                <!-- Footer -->
-                <footer>
-                    <div class="container">
-                        {% block footer %}
-                            {% if admincrud_config('site_view_footer', parameterRoot) %}
-                                {% include admincrud_config('site_view_footer', parameterRoot)|raw %}
-                            {% endif %}
+{% if config.one_page_show_layout == false %}
+        <div id="wrapper">
+            <!-- Navigation -->
+            {% block nav %}
+                <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        {% block navbar_brand %}
+                            <a class="navbar-brand" href="#">{{ admincrud_config('site_name', parameterRoot)|raw }}</a>
                         {% endblock %}
                     </div>
-                </footer>
+
+                    {% include 'MWSimpleAdminCrudBundle:Default:navbarright.html.twig' %}
+
+                    <div class="navbar-default {{ admincrud_config('menu_horizontal', parameterRoot) ? null : 'sidebar' }}" role="navigation">
+                        <div class="{{ admincrud_config('menu_horizontal', parameterRoot) ? null : 'sidebar-nav' }} navbar-collapse">
+                            {% block menu %}
+                                {{ knp_menu_render('MWSimpleAdminCrudBundle:Builder:adminMenu') }}
+                            {% endblock %}
+                        </div>
+                    </div>
+                </nav>
+            {% endblock %}
+            <!-- Page -->
+            <div id="page-wrapper">
+                <div class="row" id="mws-page">
+{% endif %}
+
+                    {% block page %}{% endblock %}
+
+{% if config.one_page_show_layout == false %}
+                </div>
             </div>
-        {% endif %}
+            <!-- Footer -->
+            <footer>
+                <div class="container">
+                    {% block footer %}
+                        {% if admincrud_config('site_view_footer', parameterRoot) %}
+                            {% include admincrud_config('site_view_footer', parameterRoot)|raw %}
+                        {% endif %}
+                    {% endblock %}
+                </div>
+            </footer>
+        </div>
+{% endif %}
 
         {% block javascript %}
+{% if config.one_page_show_layout == false %}
             <script src="{{ asset('bundles/mwsimpleadmincrud/js/bootstrap-checkbox.js') }}"></script>
-
-            {% if config.one_page_show_layout == false %}
-                <script src="{{ asset('bundles/mwsimpleadmincrud/admin2/metisMenu/metisMenu.min.js') }}"></script>
-                <script src="{{ asset('bundles/mwsimpleadmincrud/admin2/js/sb-admin-2.js') }}"></script>
-                <script>
-                    window.paceOptions = {
-                        ajax: {
-                            trackMethods: ['GET', 'POST', 'PUT', 'DELETE', 'REMOVE']
-                        }
-                    };
-                </script>
-                <script src="{{ asset('bundles/mwsimpleadmincrud/pace/pace.min.js') }}"></script>
-            {% endif %}
-            
+            <script src="{{ asset('bundles/mwsimpleadmincrud/admin2/metisMenu/metisMenu.min.js') }}"></script>
+            <script src="{{ asset('bundles/mwsimpleadmincrud/admin2/js/sb-admin-2.js') }}"></script>
+            <script>
+                window.paceOptions = {
+                    ajax: {
+                        trackMethods: ['GET', 'POST', 'PUT', 'DELETE', 'REMOVE']
+                    }
+                };
+            </script>
+            <script src="{{ asset('bundles/mwsimpleadmincrud/pace/pace.min.js') }}"></script>
+{% endif %}
             <script type="text/javascript">
                 $('.tooltips').tooltip();
             </script>
         {% endblock %}
+{% if config.one_page_show_layout == false %}
     </body>
 </html>
+{% endif %}
