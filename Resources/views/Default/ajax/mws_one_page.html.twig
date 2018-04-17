@@ -1,5 +1,4 @@
 <script>
-{# $('body').on("click", ".btn-one-page", function(event) { #}
 $('#mws-page').delegate( '.btn-one-page', 'click', function(event) {
     event.preventDefault();
     loadSpinner();
@@ -46,7 +45,10 @@ function initAjaxForm() {
         $.ajax({
             url: $(this).attr('action'),
             type: $(this).attr('method'),
-            data: $(this).serialize(),
+            data: $(this).serializefiles(),
+            cache: false,
+            contentType: false,
+            processData: false,
             success: function(data) {
                 if (data.hasOwnProperty('form')) {
                     successAjaxForm(data.form);
@@ -77,4 +79,22 @@ function initAjaxForm() {
         });
     });
 }
+//USAGE: $("#form").serializefiles();
+(function($) {
+$.fn.serializefiles = function() {
+    var obj = $(this);
+    /* ADD FILE TO PARAM AJAX */
+    var formData = new FormData();
+    $.each($(obj).find("input[type='file']"), function(i, tag) {
+        $.each($(tag)[0].files, function(i, file) {
+            formData.append(tag.name, file);
+        });
+    });
+    var params = $(obj).serializeArray();
+    $.each(params, function (i, val) {
+        formData.append(val.name, val.value);
+    });
+    return formData;
+};
+})(jQuery);
 </script>

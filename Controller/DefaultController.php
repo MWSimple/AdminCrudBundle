@@ -746,7 +746,7 @@ class DefaultController extends Controller
     public function deleteAction(Request $request, $id)
     {
         $this->getConfig();
-        $this->configArray['one_page_show_layout'] = false;
+        $this->configArray['one_page'] = false;
         $urlSuccess = $this->generateUrl($this->configArray['index']);
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
@@ -964,13 +964,10 @@ class DefaultController extends Controller
         if (!array_key_exists('table_fontSize', $this->configArray['export_pdf'])) {
             $this->configArray['export_pdf']['table_fontSize'] = 12;
         }
-        //Si no existe one_page
-        if (!array_key_exists('one_page', $this->configArray)) {
-            $this->configArray['one_page'] = false;
-            $this->configArray['one_page_show_layout'] = false;
-        } else {
-            $this->configArray['one_page_show_layout'] = $this->configArray['one_page'];
-        }
+        //Cargo boolean one_page
+        $settingOnePage = $this->container->getParameter('mw_simple_admin_crud.setting')['one_page'];
+        $this->configArray['one_page'] = $settingOnePage;
+        $this->configArray['one_page_show_layout'] = $settingOnePage;
     }
 
     /* Execute after set config */
