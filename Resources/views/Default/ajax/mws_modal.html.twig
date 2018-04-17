@@ -1,18 +1,10 @@
 <script>
-var labelAjax = '';
-$('body').on("click", ".btn-modal", function(event) {
+$('body').on("click", ".btn-one-page", function(event) {
     event.preventDefault();
-    spinnerModal();
-    label = null;
+    loadSpinner();
     var data = null;
     var url = null;
 
-    $('#mwsModalLabel').html(labelAjax);
-    $('#mwsModalBody').html(data);
-
-    if ($(this).attr('data-label')) {
-        labelAjax = $(this).attr('data-label');
-    }
     if ($(this).attr('data-id')) {
         data = {"id": $(this).attr('data-id')};
     }
@@ -31,29 +23,21 @@ $('body').on("click", ".btn-modal", function(event) {
     }
 });
 
-function spinnerModal() {
-    $('#mws-modal-dialog').html(
-        '<div class="modal-content">\
-            <div class="modal-header"><div class="float-right"><div class="btn-group"><a type="button" class="btn-sm btn-default glyphicon glyphicon-remove tooltips" data-dismiss="modal" title="" rel="tooltip" data-original-title="{{ 'views.recordactions.close'|trans({}, 'MWSimpleAdminCrudBundle') }}"></a></div></div></div>\
-            <div class="modal-body"><i class="fa fa-refresh fa-spin"></i></div>\
-        </div>'
-    );
-    $('#mwsModal').modal('show');
+function loadSpinner() {
+    $('#mws-page').html('<div class="col-md-12"><i class="fa fa-refresh fa-spin"></i></div>');
 }
 
 function successAjaxForm(form) {
-    $('#mws-modal-dialog').html(form);
-    if (labelAjax) {
-        $('#mws-modal-label').html(labelAjax);
-    }
+    $('#mws-page').html(form);
     //Si tiene select2 lo pongo al 100% para que use todo el class col boostrap
     $('span.select2').css('width', '100%');
     initAjaxForm();
 }
 
 function initAjaxForm() {
-    $( "#mws-modal-body > form" ).submit(function( event ) {
+    $( "#mws-page-panel-body > form" ).submit(function( event ) {
         event.preventDefault();
+        loadSpinner();
 
         $.ajax({
             url: $(this).attr('action'),

@@ -29,7 +29,7 @@
                             {% block buttons %}
                                 <div class="btn-group">
                                     {% if config.new is defined %}
-                                        <a class="{{ config.modal ? 'btn-modal ' }}btn btn-success" href="{{ path(config.new) }}">
+                                        <a class="{{ config.one_page ? 'btn-one-page ' }}btn btn-success" href="{{ path(config.new) }}">
                                             <span class="hidden-xs"><span>{{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}</span></span>
                                             <span class="visible-xs"><span class="glyphicon glyphicon-plus tooltips" rel="tooltip" data-original-title="{{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}"></span></span>
                                         </a>
@@ -146,9 +146,9 @@
                                 {% endfor %}
                                 <td class="text-center">
                                     {% block actions %}
-                                        <a class="{{ config.modal ? 'btn-modal ' }}glyphicon glyphicon-search tooltips" href="{{ path(config.show, { 'id': entity.id }) }}" title="" rel="tooltip" data-original-title="{{ 'views.actions.show'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}"></a>
+                                        <a class="{{ config.one_page ? 'btn-one-page ' }}glyphicon glyphicon-search tooltips" href="{{ path(config.show, { 'id': entity.id }) }}" title="" rel="tooltip" data-original-title="{{ 'views.actions.show'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}"></a>
                                         {% if config.edit is defined %}
-                                            <a class="{{ config.modal ? 'btn-modal ' }}glyphicon glyphicon-edit tooltips" href="{{ path(config.edit, { 'id': entity.id }) }}" title="" rel="tooltip" data-original-title="{{ 'views.actions.edit'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}"></a>
+                                            <a class="{{ config.one_page ? 'btn-one-page ' }}glyphicon glyphicon-edit tooltips" href="{{ path(config.edit, { 'id': entity.id }) }}" title="" rel="tooltip" data-original-title="{{ 'views.actions.edit'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}"></a>
                                         {% endif %}
                                     {% endblock actions %}
                                 </td>
@@ -164,7 +164,7 @@
                     {% block buttonsbelow %}
                     <div class="col-md-2">
                         {% if config.new is defined %}
-                            <a class="{{ config.modal ? 'btn-modal ' }}btn btn-success likepaginator" href="{{ path(config.new) }}">
+                            <a class="{{ config.one_page ? 'btn-one-page ' }}btn btn-success likepaginator" href="{{ path(config.new) }}">
                                 <span>{{ 'views.index.createnew'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}</span>
                             </a>
                         {% endif %}
@@ -181,12 +181,6 @@
         </div>
     </div>
 
-    {% if config.modal %}
-        <div class="modal fade" id="mwsModal" role="dialog" aria-labelledby="mwsModalLabel">
-            <div class="modal-dialog modal-lg" role="document" id="mws-modal-dialog">
-            </div>
-        </div>
-    {% endif %}
 {% endblock page %}
 
 {% block javascript %}
@@ -218,7 +212,7 @@
     </script>
     <script src="{{ asset('bundles/mwsimpleadmincrud/ajax/enabled_disabled.js') }}"></script>
 
-    {% if config.modal %}
+    {% if config.one_page %}
         {% include 'MWSimpleAdminCrudBundle:Default:ajax/mws_modal.html.twig' %}
     {% endif %}
 {% endblock %}

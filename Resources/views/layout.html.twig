@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="{{ app.request.locale|split('_')|first|default('en') }}">
     <head>
-        {% if config.modal_show_layout == false %}
+        {% if config.one_page_show_layout == false %}
             <meta charset="utf-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -17,7 +17,7 @@
         {% endif %}
 
         {% block stylesheets %}
-            {% if config.modal_show_layout == false %}
+            {% if config.one_page_show_layout == false %}
                 <link href="{{ asset('bundles/mwsimpleadmincrud/bootstrap/css/' ~ admincrud_config('site_theme', parameterRoot) ~ '.min.css') }}" rel="stylesheet">
                 <link href="{{ asset('bundles/mwsimpleadmincrud/css/bootstrap-checkbox.css') }}" rel="stylesheet">
                 <link href="{{ asset('bundles/mwsimpleadmincrud/select2/css/select2.min.css') }}" rel="stylesheet">
@@ -39,7 +39,7 @@
         {% endblock %}
 
         {% block head_javascript %}
-            {% if config.modal_show_layout == false %}
+            {% if config.one_page_show_layout == false %}
                 <script src="{{ asset('bundles/mwsimpleadmincrud/js/jquery.min.js') }}"></script>
                 <script src="{{ asset('bundles/mwsimpleadmincrud/bootstrap/js/bootstrap.min.js') }}"></script>
                 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -65,7 +65,7 @@
             {% endfor %}
         {% endfor %}
 
-        {% if config.modal_show_layout == false %}
+        {% if config.one_page_show_layout == false %}
             <div id="wrapper">
                 <!-- Navigation -->
                 {% block nav %}
@@ -95,13 +95,13 @@
                 {% endblock %}
                 <!-- Page -->
                 <div id="page-wrapper">
+                    <div class="row" id="mws-page">
         {% endif %}
 
-                    <div class="row">
                         {% block page %}{% endblock %}
-                    </div>
 
-        {% if config.modal_show_layout == false %}
+        {% if config.one_page_show_layout == false %}
+                    </div>
                 </div>
                 <!-- Footer -->
                 <footer>
@@ -119,7 +119,7 @@
         {% block javascript %}
             <script src="{{ asset('bundles/mwsimpleadmincrud/js/bootstrap-checkbox.js') }}"></script>
 
-            {% if config.modal_show_layout == false %}
+            {% if config.one_page_show_layout == false %}
                 <script src="{{ asset('bundles/mwsimpleadmincrud/admin2/metisMenu/metisMenu.min.js') }}"></script>
                 <script src="{{ asset('bundles/mwsimpleadmincrud/admin2/js/sb-admin-2.js') }}"></script>
                 <script>

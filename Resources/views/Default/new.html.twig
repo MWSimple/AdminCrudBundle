@@ -5,16 +5,9 @@
 {% endblock %}
 
 {% block page %}
-    <div class="{{ config.modal_show_layout ? 'modal-content' : 'col-md-12' }}" id="mws-modal-content">
+    <div class="col-md-12">
         <div class="panel panel-primary center-block">
-            <div class="panel-heading clearfix" id="mws-modal-header">
-                {% if config.modal_show_layout %}
-                    <div class="float-right">
-                        <div class="btn-group">
-                            <a type="button" class="btn-sm btn-default glyphicon glyphicon-remove tooltips" data-dismiss="modal" title="" rel="tooltip" data-placement="bottom" data-original-title="{{ 'views.recordactions.close'|trans({}, 'MWSimpleAdminCrudBundle') }}"></a>
-                        </div>
-                    </div>
-                {% endif %}
+            <div class="panel-heading clearfix">
                 {% block panelheading %}
                     <div class="float-left">
                         <i class="glyphicon glyphicon-plus"></i>
@@ -31,12 +24,12 @@
                     </div>
                 {% endblock %}
             </div>
-            <div class="panel-body" id="mws-modal-body">
+            <div class="panel-body" id="mws-page-panel-body">
                 {% block form %}
                     {{ form(form) }}
                 {% endblock %}
             </div>
-            <div class="panel-footer" id="mws-modal-footer">
+            <div class="panel-footer">
                 {% block buttonsbelow %}
                     <div class="btn-group">
                         {% if config.index is defined %}
