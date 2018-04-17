@@ -1,5 +1,6 @@
 <script>
-$('body').on("click", ".btn-one-page", function(event) {
+{# $('body').on("click", ".btn-one-page", function(event) { #}
+$('#mws-page').delegate( '.btn-one-page', 'click', function(event) {
     event.preventDefault();
     loadSpinner();
     var data = null;
@@ -25,6 +26,9 @@ $('body').on("click", ".btn-one-page", function(event) {
 
 function loadSpinner() {
     $('#mws-page').html('<div class="col-md-12"><i class="fa fa-refresh fa-spin"></i></div>');
+    $('body, html').animate({
+        scrollTop: '0px'
+    }, 300);
 }
 
 function successAjaxForm(form) {
@@ -35,7 +39,7 @@ function successAjaxForm(form) {
 }
 
 function initAjaxForm() {
-    $( "#mws-page-panel-body > form" ).submit(function( event ) {
+    $('#mws-page-panel-body > form').submit(function( event ) {
         event.preventDefault();
         loadSpinner();
 

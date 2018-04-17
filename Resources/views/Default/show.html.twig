@@ -17,11 +17,11 @@
                 {% block buttons %}
                     <div class="float-right">
                         <div class="btn-group">
-                            {% if config.index is defined %}
-                                <a class="btn-sm btn-default glyphicon glyphicon-th-list tooltips" href="{{ path(config.index) }}" title="" rel="tooltip" data-placement="bottom" data-original-title="{{ 'views.recordactions.backtothelist'|trans({}, 'MWSimpleAdminCrudBundle') }}"></a>
-                            {% endif %}
                             {% if config.edit is defined %}
                                 <a class="{{ config.one_page ? 'btn-one-page ' }}btn-sm btn-default glyphicon glyphicon-edit tooltips" href="{{ path(config.edit, { 'id': entity.id }) }}" title="" rel="tooltip" data-placement="bottom" data-original-title="{{ 'views.actions.edit'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}"></a>
+                            {% endif %}
+                            {% if config.index is defined %}
+                                <a class="btn-sm btn-default glyphicon glyphicon-th-list tooltips" href="{{ path(config.index) }}" title="" rel="tooltip" data-placement="bottom" data-original-title="{{ 'views.recordactions.backtothelist'|trans({}, 'MWSimpleAdminCrudBundle') }}"></a>
                             {% endif %}
                         </div>
                     </div>
