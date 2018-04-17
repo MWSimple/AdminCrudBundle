@@ -1,6 +1,6 @@
 <script>
 var labelAjax = '';
-$('.btn-modal').click(function(event) {
+$('body').on("click", ".btn-modal", function(event) {
     event.preventDefault();
     spinnerModal();
     label = null;
