@@ -181,6 +181,9 @@
         </div>
     </div>
 
+    {% if config.one_page %}
+        {% include 'MWSimpleAdminCrudBundle:Default:ajax/mws_one_page.html.twig' %}
+    {% endif %}
 {% endblock page %}
 
 {% block javascript %}
@@ -211,8 +214,4 @@
         };
     </script>
     <script src="{{ asset('bundles/mwsimpleadmincrud/ajax/enabled_disabled.js') }}"></script>
-
-    {% if config.one_page %}
-        {% include 'MWSimpleAdminCrudBundle:Default:ajax/mws_one_page.html.twig' %}
-    {% endif %}
 {% endblock %}
