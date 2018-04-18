@@ -18,8 +18,10 @@ class BackendController extends Controller
      * @Method("GET")
      */
     public function indexAction(Request $request) {
+        $config['one_page_show_layout'] = false;
+
         return $this->render('MWSimpleAdminCrudBundle:Backend:index.html.twig', [
-            'config' => null,
+            'config' => $config,
         ]);
     }
     /**

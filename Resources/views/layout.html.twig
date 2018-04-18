@@ -54,9 +54,9 @@
 {% endif %}
             <script src="{{ asset('bundles/tetranzselect2entity/js/select2entity.js') }}"></script>
         {% endblock %}
+{% if config.one_page_show_layout == false %}
     </head>
 
-{% if config.one_page_show_layout == false %}
     <body>
 {% endif %}
         {% for type, flashMessages in app.session.flashbag.all() %}
