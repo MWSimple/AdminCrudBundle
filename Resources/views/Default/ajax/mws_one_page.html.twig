@@ -40,43 +40,46 @@ function successAjaxForm(form) {
 function initAjaxForm() {
     $('#mws-page-panel-body > form').submit(function( event ) {
         event.preventDefault();
-        loadSpinner();
+        var button_disabled = $(this).find('button.disabled');
+        if (button_disabled.length <= 0) {
+            loadSpinner();
 
-        $.ajax({
-            url: $(this).attr('action'),
-            type: $(this).attr('method'),
-            data: $(this).serializefiles(),
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function(data) {
-                if (data.hasOwnProperty('form')) {
-                    successAjaxForm(data.form);
-                }
-                if (data.hasOwnProperty('message')) {
-                    toastr.success(data.message);
-                }
-                if (data.hasOwnProperty('postRedirect')) {
-                    if (data.postRedirect === 'reload') {
-                        location.reload();
-                    } else {
-                        $.ajax({
-                            url : data.postRedirect,
-                            type: 'GET',
-                            data: null,
-                            success: function(form) {
-                                successAjaxForm(form);
-                            },
-                            async: true
-                        });
+            $.ajax({
+                url: $(this).attr('action'),
+                type: $(this).attr('method'),
+                data: $(this).serializefiles(),
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    if (data.hasOwnProperty('form')) {
+                        successAjaxForm(data.form);
                     }
-                }
-            },
-            error: function(error){
-                toastr.error(error);
-            },
-            async: true
-        });
+                    if (data.hasOwnProperty('message')) {
+                        toastr.success(data.message);
+                    }
+                    if (data.hasOwnProperty('postRedirect')) {
+                        if (data.postRedirect === 'reload') {
+                            location.reload();
+                        } else {
+                            $.ajax({
+                                url : data.postRedirect,
+                                type: 'GET',
+                                data: null,
+                                success: function(form) {
+                                    successAjaxForm(form);
+                                },
+                                async: true
+                            });
+                        }
+                    }
+                },
+                error: function(error){
+                    toastr.error(error);
+                },
+                async: true
+            });
+        }
     });
 }
 //USAGE: $("#form").serializefiles();
