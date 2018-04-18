@@ -610,9 +610,9 @@ class DefaultController extends Controller
     }
 
     /**
-    * Creates a form to edit a entity.
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to edit a entity.
+     * @return \Symfony\Component\Form\Form The form
+     */
     protected function createEditForm()
     {
         $optionsForm = [
@@ -727,9 +727,6 @@ class DefaultController extends Controller
             } else {
                 $urlSuccess = $this->generateUrl($this->configArray['show'], array('id' => $this->entity->getId()));
             }
-            // $urlSuccess = $this->form->get('saveAndAdd')->isClicked()
-            // ? $this->generateUrl($this->configArray['new'])
-            // : $this->generateUrl($this->configArray['show'], array('id' => $this->entity->getId()));
         } elseif ($this->isXmlHttpRequest) {
             $urlSuccess = 'reload';
         } else {
