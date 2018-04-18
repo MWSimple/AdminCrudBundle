@@ -1,3 +1,6 @@
+{% if config is not defined %}
+    {% set config = { 'one_page_show_layout': false } %}
+{% endif %}
 {% if config.one_page_show_layout == false %}
 {% if parameterRoot is not defined %}
     {% set parameterRoot = null %}
