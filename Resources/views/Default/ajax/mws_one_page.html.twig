@@ -40,9 +40,9 @@ function successAjaxForm(form) {
 function initAjaxForm() {
     $('#mws-page-panel-body > form').submit(function( event ) {
         event.preventDefault();
+
         var btnSubmit = $(this).find("button[type=submit]:focus");
         var btnName = $(btnSubmit[0]).attr("name");
-
         var button_disabled = $(this).find('button.disabled');
         if (button_disabled.length <= 0) {
             loadSpinner();
@@ -50,7 +50,7 @@ function initAjaxForm() {
             $.ajax({
                 url: $(this).attr('action'),
                 type: $(this).attr('method'),
-                data: $(this).serializefiles(),
+                data: $(this).serializefiles(btnName),
                 cache: false,
                 contentType: false,
                 processData: false,
@@ -63,7 +63,7 @@ function initAjaxForm() {
                     }
                     if (data.hasOwnProperty('postRedirect')) {
                         if (data.postRedirect === 'reload') {
-                            {# location.reload(); #}
+                            location.reload();
                         } else {
                             $.ajax({
                                 url : data.postRedirect,
@@ -87,7 +87,7 @@ function initAjaxForm() {
 }
 //USAGE: $("#form").serializefiles();
 (function($) {
-$.fn.serializefiles = function() {
+$.fn.serializefiles = function(btnName) {
     var obj = $(this);
     /* ADD FILE TO PARAM AJAX */
     var formData = new FormData();
@@ -100,6 +100,9 @@ $.fn.serializefiles = function() {
     $.each(params, function (i, val) {
         formData.append(val.name, val.value);
     });
+    /* ADD BUTTON CLICK */
+    formData.append(btnName, '');
+
     return formData;
 };
 })(jQuery);
