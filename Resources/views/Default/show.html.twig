@@ -18,7 +18,7 @@
                     <div class="float-right">
                         <div class="btn-group">
                             {% if config.edit is defined %}
-                                <a class="{{ config.one_page ? 'btn-one-page ' }}btn-sm btn-default glyphicon glyphicon-edit tooltips" href="{{ path(config.edit, { 'id': entity.id }) }}" title="" rel="tooltip" data-placement="bottom" data-original-title="{{ 'views.actions.edit'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}"></a>
+                                <a class="btn-one-page btn-sm btn-default glyphicon glyphicon-edit tooltips" href="{{ path(config.edit, { 'id': entity.id }) }}" title="" rel="tooltip" data-placement="bottom" data-original-title="{{ 'views.actions.edit'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}"></a>
                             {% endif %}
                             {% if config.index is defined %}
                                 <a class="btn-sm btn-default glyphicon glyphicon-th-list tooltips" href="{{ path(config.index) }}" title="" rel="tooltip" data-placement="bottom" data-original-title="{{ 'views.recordactions.backtothelist'|trans({}, 'MWSimpleAdminCrudBundle') }}"></a>
@@ -74,10 +74,10 @@
                                                     {% if field.actions is defined %}
                                                         <td>
                                                         {% if field.actions.show is defined %}
-                                                            <a class="{{ config.one_page ? 'btn-one-page ' }}glyphicon glyphicon-search tooltips" href="{{ path(field.actions.show, { 'id': field_many.id }) }}" title="" rel="tooltip" data-placement="bottom" data-original-title="{{ 'views.actions.show'|trans({'%entity%': field.label}, 'MWSimpleAdminCrudBundle') }}"></a>
+                                                            <a class="btn-one-page glyphicon glyphicon-search tooltips" href="{{ path(field.actions.show, { 'id': field_many.id }) }}" title="" rel="tooltip" data-placement="bottom" data-original-title="{{ 'views.actions.show'|trans({'%entity%': field.label}, 'MWSimpleAdminCrudBundle') }}"></a>
                                                         {% endif %}
                                                         {% if field.actions.edit is defined %}
-                                                            <a class="{{ config.one_page ? 'btn-one-page ' }}glyphicon glyphicon-edit tooltips" href="{{ path(field.actions.edit, { 'id': field_many.id }) }}" title="" rel="tooltip" data-placement="bottom" data-original-title="{{ 'views.actions.edit'|trans({'%entity%': field.label}, 'MWSimpleAdminCrudBundle') }}"></a>
+                                                            <a class="btn-one-page glyphicon glyphicon-edit tooltips" href="{{ path(field.actions.edit, { 'id': field_many.id }) }}" title="" rel="tooltip" data-placement="bottom" data-original-title="{{ 'views.actions.edit'|trans({'%entity%': field.label}, 'MWSimpleAdminCrudBundle') }}"></a>
                                                         {% endif %}
                                                         </td>
                                                     {% endif %}
@@ -166,7 +166,7 @@
                             </a>
                         {% endif %}
                         {% if config.edit is defined %}
-                            <a class="{{ config.one_page ? 'btn-one-page ' }}btn btn-primary float-left" href="{{ path(config.edit, { 'id': entity.id }) }}">
+                            <a class="btn-one-page btn btn-primary float-left" href="{{ path(config.edit, { 'id': entity.id }) }}">
                                 {{ 'views.recordactions.edit'|trans({'%entity%': config.entityName}, 'MWSimpleAdminCrudBundle') }}
                             </a>
                         {% endif %}
