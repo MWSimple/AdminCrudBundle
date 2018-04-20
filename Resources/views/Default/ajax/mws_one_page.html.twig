@@ -88,6 +88,7 @@ function initAjaxForm() {
 //USAGE: $("#form").serializefiles();
 (function($) {
 $.fn.serializefiles = function(btnName) {
+    CKupdate();
     var obj = $(this);
     /* ADD FILE TO PARAM AJAX */
     var formData = new FormData();
@@ -106,4 +107,9 @@ $.fn.serializefiles = function(btnName) {
     return formData;
 };
 })(jQuery);
+
+function CKupdate() {
+    for ( instance in CKEDITOR.instances )
+        CKEDITOR.instances[instance].updateElement();
+}
 </script>
