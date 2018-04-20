@@ -1,7 +1,7 @@
 {
     "name": "mwsimple/admin-crud",
     "type": "symfony-bundle",
-    "description": "Admin Crud generator for Symfony applications",
+    "description": "Admin Crud Bundle generator for Symfony applications",
     "keywords": ["admin", "crud", "backend", "generator"],
     "homepage": "https://github.com/MWSimple/AdminCrudBundle",
     "license": "MIT",
@@ -23,7 +23,7 @@
         "mwsimple/scdatetimepicker-bundle": "^2.0",
         "liip/imagine-bundle": "^1.5",
         "vich/uploader-bundle": "^1.1",
-        "egeloen/ckeditor-bundle": "^4.0",
+        "egeloen/ckeditor-bundle": "^6.0",
         "tetranz/select2entity-bundle": "^2.9"
     },
     "config": {
