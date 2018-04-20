@@ -26,17 +26,6 @@
         "egeloen/ckeditor-bundle": "^6.0",
         "tetranz/select2entity-bundle": "^2.9"
     },
-    "scripts": {
-        "symfony-scripts": [
-            "Ivory\\CKEditorBundle\\Composer\\CKEditorScriptHandler::install"
-        ],
-        "post-install-cmd": [
-            "@symfony-scripts"
-        ],
-        "post-update-cmd": [
-            "@symfony-scripts"
-        ]
-    },
     "config": {
         "sort-packages": true
     },
