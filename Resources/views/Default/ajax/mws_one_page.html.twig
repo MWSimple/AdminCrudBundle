@@ -109,7 +109,10 @@ $.fn.serializefiles = function(btnName) {
 })(jQuery);
 
 function CKupdate() {
-    for ( instance in CKEDITOR.instances )
-        CKEDITOR.instances[instance].updateElement();
+    try {
+        for ( instance in CKEDITOR.instances )
+            CKEDITOR.instances[instance].updateElement();
+    }
+    catch(err) { }
 }
 </script>
