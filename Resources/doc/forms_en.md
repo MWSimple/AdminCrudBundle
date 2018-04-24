@@ -38,6 +38,18 @@ use MWSimple\Bundle\AdminCrudBundle\Form\Type\FormrowType;
 ->add('numero', \MWSimple\Bundle\AdminCrudBundle\Form\Type\PesoType::class)
 ```
 
+### mws-datetime class for DateTime type
+#### Example field form
+```php
+->add('dateTime', DateTimeType::class, [
+    'date_widget' => 'single_text',
+    'time_widget' => 'text',
+    'attr' => [
+        'class' => 'mws-datetime',
+    ],
+])
+```
+
 ### Use Text editor.
 
 #### Remember to install assets

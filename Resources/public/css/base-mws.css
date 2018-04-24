@@ -16,3 +16,15 @@ footer { text-align: center; }
 .float-left { float: left; }
 .float-right { float: right; }
 .pace .pace-progress { height: 10px !important; }
+.mws-datetime > input[type=date] {
+  width: 65% !important;
+  padding: 6px 8px !important;
+  font-size: 14px;
+  display: initial;
+}
+.mws-datetime > input[type=text] {
+  width: 15% !important;
+  padding: 6px 8px !important;
+  font-size: 14px;
+  display: initial;
+}
