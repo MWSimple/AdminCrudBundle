@@ -18,11 +18,11 @@ new SC\DatetimepickerBundle\SCDatetimepickerBundle(),
 new Liip\ImagineBundle\LiipImagineBundle(),
 new Tetranz\Select2EntityBundle\TetranzSelect2EntityBundle(),
 new Vich\UploaderBundle\VichUploaderBundle(),
-// new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
+// new FOS\CKEditorBundle\FOSCKEditorBundle(),
 ```
 
 #### For instance VichUploaderBundle uncomment and View: [Uploads files](subirarchivos_en.md)
-#### For instance IvoryCKEditorBundle uncomment and View: [Forms Text editor](forms_en.md)
+#### For instance FOSCKEditorBundle uncomment and View: [Forms Text editor](forms_en.md)
 
 ### Configure imports config and translations (include en_US, es_AR, ca_ES, pt_BR, fr, pl)
 
