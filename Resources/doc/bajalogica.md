@@ -41,7 +41,17 @@ Archivo Bundle/Entity/Post.php (Por ejemplo si la Entity fuera Post)
 use MWSimple\Bundle\AdminCrudBundle\Entity\LogicalErasingInterface;
 // ...
 class Post implements LogicalErasingInterface
-// ...
+    // Construct.
+    public function __construct()
+    {
+        $this->logicalErasing = false;
+    }
+    // ...
+    /**
+     * @ORM\Column(name="logical_erasing", type="boolean")
+     */
+    private $logicalErasing;
+    // ...
 ```
 
 * [Subir archivos](subirarchivos.md)
