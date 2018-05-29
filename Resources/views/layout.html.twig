@@ -1,5 +1,15 @@
 {% if config is not defined %}
-    {% set config = { 'one_page_show_layout': false } %}
+    {% if app.request.xmlHttpRequest == false %}
+        {% set config = { 'one_page_show_layout': false } %}
+    {% else %}
+        {% set config = { 'one_page_show_layout': true } %}
+    {% endif %}
+{% else %}
+    {% if app.request.xmlHttpRequest == false %}
+        {% set config = config|merge({ 'one_page_show_layout': false }) %}
+    {% else %}
+        {% set config = config|merge({ 'one_page_show_layout': true }) %}
+    {% endif %}
 {% endif %}
 {% if config.one_page_show_layout == false %}
 {% if parameterRoot is not defined %}
