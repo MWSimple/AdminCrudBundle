@@ -21,9 +21,7 @@ class Twig extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'isActive' => new \Twig_Function_Method($this, 'isActive', array(
-                'is_safe' => array('html'),
-            )),
+            new \Twig_SimpleFunction('isActive', array($this, 'isActive'), array('is_safe' => array('html'))),
         );
     }
 
