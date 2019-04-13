@@ -18,11 +18,11 @@ new SC\DatetimepickerBundle\SCDatetimepickerBundle(),
 new Liip\ImagineBundle\LiipImagineBundle(),
 new Tetranz\Select2EntityBundle\TetranzSelect2EntityBundle(),
 new Vich\UploaderBundle\VichUploaderBundle(),
-// new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
+// new FOS\CKEditorBundle\FOSCKEditorBundle(),
 ```
 
 #### Para instanciar VichUploaderBundle descomentar y Ver: [Subiendo archivos](subirarchivos.md)
-#### Para instanciar IvoryCKEditorBundle descomentar y Ver: [Formularios Editor de texto](forms.md)
+#### Para instanciar FOSCKEditorBundle descomentar y Ver: [Formularios Editor de texto](forms.md)
 
 ### Importar configuración y permitir traducciones (incluye en_US, es_AR, ca_ES, pt_BR, fr, pl)
 

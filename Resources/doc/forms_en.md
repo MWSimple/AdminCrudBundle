@@ -56,9 +56,9 @@ use MWSimple\Bundle\AdminCrudBundle\Form\Type\FormrowType;
 ```cli
 php bin/console assets:install
 ```
-#### Field CKEditorType::class [Documentation](http://symfony.com/doc/master/bundles/IvoryCKEditorBundle/index.html). Example
+#### Field CKEditorType::class [Documentation](https://symfony.com/doc/master/bundles/FOSCKEditorBundle/index.html). Example
 ```php
-use Ivory\CKEditorBundle\Form\Type\CKEditorType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
 $builder
     ->add('field', CKEditorType::class, array(

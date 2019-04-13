@@ -23,7 +23,7 @@
         "mwsimple/scdatetimepicker-bundle": "^2.0",
         "liip/imagine-bundle": "^1.5",
         "vich/uploader-bundle": "^1.1",
-        "egeloen/ckeditor-bundle": "^6.0",
+        "friendsofsymfony/ckeditor-bundle": "^2.0",
         "tetranz/select2entity-bundle": "^2.9"
     },
     "config": {

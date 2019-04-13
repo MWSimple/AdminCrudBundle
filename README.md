@@ -56,7 +56,7 @@ Documentación
 - Para los filtros         [LexikFormFilterBundle](https://github.com/lexik/LexikFormFilterBundle) .
 - Formulario datetime type [DatetimepickerBundle](https://github.com/stephanecollot/DatetimepickerBundle) .
 - Subir archivos           [VichUploaderBundle](https://github.com/dustin10/VichUploaderBundle) .
-- Editor de texto          [IvoryCKEditorBundle](https://github.com/egeloen/IvoryCKEditorBundle) .
+- Editor de texto          [FOSCKEditorBundle](https://github.com/FriendsOfSymfony/FOSCKEditorBundle) .
 - Manipulador de imagenes  [LiipImagineBundle](https://github.com/liip/LiipImagineBundle) .
 - Twig Extensiones         [TwigExtensions](http://twig.sensiolabs.org/doc/extensions/intl.html) .
 - Select 2 Entity          [select2entity-bundle](https://github.com/tetranz/select2entity-bundle) .
