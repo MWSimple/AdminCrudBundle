@@ -42,7 +42,9 @@
                                             <span class="glyphicon glyphicon-save"></span>
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
-                                            <li><a href="{{ path(config.export, { 'format': "pdf" }) }}" id="generatepdf">PDF</a></li>
+                                            {% if config.export_pdf %}
+                                                <li><a href="{{ path(config.export, { 'format': "pdf" }) }}" id="generatepdf">PDF</a></li>
+                                            {% endif %}
                                             <li><a href="{{ path(config.export, { 'format': "xls" }) }}">EXCEL</a></li>
                                             <li><a href="{{ path(config.export, { 'format': "csv" }) }}">CSV</a></li>
                                             <li><a href="{{ path(config.export, { 'format': "json" }) }}">JSON</a></li>
@@ -189,9 +191,11 @@
 {% block javascript %}
     {{ parent() }}
 
-    <script src="{{ asset('bundles/mwsimpleadmincrud/js/pdf/pdfmake.min.js') }}"></script>
-    <script src="{{ asset('bundles/mwsimpleadmincrud/js/pdf/vfs_fonts.js') }}"></script>
-    <script src="{{ asset('bundles/mwsimpleadmincrud/js/pdf/generate_pdf.js') }}"></script>
+    {% if config.export_pdf %}
+        <script src="{{ asset('bundles/mwsimpleadmincrud/js/pdf/pdfmake.min.js') }}" async></script>
+        <script src="{{ asset('bundles/mwsimpleadmincrud/js/pdf/vfs_fonts.js') }}" async></script>
+        <script src="{{ asset('bundles/mwsimpleadmincrud/js/pdf/generate_pdf.js') }}" async></script>
+    {% endif %}
     <script src="{{ asset('bundles/mwsimpleadmincrud/js/widget_not_validator.js') }}"></script>
 
     <script type="text/javascript">

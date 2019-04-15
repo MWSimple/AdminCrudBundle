@@ -945,7 +945,7 @@ class DefaultController extends Controller
         if (!array_key_exists('logical_erasing', $this->configArray)) {
             $this->configArray['logical_erasing'] = false;
         }
-        //Si no existe export_pdf o fue comentado entra y setea default
+        //Si no existe export o fue comentado entra y setea default
         if (!array_key_exists('export', $this->configArray)) {
             $this->configArray['export'] = false;
         }
@@ -953,13 +953,15 @@ class DefaultController extends Controller
         if (!array_key_exists('export_pdf', $this->configArray)) {
             $this->configArray['export_pdf'] = [];
         }
-        //Si no existe title_fontSize en export_pdf
-        if (!array_key_exists('title_fontSize', $this->configArray['export_pdf'])) {
-            $this->configArray['export_pdf']['title_fontSize'] = 14;
-        }
-        //Si no existe table_fontSize en export_pdf
-        if (!array_key_exists('table_fontSize', $this->configArray['export_pdf'])) {
-            $this->configArray['export_pdf']['table_fontSize'] = 12;
+        if (is_array($this->configArray['export_pdf'])) {
+            //Si no existe title_fontSize en export_pdf
+            if (!array_key_exists('title_fontSize', $this->configArray['export_pdf'])) {
+                $this->configArray['export_pdf']['title_fontSize'] = 14;
+            }
+            //Si no existe table_fontSize en export_pdf
+            if (!array_key_exists('table_fontSize', $this->configArray['export_pdf'])) {
+                $this->configArray['export_pdf']['table_fontSize'] = 12;
+            }
         }
         //Cargo boolean one_page
         $settingOnePage = $this->container->getParameter('mw_simple_admin_crud.setting')['one_page'];
