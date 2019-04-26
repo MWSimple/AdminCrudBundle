@@ -192,9 +192,9 @@
     {{ parent() }}
 
     {% if config.export_pdf %}
-        <script src="{{ asset('bundles/mwsimpleadmincrud/js/pdf/pdfmake.min.js') }}" async></script>
-        <script src="{{ asset('bundles/mwsimpleadmincrud/js/pdf/vfs_fonts.js') }}" async></script>
-        <script src="{{ asset('bundles/mwsimpleadmincrud/js/pdf/generate_pdf.js') }}" async></script>
+        <script src="{{ asset('bundles/mwsimpleadmincrud/js/pdf/pdfmake.min.js') }}"></script>
+        <script src="{{ asset('bundles/mwsimpleadmincrud/js/pdf/vfs_fonts.js') }}"></script>
+        <script src="{{ asset('bundles/mwsimpleadmincrud/js/pdf/generate_pdf.js') }}"></script>
     {% endif %}
     <script src="{{ asset('bundles/mwsimpleadmincrud/js/widget_not_validator.js') }}"></script>
 
