@@ -56,7 +56,7 @@
         {% block head_javascript %}
 {% if config.one_page_show_layout == false %}
             {% if admincrud_config('use_ckeditor', parameterRoot) %}
-                <script src="{{ asset('bundles/fosckeditor/ckeditor.js') }}" async></script>
+                <script src="{{ asset('bundles/fosckeditor/ckeditor.js') }}"></script>
             {% endif %}
             <script src="{{ asset('bundles/mwsimpleadmincrud/js/jquery.min.js') }}"></script>
             <script src="{{ asset('bundles/mwsimpleadmincrud/bootstrap/js/bootstrap.min.js') }}"></script>
