@@ -40,7 +40,9 @@
             <link href="{{ asset('bundles/mwsimpleadmincrud/admin2/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
             <link href="{{ asset('bundles/mwsimpleadmincrud/toastr/toastr.min.css') }}" rel="stylesheet">
             <link href="{{ asset('bundles/mwsimpleadmincrud/css/base-mws.css') }}" rel="stylesheet">
-            <link href="{{ asset('bundles/mwsimpleadmincrud/pace/pace.css') }}" rel="stylesheet">
+            {% if admincrud_config('use_pace', parameterRoot) %}
+                <link href="{{ asset('bundles/mwsimpleadmincrud/pace/pace.css') }}" rel="stylesheet">
+            {% endif %}
             {% if admincrud_config('menu_horizontal', parameterRoot) %}
                 <style type="text/css">
                     #page-wrapper {
@@ -135,14 +137,16 @@
             <script src="{{ asset('bundles/mwsimpleadmincrud/js/bootstrap-checkbox.min.js') }}"></script>
             <script src="{{ asset('bundles/mwsimpleadmincrud/admin2/metisMenu/metisMenu.min.js') }}"></script>
             <script src="{{ asset('bundles/mwsimpleadmincrud/admin2/js/sb-admin-2.min.js') }}"></script>
-            <script>
-                window.paceOptions = {
-                    ajax: {
-                        trackMethods: ['GET', 'POST', 'PUT', 'DELETE', 'REMOVE']
-                    }
-                };
-            </script>
-            <script src="{{ asset('bundles/mwsimpleadmincrud/pace/pace.min.js') }}"></script>
+            {% if admincrud_config('use_pace', parameterRoot) %}
+                <script>
+                    window.paceOptions = {
+                        ajax: {
+                            trackMethods: ['GET', 'POST', 'PUT', 'DELETE', 'REMOVE']
+                        }
+                    };
+                </script>
+                <script src="{{ asset('bundles/mwsimpleadmincrud/pace/pace.min.js') }}"></script>
+            {% endif %}
 {% endif %}
             <script type="text/javascript">
                 $('.tooltips').tooltip();

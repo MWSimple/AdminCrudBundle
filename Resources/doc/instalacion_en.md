@@ -71,11 +71,12 @@ knp_menu:
 #- site_view_footer: Allows you to configure the footer to be include by the CRUD.
 #- fos_user: Putting true when using FosUserBundle.
 #- one_page: Set to true, convert the CRUD into a single page using AJAX.
+#- use_pace: Set to true, add pace js.
 #- menu_horizontal: For horizontal menu set to true. Also add in menu_setting.class: nav navbar-nav
 #menu: The Child are indices should not be the same, here are added and set the menu item.
 #menu: Set the name, url, id, icon, roles who displayed, if you have submenu can be added.
 mw_simple_admin_crud:
-    setting: { site_name: Administration, fos_user: false, one_page: true } # Default:: site_theme: bootstrap, site_name: AdminCrud, site_view_layout: 'MWSimpleAdminCrudBundle::layout.html.twig', site_view_footer: '::footer.html.twig', fos_user: false, one_page: false, menu_horizontal: false
+    setting: { site_name: Administration, fos_user: false, one_page: true, use_pace: true } # Default:: site_theme: bootstrap, site_name: AdminCrud, site_view_layout: 'MWSimpleAdminCrudBundle::layout.html.twig', site_view_footer: '::footer.html.twig', fos_user: false, one_page: false, use_pace: false, menu_horizontal: false
     menu_setting: { id: side-menu, class: nav } # use id: side-menu and class; nav. If is horizontal use class: nav navbar-nav
     menu:
         child: { name: inicio, url: mws_admin_crud_menu, id: inicio, icon: glyphicon glyphicon-home }
