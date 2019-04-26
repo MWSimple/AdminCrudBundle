@@ -54,7 +54,14 @@ use MWSimple\Bundle\AdminCrudBundle\Form\Type\FormrowType;
 
 #### Remember to install assets
 ```cli
+php bin/console ckeditor:install
 php bin/console assets:install
+```
+### En el archivo `app/config/config.yml`
+```yaml
+fos_ck_editor:
+    autoload: false
+    async: true
 ```
 #### Field CKEditorType::class [Documentation](https://symfony.com/doc/master/bundles/FOSCKEditorBundle/index.html). Example
 ```php

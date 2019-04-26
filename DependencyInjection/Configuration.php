@@ -45,6 +45,7 @@ class Configuration implements ConfigurationInterface
                         ->booleanNode('fos_user')->defaultFalse()->end()
                         ->booleanNode('one_page')->defaultFalse()->end()
                         ->booleanNode('use_pace')->defaultFalse()->end()
+                        ->booleanNode('use_ckeditor')->defaultFalse()->end()
                         ->scalarNode('menu_horizontal')->defaultFalse()->end()
                     ->end()
                 ->end() //setting
